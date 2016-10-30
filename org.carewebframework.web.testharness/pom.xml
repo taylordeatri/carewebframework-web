@@ -10,6 +10,7 @@
 
 	<artifactId>org.carewebframework.web.testharness</artifactId>
 	<packaging>war</packaging>
+	<description>CWF Web Framework Test Harness</description>
 
 	<dependencies>
 		<dependency>
