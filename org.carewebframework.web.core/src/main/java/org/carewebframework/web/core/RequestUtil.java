@@ -28,9 +28,7 @@ package org.carewebframework.web.core;
 import java.io.FileNotFoundException;
 import java.net.InetAddress;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,8 +36,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.carewebframework.api.domain.IUser;
-import org.carewebframework.api.security.SecurityUtil;
 import org.springframework.util.Assert;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -208,30 +204,6 @@ public class RequestUtil {
     
     private static boolean isEmpty(String s) {
         return StringUtils.isEmpty(s) || "unknown".equalsIgnoreCase(s);
-    }
-    
-    /**
-     * <p>
-     * As convenience, constructs the following diagnostic context, as an ordered List.
-     * <ul>
-     * <li>Session ID</li>
-     * <li>Authentication Principal Username</li>
-     * <li>ZK Desktop ID</li>
-     * <li>Client Remote Address</li>
-     * <li>Server Name</li>
-     * </ul>
-     * 
-     * @return order List of Strings representing the diagnostic context
-     */
-    public static List<String> getStandardDiagnosticContext() {
-        IUser user = SecurityUtil.getAuthenticatedUser();
-        List<String> dc = new ArrayList<>();
-        dc.add(getSessionId());
-        dc.add(user == null ? "Unknown user" : user.getLoginName());
-        //dc.add(FrameworkWebSupport.getDesktopId());
-        dc.add(getRemoteAddress());
-        dc.add(getLocalHostAddress());
-        return dc;
     }
     
     /**
