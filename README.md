@@ -1,0 +1,3 @@
+#CareWeb Framework Web Framework
+
+This is an experimental open-source web framework that builds on a number of open source technologies (e.g., Spring Framework, Spring MVC, Spring Web Sockets on the server; JQuery, JQuery-UI, RequireJS, Bootstrap on the client).  It employs a server-centric, single page design.  The UI is constructed using a Java-based component model on the server which mirrors a Javascript widget model on the client.  Synchronization between server-side components and client-side widgets occurs via a web socket connection.  Javascript resources are stored on the server as web jars and deployed on demand to the client using RequireJS.  The component model is fully extensible allowing new components to be easily created.  

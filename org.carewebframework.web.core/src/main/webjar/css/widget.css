@@ -1,0 +1,381 @@
+/* jquery-ui mods */
+
+.ui-dialog-content {
+	font-size: 75%
+}
+
+.ui-dialog-titlebar > .ui-button span.ui-button-text {
+	display: none;
+}
+
+/* bootstrap mods */
+
+.panel {
+	display: flex;
+	flex-flow: column;
+}
+
+.panel-heading {
+	flex: none;
+	padding: 5px;
+}
+
+.panel-body {
+	flex: auto;
+	overflow: auto;
+}
+
+/* bootstrap extensions */
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+/* Root */
+
+body {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;    
+}
+
+/* Drag and Drop */
+
+.cwf_dragging {
+    outline: 2px dotted gray;
+    opacity: .5;
+    cursor: move;
+}
+
+.cwf_droppable {
+    outline: 2px dotted gray;
+}
+
+/* Text Content */
+
+.cwf_textcontent {
+	white-space: pre-wrap;
+}
+
+/* Modal mask */
+
+.cwf_mask {
+    cursor: not-allowed;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 99;
+    overflow: hidden;
+    text-align: center;
+    color: blue;
+    font-size: 12px;
+	opacity: .5;
+	display: none;
+	background-color: lightgray;
+	background: repeating-linear-gradient(
+		45deg,
+		#222,
+		#222 10px,
+		#333 10px,
+		#333 20px
+	);
+}
+
+.cwf_mask > div {
+	border: 1px solid;
+	background: white;
+	padding: 2px;
+}
+
+/* Modal parent */
+
+.cwf_modal {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.25);
+}
+
+/* Popup */
+
+.cwf_popup {
+	overflow: visible;
+	position: absolute;
+}
+
+/* Menupopup */
+
+.cwf_menupopup {
+	overflow: visible;
+	position: absolute;
+	background: white;
+	padding: 5px;
+    -webkit-border-radius: 6px 6px 6px 6px;
+    -moz-border-radius: 6px 6px 6px;
+    border-radius: 6px 6px 6px 6px;
+}
+
+
+/* Div */
+
+.cwf_div {
+	height: inherit;
+	width: inherit;
+	overflow: auto;
+}
+
+/* Progressbar */
+
+.cwf_progressbar {
+	display: inline-block;
+	background: white;
+	height: 20px;
+	width: 200px;
+	border: 1px solid gray;
+	text-align: center;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.cwf_progressbar > div:first-child {
+	position: absolute;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: small;
+    width: inherit;
+}
+
+.cwf_progressbar > div:nth-child(2) {
+	background: lightblue;
+	height: 100%;
+	width: 0;
+	padding-top: 3px;
+}
+
+/* Titled components */
+
+.cwf_titled > .panel-body {
+	padding: 7px;
+}
+
+.cwf_titled > .panel-heading {
+	padding: 2px;
+	font-weight: bold;
+	overflow: hidden;
+}
+
+.cwf_titled-icons {
+	float: right;
+	cursor: default;
+}
+
+.cwf_titled-icons span {
+	border-radius: 8px;
+	border: 1px solid;
+	padding: 4px 3px 2px 4px;	
+	margin-left: 2px;
+	color: inherit;	
+	opacity: .6;
+}
+
+.cwf_titled-icons span:hover {
+	opacity: 1;
+	text-decoration: none;
+}
+
+/* Window */
+
+.cwf_window-popup > .panel-heading,
+.cwf_window-modal > .panel-heading {
+	cursor: move;
+}
+
+.cwf_window-modal,
+.cwf_window-popup {
+    position: absolute;
+    max-height: 90%;
+    max-width: 90%;
+}
+
+.cwf_window-min {
+	height: auto!important;
+}
+
+.cwf_window-min > .panel-body {
+	display: none;
+}
+
+.cwf_window-max {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: auto!important;
+    width: auto!important;
+}
+
+/* Memobox */
+
+textarea.cwf_textbox {
+	resize: none;
+}
+
+/* Toolbar */
+
+.cwf_toolbar {
+	border: 1px solid lightgray;
+    display: inline-flex;
+    padding-left: 2px;
+    padding-right: 2px;
+    align-items: center;
+}
+
+.cwf_toolbar > * {
+	margin: 2px;
+}
+
+.cwf_toolbar-horizontal {
+	flex-direction: row;	
+}
+
+.cwf_toolbar-vertical {
+	flex-direction: column;
+}
+
+.cwf_toolbar-start {
+	justify-content: flex-start;
+}
+
+.cwf_toolbar-end {
+	justify-content: flex-end;
+}
+
+.cwf_toolbar-center {
+	justify-content: center;
+}
+
+/* Labeled input */
+
+.cwf_labeled-right > label {
+	float: right;	
+	margin-left: 5px;	
+}
+
+.cwf_labeled-left > label {
+	float: left;
+	margin-right: 5px;	
+}
+
+/* Cell */
+
+.cwf_cell {
+    display: inline-block;    
+}
+
+/* Checkbox */
+
+.cwf_checkbox {
+	display: inline-block;
+	margin: 0 5px 0 5px;
+}
+
+/* Radiobutton */
+
+.cwf_radiobutton {
+	display: inline-block;
+	margin: 0 5px 0 5px;
+}
+
+/* Input box components */
+
+.cwf_inputbox {
+	display: inline-flex;
+	background-color: white;
+}
+
+.cwf_inputbox > .glyphicon {
+	margin-left: -18px;
+	padding-top: 5px;
+	background-color: inherit;
+	margin-bottom: 3px;
+	margin-top: 1px;
+}
+
+.cwf_inputbox > .glyphicon:hover {
+	text-decoration: underline;
+}
+
+.cwf_inputbox > input {
+	padding-right: 22px;
+}
+
+.cwf_inputbox > input:disabled + .glyphicon {
+	opacity: .5;
+}
+
+/* Combobox */
+
+.cwf_combobox-matched {
+	color: blue;
+}
+
+.cwf_combobox-selected {
+	background-color: #d9edf7;
+}
+
+/* Table */
+
+.cwf_row > td {
+	vertical-align: middle!important;
+}

@@ -1,0 +1,133 @@
+/* Tabview */
+
+.cwf_tabview {
+	display: flex;
+}
+
+.cwf_tabview-top,
+.cwf_tabview-bottom {
+	flex-direction: column;	
+}
+
+.cwf_tabview-left,
+.cwf_tabview-right {
+	flex-direction: row;
+}
+
+.cwf_tabview-tabs {
+	display: inline-flex;
+	overflow: auto;
+	margin: 0;
+	padding: 0;
+	order: 1;
+ }
+	
+.cwf_tabview-left > .cwf_tabview-tabs,
+.cwf_tabview-right > .cwf_tabview-tabs {
+	flex-direction: column;
+}
+
+.cwf_tabview-panes {
+	display: inline-flex;
+	order: 2;
+	flex: 1;
+	overflow: auto;
+	outline: 1px solid lightgray;
+}
+
+.cwf_tabview-bottom > .cwf_tabview-panes,
+.cwf_tabview-right > .cwf_tabview-panes {
+	order: 0;	
+}
+.cwf_tabview-panes > div {
+	flex: 1;
+	padding: 2px;
+}
+
+.cwf_tab {
+	display: inline-block;
+	position: relative;
+	opacity: .75;
+	background: #eee;
+	border: solid 1px #999;
+}
+
+.cwf_tabview-bottom > .cwf_tabview-tabs > .cwf_tab {
+	border-top: none;
+	border-radius: 0 0 4px 4px;
+}
+
+.cwf_tabview-top > .cwf_tabview-tabs > .cwf_tab {
+	border-bottom: none;
+	border-radius: 4px 4px 0 0;
+}
+
+.cwf_tabview-left > .cwf_tabview-tabs > .cwf_tab {
+	border-right: none;
+	border-radius: 4px 0 0 4px;
+}
+
+.cwf_tabview-right > .cwf_tabview-tabs > .cwf_tab {
+	border-left: none;
+	text-align: right;
+	border-radius: 0 4px 4px 0;
+}
+
+.cwf_tabview-right > .cwf_tabview-tabs img {
+	float: left;
+}
+
+.cwf_tab-closable > a > span {
+	padding-right: 5px;
+}
+
+.cwf_tab a {
+	font-size: 14px;
+	line-height: 2em;
+	display: block;
+	padding: 0 10px;
+	outline: none;
+}
+
+.cwf_tab a:hover {
+	text-decoration: underline;
+}
+
+.cwf_tab a:focus {
+	text-decoration: none;
+}
+
+.cwf_tab-selected {
+	background: inherit;
+	border-color: #666;
+	opacity: 1;
+}
+
+.cwf_tabview-top > .cwf_tabview-tabs > .cwf_tab-selected {
+	border-bottom: 1px solid white;
+}
+
+.cwf_tabview-bottom > .cwf_tabview-tabs > .cwf_tab-selected {
+	border-top: 1px solid white;
+}
+
+.cwf_tabview-right > .cwf_tabview-tabs > .cwf_tab-selected {
+	border-left: 1px solid white;
+}
+
+.cwf_tabview-left > .cwf_tabview-tabs > .cwf_tab-selected {
+	border-right: 1px solid white;
+}
+
+.cwf_tab > a > .glyphicon-remove {
+	font-size: 70%;
+	position: absolute;
+	margin-top: 2px;
+	margin-left: -1px;
+	opacity: .6;
+}
+
+.cwf_tab > a > .glyphicon-remove:hover {
+	opacity: 1;
+}
+

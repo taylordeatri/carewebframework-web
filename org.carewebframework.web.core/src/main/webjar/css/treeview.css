@@ -1,0 +1,58 @@
+/* Tree View */
+
+.cwf_treeview {
+    display: inline-flex;
+    overflow: auto;
+}
+
+.cwf_treeview ul {
+    list-style-type: none;
+    background: url(../img/tree-vline.png) repeat-y;
+    margin: 0;
+    padding: 0;
+}
+   
+.cwf_treeview-noroot > ul,
+.cwf_treeview-noroot > ul > li {
+    background-image: none!important;
+    margin-left: -10px;
+}
+
+.cwf_treeview-nolines,
+.cwf_treeview-nolines * {
+    background-image: none!important;
+}
+   
+.cwf_treeview-notoggles li > .glyphicon {
+    display: none;    
+}
+
+.cwf_treeview ul {
+    margin-left: 10px;
+}
+
+.cwf_treeview li {
+    margin: 0;
+    padding: 0 12px;
+    line-height: 20px;
+    background: url(../img/tree-tline.png) no-repeat;
+    color: #369;
+    font-weight: bold;
+}
+
+.cwf_treeview li:last-child {
+    background: #fff url(../img/tree-lline.png) no-repeat;
+}
+
+.cwf_treenode-collapsed > ul {
+    display: none;    
+}
+
+.cwf_treenode > a {
+    cursor: default;
+    font-weight: normal;
+}
+
+.cwf_treenode-selected > a > span {
+    background: lightgray;
+}

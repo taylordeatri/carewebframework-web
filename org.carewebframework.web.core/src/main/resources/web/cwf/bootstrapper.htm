@@ -1,0 +1,26 @@
+<head>
+	<title></title>
+</head>
+
+<body>
+	<script src='web/require/require.js'></script>
+	
+	<script>
+		require([], function() {
+	        require.config(
+	        	${webjarInit}
+	        );
+	        
+			require(['cwf-core'], function(cwf) {
+				cwf.init({
+					pid: '${pid}',
+					wsurl: '${wsUrl}',
+					debug: ${debug},
+					logging: ${logging}
+				});	
+			});
+		});	
+	</script>
+	
+	<div id='cwf_root' style='visibility:hidden'></div>
+</body>

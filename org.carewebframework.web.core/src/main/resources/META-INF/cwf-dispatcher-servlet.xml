@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context  
+ 		http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/websocket
+        http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+	<context:property-placeholder
+		location="classpath*:/META-INF/*-default.properties,${org.carewebframework.location.properties:classpath:cwf*.properties}"
+		ignore-resource-not-found="true"  />
+
+	<context:component-scan base-package="org.carewebframework.web" />
+
+	<mvc:annotation-driven />
+
+	<mvc:interceptors>
+
+		<bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<property name="cacheMappings">
+				<props>
+					<prop key="/**/*.cwf">0</prop>
+				</props>
+			</property>
+		</bean>
+
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="locale" />
+		</bean>
+
+	</mvc:interceptors>
+
+	<websocket:handlers>
+		<websocket:mapping path="/ws/**" handler="cwf_WebSocketHandler" />
+	</websocket:handlers>
+
+	<bean id="cwf_WebSocketHandler" class="org.carewebframework.web.client.WebSocketHandler" />
+
+	<bean id="cwf_WebJarLocator" class="org.carewebframework.web.client.WebJarLocator"
+		factory-method="getInstance" />
+	
+	<bean class="org.carewebframework.web.event.EventRequestHandler" />
+
+	<bean class="org.carewebframework.web.client.InitRequestHandler" />
+	
+	<bean class="org.carewebframework.web.client.PingRequestHandler" />
+
+	<bean class="org.carewebframework.web.logging.LogRequestHandler" />
+
+	<bean id="cwf_ELEvaluator" class="org.carewebframework.web.expression.ELEvaluator"
+		factory-method="getInstance" />
+
+	<bean id="messageSource" name="msg,message"
+		class="org.carewebframework.web.spring.ClasspathMessageSource">
+		<property name="basename" value="classpath*:messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="en" />
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.config.MethodInvokingBean">
+		<property name="staticMethod" value="org.carewebframework.web.spring.InitLocalizer.init" />
+		<property name="arguments" ref="messageSource" />
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.config.MethodInvokingBean">
+		<property name="staticMethod" value="org.carewebframework.web.logging.LogUtil.initSettings" />
+		<property name="arguments">
+			<map>
+				<entry key="debug" value="${org.carewebframework.web.logging.debug:NONE}" />
+				<entry key="error" value="${org.carewebframework.web.logging.error:BOTH}" />
+				<entry key="fatal" value="${org.carewebframework.web.logging.fatal:BOTH}" />
+				<entry key="info" value="${org.carewebframework.web.logging.info:NONE}" />
+				<entry key="trace" value="${org.carewebframework.web.logging.trace:NONE}" />
+				<entry key="warn" value="${org.carewebframework.web.logging.warn:NONE}" />
+			</map>
+		</property>
+	</bean>
+</beans>

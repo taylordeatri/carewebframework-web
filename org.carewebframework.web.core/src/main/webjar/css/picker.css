@@ -1,0 +1,63 @@
+/* Picker widgets */
+
+.cwf_picker-ddn {
+	border: 1px solid lightgray;
+	padding: 2px;
+	background-color: white;
+	overflow: auto;
+	position: absolute;
+	cursor: default;
+	z-index: 100;
+	max-height: 200px;
+	max-width: 300px;
+}
+
+.cwf_picker-hidetext > input {
+    color: transparent;
+}
+
+
+/* Color picker */
+
+.cwf_colorpicker > input {
+	padding-left: 32px;
+}
+
+.cwf_colorpickeritem {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 12px;
+	height: 15px;
+	width: 15px;
+	border: 1px solid white;
+}
+
+.cwf_colorpickeritem:hover {
+	border-color: black;
+}
+
+/* Icon picker */
+
+.cwf_imagepicker > input {
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 32px;
+}
+
+.cwf_imagepickeritem {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 12px;
+	max-height: 31px;
+	min-height: 15px;
+	max-width: 31px;
+	min-width: 15px;
+	border: 1px solid white;
+}
+
+.cwf_imagepickeritem:hover {
+	border-color: black;
+}
+

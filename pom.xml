@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.carewebframework</groupId>
+		<artifactId>org.carewebframework-parent</artifactId>
+		<version>5.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>org.carewebframework.web-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<description>CWF Web Framework Aggregator POM</description>
+	
+	<modules>
+		<module>org.carewebframework.web.core</module>
+		<module>org.carewebframework.web.testharness</module>
+	</modules>
+
+	<properties>
+		<webjar.name>${project.artifactId}</webjar.name>
+		<webjar.version>${project.version}</webjar.version>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.0.1</version>
+					<executions>
+						<execution>
+							<id>copy-resources</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>
+									${project.build.directory}/classes/META-INF/resources/webjars/${webjar.name}/${webjar.version}
+								</outputDirectory>
+								<resources>
+									<resource>
+										<directory>${basedir}/src/main/webjar</directory>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>com.samaxes.maven</groupId>
+					<artifactId>minify-maven-plugin</artifactId>
+					<version>1.7.4</version>
+					<executions>
+						<execution>
+							<id>default-minify</id>
+							<configuration>
+								<skipMerge>true</skipMerge>
+								<closureLanguage>ECMASCRIPT5_STRICT</closureLanguage>
+								<webappSourceDir>${basedir}/src/main/webjar</webappSourceDir>
+								<webappTargetDir>
+									${project.build.directory}/classes/META-INF/resources/webjars/${webjar.name}/${webjar.version}
+								</webappTargetDir>
+								<cssFinalFile>${webjar.name}.css</cssFinalFile>
+								<cssSourceIncludes>
+									<cssSourceInclude>**/*.css</cssSourceInclude>
+								</cssSourceIncludes>
+								<cssSourceExcludes>
+									<cssSourceExclude>**/*.min.css</cssSourceExclude>
+								</cssSourceExcludes>
+								<jsFinalFile>${webjar.name}.js</jsFinalFile>
+								<jsSourceIncludes>
+									<jsSourceInclude>**/*.js</jsSourceInclude>
+								</jsSourceIncludes>
+								<jsSourceExcludes>
+									<jsSourceExclude>**/*.min.js</jsSourceExclude>
+								</jsSourceExcludes>
+							</configuration>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>minify</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>1.5.0</version>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>java</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
