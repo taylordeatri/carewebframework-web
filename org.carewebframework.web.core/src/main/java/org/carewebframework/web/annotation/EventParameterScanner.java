@@ -30,7 +30,6 @@ import java.lang.reflect.Field;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.annotation.EventType.EventParameter;
 import org.carewebframework.web.client.ClientRequest;
-import org.carewebframework.web.component.Page;
 import org.carewebframework.web.event.Event;
 
 /**
@@ -69,7 +68,7 @@ public class EventParameterScanner {
                 OnFailure onFailure = annot.onFailure();
                 
                 name = name.isEmpty() ? field.getName() : name;
-                Object value = field.getType() == Page.class ? request.getPage() : request.getParam(name, field.getType());
+                Object value = request.getParam(name, field.getType());
                 
                 if (value == null) {
                     onFailure.doAction("Request contains no valid value for field  \"%s\"", name);

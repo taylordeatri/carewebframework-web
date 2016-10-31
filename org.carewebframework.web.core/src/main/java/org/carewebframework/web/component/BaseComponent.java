@@ -25,6 +25,7 @@
  */
 package org.carewebframework.web.component;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.reflect.FieldUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.ancillary.ComponentException;
+import org.carewebframework.web.ancillary.ConvertUtil;
 import org.carewebframework.web.ancillary.IElementIdentifier;
 import org.carewebframework.web.ancillary.INamespace;
 import org.carewebframework.web.ancillary.NameRegistry;
@@ -82,7 +84,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
     }
     
-    private static final Pattern nameValidator = Pattern.compile("^[a-zA-Z_$][a-zA-Z_$0-9]*$");
+    private static final Pattern nameValidator = Pattern.compile("^[a-zA-Z$][a-zA-Z_$0-9]*$");
     
     private String name;
     
@@ -752,7 +754,8 @@ public abstract class BaseComponent implements IElementIdentifier {
         String state = (String) params.get("state");
         
         try {
-            FieldUtils.getField(this.getClass(), state, true).set(this, params.get("value"));
+            Field field = FieldUtils.getField(this.getClass(), state, true);
+            field.set(this, ConvertUtil.convert(params.get("value"), field.getType(), this));
         } catch (Exception e) {
             throw new RuntimeException("Error updating state: " + state, e);
         }

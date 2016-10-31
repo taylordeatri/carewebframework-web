@@ -278,7 +278,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			source$.on(sourceEvent, function (event) {
 				var forward = $.extend({}, event);
 				forward.type = forwardEvent || sourceEvent;
-				widget$.trigger(forward);
+				widget$.triggerHandler(forward);
 			})
 		},
 		
@@ -2205,24 +2205,32 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		/*------------------------------ Events ------------------------------*/
 		
 		_onmaximize: function(event) {
-			var context = $(event.target).data('context');
-			event.state = context._toggleButton('maximize');
+			var size = this._buttonState('maximize') ? 'NORMAL' : 'MAXIMIZED';
+			this.updateState('size', size);
+			this.stateChanged('size', size);
 		}, 
 		
 		_onminimize: function(event) {
-			var context = $(event.target).data('context');
-			event.state = context._toggleButton('minimize');
+			var size = this._buttonState('minimize') ? 'NORMAL' : 'MINIMIZED';
+			this.updateState('size', size);
+			this.stateChanged('size', size);
 		},
 		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
 			this._super();
-			this.initState({mode: 'INLINE'});
+			this.initState({mode: 'INLINE', size: 'NORMAL'});
 			this.toggleClass('cwf_titled panel');
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
+		
+		afterRender: function() {
+			this._super();
+			this.widget$.on('minimize', this._onminimize.bind(this));
+			this.widget$.on('maximize', this._onmaximize.bind(this));
+		},
 		
 		getDragHelper: function() {
 			return cwf.clone(this.sub$('titlebar'), -1);
@@ -2243,7 +2251,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			return $(this.resolveEL(dom));
 		},
 				
-		_addButton: function(type, icons, position, handler) {
+		_buttonAdd: function(type, icons, position) {
 			var id = this.subId(type);
 			var btn = $('#' + id);
 			
@@ -2256,8 +2264,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 				.attr('id', id)
 				.data('position', position)
 				.data('icons', icons)
-				.data('state', 0)
-				.data('context', this);
+				.data('state', 0);
 			var icons = this.sub$('icons');
 			icons.append(btn);
 			icons.children().sort(function(a, b) {
@@ -2271,31 +2278,34 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 				return x;
 			});
 			
-			if (handler) {
-				btn.on('click', handler);
-			}
-			
 			this.forward(btn, 'click', type);
 			return btn;
 		},
 		
-		_removeButton: function(type) {
+		_buttonRemove: function(type) {
 			this.sub$(type).remove();
 		},
 		
-		_toggleButton: function(type) {
+		_buttonState: function(type, newState) {
 			var btn = this.sub$(type),
 				icons = btn.data('icons'),
-				oldState = btn.data('state'),
-				newState = (oldState + 1) % icons.length;
-			btn.data('state', newState).removeClass('glyphicon-' + icons[oldState]).addClass('glyphicon-' + icons[newState]);
+				oldState = btn.data('state');
+			
+			if (!icons) {
+				newState = 0;
+			} else if (_.isNil(newState)) {
+				newState = oldState;
+			} else if (newState !== oldState) {
+				btn.data('state', newState).removeClass('glyphicon-' + icons[oldState]).addClass('glyphicon-' + icons[newState]);
+			}
+			
 			return newState;
 		},
 
 		/*------------------------------ State ------------------------------*/
 		
 		closable: function(v) {
-			this[v ? '_addButton' : '_removeButton']('close', 'remove', 9999);
+			this[v ? '_buttonAdd' : '_buttonRemove']('close', 'remove', 9999);
 			this.forwardToServer('close', !v);
 		},
 		
@@ -2312,11 +2322,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 		
 		maximizable: function(v) {
-			this[v ? '_addButton' : '_removeButton']('maximize', 'resize-full resize-small', 10, this._onmaximize);
+			this[v ? '_buttonAdd' : '_buttonRemove']('maximize', 'resize-full resize-small', 10);
 		},
 		
 		minimizable: function(v) {
-			this[v ? '_addButton' : '_removeButton']('minimize', 'chevron-down chevron-up', 20, this._onminimize);
+			this[v ? '_buttonAdd' : '_buttonRemove']('minimize', 'chevron-down chevron-up', 20);
 		},
 		
 		mode: function(v, oldmode) {
@@ -2366,6 +2376,102 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 						handles: 'all'});
 				} else {
 					this.widget$.resizable('destroy');
+				}
+			}
+		},
+		
+		size: function(v)	 {
+			var inline = 'INLINE' === this.getState('mode'),
+				saved = this.getState('_savedState'),
+				self = this,
+				w$ = this.widget$;
+			
+			switch (v) {
+				case 'NORMAL':
+					this._buttonState('minimize', 0);
+					this._buttonState('maximize', 0);
+					this.sub$('inner').hide();
+					_modifyState(saved);
+					this.setState('_savedState', null);
+					this.sub$('inner').show();
+					_disableResizable(false);
+					break;
+					
+				case 'MAXIMIZED':
+					_saveState();
+					_disableResizable(true);
+					this._buttonState('minimize', 0);
+					this._buttonState('maximize', 1);
+					
+					if (!inline) {
+						_modifyState({
+							left: 0,
+							right: 0,
+							top: 0,
+							bottom: 0,
+							height: null,
+							width: null
+						});
+					}
+					
+					this.sub$('inner').show();
+					break;
+				
+				case 'MINIMIZED':
+					_saveState();
+					_disableResizable(true);
+					this.sub$('inner').hide();
+					this._buttonState('minimize', 1);
+					this._buttonState('maximize', 0);
+					var tbheight = this.sub$('titlebar').css('height');
+					
+					if (inline) {
+						_modifyState({
+							height: tbheight
+						});
+					} else {
+						_modifyState({
+							left: 0,
+							right: 'auto',
+							top: null,
+							bottom: 0,
+							height: tbheight,
+							width: null
+						});
+					}
+					
+					break;
+			}
+			
+			function _disableResizable(disabled) {
+				if (w$.resizable('instance')) {
+					w$.resizable('option', 'disabled', disabled);
+				}
+			}
+			
+			function _modifyState(state) {
+				if (state) {
+					var s = w$[0].style;
+					
+					_.forIn(state, function(value, key) {
+						s[key] = value;
+					});
+				}
+			}
+			function _saveState() {
+				if (!saved) {
+					var s = w$[0].style;
+					
+					saved = {
+					    left: s.left,
+						right: s.right,
+						top: s.top,
+						bottom: s.bottom,
+						height: s.height,
+						width: s.width
+					};
+					
+					self.setState('_savedState', saved);
 				}
 			}
 		},

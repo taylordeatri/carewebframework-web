@@ -45,6 +45,8 @@ import org.carewebframework.web.page.PageRegistry;
 @Component(value = "page", widgetClass = "Page", content = ContentHandling.AS_CHILD, childTag = @ChildTag("*"))
 public final class Page extends BaseComponent implements INamespace {
     
+    public static final String ID_PREFIX = "_cwf_";
+    
     private static final AtomicInteger uniqueId = new AtomicInteger();
     
     private Synchronizer synchronizer;
@@ -72,7 +74,7 @@ public final class Page extends BaseComponent implements INamespace {
     }
     
     private Page(String src) {
-        this._setId("cwf_" + Integer.toHexString(uniqueId.incrementAndGet()));
+        this._setId(ID_PREFIX + Integer.toHexString(uniqueId.incrementAndGet()));
         this.src = src;
         PageRegistry.registerPage(this);
     }

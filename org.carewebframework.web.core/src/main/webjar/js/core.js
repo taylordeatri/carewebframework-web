@@ -175,8 +175,8 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		_onopen: function() {
 			var data = {
 				requestURL: window.location.href,
-				viewportHeight: window.innerHeight,
-				viewportWidth: window.innerWidth,
+				viewportHeight: $(window).height,
+				viewportWidth: $(window).width,
 				timezoneOffset: new Date().getTimezoneOffset()
 			};
 			

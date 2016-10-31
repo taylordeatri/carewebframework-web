@@ -35,10 +35,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.IntSupplier;
 
-import org.apache.commons.beanutils.ConvertUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.common.StrUtil;
 import org.carewebframework.web.ancillary.ComponentException;
+import org.carewebframework.web.ancillary.ConvertUtil;
 import org.carewebframework.web.annotation.Component.AttributeProcessor;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
@@ -213,93 +213,13 @@ public class ComponentDefinition {
             }
             
             for (int i = 0; i < parameterTypes.length; i++) {
-                args[i] = convert(args[i], parameterTypes[i], instance);
+                args[i] = ConvertUtil.convert(args[i], parameterTypes[i], instance);
             }
             
             setter.invoke(instance, args);
         } catch (Exception e) {
             throw MiscUtil.toUnchecked(e);
         }
-    }
-    
-    /**
-     * Converts an input value to a target type.
-     * 
-     * @param value The value to convert.
-     * @param targetType The type to which to convert.
-     * @param instance The object instance whose property value is to be set (necessary when the
-     *            target type is a component and the value is the component name).
-     * @return The converted value.
-     */
-    private static Object convert(Object value, Class<?> targetType, Object instance) {
-        if (value == null || targetType.isInstance(value)) {
-            return value;
-        }
-        
-        if (targetType.isEnum()) {
-            return convertToEnum(value, targetType);
-        }
-        
-        if (BaseComponent.class.isAssignableFrom(targetType)) {
-            return convertToComponent(value, targetType, instance);
-        }
-        
-        return ConvertUtils.convert(value, targetType);
-    }
-    
-    /**
-     * Converts the input value to an enumeration member. The input value must resolve to a string
-     * which is then matched to an enumeration member by using a case-insensitive lookup.
-     * 
-     * @param value The value to convert.
-     * @param enumType The enumeration type.
-     * @return The enumeration member corresponding to the input value.
-     */
-    private static Object convertToEnum(Object value, Class<?> enumType) {
-        String val = (String) convert(value, String.class, null);
-        
-        for (Object e : enumType.getEnumConstants()) {
-            if (((Enum<?>) e).name().equalsIgnoreCase(val)) {
-                return e;
-            }
-        }
-        
-        throw new IllegalArgumentException(
-                StrUtil.formatMessage("The value \"%s\" is not a member of the enumeration %s", value, enumType.getName()));
-    }
-    
-    /**
-     * Converts the input value to component. The input value must resolve to a string which
-     * represents the name of the component sought. This name is resolved to a component instance by
-     * looking it up in the namespace of the provided component instance.
-     * 
-     * @param value The value to convert.
-     * @param componentType The component type.
-     * @param instance The component whose namespace will be used for lookup.
-     * @return The component whose name matches the input value.
-     */
-    private static BaseComponent convertToComponent(Object value, Class<?> componentType, Object instance) {
-        if (!BaseComponent.class.isInstance(instance)) {
-            StrUtil.formatMessage("The property owner is not of the expected type (was %s but expected %s)",
-                instance.getClass().getName(), BaseComponent.class.getName());
-        }
-        
-        String name = (String) convert(value, String.class, instance);
-        BaseComponent container = (BaseComponent) instance;
-        BaseComponent target = container.findByName(name);
-        
-        if (target == null) {
-            throw new IllegalArgumentException(
-                    StrUtil.formatMessage("A component named \"%s\" was not found in the current namespace", name));
-        }
-        
-        if (!componentType.isInstance(target)) {
-            throw new IllegalArgumentException(
-                    StrUtil.formatMessage("The component named \"%s\" is not of the expected type (was %s but expected %s)",
-                        name, target.getClass().getName(), componentType.getName()));
-        }
-        
-        return target;
     }
     
     /**

@@ -243,8 +243,8 @@ body {
 .cwf_window-modal,
 .cwf_window-popup {
     position: absolute;
-    max-height: 90%;
-    max-width: 90%;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .cwf_window-min {

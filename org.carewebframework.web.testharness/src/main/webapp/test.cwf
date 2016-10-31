@@ -257,7 +257,7 @@
 				</window>
 				
 				<window name="window3" class="flavor:panel-warning" title="Test Window #3" 
-					height="100px" closable="true" dragid="test" sizable="true">
+					height="100px" closable="true" dragid="test" sizable="true" minimizable="true" maximizable="true" >
 					window name="window3" class="flavor:panel-warning" title="Test Window #3" height="100px" closable="true"
 					<div>
 						<button name="btnModal" label="Make modal" class="flavor:btn-success" />

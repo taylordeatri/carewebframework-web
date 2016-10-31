@@ -44,6 +44,10 @@ public class Window extends BaseUIComponent implements INamespace {
         MODAL, INLINE, POPUP;
     }
     
+    public enum Size {
+        NORMAL, MAXIMIZED, MINIMIZED;
+    }
+    
     public enum CloseAction {
         DETACH, DESTROY, HIDE
     }
@@ -59,6 +63,8 @@ public class Window extends BaseUIComponent implements INamespace {
     private boolean maximizable;
     
     private boolean minimizable;
+    
+    private Size size = Size.NORMAL;
     
     private BooleanSupplier onCanClose;
     
@@ -157,6 +163,20 @@ public class Window extends BaseUIComponent implements INamespace {
         
         if (mode != this.mode) {
             sync("mode", this.mode = mode);
+        }
+    }
+    
+    @PropertyGetter("size")
+    public Size getSize() {
+        return size;
+    }
+    
+    @PropertySetter("size")
+    public void setSize(Size size) {
+        size = size == null ? Size.NORMAL : size;
+        
+        if (size != this.size) {
+            sync("size", this.size = size);
         }
     }
     

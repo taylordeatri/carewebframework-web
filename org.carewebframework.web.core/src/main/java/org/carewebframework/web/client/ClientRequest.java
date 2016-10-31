@@ -27,8 +27,7 @@ package org.carewebframework.web.client;
 
 import java.util.Map;
 
-import org.apache.commons.beanutils.ConvertUtils;
-import org.carewebframework.web.component.BaseComponent;
+import org.carewebframework.web.ancillary.ConvertUtil;
 import org.carewebframework.web.component.Page;
 
 /**
@@ -135,16 +134,10 @@ public class ClientRequest {
     
     @SuppressWarnings("unchecked")
     private <T> T convertValue(Object value, Class<T> type) {
-        value = value == null ? null
-                : type.isInstance(value) ? value
-                        : BaseComponent.class.isAssignableFrom(type) ? resolveComponent(value)
-                                : ConvertUtils.convert(value, type);
-        
-        return (T) value;
+        try {
+            return type == Page.class ? (T) getPage() : (T) ConvertUtil.convert(value, type, getPage());
+        } catch (Exception e) {
+            return null;
+        }
     }
-    
-    private BaseComponent resolveComponent(Object value) {
-        return getPage().findById(value.toString());
-    }
-    
 }
