@@ -1597,6 +1597,15 @@
             </xs:attribute>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="sizable" type="xs:boolean"/>
+            <xs:attribute name="size">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="maximized"/>
+                        <xs:enumeration value="minimized"/>
+                        <xs:enumeration value="normal"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="title" type="xs:string"/>

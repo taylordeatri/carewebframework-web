@@ -34,12 +34,14 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import org.carewebframework.common.StrUtil;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.springframework.core.io.Resource;
 
 /**
  * Base class for tests using mock environment.
  */
-public class CommonTest {
+public class MockTest {
     
     public static Class<? extends MockEnvironment> mockEnvironmentClass = MockEnvironment.class;
     
@@ -47,6 +49,7 @@ public class CommonTest {
     
     public static MockEnvironment mockEnvironment;
     
+    @BeforeClass
     public static void beforeClass() throws Exception {
         if (mockEnvironment == null) {
             System.out.println("Initializing mock environment...");
@@ -55,6 +58,7 @@ public class CommonTest {
         }
     }
     
+    @AfterClass
     public static void afterClass() {
         if (mockEnvironment != null) {
             System.out.println("Destroying mock environment...");

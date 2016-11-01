@@ -15,6 +15,7 @@
 	
 	<modules>
 		<module>org.carewebframework.web.core</module>
+		<module>org.carewebframework.web.test</module>
 		<module>org.carewebframework.web.testharness</module>
 	</modules>
 
