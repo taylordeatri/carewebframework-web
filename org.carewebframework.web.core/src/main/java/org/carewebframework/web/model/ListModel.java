@@ -196,6 +196,29 @@ public class ListModel<T> implements IListModel<T> {
         return false;
     }
     
+    public boolean removeRange(int start, int end) {
+        validateIndex(start);
+        validateIndex(end);
+        boolean result = false;
+        
+        for (int i = end; i >= start; i--) {
+            list.remove(i);
+            result = true;
+        }
+        
+        if (result) {
+            fireEvent(ListEventType.DELETE, start, end);
+        }
+        
+        return result;
+    }
+    
+    private void validateIndex(int index) {
+        if (index < 0 || index >= list.size()) {
+            throw new IndexOutOfBoundsException(Integer.toString(index));
+        }
+    }
+    
     @Override
     public void removeAllListeners() {
         listeners.clear();

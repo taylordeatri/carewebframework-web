@@ -61,14 +61,14 @@ public class Treenode extends BaseLabeledImageComponent {
     }
     
     private void _setTreeSelected(Treenode selectedNode) {
-        Treeview treeview = getTreeView();
+        Treeview treeview = getTreeview();
         
         if (treeview != null) {
             treeview.setSelectedNode(selectedNode);
         }
     }
     
-    public Treeview getTreeView() {
+    public Treeview getTreeview() {
         return getAncestor(Treeview.class);
     }
     
