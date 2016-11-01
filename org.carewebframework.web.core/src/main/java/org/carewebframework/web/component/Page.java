@@ -73,6 +73,10 @@ public final class Page extends BaseComponent implements INamespace {
         page._setPage(page);
     }
     
+    public Page() {
+        src = null;
+    }
+    
     private Page(String src) {
         this._setId(ID_PREFIX + Integer.toHexString(uniqueId.incrementAndGet()));
         this.src = src;

@@ -45,7 +45,7 @@ public class MockTest {
     
     public static Class<? extends MockEnvironment> mockEnvironmentClass = MockEnvironment.class;
     
-    public static String[] configLocations;
+    public static String[] configLocations = { "classpath:/META-INF/cwf-dispatcher-servlet.xml" };
     
     public static MockEnvironment mockEnvironment;
     
