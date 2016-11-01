@@ -2224,6 +2224,26 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			this.toggleClass('cwf_titled panel');
 		},
 		
+		/*------------------------------ Other ------------------------------*/
+		
+		_updateSizable : function() {
+			var canResize = this.getState('sizable')
+				&& this.getState('mode') !== 'INLINE'
+				&& this.getState('size') === 'NORMAL',
+				active = this.widget$.resizable('instance');
+			
+			if (!canResize !== !active) {
+				if (canResize) {
+					this.widget$.resizable({
+						minHeight: 50,
+						minWidth: 100,
+						handles: 'all'});
+				} else {
+					this.widget$.resizable('destroy');
+				}
+			}
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
@@ -2336,6 +2356,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			v = v || 'INLINE';
 			_mode(oldmode, true);
 			_mode(v, false);
+			this._updateSizable();
 			this.widget$.draggable('instance') ? this.widget$.draggable('destroy') : null;
 			this.applyState('dragid');
 			
@@ -2365,19 +2386,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 		
 		sizable: function(v) {
-			var active = !!this.widget$.resizable('instance'),
-				v = !!v;
-
-			if (v !== active) {
-				if (v) {
-					this.widget$.resizable({
-						minHeight: 50,
-						minWidth: 100,
-						handles: 'all'});
-				} else {
-					this.widget$.resizable('destroy');
-				}
-			}
+			this._updateSizable();
 		},
 		
 		size: function(v)	 {
@@ -2385,6 +2394,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 				saved = this.getState('_savedState'),
 				self = this,
 				w$ = this.widget$;
+			
+			this._updateSizable();
 			
 			switch (v) {
 				case 'NORMAL':
@@ -2394,12 +2405,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 					_modifyState(saved);
 					this.setState('_savedState', null);
 					this.sub$('inner').show();
-					_disableResizable(false);
 					break;
 					
 				case 'MAXIMIZED':
 					_saveState();
-					_disableResizable(true);
 					this._buttonState('minimize', 0);
 					this._buttonState('maximize', 1);
 					
@@ -2419,11 +2428,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 				
 				case 'MINIMIZED':
 					_saveState();
-					_disableResizable(true);
 					this.sub$('inner').hide();
 					this._buttonState('minimize', 1);
 					this._buttonState('maximize', 0);
-					var tbheight = this.sub$('titlebar').css('height');
+					var tbheight = this.widget$.children().first().css('height');
 					
 					if (inline) {
 						_modifyState({
@@ -2441,12 +2449,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 					}
 					
 					break;
-			}
-			
-			function _disableResizable(disabled) {
-				if (w$.resizable('instance')) {
-					w$.resizable('option', 'disabled', disabled);
-				}
 			}
 			
 			function _modifyState(state) {

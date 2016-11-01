@@ -281,6 +281,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			
 			cwf.event._postprocess(event, pkt);
 			cwf.ws.sendData('event', pkt);
+			event.stopPropagation ? event.stopPropagation() : null;
 		}
 	},
 	
