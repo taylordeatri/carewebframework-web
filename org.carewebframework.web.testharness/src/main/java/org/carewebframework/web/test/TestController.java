@@ -49,6 +49,7 @@ import org.carewebframework.web.component.Treeview;
 import org.carewebframework.web.component.Window;
 import org.carewebframework.web.component.Window.Mode;
 import org.carewebframework.web.event.ChangeEvent;
+import org.carewebframework.web.event.ClickEvent;
 import org.carewebframework.web.event.DropEvent;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.ResizeEvent;
@@ -239,6 +240,13 @@ public class TestController implements IAutoWired {
     @EventHandler(value = "resize", target = "window3")
     private void resizeHandler(ResizeEvent event) {
         log("Resize event!!!");
+    }
+    
+    /*********************** Menus Tab ***********************/
+    
+    @EventHandler(value = "click", target = { "menu1", "menu2", "menu3", "menu5_1", "menu5_2" })
+    private void menuClickHandler(ClickEvent event) {
+        log(event.getTarget().getName() + " clicked.");
     }
     
     /*********************** Miscellaneous Tab ***********************/

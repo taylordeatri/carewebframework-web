@@ -247,9 +247,9 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		},
 		
 		forward: function(event, type, target) {
-			target = cwf.$(target || event.target);
+			var target$ = cwf.$(target || event.target);
 			event.type = type || event.type;
-			target.trigger(event);
+			target$.triggerHandler(event);
 		},
 		
 		removeOn: function(type) {
@@ -281,7 +281,6 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			
 			cwf.event._postprocess(event, pkt);
 			cwf.ws.sendData('event', pkt);
-			event.stopPropagation ? event.stopPropagation() : null;
 		}
 	},
 	

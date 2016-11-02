@@ -70,10 +70,10 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 		render$: function() {
 			var dom = 
 				  '<li role="presentation">'
-				+ '  <a id="${id}-tab" href="javascript:">'
+				+ '  <a id="${id}-tab" href="#">'
 				+ this.getDOMTemplate(':image', 'label', ':closable')
 				+ '  </a>'
-				+ '	 <div id="${id}-pane" class="hidden"/>'
+				+ '	 <div id="${id}-pane" class="cwf_tab-pane hidden"/>'
 				+ '</li>';
 			
 			return $(this.resolveEL(dom));

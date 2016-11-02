@@ -153,6 +153,13 @@ body {
 	position: absolute;
 }
 
+/* Menuitem */
+
+.cwf_menuitem img {
+	margin-left: -18px;
+	position: absolute;
+}
+
 /* Menupopup */
 
 .cwf_menupopup {

@@ -733,24 +733,37 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 		
 		/**
-		 * Use this method to add or remove a fixed class.  Fixed classes will always be added 
+		 * Use this method to add or remove fixed classes.  Fixed classes will always be added 
 		 * to the element regardless of the classes specified via the class property.
 		 * 
-		 * @param {string} cls The class to toggle.
+		 * @param {string} cls The classes to toggle.
 		 * @param {boolean} add If true, add the class; if false, remove it; if missing, toggle it.
-		 * @return {boolean} True if the class was added or removed.
+		 * @return {boolean} True if any class was added or removed.
 		 */
 		toggleClass: function(cls, add) {
 			var _clazz = this.getState('_clazz').split(' '),
-				i = _clazz.indexOf(cls),
-				exists = i !== -1,
-				remove = _.isNil(add) ? exists : !add;
+				cls = cls.split(' '),
+				w$ = this.widget$,
+				changed = false;
 			
-			if (exists === remove) {
-				this.widget$ ? this.widget$.toggleClass(cls, !remove) : null;
-				remove ? _clazz.splice(i, 1) : _clazz.push(cls);
+			_.forEach(cls, _toggle);
+			
+			if (changed) {
 				this.setState('_clazz', _clazz.join(' '));
-				return true;
+			}
+			
+			return changed;
+			
+			function _toggle(cls) {
+				var i = _clazz.indexOf(cls),
+					exists = i !== -1,
+					remove = _.isNil(add) ? exists : !add;
+				
+				if (exists === remove) {
+					w$ ? w$.toggleClass(cls, !remove) : null;
+					remove ? _clazz.splice(i, 1) : _clazz.push(cls);
+					changed = true;
+				}
 			}
 		},
 		
@@ -1393,7 +1406,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			 var dom = '<a class="btn-link" href="javascript:">'
+			 var dom = '<a class="btn-link" href="#">'
 				    + this.getDOMTemplate(':image', 'label')
 					+ '</a>';
 			 
@@ -1403,7 +1416,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		/*------------------------------ State ------------------------------*/
 		
 		href: function(v) {
-			this.attr('href', v || 'javascript:');
+			this.attr('href', v || '#');
 		},
 		
 		target: function(v) {
@@ -1596,7 +1609,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 	 * A menu widget
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.Menu = cwf.widget.LabeledWidget.extend({
+	cwf.widget.Menu = cwf.widget.LabeledImageWidget.extend({
 		
 		/*------------------------------ Containment ------------------------------*/
 		
@@ -1612,7 +1625,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 				+ '  <div class="dropdown" style="display: inline-block" role="presentation">'
 				+ '    <a id="${id}-btn" data-toggle="dropdown"'
 				+ '      role="button" aria-haspopup="true" aria-expanded="false">'
-				+ '      <span id="${id}-lbl"></span>'
+				+ 		 this.getDOMTemplate(':image', "label")
 				+ '      <span class="caret"></span>'
 				+ '    </a>'
 				+ '    <ul id="${id}-inner" class="dropdown-menu multi-level" '
@@ -1625,6 +1638,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		/*------------------------------ State ------------------------------*/
 		
 		clazz: function(v) {
+			this._super();
 			this.attr('class', v, this.sub$('btn'));
 		}
 		
@@ -1634,7 +1648,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 	 * A menu item widget
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.Menuitem = cwf.widget.LabeledWidget.extend({
+	cwf.widget.Menuitem = cwf.widget.LabeledImageWidget.extend({
 
 		/*------------------------------ Containment ------------------------------*/
 		
@@ -1670,13 +1684,19 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 					break;
 					
 				case 'HEADER': {
-					dom = '<li><span id="${id}-lbl"/></li>';
+					dom = 
+						  '<li>'
+					    + this.getDOMTemplate(':image', 'label')
+						+ '</li>';
 					clazz = 'dropdown-header';
 					break;
 				}
 				
 				case 'ITEM': {
-					dom = '<li><a id="${id}-lbl" href="javascript:"></a>';
+					dom = '<li>'
+						+ '  <a href="#">'
+						+ this.getDOMTemplate(':image', 'label')
+						+ '  </a>';
 					
 					if (this.getState('_submenu')) {
 						dom += '<ul id="${id}-inner" class="dropdown-menu"></li>';
@@ -1688,7 +1708,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 				}
 			}
 			
-			this.initState({_clazz: clazz}, true);
+			this.toggleClass('divider dropdown-header dropdown-submenu dropdown', false);
+			this.toggleClass(clazz, true);
 			return $(this.resolveEL(dom));
 		},
 		
@@ -2221,7 +2242,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		init: function() {
 			this._super();
 			this.initState({mode: 'INLINE', size: 'NORMAL'});
-			this.toggleClass('cwf_titled panel');
+			this.toggleClass('cwf_titled panel', true);
 		},
 		
 		/*------------------------------ Other ------------------------------*/
@@ -2455,7 +2476,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 				if (state) {
 					var s = w$[0].style;
 					
-					_.forIn(state, function(value, key) {
+					_.forOwn(state, function(value, key) {
 						s[key] = value;
 					});
 				}
