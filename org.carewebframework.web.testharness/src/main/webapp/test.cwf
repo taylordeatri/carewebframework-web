@@ -231,18 +231,18 @@
 			<tab label="Paneview">
 				<paneview orientation="horizontal">
 					<pane splittable="true">
-						Should have a vertical splitter
+						Should have a vertical splitter to the right
 					</pane>
 					<pane>
-						Should not have a splitter
+						Should not have a splitter to the right
 					</pane>
 				</paneview>
 				<paneview orientation="vertical">
 					<pane splittable="true">
-						Should have a horizontal splitter
+						Should have a horizontal splitter below
 					</pane>
 					<pane>
-						Should not have a splitter
+						Should not have a splitter below
 					</pane>
 				</paneview>
 			</tab>
