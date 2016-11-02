@@ -219,11 +219,21 @@
 			
 			<tab label="Tabview">
 				<tabview height="100%">
-					<tab label="Plain" />
-					<tab label="Closable" closable="true" />
-					<tab label="Image" image="images/ri.png" />
-					<tab label="Closable+Image" closable="true" image="images/ri.png" />
-					<tab label="Can't Close" closable="true" name="tabNoClose" />
+					<tab label="Plain">
+						This is an example of a plain tab.
+					</tab>
+					<tab label="Closable" closable="true">
+						This tab is closable by clicking on the x.
+					</tab>
+					<tab label="Image" image="images/ri.png">
+						This is a tab with an associated image.
+					</tab>
+					<tab label="Closable+Image" closable="true" image="images/ri.png">
+						This is a closable tab with an associated image.
+					</tab>
+					<tab label="Can't Close" closable="true" name="tabNoClose">
+						This closable tab has a close event handler that prevents it from being closed.
+					</tab>
 				</tabview>
 			</tab>
 			

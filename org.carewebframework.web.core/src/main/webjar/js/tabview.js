@@ -54,17 +54,13 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 			return this.sub$('pane');
 		},
 		
-		_attach: function(index) {
-			this.sub$('pane').appendTo(this._parent.sub$('panes'));
-			this._super(index);
-		},	
-		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
 			this._super();
 			this.forwardToServer('select close');
 			this.forward(this.sub$('tab'), 'click', 'select');
+			this._ancillaries.pane = this.sub$('pane').appendTo(this._parent.sub$('panes'));
 		},
 				
 		render$: function() {
