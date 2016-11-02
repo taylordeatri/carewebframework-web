@@ -23,6 +23,8 @@
 				'cwf-tabview-css': 'css/tabview',
 				'cwf-treeview': 'js/treeview',
 				'cwf-treeview-css': 'css/treeview',
+				'cwf-paneview': 'js/paneview',
+				'cwf-paneview-css': 'css/paneview',
 				'cwf-picker': 'js/picker',
 				'cwf-picker-css': 'css/picker'
 			},

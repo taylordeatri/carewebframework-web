@@ -226,6 +226,26 @@
 					<tab label="Can't Close" closable="true" name="tabNoClose" />
 				</tabview>
 			</tab>
+			
+			
+			<tab label="Paneview">
+				<paneview orientation="horizontal">
+					<pane splittable="true">
+						Should have a vertical splitter
+					</pane>
+					<pane>
+						Should not have a splitter
+					</pane>
+				</paneview>
+				<paneview orientation="vertical">
+					<pane splittable="true">
+						Should have a horizontal splitter
+					</pane>
+					<pane>
+						Should not have a splitter
+					</pane>
+				</paneview>
+			</tab>
 
 			
 			<tab label="IFrame">

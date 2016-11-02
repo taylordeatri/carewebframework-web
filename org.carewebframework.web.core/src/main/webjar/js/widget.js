@@ -2536,7 +2536,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 
 		render$: function() {
-			return this._super().appendTo('#cwf_root');
+			return this._super().appendTo('body');
 		},
 		
 		/*------------------------------ State ------------------------------*/
