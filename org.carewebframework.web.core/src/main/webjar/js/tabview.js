@@ -51,12 +51,7 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 		/*------------------------------ Containment ------------------------------*/
 		
 		anchor$: function() {
-			return this.sub$('pane');
-		},
-		
-		_attachAncillaries: function() {
-			this._ancillaries.pane$.data('oldparent', this._parent.sub$('panes'));
-			this._super();
+			return this._ancillaries.pane$;
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -74,10 +69,17 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 				+ this.getDOMTemplate(':image', 'label', ':closable')
 				+ '  </a>'
 				+ '</li>',
-				pane = 
-				  '<div id="${id}-pane" class="cwf_tab-pane hidden"/>';
-			this._ancillaries.pane$ = $(this.resolveEL(pane)).appendTo(this._parent.sub$('panes'));
+				pane = '<div id="${id}-pane" class="cwf_tab-pane hidden"/>',
+				self = this;
+				
+			this._ancillaries.pane$ = $(this.resolveEL(pane));
+			_attachPane();
+			this._ancillaries.pane$.data('attach', _attachPane);
 			return $(this.resolveEL(dom));
+			
+			function _attachPane() {
+				self._ancillaries.pane$.appendTo(self._parent.sub$('panes'));
+			}
 		},
 		
 		/*------------------------------ State ------------------------------*/		

@@ -203,12 +203,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		_attachAncillaries: function() {
 			_.forOwn(this._ancillaries, function(ancillary$) {
-				var oldparent$ = ancillary$.data('oldparent');
-				
-				if (oldparent$) {
-					oldparent$.append(ancillary$);
-				}
+				var attach = ancillary$.data('attach') || _attach;
+				attach(ancillary$);
 			});
+			
+			function _attach(ancillary$) {
+				var oldparent$ = ancillary$.data('oldparent');
+				oldparent$ ? oldparent$.append(ancillary$) : null;
+			}
 		},
 		
 		/**
