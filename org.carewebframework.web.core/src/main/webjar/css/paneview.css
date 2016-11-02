@@ -20,7 +20,7 @@
 }
 
 .cwf_pane > .ui-resizable-e {
-    cursor: ew-resize;
+    cursor: col-resize;
 }
 
 .cwf_pane > .ui-resizable-e:hover {
@@ -29,7 +29,7 @@
 }
 
 .cwf_pane > .ui-resizable-s {
-    cursor: ns-resize;
+    cursor: row-resize;
 }
 
 .cwf_pane > .ui-resizable-s:hover {
