@@ -261,10 +261,10 @@
 			
 			<tab label="Menus">
 				<menu label="mainMenu">
-					<menuitem label="header" type="header" />
+					<menuheader label="header" />
 					<menuitem label="menu2" />
 					<menuitem label="menu3" />
-					<menuitem type="separator" label="should be ignored"/>
+					<menuseparator />
 					<menuitem label="secondary">
 						<menuitem label="sub1" />
 						<menuitem label="sub2" />
@@ -445,10 +445,10 @@
 		</tabview>
 		
 		<menupopup name="contextMenu">
-			<menuitem label="header" type="header" />
+			<menuheader label="header" />
 			<menuitem label="menu2" />
 			<menuitem label="menu3" />
-			<menuitem type="separator" label="should be ignored"/>
+			<menuseparator />
 			<menuitem label="secondary">
 				<menuitem label="sub1" />
 				<menuitem label="sub2" />
