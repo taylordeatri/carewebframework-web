@@ -54,13 +54,17 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 			return this.sub$('pane');
 		},
 		
+		_attachAncillaries: function() {
+			this._ancillaries.pane$.data('oldparent', this._parent.sub$('panes'));
+			this._super();
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
 			this._super();
 			this.forwardToServer('select close');
 			this.forward(this.sub$('tab'), 'click', 'select');
-			this._ancillaries.pane = this.sub$('pane').appendTo(this._parent.sub$('panes'));
 		},
 				
 		render$: function() {
@@ -69,9 +73,10 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 				+ '  <a id="${id}-tab" href="#">'
 				+ this.getDOMTemplate(':image', 'label', ':closable')
 				+ '  </a>'
-				+ '	 <div id="${id}-pane" class="cwf_tab-pane hidden"/>'
-				+ '</li>';
-			
+				+ '</li>',
+				pane = 
+				  '<div id="${id}-pane" class="cwf_tab-pane hidden"/>';
+			this._ancillaries.pane$ = $(this.resolveEL(pane)).appendTo(this._parent.sub$('panes'));
 			return $(this.resolveEL(dom));
 		},
 		
