@@ -45,6 +45,12 @@ define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css.css'], f
 	
 	cwf.widget.Pane = cwf.widget.UIWidget.extend({
 		
+		/*------------------------------ Containment ------------------------------*/
+		
+		anchor$: function() {
+			return this.sub$('inner');
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
@@ -53,7 +59,7 @@ define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css.css'], f
 		},
 				
 		/*------------------------------ Other ------------------------------*/
-				
+		
 		_isHorizontal: function() {
 			return !this._parent || this._parent.getState('orientation') === 'HORIZONTAL';
 		},
@@ -61,18 +67,19 @@ define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css.css'], f
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			return $('<div/>');
+			return $(this.resolveEL('<div><div id="${id}-inner"/></div>'));
 		},
 		
 		_updateSplitter: function() {
-			var active = !!this.widget$.resizable('instance'),
+			var spl$ = this.widget$,
+				active = !!spl$.resizable('instance'),
 				splittable = this.getState('splittable');
 			
 			if (active === !splittable) {
 				if (active) {
-					this.widget$.resizable('destroy');
+					spl$.resizable('destroy');
 				} else {
-					this.widget$.resizable({
+					spl$.resizable({
 						handles: this._isHorizontal() ? 'e' : 's'
 					});
 				}

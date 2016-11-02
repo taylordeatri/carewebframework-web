@@ -2,38 +2,47 @@
 
 .cwf_paneview {
     overflow: auto;
-    display: inline-block;
+    display: inline-flex;
 }
 
-.cwf_paneview-horizontal > .cwf_pane {
-    display: inline-block;
+.cwf_paneview-horizontal {
+    flex-direction: row;
 }
 
-.cwf_paneview-vertical > .cwf_pane {
-    display: block;
+.cwf_paneview-vertical {
+    flex-direction: column;
 }
 
 /* Pane */
 
 .cwf_pane {
     position: relative;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    margin: 2px;
+}
+
+.cwf_pane > div:first-child {
+    overflow: hidden;
 }
 
 .cwf_pane > .ui-resizable-e {
     cursor: col-resize;
+    opacity: .5;   
+    right: -9px;
 }
 
 .cwf_pane > .ui-resizable-e:hover {
     border-left: 2px solid gray;
-    opacity: .5;   
 }
 
 .cwf_pane > .ui-resizable-s {
     cursor: row-resize;
+    opacity: .5;  
+    bottom: -9px;
 }
 
 .cwf_pane > .ui-resizable-s:hover {
     border-top: 2px solid gray;
-    opacity: .5;   
 }
 
