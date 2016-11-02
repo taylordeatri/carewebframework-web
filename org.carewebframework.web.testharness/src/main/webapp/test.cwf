@@ -137,7 +137,7 @@
 							textbox: name="txtInput" placeholder="placeholder" maxlength="10" synchronized="true"
 						</row>
 						<row>
-							<textbox name="txtSelect" value="Text should be selected" />
+							<textbox name="txtSelect" value="Characters 2-4 should be selected" />
 							textbox: name="txtSelect" value="Characters 2-4 should be selected"
 						</row>
 						<row>
