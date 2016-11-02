@@ -26,10 +26,8 @@
 package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
-import org.carewebframework.web.annotation.Component.ChildTag;
 
-@Component(value = "menu", widgetClass = "Menu", parentTag = "*", childTag = { @ChildTag("menuitem"),
-        @ChildTag("menuheader"), @ChildTag("menuseparator") })
-public class Menu extends Button {
+@Component(value = "menuseparator", widgetClass = "Menuseparator", parentTag = { "menu", "menupopup", "menuitem" })
+public class Menuseparator extends BaseUIComponent {
     
 }

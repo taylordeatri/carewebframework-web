@@ -27,30 +27,9 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
-import org.carewebframework.web.annotation.Component.PropertyGetter;
-import org.carewebframework.web.annotation.Component.PropertySetter;
 
-@Component(value = "menuitem", widgetClass = "Menuitem", parentTag = { "menu", "menupopup",
-        "menuitem" }, childTag = @ChildTag("menuitem"))
+@Component(value = "menuitem", widgetClass = "Menuitem", parentTag = { "menu", "menupopup", "menuitem" }, childTag = {
+        @ChildTag("menuitem"), @ChildTag("menuheader"), @ChildTag("menuseparator") })
 public class Menuitem extends BaseLabeledImageComponent {
     
-    public enum MenuitemType {
-        ITEM, SEPARATOR, HEADER
-    }
-    
-    private MenuitemType type = MenuitemType.ITEM;
-    
-    @PropertyGetter("type")
-    public MenuitemType getType() {
-        return type;
-    }
-    
-    @PropertySetter("type")
-    public void setType(MenuitemType type) {
-        type = type == null ? MenuitemType.ITEM : type;
-        
-        if (this.type != type) {
-            sync("type", this.type = type);
-        }
-    }
 }

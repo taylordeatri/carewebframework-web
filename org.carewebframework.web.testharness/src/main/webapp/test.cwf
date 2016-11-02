@@ -289,10 +289,10 @@
 			
 			<tab label="Menus">
 				<menu name="mainMenu" label="mainMenu">
-					<menuitem name="menu1" label="header" type="header" />
+					<menuheader name="menu1" label="header" />
 					<menuitem name="menu2" label="menu2" />
 					<menuitem name="menu3" label="menu3" image="images/music.png"/>
-					<menuitem name="menu4" type="separator" label="should be ignored"/>
+					<menuseparator name="menu4" />
 					<menuitem name="menu5" label="secondary">
 						<menuitem name="menu5_1" label="sub1" image="images/asterisk.png"/>
 						<menuitem name="menu5_2" label="sub2" />
@@ -479,10 +479,10 @@
 		</tabview>
 		
 		<menupopup name="contextMenu">
-			<menuitem label="header" type="header" />
+			<menuheader label="header" />
 			<menuitem label="menu2" />
 			<menuitem label="menu3" />
-			<menuitem type="separator" label="should be ignored"/>
+			<menuseparator />
 			<menuitem label="secondary">
 				<menuitem label="sub1" />
 				<menuitem label="sub2" />

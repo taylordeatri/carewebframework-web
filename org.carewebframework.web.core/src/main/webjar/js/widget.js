@@ -1668,62 +1668,80 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		init: function() {
 			this._super();
-			this.initState({type: 'ITEM', _submenu: false});
+			this.initState({_submenu: false});
+		},
+		
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		_childrenUpdated: function() {
+			if (this.setState('_submenu', !!this._children.length)) {
+				this.rerender();
+			}
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			var dom,
-				clazz;
+			var submenu = this.getState('_submenu'),
+				dom = '<li>'
+					+ '  <a href="#">'
+					+ this.getDOMTemplate(':image', 'label')
+					+ '  </a>'
+					+ (submenu ? '<ul id="${id}-inner" class="dropdown-menu">' : '')
+					+ '</li>';
 			
-			switch(this.getState('type')) {
-				case 'SEPARATOR':
-					dom = '<li role="separator"></li>';
-					clazz = 'divider';
-					break;
-					
-				case 'HEADER': {
-					dom = 
-						  '<li>'
-					    + this.getDOMTemplate(':image', 'label')
-						+ '</li>';
-					clazz = 'dropdown-header';
-					break;
-				}
-				
-				case 'ITEM': {
-					dom = '<li>'
-						+ '  <a href="#">'
-						+ this.getDOMTemplate(':image', 'label')
-						+ '  </a>';
-					
-					if (this.getState('_submenu')) {
-						dom += '<ul id="${id}-inner" class="dropdown-menu"></li>';
-						clazz = 'dropdown-submenu';
-					} else {
-						dom += '</li>';
-						clazz = 'dropdown';
-					}
-				}
-			}
-			
-			this.toggleClass('divider dropdown-header dropdown-submenu dropdown', false);
-			this.toggleClass(clazz, true);
+			this.toggleClass('dropdown', !submenu);
+			this.toggleClass('dropdown-submenu', submenu);
 			return $(this.resolveEL(dom));
+		}
+		
+	});
+	
+	/******************************************************************************************************************
+	 * A menu header widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Menuheader = cwf.widget.LabeledImageWidget.extend({
+
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.toggleClass('dropdown-header', true);
 		},
 		
-		/*------------------------------ State ------------------------------*/
+		/*------------------------------ Rendering ------------------------------*/
 		
-		type: function(v) {
-			this.rerender();
+		render$: function() {
+			var dom = 
+				  '<li>'
+			    + this.getDOMTemplate(':image', 'label')
+				+ '</li>';
+					
+			return $(this.resolveEL(dom));
+		}
+
+	});
+	
+	/******************************************************************************************************************
+	 * A menu separator widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Menuseparator = cwf.widget.UIWidget.extend({
+
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.toggleClass('divider', true);
 		},
-				
-		_childrenUpdated: function() {
-			if (this.setState('_submenu', !!this._children.length)) {
-				this.rerender();
-			}
-		}		
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		render$: function() {
+			return $('<li role="separator"></li>');
+		}
 		
 	});
 	
