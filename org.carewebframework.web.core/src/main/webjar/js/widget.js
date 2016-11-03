@@ -372,11 +372,23 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 		
 		/**
-		 * Creates a translucent mask over this widget.
+		 * Creates/removes a translucent mask over this widget.
+		 * @param {boolean} [destroy] Destroy mask if present.  Otherwise create mask if not present.
+		 * @return {jquery} Mask if it exists, undefined otherwise.
 		 */
-		mask: function(option) {
-			var id = this.widget$.attr('id') + '-mask';
-			this.widget$.cwf$mask(option, id);
+		mask: function(destroy) {
+			var mask$ = this._ancillaries.mask$;
+			
+			if (!mask$ === !destroy) {
+				if (destroy) {
+					mask$.remove();
+					delete this._ancillaries.mask$;
+				} else {
+					this._ancillaries.mask$ = this.widget$.cwf$mask(this.subId('mask')).appendTo(this.widget$)
+				}
+			}
+			
+			return this._ancillaries.mask$;
 		},
 		
 		/**

@@ -155,8 +155,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			}
 		},
 		
-		cwf$mask: function() {
-			return $('<div class="cwf_mask"/>')
+		cwf$mask: function(id) {
+			id = id ? ' id="' + id + '"' : '';
+			
+			return $('<div class="cwf_mask"' + id + '/>')
 				.css('z-index', ++cwf.widget._zmodal)
 				.prependTo(this);
 		}
