@@ -294,6 +294,20 @@ public class TestController implements IAutoWired {
         popupbox.setValue("Drop down opened!");
     }
     
+    @WiredComponent
+    private Div divMaskTest;
+    
+    private boolean masked;
+    
+    @EventHandler(value = "click", target = "btnMaskTest")
+    private void btnMaskTestClickHandler() {
+        if (masked = !masked) {
+            divMaskTest.addMask("Mask Test");
+        } else {
+            divMaskTest.removeMask();
+        }
+    }
+    
     /*********************** Tabview Tab ***********************/
     
     {

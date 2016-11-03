@@ -155,12 +155,12 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			}
 		},
 		
-		cwf$mask: function(id) {
-			id = id ? ' id="' + id + '"' : '';
-			
-			return $('<div class="cwf_mask"' + id + '/>')
+		cwf$mask: function(parent) {
+			parent = parent || this;
+			parent.css('position', 'relative');
+			return $('<div class="cwf_mask"/>')
 				.css('z-index', ++cwf.widget._zmodal)
-				.prependTo(this);
+				.prependTo(parent);
 		}
 	},
 	

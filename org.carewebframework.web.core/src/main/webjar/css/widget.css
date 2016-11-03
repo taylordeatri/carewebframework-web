@@ -114,7 +114,8 @@ body {
     bottom: 0;
     z-index: 99;
     overflow: hidden;
-    text-align: center;
+    align-items: center;
+    justify-content: center;
     color: blue;
     font-size: 12px;
 	opacity: .5;
@@ -129,7 +130,7 @@ body {
 	);
 }
 
-.cwf_mask > div {
+.cwf_mask > span {
 	border: 1px solid;
 	background: white;
 	padding: 2px;

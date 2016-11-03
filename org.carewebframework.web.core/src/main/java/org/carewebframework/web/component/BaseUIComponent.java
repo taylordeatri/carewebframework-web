@@ -57,6 +57,18 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     
     private Popup context;
     
+    public void addMask() {
+        addMask(null);
+    }
+    
+    public void addMask(String label) {
+        sync("mask", label);
+    }
+    
+    public void removeMask() {
+        sync("mask", false);
+    }
+    
     @PropertyGetter("style")
     public String getStyles() {
         return styles.toString();

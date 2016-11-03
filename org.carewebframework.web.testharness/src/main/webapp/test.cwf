@@ -482,6 +482,13 @@
 							<button name="btnSaveAsFile" label="Save to File" />
 							This button saves some text to a file.
 						</row>
+						<row>
+							<cell>
+								<div name="divMaskTest" height="50px" width="100px" style="display:inline-block; border: 1px solid black" />
+								<button name="btnMaskTest" label="Click to toggle mask"/>
+							</cell>
+							Test of masking components.  Should mask div to left of button.
+						</row>
 					</rows>
 				</table>
 				

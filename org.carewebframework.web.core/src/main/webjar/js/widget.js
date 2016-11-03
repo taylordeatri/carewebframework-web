@@ -372,26 +372,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 		
 		/**
-		 * Creates/removes a translucent mask over this widget.
-		 * @param {boolean} [destroy] Destroy mask if present.  Otherwise create mask if not present.
-		 * @return {jquery} Mask if it exists, undefined otherwise.
-		 */
-		mask: function(destroy) {
-			var mask$ = this._ancillaries.mask$;
-			
-			if (!mask$ === !destroy) {
-				if (destroy) {
-					mask$.remove();
-					delete this._ancillaries.mask$;
-				} else {
-					this._ancillaries.mask$ = this.widget$.cwf$mask(this.subId('mask')).appendTo(this.widget$)
-				}
-			}
-			
-			return this._ancillaries.mask$;
-		},
-		
-		/**
 		 * Returns the page to which this widget belongs.
 		 * 
 		 * @return {Page} The owning page.
@@ -616,6 +596,27 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		initState: function(state, overwrite) {
 			if (state) {
 				return overwrite ? _.assign(this._state, state) : _.defaults(this._state, state);
+			}
+		},
+		
+		/**
+		 * Creates/removes a translucent mask over this widget.
+		 */
+		mask: function(v) {
+			var destroy = v === false;
+			
+			if (!this._mask$ === !destroy) {
+				if (destroy) {
+					this._mask$.remove();
+					delete this._mask$;
+				} else {
+					this._mask$ = this.widget$.cwf$mask().append('<span>').css('display', 'flex');
+				}
+			}
+			
+			if (!destroy) {
+				var span$ = this._mask$.children().first();
+				span$.text(v).css('display', v ? '' : 'none');
 			}
 		},
 		
