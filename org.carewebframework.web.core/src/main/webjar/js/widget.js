@@ -432,9 +432,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		 * @return {jquery} The subcomponent (never null).
 		 */
 		sub$: function(sub) {
-			var id = '#' + this.subId(sub);
-			sub = this.widget$ ? this.widget$.find(id) : null;
-			return sub && sub.length > 0 ? sub : $(id);
+			var id = '#' + this.subId(sub),
+				sub$ = $(id);
+			return sub$.length ? sub$ : this.widget$ ? this.widget$.find(id) : null;
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
