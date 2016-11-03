@@ -149,6 +149,10 @@ public class MockEnvironment {
         return rootContext;
     }
     
+    public MockSession getSession() {
+        return session;
+    }
+    
     /**
      * First, posts any pending echo requests to the event queue. Then empties the event queue,
      * sending each queued event to its target. Finally, processes any events on the server push

@@ -153,6 +153,14 @@
 							datebox: placeholder="datebox"
 						</row>
 						<row>
+							<integerbox placeholder="integer value" />
+							integerbox placeholder="integer value"
+						</row>
+						<row>
+							<doublebox placeholder="double value" />
+							doublebox placeholder="double value"
+						</row>
+						<row>
 							<popupbox name="popupbox" placeholder="popupbox">
 								<popup>
 									<label class="flavor:label-success" label="Simple popup" />	

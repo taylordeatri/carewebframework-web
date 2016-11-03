@@ -1004,6 +1004,23 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 		
 		handleInput: function(event) {
+			var ele = this.input$()[0];
+			
+			if (this._constraint && !(this._constraint.test ? this._constraint.test(ele.value) : this._constraint(ele.value))) {
+				event.stopPropagation();
+				event.preventDefault();
+				ele.value = this._previous.value;
+				ele.selectionStart = this._previous.start;
+				ele.selectionEnd = this._previous.end;
+				return;
+			}
+		    
+		    this._previous = {
+		    	value: ele.value,
+		    	start: ele.selectionStart,
+		    	end: ele.selectionEnd
+		    };
+			
 		    if (this._synchronized) {
 		    	this.fireChanged();
 		    } else {
@@ -1017,6 +1034,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			this._super();
 			this._synchronized = false;
 			this._changed = false;
+			this._previous = {value: '', start: 0, end: 0};
 		},
 		
 		synced: function(v) {
@@ -1801,6 +1819,44 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		masked: function(v) {
 			this.attr('type', v ? 'password' : this._type);
+		}
+		
+	});
+	
+	/******************************************************************************************************************
+	 * An integer input box widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Integerbox = cwf.widget.InputboxWidget.extend({
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._type = 'text';
+			this._constraint = /^[-+]?\d+$/;
+			this._super();
+		}
+		
+	});
+	
+	/******************************************************************************************************************
+	 * A double float point input box widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Doublebox = cwf.widget.InputboxWidget.extend({
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._type = 'text';
+			this._constraint = this._testConstraint;
+			this._super();
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		_testConstraint(value) {
+			return /^[+-]?\.?$/.test(value) || /^[+-]?([0-9]*\.?[0-9]+|[0-9]+\.?[0-9]*)([eE][+-]?[0-9]+)?$/.test(value); 
 		}
 		
 	});

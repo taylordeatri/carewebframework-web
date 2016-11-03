@@ -266,6 +266,19 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			this.postProcessors[type] = fn;
 		},
 		
+		/**
+		 * Event handler for constraining input.
+		 */
+		constrainInput: function(keyPressEvent, constraint) {
+			var key = String.fromCharCode(keyPressEvent.which),
+				test = constraint.test ? constraint.test(key) : constraint(key);
+			
+		   	if (!test) {
+		   		keyPressEvent.stopPropagation();
+		   		keyPressEvent.preventDefault();
+		   	}
+		},
+		
 		sendToServer: function(event, params) {
 			var pkt = {};
 			
@@ -705,5 +718,6 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			saveAs(blob, filename);
 		});
 	}
+	
 		
 }});  // end module definition

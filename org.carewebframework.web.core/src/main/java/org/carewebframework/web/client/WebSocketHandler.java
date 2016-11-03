@@ -96,6 +96,10 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
     
     private ServletContext servletContext;
     
+    public static Collection<Session> getActiveSessions() {
+        return Collections.unmodifiableCollection(sessions.values());
+    }
+    
     /**
      * Register a request handler.
      * 
@@ -329,10 +333,6 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
     
     private void logSessionEvent(Session session, String event) {
         log.debug("Session #" + session.getId() + " " + event + ".");
-    }
-    
-    public Collection<Session> getActiveSessions() {
-        return Collections.unmodifiableCollection(sessions.values());
     }
     
     @Override
