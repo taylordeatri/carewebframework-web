@@ -26,44 +26,18 @@
 package org.carewebframework.web.event;
 
 import org.carewebframework.web.annotation.EventType;
-import org.carewebframework.web.annotation.EventType.EventParameter;
 import org.carewebframework.web.component.BaseComponent;
 
 @EventType(ClickEvent.TYPE)
-public class ClickEvent extends Event {
+public class ClickEvent extends MouseEvent {
     
     public static final String TYPE = "click";
-    
-    public enum MouseButton {
-        UNSPECIFIED, LEFT, MIDDLE, RIGHT
-    }
-    
-    @EventParameter
-    private int pageX;
-    
-    @EventParameter
-    private int pageY;
-    
-    @EventParameter
-    private int which;
     
     public ClickEvent() {
     }
     
     public ClickEvent(BaseComponent target, Object data) {
         super(TYPE, target, data);
-    }
-    
-    public int getPageX() {
-        return pageX;
-    }
-    
-    public int getPageY() {
-        return pageY;
-    }
-    
-    public MouseButton getMouseButton() {
-        return MouseButton.values()[which];
     }
     
 }

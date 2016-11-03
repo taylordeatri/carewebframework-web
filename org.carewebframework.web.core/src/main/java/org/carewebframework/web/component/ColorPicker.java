@@ -37,6 +37,14 @@ public class ColorPicker extends BasePickerComponent<Color> {
     @Component(value = "colorpickeritem", widgetPackage = "cwf-picker", widgetClass = "Colorpickeritem", parentTag = "colorpicker")
     public static class Colorpickeritem extends BasePickerItem<Color> {
         
+        public Colorpickeritem() {
+            super();
+        }
+        
+        public Colorpickeritem(Color color) {
+            super(color);
+        }
+        
         @Override
         protected String _toString(Color value) {
             return ColorUtil.toString(value);
@@ -52,4 +60,5 @@ public class ColorPicker extends BasePickerComponent<Color> {
     public ColorPicker() {
         super(Colorpickeritem.class);
     }
+    
 }

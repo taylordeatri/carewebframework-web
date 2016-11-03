@@ -25,19 +25,41 @@
  */
 package org.carewebframework.web.event;
 
-import org.carewebframework.web.annotation.EventType;
+import org.carewebframework.web.annotation.EventType.EventParameter;
 import org.carewebframework.web.component.BaseComponent;
 
-@EventType(DblclickEvent.TYPE)
-public class DblclickEvent extends MouseEvent {
+public class MouseEvent extends Event {
     
-    public static final String TYPE = "dblclick";
-    
-    public DblclickEvent() {
+    public enum MouseButton {
+        UNSPECIFIED, LEFT, MIDDLE, RIGHT
     }
     
-    public DblclickEvent(BaseComponent target, Object data) {
-        super(TYPE, target, data);
+    @EventParameter
+    private int pageX;
+    
+    @EventParameter
+    private int pageY;
+    
+    @EventParameter
+    private int which;
+    
+    public MouseEvent() {
+    }
+    
+    public MouseEvent(String type, BaseComponent target, Object data) {
+        super(type, target, data);
+    }
+    
+    public int getPageX() {
+        return pageX;
+    }
+    
+    public int getPageY() {
+        return pageY;
+    }
+    
+    public MouseButton getMouseButton() {
+        return MouseButton.values()[which];
     }
     
 }

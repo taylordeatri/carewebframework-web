@@ -39,6 +39,7 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.client.Synchronizer;
+import org.carewebframework.web.core.WebUtil;
 import org.carewebframework.web.event.EventQueue;
 import org.carewebframework.web.page.PageRegistry;
 
@@ -58,6 +59,8 @@ public final class Page extends BaseComponent implements INamespace {
     private final EventQueue eventQueue = new EventQueue(this);
     
     private final Map<String, Object> browserInfo = new HashMap<>();
+    
+    private Map<String, String> queryParams;
     
     private String title;
     
@@ -108,6 +111,25 @@ public final class Page extends BaseComponent implements INamespace {
     
     public Map<String, Object> getBrowserInfo() {
         return Collections.unmodifiableMap(browserInfo);
+    }
+    
+    public String getQueryParam(String param) {
+        return getQueryParams().get(param);
+    }
+    
+    public Map<String, String> getQueryParams() {
+        if (queryParams == null) {
+            String requestUrl = (String) browserInfo.get("requestURL");
+            int i = requestUrl == null ? -1 : requestUrl.indexOf("?");
+            
+            if (i >= 0) {
+                queryParams = WebUtil.queryStringToMap(requestUrl.substring(i + 1), ",");
+            } else {
+                queryParams = Collections.emptyMap();
+            }
+        }
+        
+        return Collections.unmodifiableMap(queryParams);
     }
     
     public String getSrc() {
