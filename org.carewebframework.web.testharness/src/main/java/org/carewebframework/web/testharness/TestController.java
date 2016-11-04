@@ -23,7 +23,7 @@
  *
  * #L%
  */
-package org.carewebframework.web.test;
+package org.carewebframework.web.testharness;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -212,10 +212,14 @@ public class TestController implements IAutoWired {
     @WiredComponent
     private Textbox txtSelect;
     
+    @WiredComponent
+    private Textbox txtInput;
+    
     @EventHandler(value = "select", target = "tabInputBoxes")
     private void InputBoxTabSelectHandler() {
-        txtSelect.focus();
+        txtInput.setValue("Value set programmatically");
         txtSelect.selectRange(2, 5);
+        txtSelect.focus();
     }
     
     /*********************** Window Tab ***********************/

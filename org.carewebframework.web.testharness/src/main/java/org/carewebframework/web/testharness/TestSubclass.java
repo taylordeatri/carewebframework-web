@@ -23,7 +23,7 @@
  *
  * #L%
  */
-package org.carewebframework.web.test;
+package org.carewebframework.web.testharness;
 
 import org.carewebframework.web.component.Div;
 
