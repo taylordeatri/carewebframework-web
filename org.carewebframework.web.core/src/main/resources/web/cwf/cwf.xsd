@@ -61,13 +61,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -196,13 +199,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -338,13 +344,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -425,13 +434,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -470,6 +482,34 @@
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="width" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="doublebox">
+        <xs:complexType>
+            <xs:attribute name="class" type="xs:string"/>
+            <xs:attribute name="context" type="xs:string"/>
+            <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="css" type="xs:string"/>
+            <xs:attribute name="disabled" type="xs:boolean"/>
+            <xs:attribute name="dragid" type="xs:string"/>
+            <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="hint" type="xs:string"/>
+            <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="max" type="xs:string"/>
+            <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="min" type="xs:string"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="placeholder" type="xs:string"/>
+            <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="value" type="xs:string"/>
             <xs:attribute name="visible" type="xs:boolean"/>
             <xs:attribute name="width" type="xs:string"/>
         </xs:complexType>
@@ -599,6 +639,34 @@
             <xs:attribute name="width" type="xs:string"/>
         </xs:complexType>
     </xs:element>
+    <xs:element name="integerbox">
+        <xs:complexType>
+            <xs:attribute name="class" type="xs:string"/>
+            <xs:attribute name="context" type="xs:string"/>
+            <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="css" type="xs:string"/>
+            <xs:attribute name="disabled" type="xs:boolean"/>
+            <xs:attribute name="dragid" type="xs:string"/>
+            <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="hint" type="xs:string"/>
+            <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="max" type="xs:string"/>
+            <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="min" type="xs:string"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="placeholder" type="xs:string"/>
+            <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="value" type="xs:string"/>
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="width" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="label">
         <xs:complexType>
             <xs:attribute name="class" type="xs:string"/>
@@ -666,6 +734,34 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="selected" type="xs:boolean"/>
+            <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="value" type="xs:string"/>
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="width" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="longbox">
+        <xs:complexType>
+            <xs:attribute name="class" type="xs:string"/>
+            <xs:attribute name="context" type="xs:string"/>
+            <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="css" type="xs:string"/>
+            <xs:attribute name="disabled" type="xs:boolean"/>
+            <xs:attribute name="dragid" type="xs:string"/>
+            <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="hint" type="xs:string"/>
+            <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="max" type="xs:string"/>
+            <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="min" type="xs:string"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="placeholder" type="xs:string"/>
+            <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -844,13 +940,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -893,13 +992,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -988,13 +1090,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -1082,7 +1187,7 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
-            <xs:attribute name="max" type="xs:integer"/>
+            <xs:attribute name="maxValue" type="xs:integer"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -1136,13 +1241,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -1197,13 +1305,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -1298,13 +1409,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -1382,13 +1496,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -1548,13 +1665,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
@@ -1683,13 +1803,16 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>

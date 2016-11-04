@@ -1004,22 +1004,20 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 		
 		handleInput: function(event) {
-			var ele = this.input$()[0];
+			var ele = this.input$()[0],
+				value = ele.value;
 			
-			if (this._constraint && !(this._constraint.test ? this._constraint.test(ele.value) : this._constraint(ele.value))) {
+			if (value.length && this.validate && !this.validate(value)) {
 				event.stopPropagation();
 				event.preventDefault();
-				ele.value = this._previous.value;
-				ele.selectionStart = this._previous.start;
-				ele.selectionEnd = this._previous.end;
+				var cpos = ele.selectionStart - 1;
+				ele.value = this._previous;
+				ele.selectionStart = cpos;
+				ele.selectionEnd = cpos;
 				return;
 			}
 		    
-		    this._previous = {
-		    	value: ele.value,
-		    	start: ele.selectionStart,
-		    	end: ele.selectionEnd
-		    };
+		    this._previous = value;
 			
 		    if (this._synchronized) {
 		    	this.fireChanged();
@@ -1034,11 +1032,17 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			this._super();
 			this._synchronized = false;
 			this._changed = false;
-			this._previous = {value: '', start: 0, end: 0};
+			this._previous = '';
 		},
 		
 		synced: function(v) {
 			this._synchronized = v;
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		clear: function() {
+			this.input$().val('');
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -1055,6 +1059,48 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			return $(this.resolveEL('<input type="${_type}">'));
 		}
 		
+	});
+	
+	/******************************************************************************************************************
+	 * An integer input box widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.NumberboxWidget = cwf.widget.InputboxWidget.extend({
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._type = 'text';
+			this._super();
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		validate: function(v) {
+			return this.validateRange(v);
+		},
+		
+		validateRange: function(v) {
+			var min = _.defaultTo(this.getState('min'), this._min),
+				max = _.defaultTo(this.getState('max'), this._max);
+			
+			v = v === undefined ? +this.input$().val() : +v;
+			return v >= min && v <= max;
+		},
+		
+		/*------------------------------ State ------------------------------*/
+		
+		minValue: function(v) {
+			if (!this.validateRange()) {
+				this.clear();
+			}
+		},
+		
+		maxValue: function(v) {
+			if (!this.validateRange()) {
+				this.clear();
+			}
+		}
 	});
 	
 	/******************************************************************************************************************
@@ -1827,14 +1873,36 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 	 * An integer input box widget
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.Integerbox = cwf.widget.InputboxWidget.extend({
+	cwf.widget.Integerbox = cwf.widget.NumberboxWidget.extend({
 		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
-			this._type = 'text';
-			this._constraint = /^[-+]?\d+$/;
 			this._super();
+			this._max = 2147483647;
+			this._min = -2147483648;
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		validate: function(value) {
+			return /^[-+]?\d+$/.test(value) && this._super(value);
+		}
+		
+	});
+	
+	/******************************************************************************************************************
+	 * An integer input box widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Longbox = cwf.widget.Integerbox.extend({
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this._max = 9223372036854775807;
+			this._min = -9223372036854775808;
 		}
 		
 	});
@@ -1843,20 +1911,21 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 	 * A double float point input box widget
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.Doublebox = cwf.widget.InputboxWidget.extend({
+	cwf.widget.Doublebox = cwf.widget.NumberboxWidget.extend({
 		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
-			this._type = 'text';
-			this._constraint = this._testConstraint;
 			this._super();
+			this._max = Number.MAX_VALUE;
+			this._min = Number.MIN_VALUE;
 		},
 		
 		/*------------------------------ Other ------------------------------*/
 		
-		_testConstraint(value) {
-			return /^[+-]?\.?$/.test(value) || /^[+-]?([0-9]*\.?[0-9]+|[0-9]+\.?[0-9]*)([eE][+-]?[0-9]+)?$/.test(value); 
+		validate: function(value) {
+			value = /\d/.test(value) ? value : value + '0';
+			return /^[+-]?([0-9]*\.?[0-9]+|[0-9]+\.?[0-9]*)([eE][+-]?[0-9]+)?$/.test(value) && this._super(value); 
 		}
 		
 	});
@@ -2258,6 +2327,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			this._max = 100;
 		},
 		
+		/*------------------------------ Other ------------------------------*/
+		
+		_pct: function() {
+			var value = this._value || 0;
+			var max = this._max || 100;
+			var pct = max <= 0 ? 0 : value / max * 100;
+			return pct > 100 ? 100 : pct;
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
@@ -2280,16 +2358,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			this.widget$.children().first().text(v);
 		},
 		
-		max: function(v) {
+		maxValue: function(v) {
 			this._max = v;
 			this._adjust();
-		},
-		
-		_pct: function() {
-			var value = this._value || 0;
-			var max = this._max || 100;
-			var pct = max <= 0 ? 0 : value / max * 100;
-			return pct > 100 ? 100 : pct;
 		},
 		
 		value: function(v) {

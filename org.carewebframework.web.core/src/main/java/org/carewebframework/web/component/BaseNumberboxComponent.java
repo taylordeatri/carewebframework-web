@@ -25,15 +25,42 @@
  */
 package org.carewebframework.web.component;
 
-import org.carewebframework.web.annotation.Component;
-import org.springframework.util.StringUtils;
+import org.carewebframework.web.annotation.Component.PropertyGetter;
+import org.carewebframework.web.annotation.Component.PropertySetter;
 
-@Component(value = "doublebox", widgetClass = "Doublebox", parentTag = "*")
-public class Doublebox extends BaseNumberboxComponent<Double> {
+public abstract class BaseNumberboxComponent<T extends Number> extends BaseInputboxComponent<T> {
+    
+    private T min;
+    
+    private T max;
+    
+    @PropertyGetter("min")
+    public T getMin() {
+        return min;
+    }
+    
+    @PropertySetter("min")
+    public void setMin(T min) {
+        if (min != this.min) {
+            sync("min", this.min = min);
+        }
+    }
+    
+    @PropertyGetter("max")
+    public T getMax() {
+        return max;
+    }
+    
+    @PropertySetter("max")
+    public void setMax(T max) {
+        if (max != this.max) {
+            sync("max", this.max = max);
+        }
+    }
     
     @Override
-    protected Double _toValue(String value) {
-        return StringUtils.isEmpty(value) ? null : Double.parseDouble(value);
+    protected String _toString(T value) {
+        return value == null ? null : value.toString();
     }
     
 }

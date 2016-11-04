@@ -143,7 +143,7 @@ public class TestController implements IAutoWired {
             timer.stop();
             log("Timer was stopped.");
         } else {
-            pbTimer.setMax(timer.getRepeat() + 1);
+            pbTimer.setMaxValue(timer.getRepeat() + 1);
             setTimerProgressbarState(0);
             timer.start();
             log("Timer was started.");
@@ -176,7 +176,7 @@ public class TestController implements IAutoWired {
      */
     private void setTimerProgressbarState(int count) {
         pbTimer.setValue(count);
-        pbTimer.setLabel(count + " of " + pbTimer.getMax());
+        pbTimer.setLabel(count + " of " + pbTimer.getMaxValue());
     }
     
     /**

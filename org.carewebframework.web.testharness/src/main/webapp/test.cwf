@@ -157,6 +157,10 @@
 							integerbox placeholder="integer value"
 						</row>
 						<row>
+							<longbox placeholder="long integer value" />
+							longbox placeholder="long integer value"
+						</row>
+						<row>
 							<doublebox placeholder="double value" />
 							doublebox placeholder="double value"
 						</row>
