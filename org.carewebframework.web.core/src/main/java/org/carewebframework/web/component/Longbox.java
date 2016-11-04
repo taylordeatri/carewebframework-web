@@ -26,14 +26,12 @@
 package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
-import org.springframework.util.StringUtils;
 
 @Component(value = "longbox", widgetClass = "Longbox", parentTag = "*")
 public class Longbox extends BaseNumberboxComponent<Long> {
     
-    @Override
-    protected Long _toValue(String value) {
-        return StringUtils.isEmpty(value) ? null : Long.parseLong(value);
+    public Longbox() {
+        super(Long.class);
     }
     
 }

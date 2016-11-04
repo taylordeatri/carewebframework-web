@@ -1051,8 +1051,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			this._super();
 			this.toggleClass('cwf_inputbox', true);
 			this.forwardToServer('change');
-			this.input$().on('input', this.handleInput.bind(this));
-			this.input$().on('blur', this.handleBlur.bind(this));
+			var input$ = this.input$();
+			input$.on('input propertychange', this.handleInput.bind(this));
+			input$.on('blur', this.handleBlur.bind(this));
+			this._constraint ? input$.on('keypress', cwf.event.constrainInput.bind(this, this._constraint)) : null;
 		},
 		
 		render$: function() {
@@ -1071,35 +1073,35 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		init: function() {
 			this._type = 'text';
+			this._constraint = /[\d+-]/;
+			this._partial = /^[+-]?$/;
 			this._super();
 		},
 		
 		/*------------------------------ Other ------------------------------*/
 		
-		validate: function(v) {
-			return this.validateRange(v);
+		validate: function(value, final) {
+			var partial = !final && this._partial.test(value);
+			value = partial ? 0 : _.toNumber(value);
+			return partial || (!_.isNaN(value) && this.validateRange(value, final)); 
 		},
 		
-		validateRange: function(v) {
-			var min = _.defaultTo(this.getState('min'), this._min),
-				max = _.defaultTo(this.getState('max'), this._max);
+		validateRange: function(value, final) {
+			var min = final ? _.defaultTo(this.getState('min'), this._min) : this._min,
+				max = final ? _.defaultTo(this.getState('max'), this._max) : this._max;
 			
-			v = v === undefined ? +this.input$().val() : +v;
-			return v >= min && v <= max;
+			value = value === undefined ? +this.input$().val() : +value;
+			return value >= min && value <= max;
 		},
 		
 		/*------------------------------ State ------------------------------*/
 		
 		minValue: function(v) {
-			if (!this.validateRange()) {
-				this.clear();
-			}
+			// NOP 
 		},
 		
 		maxValue: function(v) {
-			if (!this.validateRange()) {
-				this.clear();
-			}
+			// NOP
 		}
 	});
 	
@@ -1886,7 +1888,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		/*------------------------------ Other ------------------------------*/
 		
 		validate: function(value) {
-			return /^[-+]?\d+$/.test(value) && this._super(value);
+			return this._super(value);
 		}
 		
 	});
@@ -1917,16 +1919,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		init: function() {
 			this._super();
+			this._constraint = /[\d+-.]/;
+			this._partial = /^[+-]?[.]?$/;
 			this._max = Number.MAX_VALUE;
 			this._min = -Number.MAX_VALUE;
-		},
-		
-		/*------------------------------ Other ------------------------------*/
-		
-		validate: function(value) {
-			var partial = /^[+-]?[.]?$/.test(value);
-			value = partial ? 0 : _.toNumber(value);
-			return partial || (!_.isNaN(value) && this._super(value)); 
 		}
 		
 	});

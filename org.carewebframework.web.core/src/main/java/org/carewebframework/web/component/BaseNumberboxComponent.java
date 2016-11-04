@@ -27,12 +27,20 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.springframework.util.NumberUtils;
+import org.springframework.util.StringUtils;
 
 public abstract class BaseNumberboxComponent<T extends Number> extends BaseInputboxComponent<T> {
     
     private T min;
     
     private T max;
+    
+    private final Class<T> clazz;
+    
+    protected BaseNumberboxComponent(Class<T> clazz) {
+        this.clazz = clazz;
+    }
     
     @PropertyGetter("min")
     public T getMin() {
@@ -61,6 +69,12 @@ public abstract class BaseNumberboxComponent<T extends Number> extends BaseInput
     @Override
     protected String _toString(T value) {
         return value == null ? null : value.toString();
+    }
+    
+    @Override
+    protected T _toValue(String value) {
+        value = value == null ? "" : StringUtils.trimAllWhitespace(value);
+        return value.isEmpty() ? null : NumberUtils.parseNumber(value, clazz);
     }
     
 }

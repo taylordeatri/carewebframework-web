@@ -269,7 +269,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		/**
 		 * Event handler for constraining input.
 		 */
-		constrainInput: function(keyPressEvent, constraint) {
+		constrainInput: function(constraint, keyPressEvent) {
 			var key = String.fromCharCode(keyPressEvent.which),
 				test = constraint.test ? constraint.test(key) : constraint(key);
 			

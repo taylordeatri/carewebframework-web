@@ -26,14 +26,12 @@
 package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
-import org.springframework.util.StringUtils;
 
 @Component(value = "integerbox", widgetClass = "Integerbox", parentTag = "*")
 public class Integerbox extends BaseNumberboxComponent<Integer> {
     
-    @Override
-    protected Integer _toValue(String value) {
-        return StringUtils.isEmpty(value) ? null : Integer.parseInt(value);
+    public Integerbox() {
+        super(Integer.class);
     }
     
 }
