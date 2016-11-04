@@ -254,6 +254,12 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			target$.triggerHandler(event);
 		},
 		
+		stop: function(event) {
+			event.stopPropagation ? event.stopPropagation() : null;
+			event.preventDefault ? event.preventDefault(): null;
+			return event;
+		},
+		
 		removeOn: function(type) {
 			return type.startsWith('on') ? _.lowerFirst(type.substring(2)) : type;
 		},

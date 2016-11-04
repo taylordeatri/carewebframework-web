@@ -803,8 +803,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			}
 			
 			function _showContextPopup(event) {
-				event.preventDefault();
-				event.stopPropagation();
+				cwf.event.stop(event);
 				$('body').one('click', _hideContextPopup);
 				popup$.show();
 				popup$.position({
@@ -978,6 +977,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			this.attr('readonly', v, this.input$());
 		},
 		
+		required: function(v) {
+			this.attr('required', v, this.input$());
+		},
+		
 		value: function(v) {
 			this.input$().val(v);
 		}
@@ -998,7 +1001,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 				
 		handleBlur: function(event) {
-			if (this._changed) {
+			if (!event.target.checkValidity()) {
+				cwf.event.stop(event);
+			} else if (this._changed) {
 		    	this.fireChanged();
 			}
 		},
@@ -1008,8 +1013,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 				value = ele.value;
 			
 			if (value.length && this.validate && !this.validate(value)) {
-				event.stopPropagation();
-				event.preventDefault();
+				cwf.event.stop(event);
 				var cpos = ele.selectionStart - 1;
 				ele.value = this._previous;
 				ele.selectionStart = cpos;
@@ -1097,11 +1101,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		/*------------------------------ State ------------------------------*/
 		
 		minValue: function(v) {
-			// NOP 
+			this.attr('min', v, this.input$());
 		},
 		
 		maxValue: function(v) {
-			// NOP
+			this.attr('max', v, this.input$());
 		}
 	});
 	
@@ -2044,8 +2048,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			}
 			
 			function _showPopup(event) {
-				event.preventDefault();
-				event.stopPropagation();
+				cwf.event.stop(event);
 				self.toggle();
 			}
 		}		

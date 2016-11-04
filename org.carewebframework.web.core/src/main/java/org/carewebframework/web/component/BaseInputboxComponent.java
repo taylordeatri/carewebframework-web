@@ -37,6 +37,8 @@ public abstract class BaseInputboxComponent<T> extends BaseInputComponent<T> {
     
     private boolean readonly;
     
+    private boolean required;
+    
     private boolean synced;
     
     protected boolean getSynchronized() {
@@ -84,6 +86,18 @@ public abstract class BaseInputboxComponent<T> extends BaseInputComponent<T> {
     public void setReadonly(boolean readonly) {
         if (readonly != this.readonly) {
             sync("readonly", this.readonly = readonly);
+        }
+    }
+    
+    @PropertyGetter("required")
+    public boolean isRequired() {
+        return required;
+    }
+    
+    @PropertySetter("required")
+    public void setRequired(boolean required) {
+        if (required != this.required) {
+            sync("required", this.required = required);
         }
     }
     

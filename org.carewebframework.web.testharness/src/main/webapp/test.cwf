@@ -133,8 +133,8 @@
 					</columns>
 					<rows>
 						<row>
-							<textbox name="txtInput" placeholder="placeholder" maxlength="10" synchronized="true" />
-							textbox: name="txtInput" placeholder="placeholder" maxlength="10" synchronized="true"
+							<textbox name="txtInput" placeholder="placeholder" maxlength="10" synchronized="true" required="true"/>
+							textbox: name="txtInput" placeholder="placeholder" maxlength="10" synchronized="true" required="true"
 						</row>
 						<row>
 							<textbox name="txtSelect" value="Characters 3-5 should be selected" />
