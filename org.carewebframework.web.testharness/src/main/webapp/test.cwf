@@ -161,8 +161,8 @@
 							longbox placeholder="long integer value"
 						</row>
 						<row>
-							<doublebox placeholder="double value" />
-							doublebox placeholder="double value"
+							<doublebox placeholder="double value" minValue="-100000" maxValue="100000" />
+							doublebox placeholder="double value" minValue="-100000" maxValue="100000"
 						</row>
 						<row>
 							<popupbox name="popupbox" placeholder="popupbox">

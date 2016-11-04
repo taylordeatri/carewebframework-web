@@ -167,6 +167,7 @@
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="showHints" type="xs:boolean"/>
             <xs:attribute name="showText" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -299,6 +300,7 @@
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -414,6 +416,7 @@
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -500,12 +503,13 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
-            <xs:attribute name="max" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
-            <xs:attribute name="min" type="xs:string"/>
+            <xs:attribute name="maxValue" type="xs:string"/>
+            <xs:attribute name="minValue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -596,6 +600,7 @@
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="showHints" type="xs:boolean"/>
             <xs:attribute name="showText" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -653,12 +658,13 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
-            <xs:attribute name="max" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
-            <xs:attribute name="min" type="xs:string"/>
+            <xs:attribute name="maxValue" type="xs:string"/>
+            <xs:attribute name="minValue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -756,12 +762,13 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
-            <xs:attribute name="max" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
-            <xs:attribute name="min" type="xs:string"/>
+            <xs:attribute name="maxValue" type="xs:string"/>
+            <xs:attribute name="minValue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -789,6 +796,7 @@
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -1164,6 +1172,7 @@
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -1632,6 +1641,7 @@
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="synchronized" type="xs:boolean"/>
             <xs:attribute name="tabindex" type="xs:integer"/>

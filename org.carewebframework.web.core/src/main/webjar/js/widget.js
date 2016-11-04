@@ -1084,15 +1084,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		/*------------------------------ Other ------------------------------*/
 		
-		validate: function(value, final) {
-			var partial = !final && this._partial.test(value);
+		validate: function(value, full) {
+			var partial = !full && this._partial.test(value);
 			value = partial ? 0 : _.toNumber(value);
-			return partial || (!_.isNaN(value) && this.validateRange(value, final)); 
+			return partial || (!_.isNaN(value) && this.validateRange(value, full)); 
 		},
 		
-		validateRange: function(value, final) {
-			var min = final ? _.defaultTo(this.getState('min'), this._min) : this._min,
-				max = final ? _.defaultTo(this.getState('max'), this._max) : this._max;
+		validateRange: function(value, full) {
+			var min = full ? _.defaultTo(this.getState('min'), this._min) : this._min,
+				max = full ? _.defaultTo(this.getState('max'), this._max) : this._max;
 			
 			value = value === undefined ? +this.input$().val() : +value;
 			return value >= min && value <= max;

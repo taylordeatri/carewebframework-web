@@ -32,9 +32,9 @@ import org.springframework.util.StringUtils;
 
 public abstract class BaseNumberboxComponent<T extends Number> extends BaseInputboxComponent<T> {
     
-    private T min;
+    private T minValue;
     
-    private T max;
+    private T maxValue;
     
     private final Class<T> clazz;
     
@@ -42,27 +42,35 @@ public abstract class BaseNumberboxComponent<T extends Number> extends BaseInput
         this.clazz = clazz;
     }
     
-    @PropertyGetter("min")
-    public T getMin() {
-        return min;
+    @PropertyGetter("minValue")
+    public T getMinValue() {
+        return minValue;
     }
     
-    @PropertySetter("min")
-    public void setMin(T min) {
-        if (min != this.min) {
-            sync("min", this.min = min);
+    @PropertySetter("minValue")
+    private void setMinValue(String minValue) {
+        setMinValue(_toValue(minValue));
+    }
+    
+    public void setMinValue(T minValue) {
+        if (!areEqual(minValue, this.minValue)) {
+            sync("minValue", this.minValue = minValue);
         }
     }
     
-    @PropertyGetter("max")
-    public T getMax() {
-        return max;
+    @PropertyGetter("maxValue")
+    public T getMaxValue() {
+        return maxValue;
     }
     
-    @PropertySetter("max")
-    public void setMax(T max) {
-        if (max != this.max) {
-            sync("max", this.max = max);
+    @PropertySetter("maxValue")
+    private void setMaxValue(String maxValue) {
+        setMaxValue(_toValue(maxValue));
+    }
+    
+    public void setMaxValue(T maxValue) {
+        if (!areEqual(maxValue, this.maxValue)) {
+            sync("maxValue", this.maxValue = maxValue);
         }
     }
     
