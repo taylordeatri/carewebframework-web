@@ -1918,14 +1918,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		init: function() {
 			this._super();
 			this._max = Number.MAX_VALUE;
-			this._min = Number.MIN_VALUE;
+			this._min = -Number.MAX_VALUE;
 		},
 		
 		/*------------------------------ Other ------------------------------*/
 		
 		validate: function(value) {
-			value = /\d/.test(value) ? value : value + '0';
-			return /^[+-]?([0-9]*\.?[0-9]+|[0-9]+\.?[0-9]*)([eE][+-]?[0-9]+)?$/.test(value) && this._super(value); 
+			var partial = /^[+-]?[.]?$/.test(value);
+			value = partial ? 0 : _.toNumber(value);
+			return partial || (!_.isNaN(value) && this._super(value)); 
 		}
 		
 	});
