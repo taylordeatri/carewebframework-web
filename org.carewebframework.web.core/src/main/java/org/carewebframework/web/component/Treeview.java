@@ -25,13 +25,16 @@
  */
 package org.carewebframework.web.component;
 
+import java.util.Iterator;
+
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.carewebframework.web.component.Treenode.TreenodeIterator;
 
 @Component(value = "treeview", widgetPackage = "cwf-treeview", widgetClass = "Treeview", parentTag = "*", childTag = @ChildTag("treenode"))
-public class Treeview extends BaseUIComponent {
+public class Treeview extends BaseUIComponent implements Iterable<Treenode> {
     
     private boolean showRoot;
     
@@ -120,6 +123,11 @@ public class Treeview extends BaseUIComponent {
         if (((Treenode) child).isSelected()) {
             setSelectedNode((Treenode) child);
         }
+    }
+    
+    @Override
+    public Iterator<Treenode> iterator() {
+        return new TreenodeIterator(this);
     }
     
 }
