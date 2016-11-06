@@ -120,6 +120,11 @@
 		    <version>1.3.3</version>
 		</dependency>
 		<dependency>
+		    <groupId>org.webjars.bower</groupId>
+		    <artifactId>datejs</artifactId>
+		    <version>1.0.0-rc3</version>
+		</dependency>		
+		<dependency>
 		    <groupId>org.webjars</groupId>
 		    <artifactId>jquery-file-upload</artifactId>
 		    <version>9.10.1</version>
