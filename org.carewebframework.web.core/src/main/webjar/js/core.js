@@ -242,10 +242,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		
 		_postprocess: function(event, data) {
 			var fn = this.postProcessors[event.type];
-			
-			if (fn) {
-				fn.apply(this, arguments);
-			}
+			fn ? fn.apply(this, arguments) : null;
 		},
 		
 		forward: function(event, type, target) {
@@ -414,7 +411,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		},
 		
 		/**
-		 * Send log message to console and to server.
+		 * Send log message to console and/or to server.
 		 */
 		_log: function(level, message) {
 			var setting = cwf.log.level[level];
