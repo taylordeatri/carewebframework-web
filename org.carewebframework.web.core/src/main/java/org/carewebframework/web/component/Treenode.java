@@ -39,14 +39,16 @@ import org.carewebframework.web.event.SelectEvent;
 public class Treenode extends BaseLabeledImageComponent implements Iterable<Treenode> {
     
     /**
-     * Iterates over items in a tree in a depth first search. Is not susceptible to concurrent
+     * Iterates over nodes in a tree in a depth first search. Is not susceptible to concurrent
      * modification errors if tree composition changes during iteration.
      */
     protected static class TreenodeIterator implements Iterator<Treenode> {
         
-        private Treenode last;
+        private Treenode current;
         
         private Treenode next;
+        
+        private int level;
         
         /**
          * Iterates all descendants of root node.
@@ -58,23 +60,47 @@ public class Treenode extends BaseLabeledImageComponent implements Iterable<Tree
         }
         
         /**
-         * Returns next tree node following specified node.
+         * Advances to next tree node following specified node.
          * 
-         * @param node The reference tree node.
          * @return Next tree node or null if no more.
          */
-        private Treenode nextItem(Treenode node) {
-            if (node == null) {
+        private Treenode advance() {
+            if (current == null || level < 0) {
                 return null;
             }
             
-            Treenode next = (Treenode) node.getNextSibling();
+            next = (Treenode) current.getFirstChild();
             
-            while (next == null && (node = (Treenode) node.getParent()) != null) {
-                next = (Treenode) node.getNextSibling();
+            if (next != null) {
+                level++;
+                return next;
             }
             
-            return next;
+            next = (Treenode) current.getNextSibling();
+            
+            if (next != null) {
+                return next;
+            }
+            
+            next = current;
+            
+            while (--level >= 0) {
+                BaseComponent parent = next.getParent();
+                
+                if (!(parent instanceof Treenode)) {
+                    level = -1;
+                } else {
+                    next = (Treenode) parent.getNextSibling();
+                    
+                    if (next == null) {
+                        next = (Treenode) parent;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            
+            return level < 0 ? null : next;
         }
         
         /**
@@ -82,12 +108,8 @@ public class Treenode extends BaseLabeledImageComponent implements Iterable<Tree
          * 
          * @return The next tree node.
          */
-        private Treenode nextItem() {
-            if (next == null) {
-                next = nextItem(last);
-            }
-            
-            return next;
+        private Treenode nextNode() {
+            return next == null ? advance() : next;
         }
         
         /**
@@ -95,17 +117,17 @@ public class Treenode extends BaseLabeledImageComponent implements Iterable<Tree
          */
         @Override
         public boolean hasNext() {
-            return nextItem() != null;
+            return nextNode() != null;
         }
         
         /**
-         * Returns next tree item, advancing internal state to next node.
+         * Returns next tree item, preparing internal state to retrieve next node.
          */
         @Override
         public Treenode next() {
-            last = nextItem();
+            current = nextNode();
             next = null;
-            return last;
+            return current;
         }
         
     }

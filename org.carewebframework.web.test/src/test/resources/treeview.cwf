@@ -1,0 +1,16 @@
+
+<treeview name="treeview">
+	<treenode label="1.1">
+		<treenode label="2.1">
+			<treenode label="3.1" />
+		</treenode>
+		<treenode label="2.2" selected="true" />
+	</treenode>
+	<treenode label="1.2" image="images/asterisk.png" />
+	<treenode label="1.3" collapsed="true">
+		<treenode label="2.1">
+			<treenode label="3.1" />
+		</treenode>
+		<treenode label="2.2" selected="true" />
+	</treenode>
+</treeview>
