@@ -585,7 +585,7 @@ public abstract class BaseComponent implements IElementIdentifier {
             
             inits.put(state, value);
         } else {
-            page.getSynchronizer().invokeClient(this, "updateState", state, value);
+            page.getSynchronizer().invokeClient(this, "updateState", state, value, true);
         }
     }
     

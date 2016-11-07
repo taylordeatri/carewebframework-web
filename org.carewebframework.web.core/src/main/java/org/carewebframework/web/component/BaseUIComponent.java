@@ -149,6 +149,14 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
         }
     }
     
+    public void hide() {
+        setVisible(false);
+    }
+    
+    public void show() {
+        setVisible(true);
+    }
+    
     @PropertyGetter("height")
     public String getHeight() {
         return height;

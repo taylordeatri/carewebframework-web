@@ -663,13 +663,19 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		 * is active.
 		 * 
 		 * @param {string} key The name of the state.
+		 * @param {boolean} [fromServer] If true, do not sync state back to server..
 		 * @param {*} value The new value for the state.
 		 */
-		updateState: function(key, value) {
-			var old = this._state[key];
+		updateState: function(key, value, fromServer) {
+			var old = this._state[key],
+				changed = this.setState(key, value);
 			
-			if (this.setState(key, value) || this._rendering) {
+			if (changed || this._rendering) {
 				this.applyState(key, old)
+				
+				if (changed && !fromServer) {
+					this.stateChanged(key, value);
+				}
 			}
 		}
 
@@ -790,23 +796,21 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 		
 		context: function(v) {
-			var popup$ = cwf.$(v);
-			
-			if (popup$) {
+			if (v) {
 				this.widget$.on('contextmenu', _showContextPopup);
 			} else {
 				this.widget$.off('contextmenu', _showContextPopup);
 			}
 			
 			function _hideContextPopup(event) {
-				popup$.hide();
+				v.widget$.hide();
 			}
 			
 			function _showContextPopup(event) {
 				cwf.event.stop(event);
 				$('body').one('click', _hideContextPopup);
-				popup$.show();
-				popup$.position({
+				v.widget$.show();
+				v.widget$.position({
 					my: 'left top',
 					at: 'right bottom',
 					of: event
@@ -1257,8 +1261,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 				count++;
 				
 				if (self._repeat >= 0 && count > self._repeat) {
-					self.stop();
-					self.stateChanged('running', false);
+					self.updateState('running', false);
 				}
 				
 				self.trigger('timer', {count: count, running: self.timer !== null});
@@ -1380,7 +1383,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		init: function() {
 			this._super();
-			this.initState({visible: false});
 			this._allowClickBubble = false;
 		},
 
@@ -1993,9 +1995,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		/*------------------------------ Other ------------------------------*/
 		
 		open: function() {
-			if (this._popup$ && !this.isOpen()) {
-				this._popup$.show();
-				this._popup$.position({
+			if (this._popup && !this.isOpen()) {
+				this._popup.widget$.show();
+				this._popup.widget$.position({
 					my: 'right top',
 					at: 'right bottom',
 					of: this.widget$
@@ -2012,7 +2014,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		close: function() {
 			if (this.isOpen()) {
-				this._popup$.hide();
+				this._popup.widget$.hide();
 				this._trigger('close');
 			}
 		},
@@ -2022,12 +2024,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 		
 		isOpen: function() {
-			return this._popup$ && this._popup$.css('display') !== 'none';
+			return this._popup && this._popup.widget$.css('display') !== 'none';
 		},
 		
 		_trigger: function(which) {
 			var event = $.Event(which, {
-				relatedTarget: this._popup$
+				relatedTarget: this._popup.widget$
 			});
 			
 			this.trigger(event);
@@ -2036,12 +2038,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		/*------------------------------ State ------------------------------*/
 		
 		popup: function(v) {
-			this._popup$ = cwf.$(v);
+			this._popup = v;
 			
 			var btn$ = this.sub$('btn'),
 				self = this;
 			
-			if (this._popup$) {
+			if (v) {
 				btn$.on('click', _showPopup);
 			} else {
 				btn$.off('click', _showPopup);
@@ -2388,13 +2390,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		_onmaximize: function(event) {
 			var size = this._buttonState('maximize') ? 'NORMAL' : 'MAXIMIZED';
 			this.updateState('size', size);
-			this.stateChanged('size', size);
 		}, 
 		
 		_onminimize: function(event) {
 			var size = this._buttonState('minimize') ? 'NORMAL' : 'MINIMIZED';
 			this.updateState('size', size);
-			this.stateChanged('size', size);
 		},
 		
 		/*------------------------------ Lifecycle ------------------------------*/
