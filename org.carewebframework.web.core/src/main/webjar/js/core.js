@@ -155,6 +155,11 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			}
 		},
 		
+		cwf$swapClasses: function(trueClass, falseClass, value) {
+			this.removeClass(value ? falseClass : trueClass);
+			this.addClass(value ? trueClass : falseClass);
+		},
+		
 		cwf$mask: function(parent) {
 			parent = parent || this;
 			parent.css('position', 'relative');

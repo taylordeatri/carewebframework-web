@@ -161,6 +161,10 @@ body {
 	position: absolute;
 }
 
+.cwf_menuitem > a > span.glyphicon {
+    margin-left: -14px;    
+}
+
 /* Menupopup */
 
 .cwf_menupopup {

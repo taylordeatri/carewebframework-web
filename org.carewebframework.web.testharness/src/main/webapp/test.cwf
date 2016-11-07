@@ -312,7 +312,7 @@
 			<tab label="Menus">
 				<menu name="mainMenu" label="mainMenu">
 					<menuheader name="menu1" label="header" />
-					<menuitem name="menu2" label="menu2" />
+					<menuitem name="menu2" label="menu2" checkable="true" />
 					<menuitem name="menu3" label="menu3" image="images/music.png"/>
 					<menuseparator name="menu4" />
 					<menuitem name="menu5" label="secondary">

@@ -9,9 +9,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 	cwf.widget.fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 	
 	cwf.widget._domTemplates = {
+			checkable: '<span id="${id}-chk" class="glyphicon"/>',
+			closable: '<span id="${id}-cls" class="glyphicon glyphicon-remove"/>',
 			image: '<img id="${id}-img" src="${_state.image}"/>',
-			label: '<span id="${id}-lbl"/>',
-			closable: '<span id="${id}-cls" class="glyphicon glyphicon-remove"/>'
+			label: '<span id="${id}-lbl"/>'
 	};
 	
 	cwf.widget._radio = {};
@@ -489,7 +490,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		 * 
 		 * @param {string...} keys One or more keys.  A key may be prefixed with
 		 * 		a state name followed by a colon to indicate that the template
-		 *      should be included only if the state has a set value.  If no
+		 *      should be included only if the state has a truthy value.  If no
 		 *      state name precedes the colon, the key name is used (i.e.,
 		 *      ":xxx" is a shortcut for "xxx:xxx").
 		 * @return {string} A concatenation of the DOM templates associated 
@@ -506,7 +507,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 					var state = key.substring(0, j);
 					key = key.substring(j + 1);
 					
-					if (!this.hasState(state.length ? state : key)) {
+					if (!this.getState(state.length ? state : key)) {
 						continue;
 					}
 				}
@@ -726,8 +727,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		init: function() {
 			this._super();
-			var wcls = 'cwf_' + this.wclass.toLowerCase();
-			this.initState({_clazz: wcls, clazz: '', visible: true});
+			this.wclazz = 'cwf_' + this.wclass.toLowerCase();
+			this.initState({_clazz: this.wclazz, clazz: '', visible: true});
 		},
 				
 		/*------------------------------ Other ------------------------------*/
@@ -751,6 +752,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		scrollIntoView: function(alignToTop) {
 			this.widget$[0].scrollIntoView(alignToTop);
+		},
+		
+		subclazz: function(sub, wclazz) {
+			return sub ? (wclazz ? wclazz : this.wclazz) + '-' + sub.toLowerCase() : null;
 		},
 		
 		/**
@@ -1424,14 +1429,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		/*------------------------------ State ------------------------------*/
 		
 		align: function(v, old) {
-			v = 'cwf_toolbar-' + (v ? v.toLowerCase() : 'start');
-			old = old ? 'cwf_toolbar-' + old : null;
+			v = this.subclazz(v ? v : 'start');
+			old = old ? this.subclazz(old) : null;
 			this.replaceClass(old, v);
 		},
 		
 		orientation: function(v, old) {
-			v = 'cwf_toolbar-' + (v ? v.toLowerCase() : 'horizontal');
-			old = old ? 'cwf_toolbar-' + old : null;
+			v = this.subclazz(v ? v : 'horizontal');
+			old = old ? this.subclazz(old) : null;
 			this.replaceClass(old, v);
 		}
 		
@@ -1751,11 +1756,18 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			this._childrenUpdated();
 		},
 		
+		/*------------------------------ Events ------------------------------*/
+		
+		handleCheck: function(event) {
+			cwf.event.stop(event);
+			this.trigger('click');
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
 			this._super();
-			this.initState({_submenu: false});
+			this.initState({_submenu: false, checked: false, checkable: false});
 		},
 		
 		
@@ -1769,11 +1781,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
+		afterRender: function() {
+			this.sub$('chk').on('click', this.handleCheck.bind(this));
+		},
+		
 		render$: function() {
 			var submenu = this.getState('_submenu'),
 				dom = '<li>'
 					+ '  <a href="#">'
-					+ this.getDOMTemplate(':image', 'label')
+					+ this.getDOMTemplate(':image', ':checkable', 'label')
 					+ '  </a>'
 					+ (submenu ? '<ul id="${id}-inner" class="dropdown-menu">' : '')
 					+ '</li>';
@@ -1781,8 +1797,17 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			this.toggleClass('dropdown', !submenu);
 			this.toggleClass('dropdown-submenu', submenu);
 			return $(this.resolveEL(dom));
-		}
+		},
 		
+		/*------------------------------ State ------------------------------*/
+		
+		checkable: function(v) {
+			this.rerender();
+		},
+		
+		checked: function(v) {
+			this.sub$('chk').cwf$swapClasses('glyphicon-check', 'glyphicon-unchecked', v);
+		}
 	});
 	
 	/******************************************************************************************************************
@@ -2249,8 +2274,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		renderItem$: function(ul, item) {
 			return $( '<li>' )
 				.text(item.label)
-				.toggleClass('cwf_combobox-matched', item.matched)
-				.toggleClass('cwf_combobox-selected', item.selected)
+				.toggleClass(this.subclazz('matched'), item.matched)
+				.toggleClass(this.subclazz('selected'), item.selected)
 				.appendTo(ul);
 		},
 		
@@ -2562,7 +2587,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			}
 			
 			function _mode(mode, remove) {
-				mode ? self.toggleClass('cwf_window-' + mode.toLowerCase(), !remove) : null;
+				mode ? self.toggleClass(self.subclazz(mode), !remove) : null;
 			}
 		},
 		
@@ -2685,6 +2710,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		
 		init: function() {
 			this._super();
+			this.wclazz = 'cwf_window';
 			this.initState({mode: 'MODAL', closable: true, sizable: true}, true);
 		},
 		

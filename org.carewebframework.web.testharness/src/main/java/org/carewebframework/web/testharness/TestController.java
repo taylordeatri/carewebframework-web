@@ -39,6 +39,7 @@ import org.carewebframework.web.component.Button;
 import org.carewebframework.web.component.Checkbox;
 import org.carewebframework.web.component.Div;
 import org.carewebframework.web.component.Memobox;
+import org.carewebframework.web.component.Menuitem;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.component.Popupbox;
 import org.carewebframework.web.component.Progressbar;
@@ -251,6 +252,12 @@ public class TestController implements IAutoWired {
     @EventHandler(value = "click", target = { "menu1", "menu2", "menu3", "menu5_1", "menu5_2" })
     private void menuClickHandler(ClickEvent event) {
         log(event.getTarget().getName() + " clicked.");
+    }
+    
+    @EventHandler(value = "click", target = "menu2")
+    private void menuClickHandler2(ClickEvent event) {
+        Menuitem item = (Menuitem) event.getTarget();
+        item.setChecked(!item.isChecked());
     }
     
     /*********************** Miscellaneous Tab ***********************/

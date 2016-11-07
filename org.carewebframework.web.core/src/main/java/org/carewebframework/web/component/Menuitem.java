@@ -27,9 +27,39 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
+import org.carewebframework.web.annotation.Component.PropertyGetter;
+import org.carewebframework.web.annotation.Component.PropertySetter;
 
 @Component(value = "menuitem", widgetClass = "Menuitem", parentTag = { "menu", "menupopup", "menuitem" }, childTag = {
         @ChildTag("menuitem"), @ChildTag("menuheader"), @ChildTag("menuseparator") })
 public class Menuitem extends BaseLabeledImageComponent {
+    
+    private boolean checkable;
+    
+    private boolean checked;
+    
+    @PropertyGetter("checkable")
+    public boolean isCheckable() {
+        return checkable;
+    }
+    
+    @PropertySetter("checkable")
+    public void setCheckable(boolean checkable) {
+        if (checkable != this.checkable) {
+            sync("checkable", this.checkable = checkable);
+        }
+    }
+    
+    @PropertyGetter("checked")
+    public boolean isChecked() {
+        return checked;
+    }
+    
+    @PropertySetter("checked")
+    public void setChecked(boolean checked) {
+        if (checked != this.checked) {
+            sync("checked", this.checked = checked);
+        }
+    }
     
 }
