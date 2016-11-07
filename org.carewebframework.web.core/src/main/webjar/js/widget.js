@@ -1709,7 +1709,29 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 			return this.sub$('inner');
 		},
 						
+		/*------------------------------ Events ------------------------------*/
+		
+		handleClose: function(event) {
+			this._open(false);
+		},
+		
+		handleOpen: function(event) {
+			this._open(true);
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		_open: function(v) {
+			this.setState('open', v);
+			this.stateChanged('open', v);
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
+		
+		afterRender: function() {
+			this.widget$.on('show.bs.dropdown', this.handleOpen.bind(this));
+			this.widget$.on('hide.bs.dropdown', this.handleClose.bind(this));
+		},
 		
 		render$: function() {
 			var dom = 
@@ -1717,7 +1739,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 				+ '  <div class="dropdown" style="display: inline-block" role="presentation">'
 				+ '    <a id="${id}-btn" data-toggle="dropdown"'
 				+ '      role="button" aria-haspopup="true" aria-expanded="false">'
-				+ 		 this.getDOMTemplate(':image', "label")
+				+ 		 this.getDOMTemplate(':image', 'label')
 				+ '      <span class="caret"></span>'
 				+ '    </a>'
 				+ '    <ul id="${id}-inner" class="dropdown-menu multi-level" '
@@ -1732,6 +1754,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		clazz: function(v) {
 			this._super();
 			this.attr('class', v, this.sub$('btn'));
+		},
+		
+		open: function(v) {
+			var dd$ = this.widget$.children().first(),
+				open = dd$.hasClass('open');
+			
+			if (!open !== !v) {
+				dd$.children().first().dropdown('toggle');
+			}
 		}
 		
 	});

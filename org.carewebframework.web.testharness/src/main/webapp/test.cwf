@@ -320,6 +320,8 @@
 						<menuitem name="menu5_2" label="sub2" />
 					</menuitem>
 				</menu>
+				
+				<button name="btnToggleMenu" label="toggle dropdown" />
 			</tab>
 			
 			

@@ -27,9 +27,25 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
+import org.carewebframework.web.annotation.Component.PropertyGetter;
+import org.carewebframework.web.annotation.Component.PropertySetter;
 
-@Component(value = "menu", widgetClass = "Menu", parentTag = "*", childTag = {
-        @ChildTag("menuitem"), @ChildTag("menuheader"), @ChildTag("menuseparator") })
+@Component(value = "menu", widgetClass = "Menu", parentTag = "*", childTag = { @ChildTag("menuitem"),
+        @ChildTag("menuheader"), @ChildTag("menuseparator") })
 public class Menu extends Button {
+    
+    private boolean open;
+    
+    @PropertyGetter("open")
+    public boolean isOpen() {
+        return open;
+    }
+    
+    @PropertySetter("open")
+    public void setOpen(boolean open) {
+        if (open != this.open) {
+            sync("open", this.open = open);
+        }
+    }
     
 }

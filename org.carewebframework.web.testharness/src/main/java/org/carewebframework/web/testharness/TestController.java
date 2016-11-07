@@ -39,6 +39,7 @@ import org.carewebframework.web.component.Button;
 import org.carewebframework.web.component.Checkbox;
 import org.carewebframework.web.component.Div;
 import org.carewebframework.web.component.Memobox;
+import org.carewebframework.web.component.Menu;
 import org.carewebframework.web.component.Menuitem;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.component.Popupbox;
@@ -258,6 +259,14 @@ public class TestController implements IAutoWired {
     private void menuClickHandler2(ClickEvent event) {
         Menuitem item = (Menuitem) event.getTarget();
         item.setChecked(!item.isChecked());
+    }
+    
+    @WiredComponent
+    private Menu mainMenu;
+    
+    @EventHandler(value = "click", target = "btnToggleMenu")
+    private void btnToggleMenuHandler() {
+        mainMenu.setOpen(!mainMenu.isOpen());
     }
     
     /*********************** Miscellaneous Tab ***********************/
