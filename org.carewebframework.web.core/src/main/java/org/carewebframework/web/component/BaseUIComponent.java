@@ -43,6 +43,8 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     
     private String hint;
     
+    private String balloon;
+    
     private boolean disabled;
     
     private boolean visible = true;
@@ -217,6 +219,18 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     public void setHint(String hint) {
         if (!areEqual(hint = nullify(hint), this.hint)) {
             sync("hint", this.hint = hint);
+        }
+    }
+    
+    @PropertyGetter("balloon")
+    public String getBalloon() {
+        return balloon;
+    }
+    
+    @PropertySetter("balloon")
+    public void setBalloon(String balloon) {
+        if (!areEqual(balloon, this.balloon)) {
+            sync("balloon", this.balloon = balloon);
         }
     }
     

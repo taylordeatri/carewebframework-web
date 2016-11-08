@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstrap-css.css', 'css!cwf-widget-css.css'], function(cwf) { 
+define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquery-ui.css', 'css!bootstrap-css.css', 'css!cwf-widget-css.css'], function(cwf) { 
 	/* Widget support.  In the documentation, when we refer to 'widget' we mean an instance of the Widget
 	 * class.  When we refer to 'widget$' (following the convention that a variable name ending in '$'
 	 * is always a jquery object), we mean the jquery object contained by the widget.
@@ -794,6 +794,16 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		},
 		
 		/*------------------------------ State ------------------------------*/
+		
+		balloon: function(v) {
+			if (v) {
+				this.widget$.attr('data-balloon', v)
+					.attr('data-balloon-pos', 'right')
+					.attr('data-balloon-visible', true);
+			} else {
+				this.widget$.removeAttr('data-balloon data-balloon-pos data-balloon-visible');
+			}
+		},
 		
 		clazz: function(v) {
 			var clazz = this.getState('_clazz') + (v ? ' ' + v : '');

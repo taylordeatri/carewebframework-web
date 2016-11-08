@@ -503,6 +503,10 @@
 							</toolbar>
 							Test of masking components.  Should mask div to left of button.
 						</row>
+						<row>
+							<button label="Has Balloon Text" balloon="Balloon Text" />
+							Test of balloon text.
+						</row>
 					</rows>
 				</table>
 				

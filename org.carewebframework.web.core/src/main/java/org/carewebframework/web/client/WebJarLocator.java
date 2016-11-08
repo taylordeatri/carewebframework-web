@@ -281,7 +281,12 @@ public class WebJarLocator implements ApplicationContextAware {
                     ObjectNode paths = (ObjectNode) requireConfig.get("paths");
                     ArrayNode entries = paths.arrayNode();
                     String name = config.get("name").asText();
-                    addMain(config.get("main"), entries, getRootPath(resource));
+                    String path = getRootPath(resource);
+                    
+                    if (!addMain(config.get("main"), entries, path)) {
+                        return false;
+                    }
+                    
                     paths.set(name, entries);
                     return true;
                 }
@@ -296,55 +301,58 @@ public class WebJarLocator implements ApplicationContextAware {
     /**
      * Adds the "main" entry to the RequireJS config we are building.
      * 
-     * @param mainNode The node corresponding to the "main" entry. If this is an array, we recurse
-     *            over each element.
+     * @param node The node corresponding to the "main" or "files" entry. If this is an array, we
+     *            recurse over each element.
      * @param entries The node to receive the "paths" entries.
      * @param path The root path.
+     * @return True if entries added.
      */
-    private void addMain(JsonNode mainNode, ArrayNode entries, String path) {
-        if (mainNode.isArray()) {
-            Iterator<JsonNode> iter = mainNode.elements();
-            
-            while (iter.hasNext()) {
-                addMain(iter.next(), entries, path);
-            }
-        } else {
-            String main = mainNode.asText();
-            
-            if (main.endsWith(".js")) {
-                main = main.substring(0, main.length() - 3);
-                entries.add(path + main);
-                entries.add(main);
+    private boolean addMain(JsonNode node, ArrayNode entries, String path) {
+        boolean added = false;
+        
+        if (node != null) {
+            if (node.isArray()) {
+                Iterator<JsonNode> iter = node.elements();
+                
+                while (iter.hasNext()) {
+                    added |= addMain(iter.next(), entries, path);
+                }
+            } else {
+                String main = node.asText();
+                
+                if (main.endsWith(".js")) {
+                    int i = main.lastIndexOf(".");
+                    main = main.substring(0, i);
+                    entries.add(path + main);
+                    entries.add(main);
+                    added = true;
+                }
             }
         }
+        
+        return added;
     }
     
     /**
-     * In absence of a support format, try to infer the RequireJS config.
+     * In absence of a supported format, try to infer the RequireJS config.
      * 
      * @param resource The folder containing web jar resources.
      * @param requireConfig The RequireJS configuration we are building.
      * @return True if successfully processed.
      */
     private boolean tryNoFormat(Resource resource, ObjectNode requireConfig) throws Exception {
-        String main = null;
         String path = getRootPath(resource);
-        
-        for (Resource jsResource : applicationContext.getResources(path + "**/*.js")) {
-            main = getRootPath(jsResource);
-            
-            if (!main.endsWith(".min.js")) {
-                break;
-            }
-        }
+        String main = findResources(path, "js");
+        main = main == null ? findResources(path, "css") : main;
         
         if (main == null) {
             return false;
         }
         
         log.warn("Unknown web jar packaging, so inferring configuration for " + resource);
-        main = main.substring(0, main.length() - 3);
-        int i = main.indexOf("webjars/") + 8;
+        int i = main.lastIndexOf(".");
+        main = main.substring(0, i);
+        i = main.indexOf("webjars/") + 8;
         int j = main.indexOf("/", i);
         String name = main.substring(i, j);
         ObjectNode paths = (ObjectNode) requireConfig.get("paths");
@@ -353,5 +361,20 @@ public class WebJarLocator implements ApplicationContextAware {
         entries.add(main.substring(path.length()));
         paths.set(name, entries);
         return true;
+    }
+    
+    private String findResources(String path, String ext) throws Exception {
+        String main = null;
+        String minExt = ".min." + ext;
+        
+        for (Resource jsResource : applicationContext.getResources(path + "**/*." + ext)) {
+            main = getRootPath(jsResource);
+            
+            if (!main.endsWith(minExt)) {
+                break;
+            }
+        }
+        
+        return main;
     }
 }

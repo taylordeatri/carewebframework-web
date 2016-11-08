@@ -125,6 +125,11 @@
 		    <version>1.0.0-rc3</version>
 		</dependency>		
 		<dependency>
+		    <groupId>org.webjars.npm</groupId>
+		    <artifactId>balloon-css</artifactId>
+		    <version>0.3.0</version>
+		</dependency>
+		<dependency>
 		    <groupId>org.webjars</groupId>
 		    <artifactId>jquery-file-upload</artifactId>
 		    <version>9.10.1</version>
