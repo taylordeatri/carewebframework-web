@@ -93,7 +93,7 @@ public class WebJarLocator implements ApplicationContextAware {
                     }
                     boolean success = tryRequireFormat(resource, requireConfig, parser)
                             || tryBowerFormat(resource, requireConfig, parser)
-                            || tryNPMFormat(resource, requireConfig, parser);
+                            || tryNPMFormat(resource, requireConfig, parser) || tryNoFormat(resource, requireConfig);
                     
                     if (!success) {
                         throw new Exception("Unrecognized webjar package format.");
@@ -317,5 +317,41 @@ public class WebJarLocator implements ApplicationContextAware {
                 entries.add(main);
             }
         }
+    }
+    
+    /**
+     * In absence of a support format, try to infer the RequireJS config.
+     * 
+     * @param resource The folder containing web jar resources.
+     * @param requireConfig The RequireJS configuration we are building.
+     * @return True if successfully processed.
+     */
+    private boolean tryNoFormat(Resource resource, ObjectNode requireConfig) throws Exception {
+        String main = null;
+        String path = getRootPath(resource);
+        
+        for (Resource jsResource : applicationContext.getResources(path + "**/*.js")) {
+            main = getRootPath(jsResource);
+            
+            if (!main.endsWith(".min.js")) {
+                break;
+            }
+        }
+        
+        if (main == null) {
+            return false;
+        }
+        
+        log.warn("Unknown web jar packaging, so inferring configuration for " + resource);
+        main = main.substring(0, main.length() - 3);
+        int i = main.indexOf("webjars/") + 8;
+        int j = main.indexOf("/", i);
+        String name = main.substring(i, j);
+        ObjectNode paths = (ObjectNode) requireConfig.get("paths");
+        ArrayNode entries = paths.arrayNode();
+        entries.add(main);
+        entries.add(main.substring(path.length()));
+        paths.set(name, entries);
+        return true;
     }
 }
