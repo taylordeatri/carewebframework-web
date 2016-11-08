@@ -763,7 +763,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		 * to the element regardless of the classes specified via the class property.
 		 * 
 		 * @param {string} cls The classes to toggle.
-		 * @param {boolean} add If true, add the class; if false, remove it; if missing, toggle it.
+		 * @param {boolean} [add] If true, add the class; if false, remove it; if missing, toggle it.
 		 * @return {boolean} True if any class was added or removed.
 		 */
 		toggleClass: function(cls, add) {
@@ -1603,7 +1603,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!jquery-ui.css', 'css!bootstr
 		/*------------------------------ State ------------------------------*/
 		
 		checked: function(v) {
-			this.sub$('real').attr('checked', v);
+			this.sub$('real').prop('checked', v);
 			this._syncChecked(v);
 		},
 		
