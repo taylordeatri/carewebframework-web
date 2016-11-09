@@ -11,8 +11,8 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			cwf.fatal(error);
 		};
 		
-		window.onbeforeunload = function() {
-			return cwf._canClose ? null : true;
+		window.onbeforeunload = function(event) {
+			return cwf._canClose ? undefined : event.returnValue = true;
 		};
 		
 		this.debug = options.debug;
