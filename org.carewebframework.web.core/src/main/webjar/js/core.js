@@ -721,6 +721,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	},
 	
 	saveToFile: function(content, mimetype, filename) {
+		mimetype = !mimetype || navigator.userAgent.match(/Version\/[\d\.]+.*Safari/) ? 'application/octet-stream' : mimetype;
 		require(['file-saver'], function() {
 			var blob = new Blob([content], {type: mimetype});
 			saveAs(blob, filename);
