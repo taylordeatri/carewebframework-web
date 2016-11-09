@@ -2246,7 +2246,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Events ------------------------------*/
 
 		handleBlur: function(event) {
-			this._autocomplete('close');
+			this.input$().autocomplete('close');
 		},
 		
 		handleClick: function(event) {
@@ -2256,13 +2256,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				return;
 			}
 			
-			var open = $(this._autocomplete('widget')).is(':visible');
+			var open = $(inp$.autocomplete('widget')).is(':visible');
 			
 			if (!open) {
-				this._autocomplete('search', inp$.attr('value'));
+				inp$.autocomplete('search', inp$.attr('value'));
 				inp$.focus();
 			} else {
-				this._autocomplete('close');
+				inp$.autocomplete('close');
 			}
 		},
 		
@@ -2274,10 +2274,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ Other ------------------------------*/
 		
-	    _autocomplete: function (fnc, args) {
-	        return this.input$().autocomplete(fnc, args);
-	    },
-	    
 	    input$: function() {
 	    	return this.sub$('inp');
 	    },
