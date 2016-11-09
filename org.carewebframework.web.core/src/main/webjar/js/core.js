@@ -317,8 +317,8 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		_init: function() {
 		    $.widget.bridge('uitooltip', $.ui.tooltip);
 		    $.widget.bridge('uibutton', $.ui.button);
-		    cwf.debug ? null : $('body').on('contextmenu', function(event) {
-		    	event.preventDefault();
+		    $('body').on('contextmenu', function(event) {
+		    	cwf.debug ? null : event.preventDefault();
 		    });
 		},
 		
