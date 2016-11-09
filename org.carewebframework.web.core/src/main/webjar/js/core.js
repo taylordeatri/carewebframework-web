@@ -320,6 +320,16 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		    $('body').on('contextmenu', function(event) {
 		    	cwf.debug ? null : event.preventDefault();
 		    });
+		    $('body').on('keydown', function(event) {
+		    	if (event.keyCode === 8) {
+		    		var tp = event.srcElement || event.target;
+		    		tp = tp.tagName.toLowerCase();
+
+		    		if (tp !== 'input' && tp !== 'textarea')
+		    			event.preventDefault();
+		    	}
+		    });
+		    
 		},
 		
 		/**
