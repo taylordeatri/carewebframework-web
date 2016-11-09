@@ -2297,7 +2297,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				select: this.handleSelect.bind(this)
 			});
 			
-			inp$.data('ui-autocomplete')._renderItem = this.renderItem$;
+			inp$.data('ui-autocomplete')._renderItem = this.renderItem$.bind(this);
 			this.sub$('btn').on('click', this.handleClick.bind(this));
 			inp$.on('blur', this.handleBlur.bind(this));
 		},
@@ -2314,7 +2314,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		renderItem$: function(ul, item) {
-			return $( '<li>' )
+			return $('<li>')
 				.text(item.label)
 				.toggleClass(this.subclazz('matched'), item.matched)
 				.toggleClass(this.subclazz('selected'), item.selected)
