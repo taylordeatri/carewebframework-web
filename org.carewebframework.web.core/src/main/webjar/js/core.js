@@ -228,12 +228,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		postProcessors: {},
 		
 		_init: function() {
-			this.registerPostProcessor('change', _ppChangeInput);
-			this.registerPostProcessor('input', _ppChangeInput);
-			this.registerPostProcessor('resize', _ppResize);
 		    $('body').on('contextmenu', function(event) {
 		    	cwf.debug ? null : event.preventDefault();
 		    });
+		    
 		    $('body').on('keydown', function(event) {
 		    	if (event.keyCode === 8) {
 		    		var tp = event.srcElement || event.target;
@@ -243,6 +241,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		    			event.preventDefault();
 		    	}
 		    });
+			
+			this.registerPostProcessor('change', _ppChangeInput);
+			this.registerPostProcessor('input', _ppChangeInput);
+			this.registerPostProcessor('resize', _ppResize);
 			
 			function _ppChangeInput(event, data) {
 				data.value = data.value || event.target.value;
