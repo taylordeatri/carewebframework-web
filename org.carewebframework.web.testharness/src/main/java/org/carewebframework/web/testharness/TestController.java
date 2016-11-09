@@ -37,7 +37,11 @@ import org.carewebframework.web.client.ClientUtil;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Button;
 import org.carewebframework.web.component.Checkbox;
+import org.carewebframework.web.component.Combobox;
+import org.carewebframework.web.component.Comboitem;
 import org.carewebframework.web.component.Div;
+import org.carewebframework.web.component.Listbox;
+import org.carewebframework.web.component.Listitem;
 import org.carewebframework.web.component.Memobox;
 import org.carewebframework.web.component.Menu;
 import org.carewebframework.web.component.Menuitem;
@@ -56,6 +60,8 @@ import org.carewebframework.web.event.DropEvent;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.ResizeEvent;
 import org.carewebframework.web.event.TimerEvent;
+import org.carewebframework.web.model.IComponentRenderer;
+import org.carewebframework.web.model.ListModel;
 import org.carewebframework.web.page.PageUtil;
 
 public class TestController implements IAutoWired {
@@ -211,11 +217,53 @@ public class TestController implements IAutoWired {
     
     /*********************** Input Boxes Tab ***********************/
     
+    {
+        initializers.add(new IInitializer() {
+            
+            @Override
+            public void init() {
+                ListModel<String> model = new ListModel<>();
+                
+                for (int i = 1; i < 6; i++) {
+                    model.add("Rendered item #" + i);
+                }
+                
+                lboxRender.getModelAndView(String.class).setModel(model);
+                cboxRender.getModelAndView(String.class).setModel(model);
+                
+                lboxRender.getModelAndView(String.class).setRenderer(new IComponentRenderer<Listitem, String>() {
+                    
+                    @Override
+                    public Listitem render(String model) {
+                        return new Listitem(model);
+                    }
+                    
+                });
+                
+                cboxRender.getModelAndView(String.class).setRenderer(new IComponentRenderer<Comboitem, String>() {
+                    
+                    @Override
+                    public Comboitem render(String model) {
+                        return new Comboitem(model);
+                    }
+                    
+                });
+            }
+            
+        });
+    }
+    
     @WiredComponent
     private Textbox txtSelect;
     
     @WiredComponent
     private Textbox txtInput;
+    
+    @WiredComponent
+    private Listbox lboxRender;
+    
+    @WiredComponent
+    private Combobox cboxRender;
     
     @EventHandler(value = "select", target = "tabInputBoxes")
     private void InputBoxTabSelectHandler() {

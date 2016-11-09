@@ -299,7 +299,6 @@ public class ListModel<M> implements IListModel<M> {
         return list.toArray();
     }
     
-    @SuppressWarnings("hiding")
     @Override
     public <T> T[] toArray(T[] a) {
         return list.toArray(a);

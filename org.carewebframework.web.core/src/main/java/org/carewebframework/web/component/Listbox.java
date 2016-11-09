@@ -33,6 +33,8 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.carewebframework.web.model.IModelAndView;
+import org.carewebframework.web.model.ModelAndView;
 
 @Component(value = "listbox", widgetClass = "Listbox", parentTag = "*", childTag = @ChildTag("listitem"))
 public class Listbox extends BaseUIComponent {
@@ -40,6 +42,8 @@ public class Listbox extends BaseUIComponent {
     private boolean multiple;
     
     private int size;
+    
+    private final ModelAndView<Listitem, ?> modelAndView = new ModelAndView<>(this);
     
     private final Set<Listitem> selected = new LinkedHashSet<>();
     
@@ -135,6 +139,17 @@ public class Listbox extends BaseUIComponent {
         if (selected.remove(child)) {
             ((Listitem) child)._setSelected(false, true, false);
         }
+    }
+    
+    @Override
+    public void destroy() {
+        super.destroy();
+        modelAndView.destroy();
+    }
+    
+    @SuppressWarnings("unchecked")
+    public <M> IModelAndView<Listitem, M> getModelAndView(Class<M> clazz) {
+        return (IModelAndView<Listitem, M>) modelAndView;
     }
     
 }

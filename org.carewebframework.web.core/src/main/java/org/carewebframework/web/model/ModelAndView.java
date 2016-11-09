@@ -32,7 +32,7 @@ import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.model.IListModel.IListModelListener;
 import org.carewebframework.web.model.IListModel.ListEventType;
 
-public class ModelAndView<T extends BaseComponent, M> implements IListModelListener {
+public class ModelAndView<T extends BaseComponent, M> implements IListModelListener, IModelAndView<T, M> {
     
     private BaseComponent parent;
     
@@ -52,10 +52,12 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         setRenderer(renderer);
     }
     
+    @Override
     public IComponentRenderer<T, M> getRenderer() {
         return renderer;
     }
     
+    @Override
     public void setRenderer(IComponentRenderer<T, M> renderer) {
         if (renderer != this.renderer) {
             this.renderer = renderer;
@@ -63,10 +65,12 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         }
     }
     
+    @Override
     public IListModel<M> getModel() {
         return model;
     }
     
+    @Override
     public void setModel(IListModel<M> model) {
         if (this.model != null) {
             this.model.removeEventListener(this);
@@ -89,6 +93,7 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         return linkedViews;
     }
     
+    @Override
     public void rerender() {
         if (model != null && parent != null) {
             removeLinkedViews();
@@ -173,4 +178,5 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         }
         
     }
+    
 }

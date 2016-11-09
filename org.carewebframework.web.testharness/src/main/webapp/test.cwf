@@ -182,6 +182,10 @@
 							listbox
 						</row>
 						<row>
+							<listbox name="lboxRender" />
+							listbox populated from model
+						</row>
+						<row>
 							<combobox>
 								<comboitem label="item1" />
 								<comboitem label="item2" />
@@ -189,6 +193,10 @@
 								<comboitem label="item4" />
 							</combobox>
 							combobox
+						</row>
+						<row>
+							<combobox name="cboxRender" />
+							combobox populated from model
 						</row>
 						<row>
 							<colorpicker value="green" showText="true" />
