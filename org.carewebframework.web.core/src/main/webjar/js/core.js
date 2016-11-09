@@ -713,13 +713,6 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		return changed;
 	},
 	
-	/**
-	 * Returns the input value, or the default value if the input is undefined or null.
-	 */
-	ensureValue: function(value, dflt) {
-		return _.isNil(value) ? dflt : value;
-	},
-	
 	saveToFile: function(content, mimetype, filename) {
 		mimetype = !mimetype || navigator.userAgent.match(/Version\/[\d\.]+.*Safari/) ? 'application/octet-stream' : mimetype;
 		require(['file-saver'], function() {

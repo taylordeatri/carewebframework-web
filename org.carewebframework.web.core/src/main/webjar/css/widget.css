@@ -75,6 +75,7 @@
     border-radius: 6px 0 6px 6px;
 }
 
+
 /* Root */
 
 body {
@@ -83,6 +84,10 @@ body {
     bottom: 0;
     right: 0;
     left: 0;    
+}
+
+:focus {
+	outline: 0!important;
 }
 
 /* Drag and Drop */
