@@ -25,17 +25,22 @@
  */
 package org.carewebframework.web.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.model.IListModel.IListModelListener;
 import org.carewebframework.web.model.IListModel.ListEventType;
 
 public class ModelAndView<T extends BaseComponent, M> implements IListModelListener {
     
-    private final BaseComponent parent;
+    private BaseComponent parent;
     
     private IComponentRenderer<T, M> renderer;
     
     private IListModel<M> model;
+    
+    private Map<BaseComponent, ModelAndView<T, M>> linkedViews;
     
     public ModelAndView(BaseComponent parent) {
         this.parent = parent;
@@ -76,8 +81,17 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         rerender();
     }
     
+    private Map<BaseComponent, ModelAndView<T, M>> getLinkedViews() {
+        if (linkedViews == null) {
+            linkedViews = new HashMap<>();
+        }
+        
+        return linkedViews;
+    }
+    
     public void rerender() {
-        if (model != null) {
+        if (model != null && parent != null) {
+            removeLinkedViews();
             parent.destroyChildren();
             
             for (int i = 0; i < model.size(); i++) {
@@ -86,11 +100,45 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         }
     }
     
-    private void renderChild(int index) {
+    protected void renderChild(int index) {
         if (renderer != null) {
-            T child = renderer.render(model.get(index));
+            M mdl = model.get(index);
+            T child = renderer.render(mdl);
             parent.addChild(child, index);
+            
+            if (model instanceof INestedModel) {
+                getLinkedViews().put(child, new ModelAndView<>(child, ((INestedModel<M>) model).getChildren(mdl), renderer));
+            }
         }
+    }
+    
+    protected void destroyChild(int index) {
+        BaseComponent child = parent.getChildAt(index);
+        ModelAndView<T, M> linkedView = linkedViews == null ? null : linkedViews.get(child);
+        
+        if (linkedView != null) {
+            linkedViews.remove(child);
+            linkedView.destroy();
+        }
+        child.destroy();
+    }
+    
+    private void removeLinkedViews() {
+        if (linkedViews != null) {
+            for (ModelAndView<T, M> linkedView : linkedViews.values()) {
+                linkedView.destroy();
+            }
+            
+            linkedViews.clear();
+        }
+    }
+    
+    public void destroy() {
+        removeLinkedViews();
+        linkedViews = null;
+        model = null;
+        renderer = null;
+        parent = null;
     }
     
     @Override
@@ -105,8 +153,9 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
             
             case DELETE:
                 for (int i = endIndex; i >= startIndex; i--) {
-                    parent.getChildAt(i).destroy();
+                    destroyChild(i);
                 }
+                
                 break;
             
             case CHANGE:

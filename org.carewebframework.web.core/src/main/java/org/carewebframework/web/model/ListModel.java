@@ -36,18 +36,18 @@ import java.util.ListIterator;
 
 import org.apache.commons.collections.IteratorUtils;
 
-public class ListModel<T> implements IListModel<T> {
+public class ListModel<M> implements IListModel<M> {
     
-    private final List<T> list = new LinkedList<T>();
+    private final List<M> list = new LinkedList<M>();
     
     private final List<IListModelListener> listeners = new ArrayList<>();
     
-    private Comparator<T> ascendingComparator;
+    private Comparator<M> ascendingComparator;
     
-    private final Comparator<T> descendingComparator = new Comparator<T>() {
+    private final Comparator<M> descendingComparator = new Comparator<M>() {
         
         @Override
-        public int compare(T o1, T o2) {
+        public int compare(M o1, M o2) {
             return -ascendingComparator.compare(o1, o2);
         }
         
@@ -56,18 +56,18 @@ public class ListModel<T> implements IListModel<T> {
     public ListModel() {
     }
     
-    public ListModel(Collection<T> list) {
+    public ListModel(Collection<M> list) {
         this.list.addAll(list);
     }
     
     @Override
-    public void add(int index, T value) {
+    public void add(int index, M value) {
         list.add(index, value);
         fireEvent(ListEventType.ADD, index, index);
     }
     
     @Override
-    public boolean add(T value) {
+    public boolean add(M value) {
         if (list.add(value)) {
             int i = list.size() - 1;
             fireEvent(ListEventType.ADD, i, i);
@@ -78,12 +78,12 @@ public class ListModel<T> implements IListModel<T> {
     }
     
     @Override
-    public boolean addAll(Collection<? extends T> c) {
+    public boolean addAll(Collection<? extends M> c) {
         return addAll(list.size(), c);
     }
     
     @Override
-    public boolean addAll(int index, Collection<? extends T> c) {
+    public boolean addAll(int index, Collection<? extends M> c) {
         int i = list.size();
         
         if (list.addAll(c)) {
@@ -127,11 +127,11 @@ public class ListModel<T> implements IListModel<T> {
     }
     
     @Override
-    public T get(int index) {
+    public M get(int index) {
         return list.get(index);
     }
     
-    public Comparator<T> getComparator() {
+    public Comparator<M> getComparator() {
         return ascendingComparator;
     }
     
@@ -147,7 +147,7 @@ public class ListModel<T> implements IListModel<T> {
     
     @SuppressWarnings("unchecked")
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<M> iterator() {
         return IteratorUtils.unmodifiableIterator(list.iterator());
     }
     
@@ -157,19 +157,19 @@ public class ListModel<T> implements IListModel<T> {
     }
     
     @Override
-    public ListIterator<T> listIterator() {
+    public ListIterator<M> listIterator() {
         return listIterator(0);
     }
     
     @SuppressWarnings("unchecked")
     @Override
-    public ListIterator<T> listIterator(int index) {
+    public ListIterator<M> listIterator(int index) {
         return IteratorUtils.unmodifiableListIterator(list.listIterator(index));
     }
     
     @Override
-    public T remove(int index) {
-        T value = list.remove(index);
+    public M remove(int index) {
+        M value = list.remove(index);
         fireEvent(ListEventType.DELETE, index, index);
         return value;
     }
@@ -240,8 +240,8 @@ public class ListModel<T> implements IListModel<T> {
     }
     
     @Override
-    public T set(int index, T value) {
-        T result = list.set(index, value);
+    public M set(int index, M value) {
+        M result = list.set(index, value);
         
         if (result != value) {
             fireEvent(ListEventType.REPLACE, index, index);
@@ -250,7 +250,7 @@ public class ListModel<T> implements IListModel<T> {
         return result;
     }
     
-    public void setComparator(Comparator<T> comparator) {
+    public void setComparator(Comparator<M> comparator) {
         this.ascendingComparator = comparator;
     }
     
@@ -274,15 +274,15 @@ public class ListModel<T> implements IListModel<T> {
     }
     
     @Override
-    public List<T> subList(int fromIndex, int toIndex) {
+    public List<M> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException();
     }
     
     @Override
     public void swap(int index1, int index2) {
         if (index1 != index2) {
-            T item1 = list.get(index1);
-            T item2 = list.get(index2);
+            M item1 = list.get(index1);
+            M item2 = list.get(index2);
             list.set(index1, item2);
             list.set(index2, item1);
             fireEvent(ListEventType.SWAP, index1, index2);
@@ -290,7 +290,7 @@ public class ListModel<T> implements IListModel<T> {
     }
     
     @Override
-    public void swap(T item1, T item2) {
+    public void swap(M item1, M item2) {
         swap(list.indexOf(item1), list.indexOf(item2));
     }
     

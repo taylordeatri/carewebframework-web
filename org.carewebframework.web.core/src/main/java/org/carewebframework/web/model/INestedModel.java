@@ -25,33 +25,12 @@
  */
 package org.carewebframework.web.model;
 
-import java.util.List;
-
 /**
  * Describes a tracked list used to hold model objects.
  *
- * @param <M> The type of the model object.
+ * @param <T> The type of the model object.
  */
-public interface IListModel<M> extends List<M> {
+public interface INestedModel<T> extends IListModel<T> {
     
-    interface IListModelListener {
-        
-        void onListChange(ListEventType type, int startIndex, int endIndex);
-    }
-    
-    enum ListEventType {
-        ADD, DELETE, REPLACE, SWAP, CHANGE
-    }
-    
-    boolean addEventListener(IListModelListener listener);
-    
-    void removeAllListeners();
-    
-    boolean removeEventListener(IListModelListener listener);
-    
-    void swap(int index1, int index2);
-    
-    void swap(M value1, M value2);
-    
-    void sort(boolean ascending);
+    IListModel<T> getChildren(T parent);
 }
