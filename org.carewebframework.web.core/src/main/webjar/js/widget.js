@@ -799,9 +799,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			if (v) {
 				this.widget$.attr('data-balloon', v)
 					.attr('data-balloon-pos', 'right')
-					.attr('data-balloon-visible', true);
+					.attr('data-balloon-visible', true)
+					.attr('data-balloon-length', 'fit');
 			} else {
-				this.widget$.removeAttr('data-balloon data-balloon-pos data-balloon-visible');
+				this.widget$.removeAttr('data-balloon data-balloon-pos data-balloon-visible data-balloon-length');
 			}
 		},
 		

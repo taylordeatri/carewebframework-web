@@ -363,6 +363,13 @@ public class WebJarLocator implements ApplicationContextAware {
         return true;
     }
     
+    /**
+     * Find all resources with the specified extension under the given path.
+     * 
+     * @param path The path under which to search.
+     * @param ext The file extension to search for.
+     * @return The first matching resource encountered, or null if none found.
+     */
     private String findResources(String path, String ext) throws Exception {
         String main = null;
         String minExt = ".min." + ext;

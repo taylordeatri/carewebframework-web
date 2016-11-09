@@ -201,7 +201,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		},
 		
 		_onerror: function(event) {
-			console.log.error(event);
+			cwf.log.error(event);
 		},
 		
 		isConnected: function() {
