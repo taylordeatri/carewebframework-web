@@ -2260,6 +2260,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			if (!open) {
 				inp$.autocomplete('search', inp$.attr('value'));
+				this.anchor$().position({
+					my: 'left top',
+					at: 'left bottom',
+					of: this.widget$});
 				inp$.focus();
 			} else {
 				inp$.autocomplete('close');

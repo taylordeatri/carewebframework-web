@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.carewebframework.web.ancillary.IAutoWired;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.annotation.OnFailure;
@@ -49,6 +50,7 @@ import org.carewebframework.web.component.Page;
 import org.carewebframework.web.component.Popupbox;
 import org.carewebframework.web.component.Progressbar;
 import org.carewebframework.web.component.Tab;
+import org.carewebframework.web.component.Tabview;
 import org.carewebframework.web.component.Textbox;
 import org.carewebframework.web.component.Timer;
 import org.carewebframework.web.component.Treeview;
@@ -75,7 +77,6 @@ public class TestController implements IAutoWired {
     
     List<IInitializer> initializers = new ArrayList<>();
     
-    @SuppressWarnings("unused")
     private Page page;
     
     @WiredComponent(onFailure = OnFailure.IGNORE)
@@ -91,6 +92,9 @@ public class TestController implements IAutoWired {
     private Window window3;
     
     @WiredComponent
+    private Tabview tabview;
+    
+    @WiredComponent
     private Tab tabNoClose;
     
     @Override
@@ -102,6 +106,9 @@ public class TestController implements IAutoWired {
             "Component window2.window_div was autowired.");
         log(windowdiv1 == windowdiv2, "window1.window_div and window2.window_div should not be the same.", null);
         log(nomatch == null, "Component 'nomatch' was correctly not wired.", "Component 'nomatch' as erroneously wired.");
+        
+        int tabIndex = NumberUtils.toInt(page.getQueryParam("tab"));
+        tabview.setSelectedTab((Tab) tabview.getChildAt(tabIndex));
         
         for (IInitializer initializer : initializers) {
             initializer.init();
