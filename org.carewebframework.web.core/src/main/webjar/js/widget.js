@@ -2260,10 +2260,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			if (!open) {
 				inp$.autocomplete('search', inp$.attr('value'));
-				this.anchor$().position({
-					my: 'left top',
-					at: 'left bottom',
-					of: this.widget$});
 				inp$.focus();
 			} else {
 				inp$.autocomplete('close');
@@ -2293,6 +2289,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	            delay: 50,
 	            minLength: 0,
 	            autoFocus: false,
+	            appendTo: this.widget$,
 	            source: this.source.bind(this),
 				select: this.handleSelect.bind(this)
 			});

@@ -84,11 +84,12 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 			ddn$.toggleClass('invisible', !v);
 
 			if (v) {
-				var in$ = this.input$(),
-					offset = in$.offset();
-				offset.top += in$.outerHeight() + 2;
-				ddn$.offset(offset);
-				in$.focus();
+				ddn$.position({
+					my: 'left top',
+					at: 'left bottom',
+					of: this.widget$
+				});
+				this.input$().focus();
 			}
 	    },
 	    
