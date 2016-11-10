@@ -53,6 +53,7 @@ import org.carewebframework.web.component.Tab;
 import org.carewebframework.web.component.Tabview;
 import org.carewebframework.web.component.Textbox;
 import org.carewebframework.web.component.Timer;
+import org.carewebframework.web.component.Treenode;
 import org.carewebframework.web.component.Treeview;
 import org.carewebframework.web.component.Window;
 import org.carewebframework.web.component.Window.Mode;
@@ -63,7 +64,10 @@ import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.ResizeEvent;
 import org.carewebframework.web.event.TimerEvent;
 import org.carewebframework.web.model.IComponentRenderer;
+import org.carewebframework.web.model.IListModel;
+import org.carewebframework.web.model.IModelAndView;
 import org.carewebframework.web.model.ListModel;
+import org.carewebframework.web.model.NestedModel;
 import org.carewebframework.web.page.PageUtil;
 
 public class TestController implements IAutoWired {
@@ -408,8 +412,72 @@ public class TestController implements IAutoWired {
     
     /*********************** Treeview Tab ***********************/
     
+    class TreeModelObject {
+        
+        final List<TreeModelObject> children = new ArrayList<>();
+        
+        final String label;
+        
+        TreeModelObject(String label) {
+            this.label = label;
+        }
+        
+    }
+    
+    class TreeModel extends NestedModel<TreeModelObject> {
+        
+        public TreeModel(List<TreeModelObject> children) {
+            super(children);
+        }
+        
+        @Override
+        public IListModel<TreeModelObject> getChildren(TreeModelObject parent) {
+            return new TreeModel(parent.children);
+        }
+        
+    }
+    
+    {
+        initializers.add(new IInitializer() {
+            
+            @Override
+            public void init() {
+                TreeModelObject root = new TreeModelObject(null);
+                addChildren(root, 1);
+                IModelAndView<Treenode, TreeModelObject> mv = treeview2.getModelAndView(TreeModelObject.class);
+                mv.setModel(new TreeModel(root.children));
+                mv.setRenderer(new IComponentRenderer<Treenode, TreeModelObject>() {
+                    
+                    @Override
+                    public Treenode render(TreeModelObject model) {
+                        Treenode node = new Treenode();
+                        node.setLabel(model.label);
+                        return node;
+                    }
+                    
+                });
+            }
+            
+            private void addChildren(TreeModelObject parent, int level) {
+                for (int i = 1; i < 4; i++) {
+                    String label = parent.label == null ? Integer.toString(i) : parent.label + "." + i;
+                    TreeModelObject child = new TreeModelObject(label);
+                    parent.children.add(child);
+                    
+                    if (level < 3) {
+                        addChildren(child, level + 1);
+                    }
+                }
+            }
+            
+        });
+    }
+    
     @WiredComponent
     private Treeview treeview;
+    
+    @WiredComponent
+    private Treeview treeview2;
     
     @WiredComponent
     private Checkbox chkShowRoot;

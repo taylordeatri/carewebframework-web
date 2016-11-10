@@ -461,6 +461,10 @@
 								<button name="btnExpandAll" label="Expand All" class="flavor:btn-success" />
 							</toolbar>
 						</row>
+						<row>
+							<treeview name="treeview2" showRoot="true" showLines="true" showToggles="true" />
+							This treeview is rendered from a model.
+						</row>
 					</rows>
 				</table>
 			</tab>
