@@ -13,4 +13,8 @@ public interface IModelAndView<T extends BaseComponent, M> {
     void setRenderer(IComponentRenderer<T, M> renderer);
     
     void rerender();
+    
+    T rerender(M object);
+    
+    T rerender(int index);
 }

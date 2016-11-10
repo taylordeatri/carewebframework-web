@@ -105,7 +105,7 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         }
     }
     
-    protected void renderChild(int index) {
+    protected T renderChild(int index) {
         if (renderer != null) {
             M mdl = model.get(index);
             T child = renderer.render(mdl);
@@ -114,7 +114,11 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
             if (model instanceof INestedModel) {
                 getLinkedViews().put(child, new ModelAndView<>(child, ((INestedModel<M>) model).getChildren(mdl), renderer));
             }
+            
+            return child;
         }
+        
+        return null;
     }
     
     protected void destroyChild(int index) {
@@ -177,6 +181,17 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
                 break;
         }
         
+    }
+    
+    @Override
+    public T rerender(M object) {
+        return rerender(model.indexOf(object));
+    }
+    
+    @Override
+    public T rerender(int index) {
+        destroyChild(index);
+        return renderChild(index);
     }
     
 }
