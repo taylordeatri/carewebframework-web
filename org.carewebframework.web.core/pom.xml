@@ -19,6 +19,7 @@
 				'cwf-widget': 'js/widget',
 				'cwf-widget-css': 'css/widget',
 				'cwf-table': 'js/table',
+				'cwf-table-css': 'css/table',
 				'cwf-tabview': 'js/tabview',
 				'cwf-tabview-css': 'css/tabview',
 				'cwf-treeview': 'js/treeview',

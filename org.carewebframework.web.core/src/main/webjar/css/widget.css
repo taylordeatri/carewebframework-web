@@ -392,8 +392,3 @@ textarea.cwf_textbox {
 	background-color: #d9edf7;
 }
 
-/* Table */
-
-.cwf_row > td {
-	vertical-align: middle!important;
-}

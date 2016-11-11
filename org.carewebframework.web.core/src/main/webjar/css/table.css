@@ -1,0 +1,5 @@
+/* Row */
+
+.cwf_row > td {
+	vertical-align: middle!important;
+}
