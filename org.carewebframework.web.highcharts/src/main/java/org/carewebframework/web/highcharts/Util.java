@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.carewebframework.web.annotation.ComponentScanner;
+
 /**
  * Static utility methods.
  */
@@ -66,7 +68,8 @@ public class Util {
     /**
      * Load time initializations.
      */
-    protected static void init() {
+    public static void init() {
+        ComponentScanner.getInstance().scan(Util.class.getPackage());
         plotTypes.put("area", PlotArea.class);
         plotTypes.put("arearange", PlotAreaRange.class);
         plotTypes.put("areaspline", PlotAreaSpline.class);

@@ -1,6 +1,7 @@
 <xs:schema elementFormDefault="qualified" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" vc:minVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="a">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -27,6 +28,7 @@
     </xs:element>
     <xs:element name="button">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -93,6 +95,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -116,6 +119,7 @@
     </xs:element>
     <xs:element name="checkbox">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="checked" type="xs:boolean"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
@@ -151,6 +155,7 @@
             <xs:all>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpickeritem"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -232,6 +237,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -258,6 +264,7 @@
             <xs:all>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="column"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -284,6 +291,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="comboitem"/>
             </xs:all>
             <xs:attribute name="autoFilter" type="xs:boolean"/>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -311,6 +319,7 @@
     </xs:element>
     <xs:element name="comboitem">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -378,6 +387,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -400,6 +410,7 @@
     </xs:element>
     <xs:element name="datebox">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -469,6 +480,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -491,6 +503,7 @@
     </xs:element>
     <xs:element name="doublebox">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -533,6 +546,7 @@
     </xs:element>
     <xs:element name="iframe">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -558,6 +572,7 @@
     <xs:element name="image">
         <xs:complexType>
             <xs:attribute name="alt" type="xs:string"/>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -584,6 +599,7 @@
             <xs:all>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepickeritem"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -623,6 +639,7 @@
     </xs:element>
     <xs:element name="import">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -646,6 +663,7 @@
     </xs:element>
     <xs:element name="integerbox">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -675,6 +693,7 @@
     </xs:element>
     <xs:element name="label">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -701,6 +720,7 @@
             <xs:all>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listitem"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -725,6 +745,7 @@
     </xs:element>
     <xs:element name="listitem">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -750,6 +771,7 @@
     </xs:element>
     <xs:element name="longbox">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -780,6 +802,7 @@
     <xs:element name="memobox">
         <xs:complexType>
             <xs:attribute name="autoScroll" type="xs:boolean"/>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -812,6 +835,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menuitem"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menuseparator"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -827,6 +851,7 @@
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="open" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -836,6 +861,7 @@
     </xs:element>
     <xs:element name="menuheader">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -865,6 +891,9 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menuitem"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menuseparator"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
+            <xs:attribute name="checkable" type="xs:boolean"/>
+            <xs:attribute name="checked" type="xs:boolean"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -894,6 +923,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menuitem"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menuseparator"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -916,6 +946,7 @@
     </xs:element>
     <xs:element name="menuseparator">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1032,6 +1063,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1058,6 +1090,7 @@
             <xs:all>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="pane"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1130,6 +1163,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1155,6 +1189,7 @@
             <xs:all>
                 <xs:element maxOccurs="1" minOccurs="0" ref="popup"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1183,6 +1218,7 @@
     </xs:element>
     <xs:element name="progressbar">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1208,6 +1244,7 @@
     </xs:element>
     <xs:element name="radiobutton">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="checked" type="xs:boolean"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
@@ -1282,6 +1319,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1346,6 +1384,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1371,6 +1410,7 @@
             <xs:all>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1450,6 +1490,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1537,6 +1578,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="closable" type="xs:boolean"/>
             <xs:attribute name="context" type="xs:string"/>
@@ -1567,6 +1609,7 @@
                 <xs:element maxOccurs="1" minOccurs="0" ref="columns"/>
                 <xs:element maxOccurs="1" minOccurs="0" ref="rows"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1592,6 +1635,7 @@
             <xs:all>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tab"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1624,6 +1668,7 @@
     </xs:element>
     <xs:element name="textbox">
         <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1716,6 +1761,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1749,6 +1795,7 @@
             <xs:all>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treenode"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="collapsed" type="xs:boolean"/>
             <xs:attribute name="context" type="xs:string"/>
@@ -1778,6 +1825,7 @@
             <xs:all>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treenode"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="context" type="xs:string"/>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1845,6 +1893,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
             <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="closable" type="xs:boolean"/>
             <xs:attribute name="closeAction">

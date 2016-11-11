@@ -24,10 +24,6 @@ import org.carewebframework.web.component.Page;
 @Component(value = "hchart", widgetPackage = "cwf-hchart", widgetClass = "HChart", parentTag = "*")
 public class Chart extends BaseUIComponent implements IMapConverter {
     
-    static {
-        Util.init();
-    }
-    
     private static final String GLOBAL_SETTINGS = Chart.class.getName() + ".global";
     
     public static class ChartSettings extends Options {
