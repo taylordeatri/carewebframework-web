@@ -1,0 +1,41 @@
+<page>
+	<style>
+		.my-dd {
+			display: block;
+			min-height: 50px;
+			min-width: 50px;
+			border: 1px solid black;
+			text-align: center;
+			vertical-align: middle;
+		}
+		
+		.my-draggables {
+			background-color: lightgray;
+			min-height: 100px;
+		}
+		
+		.my-draggables * {
+			display: block;
+		}
+	</style>
+	<table>
+		<rows>
+			<row>
+				<div name="dropTargetOriginal" dropid="*" class="my-draggables">
+					<button dragid="A B C" label="A B C" />
+					<button dragid="D E F" label="D E F" />
+					<button dragid="X Y Z" label="X Y Z" />
+					<button dragid="P Q R" label="P Q R" />
+				</div>
+				<div>
+					<div name="dropTargetA" dropid="A" class="my-dd alert-success">A</div>
+					<div name="dropTargetD_X" dropid="D X" class="my-dd alert-info">D X</div>
+					<div name="dropTargetX" dropid="X" class="my-dd alert-warning">X</div>
+					<div name="dropTargetALL" dropid="*" class="my-dd">*</div>
+					<div name="dropTargetNONE" dropid="NONE" class="my-dd alert-danger">NONE</div>
+				</div>
+			</row>
+		</rows>
+	</table>
+</page>
+	

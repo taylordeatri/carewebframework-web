@@ -94,6 +94,6 @@ public class Util {
      * Enforce static class.
      */
     private Util() {
-    };
+    }
     
 }

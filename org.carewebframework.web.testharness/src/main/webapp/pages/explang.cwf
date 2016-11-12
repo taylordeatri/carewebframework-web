@@ -1,0 +1,20 @@
+<table>
+	<columns>
+		<column width="60%" />
+		<column width="40%" />
+	</columns>
+	<rows>
+		<row>
+			<div>This should resolve to a class name</div>
+			<div>${@cwf_ELEvaluator.class.name}</div>
+		</row>
+		<row>
+			<div>This should resolve to external label text</div>
+			<div>${@msg.test.message}</div>
+		</row>
+		<row>
+			<div>This should evaluate to 20</div>
+			<div>${(1+4)*4}</div>
+		</row>
+	</rows>
+</table>

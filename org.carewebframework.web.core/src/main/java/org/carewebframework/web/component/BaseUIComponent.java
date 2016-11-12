@@ -25,6 +25,7 @@
  */
 package org.carewebframework.web.component;
 
+import org.carewebframework.web.ancillary.ConvertUtil;
 import org.carewebframework.web.ancillary.CssClasses;
 import org.carewebframework.web.ancillary.CssStyles;
 import org.carewebframework.web.ancillary.IDisable;
@@ -313,6 +314,10 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     }
     
     @PropertySetter(value = "context", defer = true)
+    private void setContext(String context) {
+        setContext(ConvertUtil.convert(context, Popup.class, this));
+    }
+    
     public void setContext(Popup context) {
         if (context != getContext()) {
             validate(context);

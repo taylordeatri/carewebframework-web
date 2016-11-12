@@ -819,18 +819,19 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			}
 			
 			function _hideContextPopup(event) {
-				v.widget$.hide();
+				cwf.$(v).hide();
 			}
 			
 			function _showContextPopup(event) {
 				cwf.event.stop(event);
 				$('body').one('click', _hideContextPopup);
-				v.widget$.show();
-				v.widget$.position({
-					my: 'left top',
-					at: 'right bottom',
-					of: event
-				});
+				cwf.$(v)
+					.show()
+					.position({
+						my: 'left top',
+						at: 'right bottom',
+						of: event
+					});
 			}
 		},
 		
@@ -2063,8 +2064,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		open: function() {
 			if (this._popup && !this.isOpen()) {
-				this._popup.widget$.show();
-				this._popup.widget$.position({
+				var popup$ = this.popup$();
+				popup$.show();
+				popup$.position({
 					my: 'right top',
 					at: 'right bottom',
 					of: this.widget$
@@ -2075,13 +2077,17 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			}
 		},
 		
+		popup$: function() {
+			return cwf.$(this._popup);
+		},
+		
 		input$: function() {
 			return this.sub$('inp');
 		},
 		
 		close: function() {
 			if (this.isOpen()) {
-				this._popup.widget$.hide();
+				this.popup$().hide();
 				this._trigger('close');
 			}
 		},
@@ -2091,12 +2097,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		isOpen: function() {
-			return this._popup && this._popup.widget$.css('display') !== 'none';
+			return this._popup && this.popup$().css('display') !== 'none';
 		},
 		
 		_trigger: function(which) {
 			var event = $.Event(which, {
-				relatedTarget: this._popup.widget$
+				relatedTarget: this.popup$()
 			});
 			
 			this.trigger(event);

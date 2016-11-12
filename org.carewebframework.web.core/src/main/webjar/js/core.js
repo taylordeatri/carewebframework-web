@@ -453,16 +453,21 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 * Returns the jquery object associated with the object.
 	 */
 	$: function(object) {
-		return _.isNil(object) ? null : object.jquery ? object : 
-			cwf.widget.isWidget(object) ? object.widget$ : $(object);
+		return _.isNil(object) ? null 
+			: object.jquery ? object 
+			: object.__cwf__ ? cwf.$(cwf.widget.find(object.__cwf__))
+			: cwf.widget.isWidget(object) ? object.widget$ 
+			: $(object);
 	},
 	
 	/**
 	 * Returns the widget associated with the object.
 	 */
 	wgt: function(object) {
-		return _.isNil(object) ? null : cwf.widget.isWidget(object) ? object : 
-			this.$(object).cwf$widget();
+		return _.isNil(object) ? null 
+			: object.__cwf__ ? cwf.widget.find(object.__cwf__)
+			: cwf.widget.isWidget(object) ? object 
+			: this.$(object).cwf$widget();
 	},	
 	
 	/**
@@ -499,7 +504,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 * Handler for fatal exceptions.
 	 */
 	fatal: function(error) {
-		$('#' + this.pid).hide();
+		//$('#' + this.pid).hide();
 		
 		if (!(error instanceof Error)) {
 			error = new Error(error);

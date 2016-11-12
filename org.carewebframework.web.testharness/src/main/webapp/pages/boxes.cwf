@@ -1,0 +1,114 @@
+<page>
+	<table>
+		<columns>
+			<column width="40%" />
+			<column width="80%" />
+		</columns>
+		<rows>
+			<row>
+				<textbox name="txtInput" placeholder="placeholder" maxlength="10"
+					synchronized="true" required="true" />
+				textbox: name="txtInput" placeholder="placeholder" maxlength="10"
+				synchronized="true" required="true"
+			</row>
+			<row>
+				<textbox name="txtSelect" value="Characters 3-5 should be selected" />
+				textbox: name="txtSelect" value="Characters 3-5 should be selected"
+			</row>
+			<row>
+				<textbox placeholder="masked" masked="true" />
+				textbox: placeholder="masked" masked="true"
+			</row>
+			<row>
+				<memobox placeholder="memobox" />
+				memobox: placeholder="memobox"
+			</row>
+			<row>
+				<datebox placeholder="datebox" />
+				datebox: placeholder="datebox"
+			</row>
+			<row>
+				<integerbox placeholder="integer value" />
+				integerbox placeholder="integer value"
+			</row>
+			<row>
+				<longbox placeholder="long integer value" />
+				longbox placeholder="long integer value"
+			</row>
+			<row>
+				<doublebox placeholder="double value" minValue="-100000"
+					maxValue="100000" />
+				doublebox placeholder="double value" minValue="-100000"
+				maxValue="100000"
+			</row>
+			<row>
+				<popupbox name="popupbox" placeholder="popupbox">
+					<popup>
+						<label class="flavor:label-success" label="Simple popup" />
+					</popup>
+				</popupbox>
+				popupbox name="popupbox" placeholder="popupbox"
+			</row>
+			<row>
+				<listbox>
+					<listitem label="item1" />
+					<listitem label="item2" />
+					<listitem label="item3" />
+					<listitem label="item4" />
+				</listbox>
+				listbox
+			</row>
+			<row>
+				<listbox name="lboxRender" />
+				listbox populated from model
+			</row>
+			<row>
+				<combobox>
+					<comboitem label="item1" />
+					<comboitem label="item2" />
+					<comboitem label="item3" />
+					<comboitem label="item4" />
+				</combobox>
+				combobox
+			</row>
+			<row>
+				<combobox name="cboxRender" />
+				combobox populated from model
+			</row>
+			<row>
+				<colorpicker value="green" showText="true" />
+				colorpicker: value="green" (using defaults)
+			</row>
+			<row>
+				<colorpicker readonly="true" showHints="true">
+					<colorpickeritem />
+					<colorpickeritem value="red" />
+					<colorpickeritem value="blue" />
+					<colorpickeritem value="green" />
+				</colorpicker>
+				colorpicker: red, blue, and green
+			</row>
+			<row>
+				<imagepicker showText="true" showHints="true">
+					<imagepickeritem />
+					<imagepickeritem value="images/accept.png" />
+					<imagepickeritem value="images/asterisk.png" />
+					<imagepickeritem value="images/book.png" />
+					<imagepickeritem value="images/box.png" />
+					<imagepickeritem value="images/calendar.png" />
+					<imagepickeritem value="images/cart.png" />
+					<imagepickeritem value="images/cog.png" />
+					<imagepickeritem value="images/date.png" />
+					<imagepickeritem value="images/flag.png" />
+					<imagepickeritem value="images/house.png" />
+					<imagepickeritem value="images/link.png" />
+					<imagepickeritem value="images/music.png" />
+					<imagepickeritem value="images/printer.png" />
+					<imagepickeritem value="images/rainbow.png" />
+					<imagepickeritem value="images/square.png" />
+				</imagepicker>
+				imagepicker
+			</row>
+		</rows>
+	</table>
+</page>

@@ -1,0 +1,37 @@
+<table>
+	<columns>
+		<column width="30%" />
+		<column width="70%" />
+	</columns>
+	<rows>
+		<row>
+			<treeview name="treeview">
+				<treenode label="level 1.1">
+					<treenode label="level 2.1">
+						<treenode label="level 3.1" />
+					</treenode>
+					<treenode label="level 2.2" selected="true" />
+				</treenode>
+				<treenode label="level 1.2" image="images/asterisk.png" />
+				<treenode label="level 1.3" collapsed="true">
+					<treenode label="level 2.1">
+						<treenode label="level 3.1" />
+					</treenode>
+					<treenode label="level 2.2" selected="true" />
+				</treenode>
+			</treeview>
+			<toolbar>
+				<checkbox name="chkShowRoot" label="Show root" />
+				<checkbox name="chkShowLines" label="Show lines" checked="true" />
+				<checkbox name="chkShowToggles" label="Show toggles"
+					checked="true" />
+				<button name="btnCollapseAll" label="Collapse All" class="flavor:btn-danger" />
+				<button name="btnExpandAll" label="Expand All" class="flavor:btn-success" />
+			</toolbar>
+		</row>
+		<row>
+			<treeview name="treeview2" showRoot="true" showLines="true" showToggles="true" />
+			This treeview is rendered from a model.
+		</row>
+	</rows>
+</table>

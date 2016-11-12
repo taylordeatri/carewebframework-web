@@ -1,0 +1,7 @@
+<html>
+	<![CDATA[
+	<div style="background:red;height:50px;width:150px">
+		This is an example of embedded HTML.
+	</div>
+	]]>
+</html>

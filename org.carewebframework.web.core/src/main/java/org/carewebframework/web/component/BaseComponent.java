@@ -41,7 +41,6 @@ import org.carewebframework.web.ancillary.ComponentException;
 import org.carewebframework.web.ancillary.ConvertUtil;
 import org.carewebframework.web.ancillary.IElementIdentifier;
 import org.carewebframework.web.ancillary.INamespace;
-import org.carewebframework.web.ancillary.NameRegistry;
 import org.carewebframework.web.annotation.Component.AttributeProcessor;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
@@ -84,6 +83,90 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
     }
     
+    /**
+     * An index of child component names for a parent component.
+     */
+    private class NameIndex {
+        
+        private Map<String, BaseComponent> names;
+        
+        public void add(BaseComponent component) {
+            String name = component.getName();
+            
+            if (name != null) {
+                names = names == null ? new HashMap<>() : names;
+                names.put(name, component);
+            }
+        }
+        
+        public void remove(BaseComponent component) {
+            String name = component.getName();
+            
+            if (name != null && names != null) {
+                names.remove(name);
+            }
+        }
+        
+        private BaseComponent _get(String name) {
+            return names == null ? null : names.get(name);
+        }
+        
+        public void validate(BaseComponent component) {
+            _validate(component, getNameRoot());
+        }
+        
+        private void _validate(BaseComponent component, BaseComponent root) {
+            _validate(component.getName(), root);
+            
+            for (BaseComponent child : component.getChildren()) {
+                _validate(child, root);
+            }
+        }
+        
+        public void validate(String name) {
+            _validate(name, getNameRoot());
+        }
+        
+        private void _validate(String name, BaseComponent root) {
+            if (name != null) {
+                BaseComponent cmp = _find(name, root);
+                
+                if (cmp != null) {
+                    throw new ComponentException("Name \"" + name + "\"already exists in current namespace");
+                }
+            }
+        }
+        
+        private BaseComponent getNameRoot() {
+            BaseComponent root = getNamespace();
+            return root == null ? getRoot() : root;
+        }
+        
+        public BaseComponent find(String name) {
+            return _find(name, getNameRoot());
+        }
+        
+        private BaseComponent _find(String name, BaseComponent root) {
+            BaseComponent component = root.nameIndex._get(name);
+            
+            if (component != null) {
+                return component;
+            }
+            
+            for (BaseComponent child : root.getChildren()) {
+                if (!(child instanceof INamespace)) {
+                    component = _find(name, child);
+                    
+                    if (component != null) {
+                        break;
+                    }
+                }
+            }
+            
+            return component;
+        }
+    }
+    
     private static final Pattern nameValidator = Pattern.compile("^[a-zA-Z$][a-zA-Z_$0-9]*$");
     
     private String name;
@@ -96,6 +179,8 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     private Object data;
     
+    private boolean initialized;
+    
     private Map<String, Object> inits;
     
     private ClientInvocationQueue invocationQueue;
@@ -106,9 +191,9 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     private final EventListeners eventListeners = new EventListeners();
     
-    private final NameRegistry nameRegistry;
-    
     private final ComponentDefinition componentDefinition;
+    
+    private final NameIndex nameIndex = new NameIndex();
     
     protected static boolean isDead(IElementIdentifier id) {
         return DEAD_ID.equals(id.getId());
@@ -141,7 +226,6 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     public BaseComponent() {
         componentDefinition = ComponentRegistry.getInstance().get(getClass());
-        nameRegistry = this instanceof INamespace ? new NameRegistry() : null;
     }
     
     public ComponentDefinition getDefinition() {
@@ -157,29 +241,23 @@ public abstract class BaseComponent implements IElementIdentifier {
     public void setName(String name) {
         name = nullify(name);
         
-        if (name != null && !validateName(name)) {
-            throw new ComponentException(this, "Component name is not valid: " + name);
-        }
-        
         if (!areEqual(this.name, name)) {
-            String oldName = this.name;
-            
-            try {
-                registerToNamespace(false, false);
-                this.name = name;
-                registerToNamespace(true, false);
-            } catch (Exception e) {
-                this.name = oldName;
-                registerToNamespace(true, false);
-                throw e;
-            }
-            
-            sync("name", this.name);
+            validateName(name);
+            nameIndex.remove(this);
+            this.name = name;
+            nameIndex.add(this);
+            sync("name", name);
         }
     }
     
-    protected boolean validateName(String name) {
-        return nameValidator.matcher(name).matches();
+    private void validateName(String name) {
+        if (name != null) {
+            if (!nameValidator.matcher(name).matches()) {
+                throw new ComponentException(this, "Component name is not valid: " + name);
+            }
+            
+            nameIndex.validate(name);
+        }
     }
     
     @Override
@@ -295,6 +373,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     protected void validateChild(BaseComponent child) {
         componentDefinition.validateChild(child.componentDefinition, () -> getChildCount(child.getClass()));
+        nameIndex.validate(child);
     }
     
     public void addChild(BaseComponent child) {
@@ -321,42 +400,27 @@ public abstract class BaseComponent implements IElementIdentifier {
         child.beforeSetParent(this);
         beforeAddChild(child);
         BaseComponent oldParent = child.getParent();
-        int oldIndex = -1;
         
         if (oldParent != null) {
-            child.registerToNamespace(false, true);
-            oldIndex = oldParent.children.indexOf(child);
             oldParent._removeChild(child, true, false);
         }
         
-        try {
-            if (index < 0) {
-                children.add(child);
-            } else {
-                children.add(index, child);
-            }
-            
-            child.parent = this;
-            
-            if (page != null) {
-                child._setPage(page);
-            }
-            
-            child.registerToNamespace(true, true);
-            
-            if (!noSync) {
-                invoke("addChild", child, index);
-            }
-        } catch (Exception e) {
-            children.remove(child);
-            child.parent = oldParent;
-            
-            if (oldParent != null) {
-                oldParent.children.add(oldIndex, child);
-                child.registerToNamespace(true, true);
-            }
-            
-            throw e;
+        if (index < 0) {
+            children.add(child);
+        } else {
+            children.add(index, child);
+        }
+        
+        child.parent = this;
+        
+        if (page != null) {
+            child._init(page);
+        }
+        
+        nameIndex.add(child);
+        
+        if (!noSync) {
+            invoke("addChild", child, index);
         }
         
         afterAddChild(child);
@@ -395,7 +459,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
         
         beforeRemoveChild(child);
-        child.registerToNamespace(false, true);
+        nameIndex.remove(child);
         child.parent = null;
         children.remove(child);
         
@@ -489,6 +553,16 @@ public abstract class BaseComponent implements IElementIdentifier {
         return getChildAt(getChildCount() - 1);
     }
     
+    public BaseComponent getRoot() {
+        BaseComponent root = this;
+        
+        while (root.getParent() != null) {
+            root = root.getParent();
+        }
+        
+        return root;
+    }
+    
     @SuppressWarnings("unchecked")
     public <T extends BaseComponent> T getAncestor(Class<T> clazz) {
         return (T) getAncestorByClass(clazz, false);
@@ -539,35 +613,44 @@ public abstract class BaseComponent implements IElementIdentifier {
         return page;
     }
     
-    protected void _setPage(Page page) {
-        if (page == this.page) {
+    protected boolean validatePage(Page page) {
+        return page == this.page || this.page == null;
+    }
+    
+    protected void _init(Page page) {
+        if (initialized) {
             return;
         }
         
+        initialized = true;
+        _initPage(page);
+        _initWidget();
+    }
+    
+    protected void _initPage(Page page) {
         if (!validatePage(page)) {
             throw new ComponentException(this, "Component cannot be assigned to a different page");
         }
         
         this.page = page;
         page.registerComponent(this, true);
-        _init();
         
         for (BaseComponent child : getChildren()) {
-            child._setPage(page);
+            child._initPage(page);
         }
     }
     
-    protected boolean validatePage(Page page) {
-        return page == this.page || this.page == null;
-    }
-    
-    protected void _init() {
+    protected void _initWidget() {
         Map<String, Object> props = new HashMap<>();
         _init(props);
         page.getSynchronizer().createWidget(parent, props, inits, invocationQueue);
         invocationQueue = null;
         inits = null;
         EventHandlerScanner.wire(this, null);
+        
+        for (BaseComponent child : getChildren()) {
+            child._initWidget();
+        }
     }
     
     protected void _init(Map<String, Object> props) {
@@ -619,8 +702,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         int i = 0;
         
         while (i < pcs.length && cmp != null) {
-            BaseComponent namespace = cmp.getNamespace();
-            cmp = namespace == null ? null : namespace.nameRegistry.get(pcs[i++]);
+            cmp = cmp.nameIndex.find(pcs[i++]);
         }
         
         return cmp;
@@ -633,28 +715,6 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     public SubComponent sub(String subId) {
         return new SubComponent(this, subId);
-    }
-    
-    private void registerToNamespace(boolean register, boolean recurse) {
-        if (name == null) {
-            return;
-        }
-        
-        BaseComponent namespace = parent == null ? null : parent.getNamespace();
-        
-        if (namespace != null) {
-            registerToNamespace(register, recurse, namespace.nameRegistry);
-        }
-    }
-    
-    private void registerToNamespace(boolean register, boolean recurse, NameRegistry nameRegistry) {
-        nameRegistry.register(this, register);
-        
-        if (recurse && !(this instanceof INamespace)) {
-            for (BaseComponent child : getChildren()) {
-                child.registerToNamespace(register, recurse, nameRegistry);
-            }
-        }
     }
     
     public void registerEventForward(String eventType, BaseComponent target, String forwardType) {

@@ -1,0 +1,21 @@
+<page>
+	<window name="window1" class="flavor:panel-success" title="Test Window" height="100px">
+		window name="window1" class="flavor:panel-success" title="Test Window" height="100px"
+		<div name="window_div" />
+	</window>
+	
+	<window name="window2" class="flavor:panel-danger" title="Test Window #2" 
+		image="images/house.png" height="100px" closable="true">
+		window name="window2" class="flavor:panel-danger" title="Test Window #2" image="images/house.png" height="100px" closable="true"
+		<div name="window_div" />
+	</window>
+	
+	<window name="window3" class="flavor:panel-warning" title="Test Window #3" 
+		height="100px" closable="true" dragid="test" sizable="true" minimizable="true" maximizable="true" >
+		window name="window3" class="flavor:panel-warning" title="Test Window #3" height="100px" closable="true"
+		<div>
+			<button name="btnModal" label="Make modal" class="flavor:btn-success" />
+			<button name="btnAlert" label="Show alert" class="flavor:btn-warning" />
+		</div>
+	</window>
+</page>

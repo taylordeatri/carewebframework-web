@@ -1,0 +1,64 @@
+<page>
+	<table>
+		<columns>
+			<column width="30%" />
+			<column width="70%" />
+		</columns>
+		<rows>
+			<row>
+				<checkbox name="chkPreventClosure" label="Prevent page closure" />
+				Checking this should cause browser to challenge page closure.
+			</row>
+			<row>
+				<cell label="This is a cell">
+					With some text content.
+				</cell>
+				Cell with label and text content.
+			</row>
+			<row>
+				<cell label="This is a cell" />
+				Cell with label only.
+			</row>
+			<row>
+				<cell>
+					Text content.
+				</cell>
+				Cell with content only.
+			</row>
+			<row>
+				<span name="dynamicContent" />
+				This is dynamically-generated content.
+			</row>
+			<row>
+				<button label="Has Context Menu" context="contextMenu" />
+				This button has a context menu associated with it.
+			</row>
+			<row>
+				<button name="btnSaveAsFile" label="Save to File" />
+				This button saves some text to a file.
+			</row>
+			<row>
+				<toolbar>
+					<div name="divMaskTest" height="50px" width="100px" style="display:inline-block; border: 1px solid black" />
+					<button name="btnMaskTest" label="Click to toggle mask"/>
+				</toolbar>
+				Test of masking components.  Should mask div to left of button.
+			</row>
+			<row>
+				<button label="Has Balloon Text" balloon="Balloon Text" />
+				Test of balloon text.
+			</row>
+		</rows>
+	</table>
+	
+	<menupopup name="contextMenu">
+		<menuheader label="header" />
+		<menuitem label="menu2" />
+		<menuitem label="menu3" />
+		<menuseparator />
+		<menuitem label="secondary">
+			<menuitem label="sub1" />
+			<menuitem label="sub2" />
+		</menuitem>
+	</menupopup>
+</page>

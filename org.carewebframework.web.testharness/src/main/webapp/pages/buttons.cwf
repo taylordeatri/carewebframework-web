@@ -1,0 +1,82 @@
+<page>
+	<table>
+		<columns>
+			<column width="40%" />
+			<column width="80%" />
+		</columns>
+		<rows>
+			<row>
+				<button label="fire event" name="btnWithEvent" />
+				This button should have an event handler.
+			</row>
+			<row>
+				<button label="image" image="images/ri.png" />
+				This is a button with an image.
+			</row>
+			<row>
+				<a label="link" name="link" href="about://" target="about" />
+				This is a simple hyperlink.
+			</row>
+			<row>
+				<a label="link+image" image="images/ri.png" />
+				This is a hyperlink with an image.
+			</row>
+			<row>
+				<image src="images/ri.png" alt="this is alt text" />
+				This is just a standalone image.
+			</row>
+			<row>
+				<toolbar>
+					<button class="flavor:btn-default" label="default" />
+					<button class="flavor:btn-primary" label="primary" />
+					<button class="flavor:btn-info" label="info" />
+					<button class="flavor:btn-danger" label="danger" />
+					<button class="flavor:btn-success" label="success" />
+					<button class="flavor:btn-warning" label="warning" />
+				</toolbar>
+				This is a horizontal, start aligned toolbar with styled buttons.
+			</row>
+			<row>
+				<span style="display: flex">
+					<toolbar orientation="vertical" align="start" height="200px">
+						<button class="flavor:btn-danger" label="danger" />
+						<button class="flavor:btn-success" label="success" />
+						<button class="flavor:btn-warning" label="warning" />
+					</toolbar>
+					<toolbar orientation="vertical" align="center" height="200px">
+						<button class="flavor:btn-danger" label="danger" />
+						<button class="flavor:btn-success" label="success" />
+						<button class="flavor:btn-warning" label="warning" />
+					</toolbar>
+					<toolbar orientation="vertical" align="end" height="200px">
+						<button class="flavor:btn-danger" label="danger" />
+						<button class="flavor:btn-success" label="success" />
+						<button class="flavor:btn-warning" label="warning" />
+					</toolbar>
+				</span>
+				Vertically-oriented toolbars with start, center, and end alignments.
+			</row>
+			<row>
+				<span>
+					<toolbar orientation="horizontal" align="start" width="250px">
+						<button class="flavor:btn-danger" label="danger" />
+						<button class="flavor:btn-success" label="success" />
+						<button class="flavor:btn-warning" label="warning" />
+					</toolbar>
+					<toolbar orientation="horizontal" align="center" width="250px">
+						<button class="flavor:btn-danger" label="danger" />
+						<button class="flavor:btn-success" label="success" />
+						<button class="flavor:btn-warning" label="warning" />
+					</toolbar>
+					<toolbar orientation="horizontal" align="end" width="250px">
+						<button class="flavor:btn-danger" label="danger" />
+						<button class="flavor:btn-success" label="success" />
+						<button class="flavor:btn-warning" label="warning" />
+					</toolbar>
+				</span>
+				Horizontally-oriented toolbars with start, center, and end
+				alignments.
+			</row>
+		</rows>
+	</table>
+</page>

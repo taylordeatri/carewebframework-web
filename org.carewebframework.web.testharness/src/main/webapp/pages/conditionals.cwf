@@ -1,0 +1,14 @@
+<page>
+	<div class="alert-success" if="${1==1}">
+		This conditional "if" block should be visible.
+	</div>
+	<div class="alert-danger" if="${1==0}">
+		This conditional "if" block should not be included.
+	</div>
+	<div class="alert-success" unless="${1==0}">
+		This conditional "unless" block should be visible.
+	</div>
+	<div class="alert-danger" unless="${1==1}">
+		This conditional "unless" block should not be included.
+	</div>
+</page>

@@ -41,20 +41,21 @@ public class ConvertUtil {
      *            target type is a component and the value is the component name or id).
      * @return The converted value.
      */
-    public static Object convert(Object value, Class<?> targetType, Object instance) {
+    @SuppressWarnings("unchecked")
+    public static <T> T convert(Object value, Class<T> targetType, Object instance) {
         if (value == null || targetType.isInstance(value)) {
-            return value;
+            return (T) value;
         }
         
         if (targetType.isEnum()) {
-            return convertToEnum(value, targetType);
+            return (T) convertToEnum(value, targetType);
         }
         
         if (BaseComponent.class.isAssignableFrom(targetType)) {
-            return convertToComponent(value, targetType, instance);
+            return (T) convertToComponent(value, targetType, instance);
         }
         
-        return ConvertUtils.convert(value, targetType);
+        return (T) ConvertUtils.convert(value, targetType);
     }
     
     /**
@@ -66,7 +67,7 @@ public class ConvertUtil {
      * @return The enumeration member corresponding to the input value.
      */
     private static Object convertToEnum(Object value, Class<?> enumType) {
-        String val = (String) convert(value, String.class, null);
+        String val = convert(value, String.class, null);
         
         for (Object e : enumType.getEnumConstants()) {
             if (((Enum<?>) e).name().equalsIgnoreCase(val)) {
@@ -94,7 +95,7 @@ public class ConvertUtil {
                 instance.getClass().getName(), BaseComponent.class.getName());
         }
         
-        String name = (String) convert(value, String.class, instance);
+        String name = convert(value, String.class, instance);
         BaseComponent container = (BaseComponent) instance;
         BaseComponent target = name.startsWith(Page.ID_PREFIX) ? container.getPage().findById(name)
                 : container.findByName(name);
