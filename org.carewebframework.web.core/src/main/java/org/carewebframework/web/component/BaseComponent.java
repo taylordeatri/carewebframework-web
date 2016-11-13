@@ -179,8 +179,6 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     private Object data;
     
-    private boolean initialized;
-    
     private Map<String, Object> inits;
     
     private ClientInvocationQueue invocationQueue;
@@ -618,13 +616,10 @@ public abstract class BaseComponent implements IElementIdentifier {
     }
     
     protected void _init(Page page) {
-        if (initialized) {
-            return;
+        if (this.page == null) {
+            _initPage(page);
+            _initWidget();
         }
-        
-        initialized = true;
-        _initPage(page);
-        _initWidget();
     }
     
     protected void _initPage(Page page) {

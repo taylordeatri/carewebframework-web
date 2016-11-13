@@ -4,7 +4,7 @@
 	</div>
 	<stylesheet href="css/styles.css" />
 	<style>
-		div > .embedded {
+		.embedded {
 		background: green;
 		}
 	</style>

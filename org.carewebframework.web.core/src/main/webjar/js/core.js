@@ -660,6 +660,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	clone: function(element, depth, parent) {
 		element = cwf.ele(element);
 		var clone = element.cloneNode(false);
+		clone.id = '';
 		depth = depth || 0;
 		
 		if (parent) {

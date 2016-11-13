@@ -96,7 +96,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				throw new Error('Child is not a valid widget.');
 			}
 			
-			var currentIndex = child.getIndex();
+			var currentIndex = child._parent === this ? child.getIndex() : -1;
 			index = _.isNil(index) || index < -1 ? -1 : index;
 			
 			if (currentIndex >= 0 && currentIndex === index) {
@@ -111,11 +111,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				index = -1;
 			}
 			
-			if (currentIndex >= 0) {
-				this._children.splice(currentIndex, 1);
-				child._detach();
-			}
-			
+			child._parent ? child._parent.removeChild(child) : null;
 			index < 0 ? this._children.push(child) : this._children.splice(index, 0, child);
 			child._parent = this;
 			child._attach(index);
