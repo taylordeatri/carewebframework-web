@@ -616,13 +616,13 @@ public abstract class BaseComponent implements IElementIdentifier {
     }
     
     protected void _init(Page page) {
-        if (this.page == null) {
+        if (this.page == null && page != null) {
             _initPage(page);
             _initWidget();
         }
     }
     
-    protected void _initPage(Page page) {
+    private void _initPage(Page page) {
         if (!validatePage(page)) {
             throw new ComponentException(this, "Component cannot be assigned to a different page");
         }
@@ -635,7 +635,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
     }
     
-    protected void _initWidget() {
+    private void _initWidget() {
         Map<String, Object> props = new HashMap<>();
         _init(props);
         page.getSynchronizer().createWidget(parent, props, inits, invocationQueue);
