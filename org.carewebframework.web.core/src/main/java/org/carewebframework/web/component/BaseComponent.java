@@ -412,7 +412,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         child.parent = this;
         
         if (page != null) {
-            child._init(page);
+            child._attach(page);
         }
         
         nameIndex.add(child);
@@ -498,19 +498,24 @@ public abstract class BaseComponent implements IElementIdentifier {
         return Collections.unmodifiableList(children);
     }
     
-    public <T extends BaseComponent> Iterable<T> getChildren(Class<T> clazz) {
-        return MiscUtil.iterableForType(getChildren(), clazz);
+    public <T extends BaseComponent> Iterable<T> getChildren(Class<T> type) {
+        return MiscUtil.iterableForType(getChildren(), type);
     }
     
+    /**
+     * Returns the number of children.
+     * 
+     * @return The number of children.
+     */
     public int getChildCount() {
         return children.size();
     }
     
-    public int getChildCount(Class<? extends BaseComponent> clazz) {
+    public int getChildCount(Class<? extends BaseComponent> type) {
         int count = 0;
         
         for (BaseComponent child : children) {
-            if (clazz.isInstance(child)) {
+            if (type.isInstance(child)) {
                 count++;
             }
         }
@@ -518,14 +523,25 @@ public abstract class BaseComponent implements IElementIdentifier {
         return count;
     }
     
+    /**
+     * Returns true if this component may contain children.
+     * 
+     * @return True if this component may contain children.
+     */
     public boolean isContainer() {
         return componentDefinition.childrenAllowed();
     }
     
+    /**
+     * Return the first child of the requested type.
+     * 
+     * @param type The type of child sought.
+     * @return The requested child, or null if none exist of the requested type.
+     */
     @SuppressWarnings("unchecked")
-    public <T extends BaseComponent> T getChild(Class<T> clazz) {
+    public <T extends BaseComponent> T getChild(Class<T> type) {
         for (BaseComponent child : getChildren()) {
-            if (clazz.isInstance(child)) {
+            if (type.isInstance(child)) {
                 return (T) child;
             }
         }
@@ -543,14 +559,29 @@ public abstract class BaseComponent implements IElementIdentifier {
         return index < 0 || index >= children.size() ? null : children.get(index);
     }
     
+    /**
+     * Returns the first child of this component.
+     * 
+     * @return The first child, or null if no children.
+     */
     public BaseComponent getFirstChild() {
         return getChildAt(0);
     }
     
+    /**
+     * Returns the last child of this component.
+     * 
+     * @return The last child, or null if no children.
+     */
     public BaseComponent getLastChild() {
         return getChildAt(getChildCount() - 1);
     }
     
+    /**
+     * Return the root component of this component's hierarchy.
+     * 
+     * @return The root component of the hierarchy to which this component belongs.
+     */
     public BaseComponent getRoot() {
         BaseComponent root = this;
         
@@ -561,17 +592,36 @@ public abstract class BaseComponent implements IElementIdentifier {
         return root;
     }
     
+    /**
+     * Return first ancestor that is of the requested type.
+     * 
+     * @param type The type of ancestor sought.
+     * @return The ancestor component of the requested type, or null if none found.
+     */
     @SuppressWarnings("unchecked")
-    public <T extends BaseComponent> T getAncestor(Class<T> clazz) {
-        return (T) getAncestorByClass(clazz, false);
+    public <T extends BaseComponent> T getAncestor(Class<T> type) {
+        return (T) getAncestorByType(type, false);
     }
     
-    public BaseComponent getNextSibling() {
-        return getRelativeSibling(1);
-    }
-    
-    public BaseComponent getPreviousSibling() {
-        return getRelativeSibling(-1);
+    /**
+     * Return first ancestor that is of the requested type.
+     * 
+     * @param type The type of ancestor sought.
+     * @param includeSelf If true, include this component in the search.
+     * @return The ancestor component of the requested type, or null if none found.
+     */
+    private BaseComponent getAncestorByType(Class<?> type, boolean includeSelf) {
+        BaseComponent cmp = includeSelf ? this : this.getParent();
+        
+        while (cmp != null) {
+            if (type.isInstance(cmp)) {
+                break;
+            } else {
+                cmp = cmp.getParent();
+            }
+        }
+        
+        return cmp;
     }
     
     /**
@@ -583,46 +633,61 @@ public abstract class BaseComponent implements IElementIdentifier {
         return getParent() == null ? -1 : getParent().children.indexOf(this);
     }
     
+    /**
+     * Return the next sibling for this component.
+     * 
+     * @return The requested sibling, or null if not found.
+     */
+    public BaseComponent getNextSibling() {
+        return getRelativeSibling(1);
+    }
+    
+    /**
+     * Return the previous sibling for this component.
+     * 
+     * @return The requested sibling, or null if not found.
+     */
+    public BaseComponent getPreviousSibling() {
+        return getRelativeSibling(-1);
+    }
+    
+    /**
+     * Returns the sibling of this component at the specified offset.
+     * 
+     * @param offset Offset from this component. For example, 2 would mean the second sibling
+     *            following this component.
+     * @return The requested sibling, or null if none exists at the requested offset.
+     */
     private BaseComponent getRelativeSibling(int offset) {
         int i = indexOf();
         i = i == -1 ? -1 : i + offset;
-        return i < 0 ? null : i >= getParent().getChildCount() ? null : getParent().children.get(i);
+        return i < 0 || i >= getParent().getChildCount() ? null : getParent().children.get(i);
     }
     
+    /**
+     * Returns the namespace to which this component belongs. May be null.
+     * 
+     * @return The namespace to which this component belongs.
+     */
     public BaseComponent getNamespace() {
-        return getAncestorByClass(INamespace.class, true);
+        return getAncestorByType(INamespace.class, true);
     }
     
-    private BaseComponent getAncestorByClass(Class<?> clazz, boolean includeSelf) {
-        BaseComponent cmp = includeSelf ? this : this.getParent();
-        
-        while (cmp != null) {
-            if (clazz.isInstance(cmp)) {
-                break;
-            } else {
-                cmp = cmp.getParent();
-            }
-        }
-        
-        return cmp;
-    }
-    
+    /**
+     * Returns the page to which this component belongs.
+     * 
+     * @return The owning page (may be null).
+     */
     public Page getPage() {
         return page;
     }
     
-    protected boolean validatePage(Page page) {
-        return page == this.page || this.page == null;
-    }
-    
-    protected void _init(Page page) {
-        if (this.page == null && page != null) {
-            _initPage(page);
-            _initWidget();
-        }
-    }
-    
-    private void _initPage(Page page) {
+    /**
+     * Sets the page property for this component and its children.
+     * 
+     * @param page The owning page.
+     */
+    private void _setPage(Page page) {
         if (!validatePage(page)) {
             throw new ComponentException(this, "Component cannot be assigned to a different page");
         }
@@ -631,30 +696,66 @@ public abstract class BaseComponent implements IElementIdentifier {
         page.registerComponent(this, true);
         
         for (BaseComponent child : getChildren()) {
-            child._initPage(page);
+            child._setPage(page);
         }
     }
     
-    private void _initWidget() {
+    /**
+     * Validates that the specified page can be an owner of this component.
+     * 
+     * @param page The page to be tested.
+     * @return True if the page can be an owner of this component.
+     */
+    protected boolean validatePage(Page page) {
+        return page == this.page || this.page == null;
+    }
+    
+    /**
+     * Attach this component and its children to their owning page.
+     * 
+     * @param page Page to receive this component.
+     */
+    protected void _attach(Page page) {
+        if (page != null && this.page != page) {
+            _setPage(page);
+            _createWidget();
+        }
+    }
+    
+    /**
+     * Creates this component's corresponding widget on the client.
+     */
+    private void _createWidget() {
         Map<String, Object> props = new HashMap<>();
-        _init(props);
+        _initProps(props);
         page.getSynchronizer().createWidget(parent, props, inits, invocationQueue);
         invocationQueue = null;
         inits = null;
         EventHandlerScanner.wire(this, null);
         
         for (BaseComponent child : getChildren()) {
-            child._initWidget();
+            child._createWidget();
         }
     }
     
-    protected void _init(Map<String, Object> props) {
+    /**
+     * Initialize properties to be passed to widget factory. Override to add additional properties.
+     * 
+     * @param props Properties for widget factory.
+     */
+    protected void _initProps(Map<String, Object> props) {
         props.put("id", id);
         props.put("wclass", componentDefinition.getWidgetClass());
         props.put("wpkg", componentDefinition.getWidgetPackage());
         props.put("cntr", isContainer());
     }
     
+    /**
+     * Synchronize a state value to the client.
+     * 
+     * @param state The state name.
+     * @param value The state value.
+     */
     public void sync(String state, Object value) {
         if (getPage() == null) {
             if (inits == null) {
@@ -667,10 +768,16 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
     }
     
+    /**
+     * Invoke a widget function on the client.
+     * 
+     * @param function The name of the function.
+     * @param args Arguments for the function.
+     */
     public void invoke(String function, Object... args) {
         ClientInvocation invocation = new ClientInvocation(this, function, args);
         
-        if (getPage() == null) {
+        if (page == null) {
             if (invocationQueue == null) {
                 invocationQueue = new ClientInvocationQueue();
             }
@@ -703,11 +810,25 @@ public abstract class BaseComponent implements IElementIdentifier {
         return cmp;
     }
     
+    /**
+     * Looks up a component of the specified type by its name within the namespace occupied by this
+     * component.
+     * 
+     * @param name Component name or path.
+     * @param type Expected return type.
+     * @return The component sought, or null if not found.
+     */
     @SuppressWarnings("unchecked")
-    public <T extends BaseComponent> T findByName(String name, Class<T> clazz) {
+    public <T extends BaseComponent> T findByName(String name, Class<T> type) {
         return (T) findByName(name);
     }
     
+    /**
+     * Returns a subcomponent identifier.
+     * 
+     * @param subId The sub identifier.
+     * @return A subcomponent object.
+     */
     public SubComponent sub(String subId) {
         return new SubComponent(this, subId);
     }

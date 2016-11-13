@@ -73,7 +73,7 @@ public final class Page extends BaseComponent implements INamespace {
     public static void _init(Page page, Map<String, Object> browserInfo, Synchronizer synchronizer) {
         page.synchronizer = synchronizer;
         page.browserInfo.putAll(browserInfo);
-        page._init(page);
+        page._attach(page);
     }
     
     public Page() {
