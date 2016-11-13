@@ -471,6 +471,16 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	},	
 	
 	/**
+	 * Returns the id associated with the object.
+	 */
+	id: function(object) {
+		return _.isNil(object) ? null 
+			: object.jquery ? object.attr('id') 
+			: object.__cwf__ ? object.__cwf__
+			: object.id;
+	},
+	
+	/**
 	 * Returns the DOM element associated with the object.
 	 */
 	ele: function(object) {
@@ -491,13 +501,6 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 
 		parent1.insertBefore(ele2, next1);
 		parent2.insertBefore(ele1, next2);
-	},
-	
-	/**
-	 * Returns the id associated with the object.
-	 */
-	id: function(object) {
-		return _.isNil(object) ? null : object.jquery ? object.attr('id') : object.id;
 	},
 	
 	/**
