@@ -484,7 +484,9 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 * Returns the DOM element associated with the object.
 	 */
 	ele: function(object) {
-		return _.isNil(object) ? null : _.isElement(object) ? object : cwf.$(object)[0];
+		return _.isNil(object) ? null 
+			: _.isElement(object) ? object 
+			: cwf.$(object)[0];
 	},
 	
 	/**
@@ -507,8 +509,6 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 * Handler for fatal exceptions.
 	 */
 	fatal: function(error) {
-		//$('#' + this.pid).hide();
-		
 		if (!(error instanceof Error)) {
 			error = new Error(error);
 		}
@@ -537,7 +537,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				title: title || 'Alert',
 				text: message};
 		
-		return alert = cwf.widget.create(null, props, state);
+		return cwf.widget.create(null, props, state);
 	},
 	
 	/**
@@ -558,7 +558,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 * Return a unique identifier.
 	 */
 	uniqueId: function() {
-		return _.uniqueId('cwf__');
+		return _.uniqueId('_cwf__');
 	},
 	
 	/**

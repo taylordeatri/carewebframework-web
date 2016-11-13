@@ -39,7 +39,7 @@ import org.carewebframework.web.page.PageParser;
  * prohibits child tags, it does allow the addition of child components either programmatically or
  * via the specified source page.
  */
-@Component(value = "import", widgetClass = "Div", parentTag = "*")
+@Component(value = "import", widgetClass = "Span", parentTag = "*")
 public class Import extends BaseUIComponent {
     
     private String src;
