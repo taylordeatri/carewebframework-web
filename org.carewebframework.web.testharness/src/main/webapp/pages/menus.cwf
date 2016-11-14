@@ -1,4 +1,4 @@
-<page>
+<span controller="org.carewebframework.web.testharness.MenusController">
 	<menu name="mainMenu" label="mainMenu">
 		<menuheader name="menu1" label="header" />
 		<menuitem name="menu2" label="menu2" checkable="true" />
@@ -12,4 +12,4 @@
 	
 	<button name="btnToggleMenu" label="toggle dropdown" />
 	
-</page>
+</span>

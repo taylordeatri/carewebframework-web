@@ -1,8 +1,8 @@
-<page>
+<span controller="org.carewebframework.web.testharness.TimerController">
 	<div>timer: name="timer" repeat="5" interval="2000" running="false"</div>
 	<timer name="timer" repeat="5" interval="2000" running="false" />
 	<toolbar>
 		<button name="btnToggleTimer" />
 		<progressbar name="pbTimer" />
 	</toolbar>
-</page>
+</span>

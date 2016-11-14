@@ -90,12 +90,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				throw new Error('Not a container widget: ' + this.wclass)
 			}
 			
-			child = cwf.wgt(child);
+			var wgt = cwf.wgt(child);
 			
-			if (!child) {
+			if (!wgt) {
 				throw new Error('Child is not a valid widget.');
 			}
 			
+			child = wgt;
 			var currentIndex = child._parent === this ? child.getIndex() : -1;
 			index = _.isNil(index) || index < -1 ? -1 : index;
 			

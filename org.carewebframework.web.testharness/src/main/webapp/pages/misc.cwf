@@ -1,4 +1,4 @@
-<page>
+<span controller="org.carewebframework.web.testharness.MiscController">
 	<table>
 		<columns>
 			<column width="30%" />
@@ -61,4 +61,4 @@
 			<menuitem label="sub2" />
 		</menuitem>
 	</menupopup>
-</page>
+</span>

@@ -1,4 +1,4 @@
-<page>
+<span controller="org.carewebframework.web.testharness.WindowsController">
 	<window name="window1" class="flavor:panel-success" title="Test Window" height="100px">
 		window name="window1" class="flavor:panel-success" title="Test Window" height="100px"
 		<div name="window_div" />
@@ -18,4 +18,4 @@
 			<button name="btnAlert" label="Show alert" class="flavor:btn-warning" />
 		</div>
 	</window>
-</page>
+</span>

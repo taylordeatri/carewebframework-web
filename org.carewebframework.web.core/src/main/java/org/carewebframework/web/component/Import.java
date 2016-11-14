@@ -59,7 +59,7 @@ public class Import extends BaseUIComponent {
         return src;
     }
     
-    @PropertySetter("src")
+    @PropertySetter(value = "src", defer = true)
     public void setSrc(String src) {
         if (!areEqual(src = nullify(src), this.src)) {
             this.src = src;

@@ -1,7 +1,7 @@
  
 <page name="page" title="The Page Title"> 
 	<window title="CWF Component Tests" class="flavor:panel-primary" 
-		controller="org.carewebframework.web.testharness.TestController">
+		controller="org.carewebframework.web.testharness.MainController">
 		<tabview name="tabview" height="500px" tabPosition="left">
 			
 			<tab label="Styles" selected="true">

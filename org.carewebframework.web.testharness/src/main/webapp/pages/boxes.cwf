@@ -1,5 +1,5 @@
 <page>
-	<table>
+	<table controller="org.carewebframework.web.testharness.BoxesController">
 		<columns>
 			<column width="40%" />
 			<column width="80%" />

@@ -18,7 +18,7 @@
 			display: block;
 		}
 	</style>
-	<table>
+	<table controller="org.carewebframework.web.testharness.DnDController">
 		<rows>
 			<row>
 				<div name="dropTargetOriginal" dropid="*" class="my-draggables">

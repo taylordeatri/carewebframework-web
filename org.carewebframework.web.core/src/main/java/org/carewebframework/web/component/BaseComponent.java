@@ -804,7 +804,14 @@ public abstract class BaseComponent implements IElementIdentifier {
         int i = 0;
         
         while (i < pcs.length && cmp != null) {
-            cmp = cmp.nameIndex.find(pcs[i++]);
+            String pc = pcs[i++];
+            
+            if ("^".equals(pc)) {
+                cmp = cmp.getParent();
+                cmp = cmp == null ? null : cmp.getNamespace();
+            } else {
+                cmp = cmp.nameIndex.find(pc);
+            }
         }
         
         return cmp;

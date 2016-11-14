@@ -1,5 +1,4 @@
-
-<tabview height="100%">
+<tabview height="100%" controller="org.carewebframework.web.testharness.TabsController">
 	<tab label="Plain">
 		This is an example of a plain tab.
 	</tab>
