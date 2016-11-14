@@ -43,7 +43,7 @@
 			</row>
 			<row>
 				<popupbox name="popupbox" placeholder="popupbox">
-					<popup>
+					<popup name="popupboxpopup">
 						<label class="flavor:label-success" label="Simple popup" />
 					</popup>
 				</popupbox>

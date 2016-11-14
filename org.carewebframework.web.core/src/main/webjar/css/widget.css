@@ -159,17 +159,6 @@ body {
 	position: absolute;
 }
 
-/* Menuitem */
-
-.cwf_menuitem img {
-	margin-left: -18px;
-	position: absolute;
-}
-
-.cwf_menuitem > a > span.glyphicon {
-    margin-left: -14px;    
-}
-
 /* Menupopup */
 
 .cwf_menupopup {
@@ -182,6 +171,16 @@ body {
     border-radius: 6px 6px 6px 6px;
 }
 
+/* Menuitem */
+
+.cwf_menuitem img {
+	margin-left: -18px;
+	position: absolute;
+}
+
+.cwf_menuitem > a > span.glyphicon {
+    margin-left: -14px;    
+}
 
 /* Div */
 

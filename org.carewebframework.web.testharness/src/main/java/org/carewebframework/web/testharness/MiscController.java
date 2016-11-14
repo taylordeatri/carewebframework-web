@@ -32,7 +32,6 @@ import org.carewebframework.web.client.ClientUtil;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Checkbox;
 import org.carewebframework.web.component.Div;
-import org.carewebframework.web.component.Popupbox;
 import org.carewebframework.web.event.ChangeEvent;
 import org.carewebframework.web.page.PageUtil;
 
@@ -43,9 +42,6 @@ public class MiscController extends BaseController {
     
     @WiredComponent
     BaseComponent dynamicContent;
-    
-    @WiredComponent
-    Popupbox popupbox;
     
     @Override
     public void afterInitialized(BaseComponent root) {
@@ -67,16 +63,6 @@ public class MiscController extends BaseController {
     @EventHandler(value = "click", target = "btnSaveAsFile")
     public void btnSaveAsFileHandler() {
         ClientUtil.saveToFile("This is test content", "text/plain", "testFile.txt");
-    }
-    
-    @EventHandler(value = "close", target = "@popupbox")
-    public void popupboxCloseHandler() {
-        popupbox.setValue("Drop down closed!");
-    }
-    
-    @EventHandler(value = "open", target = "@popupbox")
-    public void popupboxOpenHandler() {
-        popupbox.setValue("Drop down opened!");
     }
     
     @WiredComponent

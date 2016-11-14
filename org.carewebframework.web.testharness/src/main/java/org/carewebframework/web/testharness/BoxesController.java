@@ -32,7 +32,9 @@ import org.carewebframework.web.component.Combobox;
 import org.carewebframework.web.component.Comboitem;
 import org.carewebframework.web.component.Listbox;
 import org.carewebframework.web.component.Listitem;
+import org.carewebframework.web.component.Popupbox;
 import org.carewebframework.web.component.Textbox;
+import org.carewebframework.web.event.Event;
 import org.carewebframework.web.model.IComponentRenderer;
 import org.carewebframework.web.model.ListModel;
 
@@ -52,6 +54,9 @@ public class BoxesController extends BaseController {
     
     @WiredComponent
     private Combobox cboxRender;
+    
+    @WiredComponent
+    Popupbox popupbox;
     
     @Override
     public void afterInitialized(BaseComponent root) {
@@ -89,6 +94,16 @@ public class BoxesController extends BaseController {
         txtInput.setValue("Value set programmatically");
         txtSelect.selectRange(2, 5);
         txtSelect.focus();
+    }
+    
+    @EventHandler(value = "close", target = "popupboxpopup")
+    public void popupboxCloseHandler(Event event) {
+        popupbox.setValue("Drop down closed!");
+    }
+    
+    @EventHandler(value = "open", target = "popupboxpopup")
+    public void popupboxOpenHandler(Event event) {
+        popupbox.setValue("Drop down opened!");
     }
     
 }

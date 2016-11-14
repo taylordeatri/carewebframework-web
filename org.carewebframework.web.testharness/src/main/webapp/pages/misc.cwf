@@ -51,14 +51,4 @@
 		</rows>
 	</table>
 	
-	<menupopup name="contextMenu">
-		<menuheader label="header" />
-		<menuitem label="menu2" />
-		<menuitem label="menu3" />
-		<menuseparator />
-		<menuitem label="secondary">
-			<menuitem label="sub1" />
-			<menuitem label="sub2" />
-		</menuitem>
-	</menupopup>
 </span>

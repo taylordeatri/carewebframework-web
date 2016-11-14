@@ -816,20 +816,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				this.widget$.off('contextmenu', _showContextPopup);
 			}
 			
-			function _hideContextPopup(event) {
-				cwf.$(v).hide();
-			}
-			
 			function _showContextPopup(event) {
 				cwf.event.stop(event);
-				$('body').one('click', _hideContextPopup);
-				cwf.$(v)
-					.show()
-					.position({
-						my: 'left top',
-						at: 'right bottom',
-						of: event
-					});
+				cwf.wgt(v).open({
+					my: 'left top',
+					at: 'right bottom',
+					of: event
+				});
 			}
 		},
 		
@@ -1395,6 +1388,22 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.Popup = cwf.widget.UIWidget.extend({
 		
+		/*------------------------------ Containment ------------------------------*/
+		
+		anchor$: function() {
+			return this.sub$('inner');
+		},
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		_trigger: function(which) {
+			var event = $.Event(which, {
+				relatedTarget: !this._related ? null : this._related.target ? this._related.target : this._related
+			});
+			
+			this.trigger(event);
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
@@ -1402,18 +1411,43 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._allowClickBubble = false;
 		},
 
+		/*------------------------------ Other ------------------------------*/
+		
+		close: function() {
+			this.anchor$().hide().appendTo(this.widget$);
+			this._trigger('close');
+			this._related = null;
+		},
+		
+		isOpen: function() {
+			return this.anchor$().css('display') !== 'none';
+		},
+		
+		open: function(position) {
+			$('body').one('click', this.close.bind(this));
+			this._related = position.of;
+			
+			this.anchor$()
+				.show()
+				.appendTo('#cwf_root')
+				.position(position);
+			
+			this._trigger('open');
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
 			this._super();
-			this.widget$.hide();
+			this.toggleClass('hidden', true);
+			this.anchor$().addClass(this.wclazz).hide();
 			this._allowClickBubble ? null : this.widget$.on('click', function(event) {
 				event.stopPropagation();
 			});
 		},
 		
 		render$: function() {
-			return $('<div>');
+			return $(this.resolveEL('<span><div id="${id}-inner"></span'));
 		}
 		
 	});
@@ -1696,14 +1730,17 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		init: function() {
 			this._super();
-			this.toggleClass('dropdown-menu multi-level', true);
 			this._allowClickBubble = true;
 		},		
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			return $('<ul role="menu" />');
+			var dom = 
+				'<span>'
+			  +   '<ul id="${id}-inner" role="menu" class="dropdown-menu multi-level" />'
+			  + '</span>';
+			return $(this.resolveEL(dom));
 		}
 		
 	});
@@ -2064,27 +2101,17 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		open: function() {
 			if (this._popup && !this.isOpen()) {
-				var popup$ = this.popup$();
-				popup$.show();
-				popup$.position({
+				this._popup.open({
 					my: 'right top',
 					at: 'right bottom',
 					of: this.widget$
 				});
-				
-				$('body').one('click', this.close.bind(this));
-				this._trigger('open');	
 			}
-		},
-		
-		popup$: function() {
-			return cwf.$(this._popup);
 		},
 		
 		close: function() {
 			if (this.isOpen()) {
-				this.popup$().hide();
-				this._trigger('close');
+				this._popup.close();
 			}
 		},
 		
@@ -2093,15 +2120,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		isOpen: function() {
-			return this._popup && this.popup$().css('display') !== 'none';
-		},
-		
-		_trigger: function(which) {
-			var event = $.Event(which, {
-				relatedTarget: this.popup$()
-			});
-			
-			this.trigger(event);
+			return this._popup && this._popup.isOpen();
 		},
 		
 		/*------------------------------ State ------------------------------*/
