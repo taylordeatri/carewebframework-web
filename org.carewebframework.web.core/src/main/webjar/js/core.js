@@ -132,9 +132,17 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		},
 		
 		cwf$widget: function() {
-			return this.data('cwf_widget');
+			var ele$ = this,
+				wgt;
+
+			while (!wgt && ele$.length) {
+				wgt = ele$.data('cwf_widget');	
+				ele$ = wgt ? null : ele$.parent();
+			}
+			 
+			return wgt;
 		},
-		
+				
 		cwf$attr: function(name, value) {
 			return _.isNil(value) || value === '' ? this.removeAttr(name): this.attr(name, value);
 		},

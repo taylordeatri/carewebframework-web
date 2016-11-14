@@ -28,6 +28,9 @@ package org.carewebframework.web.testharness;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.DropEvent;
 
+/**
+ * Drag and drop demonstration
+ */
 public class DnDController extends BaseController {
     
     /**

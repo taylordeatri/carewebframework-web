@@ -731,7 +731,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Other ------------------------------*/
 		
 		input$: function() {
-			return this.widget$;
+			var input$ = this.sub$('inp');
+			return input$.length ? input$ : this.widget$;
 		},
 		
 		/**
@@ -1019,9 +1020,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 				
 		handleBlur: function(event) {
-			if (!event.target.checkValidity()) {
-				cwf.event.stop(event);
-			} else if (this._changed) {
+			var msg = event.target.validationMessage;
+			cwf.wgt(event.target).updateState('balloon', msg ? msg : null);
+			
+			if (this._changed && !msg) {
 		    	this.fireChanged();
 			}
 		},
@@ -1080,7 +1082,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		render$: function() {
-			return $(this.resolveEL('<input type="${_type}">'));
+			return $(this.resolveEL('<span><input id="${id}-inp" type="${_type}"></span'));
 		}
 		
 	});
@@ -2007,11 +2009,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			return $('<textarea>');
+			return $(this.resolveEL('<span><textarea id="${id}-inp"></span>'));
 		},
 		
 		scrollToBottom: function() {
-			this.widget$.scrollTop(this.widget$[0].scrollHeight);
+			var input$ = this.input$();
+			input$.scrollTop(input$[0].scrollHeight);
 		},
 		
 		/*------------------------------ State ------------------------------*/
@@ -2076,10 +2079,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		popup$: function() {
 			return cwf.$(this._popup);
-		},
-		
-		input$: function() {
-			return this.sub$('inp');
 		},
 		
 		close: function() {
@@ -2275,12 +2274,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			wgt.trigger('select', {selected: true});
 		},
 		
-		/*------------------------------ Other ------------------------------*/
-		
-	    input$: function() {
-	    	return this.sub$('inp');
-	    },
-
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {

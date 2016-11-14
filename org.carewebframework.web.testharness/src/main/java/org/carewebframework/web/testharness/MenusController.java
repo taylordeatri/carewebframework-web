@@ -31,6 +31,9 @@ import org.carewebframework.web.component.Menu;
 import org.carewebframework.web.component.Menuitem;
 import org.carewebframework.web.event.ClickEvent;
 
+/**
+ * Menus Demonstration
+ */
 public class MenusController extends BaseController {
     
     @WiredComponent

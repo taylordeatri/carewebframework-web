@@ -36,6 +36,9 @@ import org.carewebframework.web.component.Textbox;
 import org.carewebframework.web.model.IComponentRenderer;
 import org.carewebframework.web.model.ListModel;
 
+/**
+ * Input boxes demonstration
+ */
 public class BoxesController extends BaseController {
     
     @WiredComponent

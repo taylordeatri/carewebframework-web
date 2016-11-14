@@ -237,9 +237,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     @PropertySetter("name")
     public void setName(String name) {
-        name = nullify(name);
-        
-        if (!areEqual(this.name, name)) {
+        if (!areEqual(name = nullify(name), this.name)) {
             validateName(name);
             nameIndex.remove(this);
             this.name = name;

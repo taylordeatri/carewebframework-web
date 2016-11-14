@@ -30,7 +30,7 @@ import org.carewebframework.web.annotation.WiredComponent;
 import org.carewebframework.web.component.Button;
 
 /*
- * Buttons tab controller
+ * Buttons demonstration.
  */
 public class ButtonsController extends BaseController {
     
