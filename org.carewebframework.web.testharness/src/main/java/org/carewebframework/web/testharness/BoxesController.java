@@ -81,7 +81,7 @@ public class BoxesController extends BaseController {
         });
     }
     
-    @EventHandler(value = "select", target = "^.tabInputBoxes")
+    @EventHandler(value = "select", target = "tabInputBoxes")
     private void InputBoxTabSelectHandler() {
         txtInput.setValue("Value set programmatically");
         txtSelect.selectRange(2, 5);
