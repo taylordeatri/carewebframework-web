@@ -391,7 +391,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 * Returns the id of the page to which this widget belongs.
 		 */
 		pageId: function() {
-			return 'cwf_' + this.id.split('_')[1];
+			return '_cwf_' + this.id.split('_')[2];
 		},
 		
 		/**
