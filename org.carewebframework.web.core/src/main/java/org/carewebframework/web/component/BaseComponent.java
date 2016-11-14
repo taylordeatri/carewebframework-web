@@ -791,7 +791,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     /**
      * Looks up a component by its name within the namespace occupied by this component.
      * 
-     * @param name Component name or path.
+     * @param name Component name or path. "^" in path means parent namespace.
      * @return The component sought, or null if not found.
      */
     public BaseComponent findByName(String name) {
