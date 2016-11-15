@@ -981,6 +981,18 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this.attr('maxlength', v, this.input$());
 		},
 		
+		maxvalue: function(v) {
+			this.attr('max', v, this.input$());
+		},
+		
+		minvalue: function(v) {
+			this.attr('min', v, this.input$());
+		},
+		
+		pattern: function(v) {
+			this.attr('pattern', v, this.input$());
+		},
+		
 		placeholder: function(v) {
 			this.attr('placeholder', v, this.input$());
 		},

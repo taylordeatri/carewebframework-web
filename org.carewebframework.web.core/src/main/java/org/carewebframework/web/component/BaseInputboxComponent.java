@@ -31,6 +31,12 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 
 public abstract class BaseInputboxComponent<T> extends BaseInputComponent<T> {
     
+    private T minvalue;
+    
+    private T maxvalue;
+    
+    private String pattern;
+    
     private String placeholder;
     
     private int maxLength;
@@ -48,6 +54,53 @@ public abstract class BaseInputboxComponent<T> extends BaseInputComponent<T> {
     protected void setSynchronized(boolean synchronize) {
         if (synchronize != this.synced) {
             sync("synced", this.synced = synchronize);
+        }
+    }
+    
+    @PropertyGetter("minvalue")
+    public T getMinvalue() {
+        return minvalue;
+    }
+    
+    @PropertySetter("minvalue")
+    private void _setMinvalue(String minvalue) {
+        setMinvalue(_toValue(minvalue));
+    }
+    
+    public void setMinvalue(T minvalue) {
+        if (!areEqual(minvalue, this.minvalue)) {
+            this.minvalue = minvalue;
+            sync("minvalue", _toString(minvalue));
+        }
+    }
+    
+    @PropertyGetter("maxvalue")
+    public T getMaxvalue() {
+        return maxvalue;
+    }
+    
+    @PropertySetter("maxvalue")
+    private void _setMaxvalue(String maxvalue) {
+        setMaxvalue(_toValue(maxvalue));
+    }
+    
+    @PropertySetter("maxvalue")
+    public void setMaxvalue(T maxvalue) {
+        if (!areEqual(maxvalue, this.maxvalue)) {
+            this.maxvalue = maxvalue;
+            sync("maxvalue", this._toString(maxvalue));
+        }
+    }
+    
+    @PropertyGetter("pattern")
+    public String getPattern() {
+        return pattern;
+    }
+    
+    @PropertySetter("pattern")
+    public void setPattern(String pattern) {
+        if (!areEqual(pattern = nullify(pattern), this.pattern)) {
+            sync("pattern", this.pattern = pattern);
         }
     }
     
