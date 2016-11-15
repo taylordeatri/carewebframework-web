@@ -939,6 +939,28 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this.attr('title', v, this.input$());
 		},
 		
+		keycapture: function(v) {
+			var	self = this;
+			
+			if (v) {
+				this._keycapture = v.split(' ');
+				this.widget$.on('keydown', _keyevent);
+			} else {
+				this._keycapture = null;
+				this.widget$.off('keydown', _keyevent);
+			}
+			
+			function _keyevent(event) {
+				var val = cwf.event.toKeyCapture(event);
+				
+				if (self._keycapture.indexOf(val) >= 0) {
+					cwf.event.stop(event);
+					event.type = 'keycapture';
+					cwf.event.sendToServer(event);
+				}
+			}
+		},
+		
 		style: function(v) {
 			this.attr('style', v);
 		},
@@ -2058,7 +2080,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			return $(this.resolveEL('<span><textarea id="${id}-inp"></span>'));
+			return $(this.resolveEL('<span><textarea id="${id}-inp"/></span>'));
 		},
 		
 		scrollToBottom: function() {

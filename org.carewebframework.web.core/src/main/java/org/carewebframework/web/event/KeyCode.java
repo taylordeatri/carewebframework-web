@@ -4,7 +4,7 @@
  * %%
  * Copyright (C) 2008 - 2016 Regenstrief Institute, Inc.
  * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License")),
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
@@ -25,420 +25,437 @@
  */
 package org.carewebframework.web.event;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.carewebframework.common.MiscUtil;
-
-public class KeyCode {
+public enum KeyCode {
     
-    public static final int VK_0 = 48;
+    VK_0(48),
     
-    public static final int VK_1 = 49;
+    VK_1(49),
     
-    public static final int VK_2 = 50;
+    VK_2(50),
     
-    public static final int VK_3 = 51;
+    VK_3(51),
     
-    public static final int VK_4 = 52;
+    VK_4(52),
     
-    public static final int VK_5 = 53;
+    VK_5(53),
     
-    public static final int VK_6 = 54;
+    VK_6(54),
     
-    public static final int VK_7 = 55;
+    VK_7(55),
     
-    public static final int VK_8 = 56;
+    VK_8(56),
     
-    public static final int VK_9 = 57;
+    VK_9(57),
     
-    public static final int VK_A = 65;
+    VK_A(65),
     
-    public static final int VK_ACCEPT = 30;
+    VK_ACCEPT(30),
     
-    public static final int VK_ADD = 107;
+    VK_ADD(107),
     
-    public static final int VK_AGAIN = 65481;
+    VK_AGAIN(65481),
     
-    public static final int VK_ALL_CANDIDATES = 256;
+    VK_ALL_CANDIDATES(256),
     
-    public static final int VK_ALPHANUMERIC = 240;
+    VK_ALPHANUMERIC(240),
     
-    public static final int VK_ALT = 18;
+    VK_ALT(18),
     
-    public static final int VK_ALT_GRAPH = 65406;
+    VK_ALT_GRAPH(65406),
     
-    public static final int VK_AMPERSAND = 150;
+    VK_AMPERSAND(150),
     
-    public static final int VK_ASTERISK = 151;
+    VK_ASTERISK(151),
     
-    public static final int VK_AT = 512;
+    VK_AT(512),
     
-    public static final int VK_B = 66;
+    VK_B(66),
     
-    public static final int VK_BACK_QUOTE = 192;
+    VK_BACK_QUOTE(192),
     
-    public static final int VK_BACK_SLASH = 92;
+    VK_BACK_SLASH(92),
     
-    public static final int VK_BACK_SPACE = 8;
+    VK_BACK_SPACE(8),
     
-    public static final int VK_BEGIN = 65368;
+    VK_BEGIN(65368),
     
-    public static final int VK_BRACELEFT = 161;
+    VK_BRACELEFT(161),
     
-    public static final int VK_BRACERIGHT = 162;
+    VK_BRACERIGHT(162),
     
-    public static final int VK_C = 67;
+    VK_C(67),
     
-    public static final int VK_CANCEL = 3;
+    VK_CANCEL(3),
     
-    public static final int VK_CAPS_LOCK = 20;
+    VK_CAPS_LOCK(20),
     
-    public static final int VK_CIRCUMFLEX = 514;
+    VK_CIRCUMFLEX(514),
     
-    public static final int VK_CLEAR = 12;
+    VK_CLEAR(12),
     
-    public static final int VK_CLOSE_BRACKET = 93;
+    VK_CLOSE_BRACKET(93),
     
-    public static final int VK_CODE_INPUT = 258;
+    VK_CODE_INPUT(258),
     
-    public static final int VK_COLON = 513;
+    VK_COLON(513),
     
-    public static final int VK_COMMA = 44;
+    VK_COMMA(44),
     
-    public static final int VK_COMPOSE = 65312;
+    VK_COMPOSE(65312),
     
-    public static final int VK_CONTEXT_MENU = 525;
+    VK_CONTEXT_MENU(525),
     
-    public static final int VK_CONTROL = 17;
+    VK_CONTROL(17),
     
-    public static final int VK_CONVERT = 28;
+    VK_CONVERT(28),
     
-    public static final int VK_COPY = 65485;
+    VK_COPY(65485),
     
-    public static final int VK_CUT = 65489;
+    VK_CUT(65489),
     
-    public static final int VK_D = 68;
+    VK_D(68),
     
-    public static final int VK_DEAD_ABOVEDOT = 134;
+    VK_DEAD_ABOVEDOT(134),
     
-    public static final int VK_DEAD_ABOVERING = 136;
+    VK_DEAD_ABOVERING(136),
     
-    public static final int VK_DEAD_ACUTE = 129;
+    VK_DEAD_ACUTE(129),
     
-    public static final int VK_DEAD_BREVE = 133;
+    VK_DEAD_BREVE(133),
     
-    public static final int VK_DEAD_CARON = 138;
+    VK_DEAD_CARON(138),
     
-    public static final int VK_DEAD_CEDILLA = 139;
+    VK_DEAD_CEDILLA(139),
     
-    public static final int VK_DEAD_CIRCUMFLEX = 130;
+    VK_DEAD_CIRCUMFLEX(130),
     
-    public static final int VK_DEAD_DIAERESIS = 135;
+    VK_DEAD_DIAERESIS(135),
     
-    public static final int VK_DEAD_DOUBLEACUTE = 137;
+    VK_DEAD_DOUBLEACUTE(137),
     
-    public static final int VK_DEAD_GRAVE = 128;
+    VK_DEAD_GRAVE(128),
     
-    public static final int VK_DEAD_IOTA = 141;
+    VK_DEAD_IOTA(141),
     
-    public static final int VK_DEAD_MACRON = 132;
+    VK_DEAD_MACRON(132),
     
-    public static final int VK_DEAD_OGONEK = 140;
+    VK_DEAD_OGONEK(140),
     
-    public static final int VK_DEAD_SEMIVOICED_SOUND = 143;
+    VK_DEAD_SEMIVOICED_SOUND(143),
     
-    public static final int VK_DEAD_TILDE = 131;
+    VK_DEAD_TILDE(131),
     
-    public static final int VK_DEAD_VOICED_SOUND = 142;
+    VK_DEAD_VOICED_SOUND(142),
     
-    public static final int VK_DECIMAL = 110;
+    VK_DECIMAL(110),
     
-    public static final int VK_DELETE = 127;
+    VK_DELETE(127),
     
-    public static final int VK_DIVIDE = 111;
+    VK_DIVIDE(111),
     
-    public static final int VK_DOLLAR = 515;
+    VK_DOLLAR(515),
     
-    public static final int VK_DOWN = 40;
+    VK_DOWN(40),
     
-    public static final int VK_E = 69;
+    VK_E(69),
     
-    public static final int VK_END = 35;
+    VK_END(35),
     
-    public static final int VK_ENTER = 10;
+    VK_ENTER(10),
     
-    public static final int VK_EQUALS = 61;
+    VK_EQUALS(61),
     
-    public static final int VK_ESCAPE = 27;
+    VK_ESCAPE(27),
     
-    public static final int VK_EURO_SIGN = 516;
+    VK_EURO_SIGN(516),
     
-    public static final int VK_EXCLAMATION_MARK = 517;
+    VK_EXCLAMATION_MARK(517),
     
-    public static final int VK_F = 70;
+    VK_F(70),
     
-    public static final int VK_F1 = 112;
+    VK_F1(112),
     
-    public static final int VK_F10 = 121;
+    VK_F10(121),
     
-    public static final int VK_F11 = 122;
+    VK_F11(122),
     
-    public static final int VK_F12 = 123;
+    VK_F12(123),
     
-    public static final int VK_F13 = 61440;
+    VK_F13(61440),
     
-    public static final int VK_F14 = 61441;
+    VK_F14(61441),
     
-    public static final int VK_F15 = 61442;
+    VK_F15(61442),
     
-    public static final int VK_F16 = 61443;
+    VK_F16(61443),
     
-    public static final int VK_F17 = 61444;
+    VK_F17(61444),
     
-    public static final int VK_F18 = 61445;
+    VK_F18(61445),
     
-    public static final int VK_F19 = 61446;
+    VK_F19(61446),
     
-    public static final int VK_F2 = 113;
+    VK_F2(113),
     
-    public static final int VK_F20 = 61447;
+    VK_F20(61447),
     
-    public static final int VK_F21 = 61448;
+    VK_F21(61448),
     
-    public static final int VK_F22 = 61449;
+    VK_F22(61449),
     
-    public static final int VK_F23 = 61450;
+    VK_F23(61450),
     
-    public static final int VK_F24 = 61451;
+    VK_F24(61451),
     
-    public static final int VK_F3 = 114;
+    VK_F3(114),
     
-    public static final int VK_F4 = 115;
+    VK_F4(115),
     
-    public static final int VK_F5 = 116;
+    VK_F5(116),
     
-    public static final int VK_F6 = 117;
+    VK_F6(117),
     
-    public static final int VK_F7 = 118;
+    VK_F7(118),
     
-    public static final int VK_F8 = 119;
+    VK_F8(119),
     
-    public static final int VK_F9 = 120;
+    VK_F9(120),
     
-    public static final int VK_FINAL = 24;
+    VK_FINAL(24),
     
-    public static final int VK_FIND = 65488;
+    VK_FIND(65488),
     
-    public static final int VK_FULL_WIDTH = 243;
+    VK_FULL_WIDTH(243),
     
-    public static final int VK_G = 71;
+    VK_G(71),
     
-    public static final int VK_GREATER = 160;
+    VK_GREATER(160),
     
-    public static final int VK_H = 72;
+    VK_H(72),
     
-    public static final int VK_HALF_WIDTH = 244;
+    VK_HALF_WIDTH(244),
     
-    public static final int VK_HELP = 156;
+    VK_HELP(156),
     
-    public static final int VK_HIRAGANA = 242;
+    VK_HIRAGANA(242),
     
-    public static final int VK_HOME = 36;
+    VK_HOME(36),
     
-    public static final int VK_I = 73;
+    VK_I(73),
     
-    public static final int VK_INPUT_METHOD_ON_OFF = 263;
+    VK_INPUT_METHOD_ON_OFF(263),
     
-    public static final int VK_INSERT = 155;
+    VK_INSERT(155),
     
-    public static final int VK_INVERTED_EXCLAMATION_MARK = 518;
+    VK_INVERTED_EXCLAMATION_MARK(518),
     
-    public static final int VK_J = 74;
+    VK_J(74),
     
-    public static final int VK_JAPANESE_HIRAGANA = 260;
+    VK_JAPANESE_HIRAGANA(260),
     
-    public static final int VK_JAPANESE_KATAKANA = 259;
+    VK_JAPANESE_KATAKANA(259),
     
-    public static final int VK_JAPANESE_ROMAN = 261;
+    VK_JAPANESE_ROMAN(261),
     
-    public static final int VK_K = 75;
+    VK_K(75),
     
-    public static final int VK_KANA = 21;
+    VK_KANA(21),
     
-    public static final int VK_KANA_LOCK = 262;
+    VK_KANA_LOCK(262),
     
-    public static final int VK_KANJI = 25;
+    VK_KANJI(25),
     
-    public static final int VK_KATAKANA = 241;
+    VK_KATAKANA(241),
     
-    public static final int VK_KP_DOWN = 225;
+    VK_KP_DOWN(225),
     
-    public static final int VK_KP_LEFT = 226;
+    VK_KP_LEFT(226),
     
-    public static final int VK_KP_RIGHT = 227;
+    VK_KP_RIGHT(227),
     
-    public static final int VK_KP_UP = 224;
+    VK_KP_UP(224),
     
-    public static final int VK_L = 76;
+    VK_L(76),
     
-    public static final int VK_LEFT = 37;
+    VK_LEFT(37),
     
-    public static final int VK_LEFT_PARENTHESIS = 519;
+    VK_LEFT_PARENTHESIS(519),
     
-    public static final int VK_LESS = 153;
+    VK_LESS(153),
     
-    public static final int VK_M = 77;
+    VK_M(77),
     
-    public static final int VK_META = 157;
+    VK_META(157),
     
-    public static final int VK_MINUS = 45;
+    VK_MINUS(45),
     
-    public static final int VK_MODECHANGE = 31;
+    VK_MODECHANGE(31),
     
-    public static final int VK_MULTIPLY = 106;
+    VK_MULTIPLY(106),
     
-    public static final int VK_N = 78;
+    VK_N(78),
     
-    public static final int VK_NONCONVERT = 29;
+    VK_NONCONVERT(29),
     
-    public static final int VK_NUM_LOCK = 144;
+    VK_NUM_LOCK(144),
     
-    public static final int VK_NUMBER_SIGN = 520;
+    VK_NUMBER_SIGN(520),
     
-    public static final int VK_NUMPAD0 = 96;
+    VK_NUMPAD0(96),
     
-    public static final int VK_NUMPAD1 = 97;
+    VK_NUMPAD1(97),
     
-    public static final int VK_NUMPAD2 = 98;
+    VK_NUMPAD2(98),
     
-    public static final int VK_NUMPAD3 = 99;
+    VK_NUMPAD3(99),
     
-    public static final int VK_NUMPAD4 = 100;
+    VK_NUMPAD4(100),
     
-    public static final int VK_NUMPAD5 = 101;
+    VK_NUMPAD5(101),
     
-    public static final int VK_NUMPAD6 = 102;
+    VK_NUMPAD6(102),
     
-    public static final int VK_NUMPAD7 = 103;
+    VK_NUMPAD7(103),
     
-    public static final int VK_NUMPAD8 = 104;
+    VK_NUMPAD8(104),
     
-    public static final int VK_NUMPAD9 = 105;
+    VK_NUMPAD9(105),
     
-    public static final int VK_O = 79;
+    VK_O(79),
     
-    public static final int VK_OPEN_BRACKET = 91;
+    VK_OPEN_BRACKET(91),
     
-    public static final int VK_P = 80;
+    VK_P(80),
     
-    public static final int VK_PAGE_DOWN = 34;
+    VK_PAGE_DOWN(34),
     
-    public static final int VK_PAGE_UP = 33;
+    VK_PAGE_UP(33),
     
-    public static final int VK_PASTE = 65487;
+    VK_PASTE(65487),
     
-    public static final int VK_PAUSE = 19;
+    VK_PAUSE(19),
     
-    public static final int VK_PERIOD = 46;
+    VK_PERIOD(46),
     
-    public static final int VK_PLUS = 521;
+    VK_PLUS(521),
     
-    public static final int VK_PREVIOUS_CANDIDATE = 257;
+    VK_PREVIOUS_CANDIDATE(257),
     
-    public static final int VK_PRINTSCREEN = 154;
+    VK_PRINTSCREEN(154),
     
-    public static final int VK_PROPS = 65482;
+    VK_PROPS(65482),
     
-    public static final int VK_Q = 81;
+    VK_Q(81),
     
-    public static final int VK_QUOTE = 222;
+    VK_QUOTE(222),
     
-    public static final int VK_QUOTEDBL = 152;
+    VK_QUOTEDBL(152),
     
-    public static final int VK_R = 82;
+    VK_R(82),
     
-    public static final int VK_RIGHT = 39;
+    VK_RIGHT(39),
     
-    public static final int VK_RIGHT_PARENTHESIS = 522;
+    VK_RIGHT_PARENTHESIS(522),
     
-    public static final int VK_ROMAN_CHARACTERS = 245;
+    VK_ROMAN_CHARACTERS(245),
     
-    public static final int VK_S = 83;
+    VK_S(83),
     
-    public static final int VK_SCROLL_LOCK = 145;
+    VK_SCROLL_LOCK(145),
     
-    public static final int VK_SEMICOLON = 59;
+    VK_SEMICOLON(59),
     
-    public static final int VK_SEPARATER = 108;
+    VK_SEPARATOR(108),
     
-    public static final int VK_SEPARATOR = 108;
+    VK_SHIFT(16),
     
-    public static final int VK_SHIFT = 16;
+    VK_SLASH(47),
     
-    public static final int VK_SLASH = 47;
+    VK_SPACE(32),
     
-    public static final int VK_SPACE = 32;
+    VK_STOP(65480),
     
-    public static final int VK_STOP = 65480;
+    VK_SUBTRACT(109),
     
-    public static final int VK_SUBTRACT = 109;
+    VK_T(84),
     
-    public static final int VK_T = 84;
+    VK_TAB(9),
     
-    public static final int VK_TAB = 9;
+    VK_U(85),
     
-    public static final int VK_U = 85;
+    VK_UNDERSCORE(523),
     
-    public static final int VK_UNDEFINED = 0;
+    VK_UNDO(65483),
     
-    public static final int VK_UNDERSCORE = 523;
+    VK_UP(38),
     
-    public static final int VK_UNDO = 65483;
+    VK_V(86),
     
-    public static final int VK_UP = 38;
+    VK_W(87),
     
-    public static final int VK_V = 86;
+    VK_WINDOWS(524),
     
-    public static final int VK_W = 87;
+    VK_X(88),
     
-    public static final int VK_WINDOWS = 524;
+    VK_Y(89),
     
-    public static final int VK_X = 88;
+    VK_Z(90);
     
-    public static final int VK_Y = 89;
+    private static final Map<Integer, KeyCode> map = new HashMap<>();
     
-    public static final int VK_Z = 90;
+    private static volatile boolean initialized;
     
-    private static final Map<Integer, String> codeToString = new HashMap<>();
+    private final int code;
     
-    private static final Map<String, Integer> stringToCode = new HashMap<>();
+    public static KeyCode fromString(String value) {
+        if (value != null) {
+            value = value.toUpperCase();
+            
+            if (!value.startsWith("VK_")) {
+                value = "VK_" + value;
+            }
+            
+            try {
+                return KeyCode.valueOf(value);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+        
+        return null;
+    }
     
-    static {
-        for (Field field : KeyCode.class.getDeclaredFields()) {
-            if (field.getType() == int.class) {
-                try {
-                    int value = field.getInt(null);
-                    String name = field.getName();
-                    codeToString.put(value, name);
-                    stringToCode.put(name, value);
-                } catch (Exception e) {
-                    throw MiscUtil.toUnchecked(e);
+    public static KeyCode fromCode(int keyCode) {
+        if (!initialized) {
+            initMap();
+        }
+        
+        return map.get(keyCode);
+    }
+    
+    private static void initMap() {
+        synchronized (map) {
+            if (!initialized) {
+                for (KeyCode e : values()) {
+                    if (map.containsKey(e.code)) {
+                        throw new RuntimeException("Duplicate key code: " + e);
+                    }
+                    map.put(e.code, e);
                 }
+                
+                initialized = true;
             }
         }
     }
     
-    public static String getSymbolicName(int keyCode) {
-        return codeToString.get(keyCode);
+    KeyCode(int code) {
+        this.code = code;
     }
     
-    public static int getCode(String symbolicName) {
-        Integer code = stringToCode.get(symbolicName);
-        return code == null ? -1 : code;
-    }
-    
-    private KeyCode() {
+    public int getCode() {
+        return code;
     }
 }

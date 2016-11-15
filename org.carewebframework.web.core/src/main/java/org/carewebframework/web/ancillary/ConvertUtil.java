@@ -26,9 +26,11 @@
 package org.carewebframework.web.ancillary;
 
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang.StringUtils;
 import org.carewebframework.common.StrUtil;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Page;
+import org.carewebframework.web.event.KeyCode;
 
 public class ConvertUtil {
     
@@ -112,6 +114,47 @@ public class ConvertUtil {
         }
         
         return target;
+    }
+    
+    private static final String KEY_PFX = "^@~!";
+    
+    public static String parseKeyCapture(String keycapture) {
+        if (keycapture != null) {
+            StringBuilder result = new StringBuilder();
+            
+            for (String entry : keycapture.split(" ")) {
+                if (entry.isEmpty()) {
+                    continue;
+                }
+                
+                String[] pfxs = { "", "", "", "" };
+                
+                while (!entry.isEmpty()) {
+                    String pfx = entry.substring(0, 1);
+                    int i = KEY_PFX.indexOf(pfx);
+                    
+                    if (i < 0) {
+                        break;
+                    }
+                    
+                    pfxs[i] = pfx;
+                    entry = entry.substring(1);
+                }
+                
+                KeyCode keycode = KeyCode.fromString(entry);
+                
+                if (keycode == null) {
+                    throw new IllegalArgumentException("Unrecognized key mnemonic: " + entry);
+                }
+                
+                String pfx = StringUtils.join(pfxs, "");
+                result.append(result.length() > 0 ? " " : "").append(pfx).append(keycode.getCode());
+            }
+            
+            return result.toString();
+        }
+        
+        return null;
     }
     
     private ConvertUtil() {

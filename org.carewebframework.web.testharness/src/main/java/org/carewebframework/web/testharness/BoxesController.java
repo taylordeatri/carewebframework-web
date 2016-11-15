@@ -106,4 +106,8 @@ public class BoxesController extends BaseController {
         popupbox.setValue("Drop down opened!");
     }
     
+    @EventHandler(value = "keycapture", target = "memobox")
+    public void memoboxKeyPressHandler(Event event) {
+        log("Captured keypress: " + event);
+    }
 }

@@ -60,6 +60,8 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     
     private Popup context;
     
+    private String keycapture;
+    
     public void addMask() {
         addMask(null);
     }
@@ -322,6 +324,19 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
         if (context != getContext()) {
             validate(context);
             sync("context", this.context = context);
+        }
+    }
+    
+    @PropertyGetter("keycapture")
+    public String getKeycapture() {
+        return keycapture;
+    }
+    
+    @PropertySetter("keycapture")
+    public void setKeycapture(String keycapture) {
+        if (!areEqual(keycapture = nullify(keycapture), this.keycapture)) {
+            sync("keycapture", ConvertUtil.parseKeyCapture(keycapture));
+            this.keycapture = keycapture;
         }
     }
     

@@ -295,6 +295,16 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		registerPostProcessor: function(type, fn) {
 			this.postProcessors[type] = fn;
 		},
+
+		toKeyCapture: function(event) {
+			var value = '';
+			value += event.ctrlKey ? '^' : '';
+			value += event.altKey ? '@' : '';
+			value += event.metaKey ? '~' : '';
+			value += event.shiftKey ? '!' : '';
+			value += event.keyCode;
+			return value;
+		},
 		
 		/**
 		 * Event handler for constraining input.

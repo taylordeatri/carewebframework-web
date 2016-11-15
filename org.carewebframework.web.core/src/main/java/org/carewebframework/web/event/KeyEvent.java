@@ -75,8 +75,8 @@ public class KeyEvent extends Event {
         return metaKey;
     }
     
-    public int getKeyCode() {
-        return keyCode;
+    public KeyCode getKeyCode() {
+        return KeyCode.fromCode(keyCode);
     }
     
     public char getCharCode() {
