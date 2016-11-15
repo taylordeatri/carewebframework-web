@@ -30,6 +30,7 @@ import org.carewebframework.web.annotation.OnFailure;
 import org.carewebframework.web.annotation.WiredComponent;
 import org.carewebframework.web.client.ClientUtil;
 import org.carewebframework.web.component.BaseComponent;
+import org.carewebframework.web.component.Button;
 import org.carewebframework.web.component.Checkbox;
 import org.carewebframework.web.component.Div;
 import org.carewebframework.web.event.ChangeEvent;
@@ -41,7 +42,7 @@ public class MiscController extends BaseController {
     private Div nomatch;
     
     @WiredComponent
-    BaseComponent dynamicContent;
+    private BaseComponent dynamicContent;
     
     @Override
     public void afterInitialized(BaseComponent root) {
@@ -79,4 +80,15 @@ public class MiscController extends BaseController {
         }
     }
     
+    @WiredComponent
+    private Button btnToggleBalloon;
+    
+    @EventHandler(value = "click", target = "@btnToggleBalloon")
+    private void btnToggleBalloonClickHandler() {
+        if (btnToggleBalloon.getBalloon() == null) {
+            btnToggleBalloon.setBalloon("Balloon Text");
+        } else {
+            btnToggleBalloon.setBalloon(null);
+        }
+    }
 }

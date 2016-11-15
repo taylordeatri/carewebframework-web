@@ -45,8 +45,8 @@
 				Test of masking components.  Should mask div to left of button.
 			</row>
 			<row>
-				<button label="Has Balloon Text" balloon="Balloon Text" />
-				Test of balloon text.
+				<button name="btnToggleBalloon" label="Click Here" balloon="Balloon Text" />
+				Click to toggle balloon text.
 			</row>
 		</rows>
 	</table>
