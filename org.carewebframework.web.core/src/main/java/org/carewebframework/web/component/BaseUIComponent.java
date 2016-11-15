@@ -31,6 +31,7 @@ import org.carewebframework.web.ancillary.CssStyles;
 import org.carewebframework.web.ancillary.IDisable;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.carewebframework.web.event.KeyCode;
 
 public abstract class BaseUIComponent extends BaseComponent implements IDisable {
     
@@ -335,7 +336,7 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     @PropertySetter("keycapture")
     public void setKeycapture(String keycapture) {
         if (!areEqual(keycapture = nullify(keycapture), this.keycapture)) {
-            sync("keycapture", ConvertUtil.parseKeyCapture(keycapture));
+            sync("keycapture", KeyCode.parseKeyCapture(keycapture));
             this.keycapture = keycapture;
         }
     }
