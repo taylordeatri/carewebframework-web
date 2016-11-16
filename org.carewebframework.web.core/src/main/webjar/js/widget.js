@@ -1462,8 +1462,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._related = position.of;
 			
 			this.anchor$()
+				.appendTo(position.anchor || '#cwf_root')
 				.show()
-				.appendTo('#cwf_root')
 				.position(position);
 			
 			this._trigger('open');
@@ -2138,7 +2138,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				this._popup.open({
 					my: 'right top',
 					at: 'right bottom',
-					of: this.widget$
+					of: this.widget$,
+					anchor: this.widget$
 				});
 			}
 		},
