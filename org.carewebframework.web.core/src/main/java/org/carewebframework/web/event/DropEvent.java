@@ -34,6 +34,7 @@ public class DropEvent extends Event {
     public static final String TYPE = "drop";
     
     public DropEvent() {
+        super(TYPE);
     }
     
     public DropEvent(BaseComponent target, Object data) {

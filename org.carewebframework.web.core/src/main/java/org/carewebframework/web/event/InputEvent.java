@@ -38,6 +38,7 @@ public class InputEvent extends Event {
     private String value;
     
     public InputEvent() {
+        super(TYPE);
     }
     
     public InputEvent(BaseComponent target, Object data) {

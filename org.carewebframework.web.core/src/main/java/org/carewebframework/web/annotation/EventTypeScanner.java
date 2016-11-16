@@ -32,7 +32,7 @@ import org.carewebframework.common.RegistryMap.DuplicateAction;
 import org.carewebframework.web.event.Event;
 
 /**
- * Utility class for scanning method annotations and building component definitions from them.
+ * Builds a map of event types to implementation classes by scanning class annotations.
  */
 public class EventTypeScanner extends AbstractClassScanner<Event, EventType> {
     
@@ -49,21 +49,34 @@ public class EventTypeScanner extends AbstractClassScanner<Event, EventType> {
     }
     
     /**
-     * Creates and registers a component definition for a class by scanning the class and its
-     * superclasses for method annotations.
+     * Creates mapping between event type and its implementation class.
      * 
-     * @param eventClass Class to scan.
+     * @param eventClass Class containing EventType annotation.
      */
     @Override
     protected void scanClass(Class<Event> eventClass) {
         typeToClass.put(getEventType(eventClass), eventClass);
     }
     
+    /**
+     * Returns an implementation class given an event type. Will never return null; for any event
+     * types that do not have an explicit implementation class this method will return a generic
+     * Event class.
+     * 
+     * @param eventType The event type whose implementation class is sought.
+     * @return The implementation class.
+     */
     public Class<? extends Event> getEventClass(String eventType) {
         Class<? extends Event> eventClass = typeToClass.get(eventType);
         return eventClass == null ? Event.class : eventClass;
     }
     
+    /**
+     * Given an event class, returns the event type implemented by that class.
+     * 
+     * @param eventClass An event class.
+     * @return The event type, or null if none is associated with the class.
+     */
     public String getEventType(Class<? extends Event> eventClass) {
         EventType eventType = eventClass.getAnnotation(EventType.class);
         return eventType == null ? null : eventType.value();

@@ -35,6 +35,7 @@ import org.carewebframework.web.component.Listitem;
 import org.carewebframework.web.component.Popupbox;
 import org.carewebframework.web.component.Textbox;
 import org.carewebframework.web.event.Event;
+import org.carewebframework.web.event.KeycaptureEvent;
 import org.carewebframework.web.model.IComponentRenderer;
 import org.carewebframework.web.model.ListModel;
 
@@ -107,7 +108,7 @@ public class BoxesController extends BaseController {
     }
     
     @EventHandler(value = "keycapture", target = "memobox")
-    public void memoboxKeyPressHandler(Event event) {
-        log("Captured keypress: " + event);
+    public void memoboxKeyPressHandler(KeycaptureEvent event) {
+        log("Captured keypress: " + event.getKeycapture());
     }
 }

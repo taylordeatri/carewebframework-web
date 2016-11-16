@@ -38,6 +38,7 @@ public class SelectEvent extends Event {
     private boolean selected = true;
     
     public SelectEvent() {
+        super(TYPE);
     }
     
     public SelectEvent(BaseComponent target, Object data, boolean selected) {

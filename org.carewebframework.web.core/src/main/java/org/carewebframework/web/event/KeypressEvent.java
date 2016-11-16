@@ -28,16 +28,16 @@ package org.carewebframework.web.event;
 import org.carewebframework.web.annotation.EventType;
 import org.carewebframework.web.component.BaseComponent;
 
-@EventType(ClickEvent.TYPE)
-public class ClickEvent extends MouseEvent {
+@EventType(KeypressEvent.TYPE)
+public class KeypressEvent extends KeyEvent {
     
-    public static final String TYPE = "click";
+    public static final String TYPE = "keypress";
     
-    public ClickEvent() {
+    public KeypressEvent() {
         super(TYPE);
     }
     
-    public ClickEvent(BaseComponent target, Object data) {
+    public KeypressEvent(BaseComponent target, Object data) {
         super(TYPE, target, data);
     }
     

@@ -28,7 +28,7 @@ package org.carewebframework.web.event;
 import org.carewebframework.web.annotation.EventType.EventParameter;
 import org.carewebframework.web.component.BaseComponent;
 
-public class MouseEvent extends Event {
+public abstract class MouseEvent extends Event {
     
     public enum MouseButton {
         UNSPECIFIED, LEFT, MIDDLE, RIGHT
@@ -43,10 +43,11 @@ public class MouseEvent extends Event {
     @EventParameter
     private int which;
     
-    public MouseEvent() {
+    protected MouseEvent(String type) {
+        super(type);
     }
     
-    public MouseEvent(String type, BaseComponent target, Object data) {
+    protected MouseEvent(String type, BaseComponent target, Object data) {
         super(type, target, data);
     }
     

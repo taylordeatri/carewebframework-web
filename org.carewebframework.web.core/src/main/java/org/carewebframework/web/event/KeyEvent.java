@@ -25,14 +25,10 @@
  */
 package org.carewebframework.web.event;
 
-import org.carewebframework.web.annotation.EventType;
 import org.carewebframework.web.annotation.EventType.EventParameter;
 import org.carewebframework.web.component.BaseComponent;
 
-@EventType(KeyEvent.TYPE)
-public class KeyEvent extends Event {
-    
-    public static final String TYPE = "key";
+public abstract class KeyEvent extends Event {
     
     @EventParameter
     private int keyCode;
@@ -52,11 +48,12 @@ public class KeyEvent extends Event {
     @EventParameter
     private boolean metaKey;
     
-    public KeyEvent() {
+    protected KeyEvent(String type) {
+        super(type);
     }
     
-    public KeyEvent(BaseComponent target, Object data) {
-        super(TYPE, target, data);
+    protected KeyEvent(String type, BaseComponent target, Object data) {
+        super(type, target, data);
     }
     
     public boolean isAltKey() {
@@ -81,6 +78,34 @@ public class KeyEvent extends Event {
     
     public char getCharCode() {
         return charCode;
+    }
+    
+    /**
+     * Returns the key capture representation of the typed key.
+     * 
+     * @return The key capture representation of the typed key.
+     */
+    public String getKeycapture() {
+        StringBuilder sb = new StringBuilder();
+        
+        if (isCtrlKey()) {
+            sb.append('^');
+        }
+        
+        if (isAltKey()) {
+            sb.append('@');
+        }
+        
+        if (isMetaKey()) {
+            sb.append('~');
+        }
+        
+        if (isShiftKey()) {
+            sb.append('!');
+        }
+        
+        sb.append("#").append(getKeyCode().getCode());
+        return sb.toString();
     }
     
 }

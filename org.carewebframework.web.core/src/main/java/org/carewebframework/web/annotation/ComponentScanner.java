@@ -33,7 +33,8 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.component.BaseComponent;
 
 /**
- * Utility class for scanning method annotations and building component definitions from them.
+ * Utility class for scanning class and method annotations and building component definitions from
+ * them.
  */
 public class ComponentScanner extends AbstractClassScanner<BaseComponent, Component> {
     

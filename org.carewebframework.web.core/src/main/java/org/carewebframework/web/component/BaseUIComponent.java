@@ -336,7 +336,7 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     @PropertySetter("keycapture")
     public void setKeycapture(String keycapture) {
         if (!areEqual(keycapture = nullify(keycapture), this.keycapture)) {
-            sync("keycapture", KeyCode.parseKeyCapture(keycapture));
+            sync("keycapture", KeyCode.normalizeKeyCapture(keycapture));
             this.keycapture = keycapture;
         }
     }

@@ -41,6 +41,7 @@ public class TimerEvent extends Event {
     private boolean running;
     
     public TimerEvent() {
+        super(TYPE);
     }
     
     public TimerEvent(BaseComponent target, Object data) {

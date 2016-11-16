@@ -414,13 +414,17 @@ public enum KeyCode {
     
     public static KeyCode fromString(String value) {
         if (value != null) {
-            value = value.toUpperCase();
-            
-            if (!value.startsWith("VK_")) {
-                value = "VK_" + value;
-            }
-            
             try {
+                value = value.toUpperCase();
+                
+                if (value.startsWith("#")) {
+                    return fromCode(Integer.parseInt(value.substring(1)));
+                }
+                
+                if (!value.startsWith("VK_")) {
+                    value = "VK_" + value;
+                }
+                
                 return KeyCode.valueOf(value);
             } catch (Exception e) {
                 return null;
@@ -455,7 +459,14 @@ public enum KeyCode {
     
     private static final String KEY_PFX = "^@~!";
     
-    public static String parseKeyCapture(String keycapture) {
+    /**
+     * Normalizes a key capture string by ordering prefixes and converting symbolic names to key
+     * code values.
+     * 
+     * @param keycapture One or more key capture strings delimited by spaces.
+     * @return The normalized string.
+     */
+    public static String normalizeKeyCapture(String keycapture) {
         if (keycapture != null) {
             StringBuilder result = new StringBuilder();
             
@@ -464,7 +475,7 @@ public enum KeyCode {
                     continue;
                 }
                 
-                String[] pfxs = { "", "", "", "" };
+                String[] pfxs = { "", "", "", "", "#" };
                 
                 while (!entry.isEmpty()) {
                     String pfx = entry.substring(0, 1);
@@ -478,7 +489,7 @@ public enum KeyCode {
                     entry = entry.substring(1);
                 }
                 
-                KeyCode keycode = KeyCode.fromString(entry);
+                KeyCode keycode = fromString(entry);
                 
                 if (keycode == null) {
                     throw new IllegalArgumentException("Unrecognized key mnemonic: " + entry);

@@ -34,6 +34,7 @@ public class DblclickEvent extends MouseEvent {
     public static final String TYPE = "dblclick";
     
     public DblclickEvent() {
+        super(TYPE);
     }
     
     public DblclickEvent(BaseComponent target, Object data) {

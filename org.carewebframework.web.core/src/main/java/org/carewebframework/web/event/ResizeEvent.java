@@ -47,6 +47,7 @@ public class ResizeEvent extends Event {
     private double bottom;
     
     public ResizeEvent() {
+        super(TYPE);
     }
     
     public ResizeEvent(BaseComponent target, Object data) {

@@ -59,6 +59,10 @@ public class Event {
         
     }
     
+    public Event(String type) {
+        this(type, null);
+    }
+    
     public Event(String type, BaseComponent target) {
         this(type, target, null);
     }

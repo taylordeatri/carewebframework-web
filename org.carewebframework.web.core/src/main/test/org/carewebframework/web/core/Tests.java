@@ -11,7 +11,7 @@ public class Tests {
     public void keyCodeTest() {
         assertEquals(KeyCode.VK_BACK_SPACE, KeyCode.fromCode(8));
         assertEquals(KeyCode.VK_ASTERISK, KeyCode.fromString("ASTERISK"));
-        assertEquals(KeyCode.parseKeyCapture("^A ~F1 ^@~@^!1"), "^65 ~112 ^@~!49");
+        assertEquals(KeyCode.normalizeKeyCapture("^A ~F1 ^@~@^!1"), "^#65 ~#112 ^@~!#49");
     }
     
 }

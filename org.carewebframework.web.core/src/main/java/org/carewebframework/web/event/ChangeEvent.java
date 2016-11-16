@@ -38,6 +38,7 @@ public class ChangeEvent extends Event {
     private String value;
     
     public ChangeEvent() {
+        super(TYPE);
     }
     
     public ChangeEvent(BaseComponent target, Object data) {
