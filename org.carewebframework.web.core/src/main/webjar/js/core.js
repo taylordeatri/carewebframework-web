@@ -301,7 +301,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			value += event.ctrlKey ? '^' : '';
 			value += event.altKey ? '@' : '';
 			value += event.metaKey ? '~' : '';
-			value += event.shiftKey ? '!' : '';
+			value += event.shiftKey ? '$' : '';
 			value += "#" + event.keyCode;
 			return value;
 		},

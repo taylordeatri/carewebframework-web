@@ -101,7 +101,7 @@ public abstract class KeyEvent extends Event {
         }
         
         if (isShiftKey()) {
-            sb.append('!');
+            sb.append('$');
         }
         
         sb.append("#").append(getKeyCode().getCode());

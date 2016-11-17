@@ -457,7 +457,7 @@ public enum KeyCode {
         }
     }
     
-    private static final String KEY_PFX = "^@~!";
+    private static final String KEY_PFX = "^@~$";
     
     /**
      * Normalizes a key capture string by ordering prefixes and converting symbolic names to key
