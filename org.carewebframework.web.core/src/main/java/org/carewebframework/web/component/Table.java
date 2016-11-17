@@ -32,16 +32,6 @@ import org.carewebframework.web.annotation.Component.ChildTag;
         @ChildTag(value = "rows", maximum = 1), @ChildTag(value = "columns", maximum = 1) })
 public class Table extends BaseUIComponent {
     
-    @Component(value = "rows", widgetPackage = "cwf-table", widgetClass = "Rows", parentTag = "table", childTag = @ChildTag("row"))
-    public static class Rows extends BaseUIComponent {
-        
-    }
-    
-    @Component(value = "columns", widgetPackage = "cwf-table", widgetClass = "Columns", parentTag = "table", childTag = @ChildTag("column"))
-    public static class Columns extends BaseUIComponent {
-        
-    }
-    
     private Columns columns;
     
     private Rows rows;

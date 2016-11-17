@@ -34,6 +34,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.collections.IteratorUtils;
 
 public class ListModel<M> implements IListModel<M> {
@@ -41,17 +42,6 @@ public class ListModel<M> implements IListModel<M> {
     private final List<M> list = new LinkedList<M>();
     
     private final List<IListModelListener> listeners = new ArrayList<>();
-    
-    private Comparator<M> ascendingComparator;
-    
-    private final Comparator<M> descendingComparator = new Comparator<M>() {
-        
-        @Override
-        public int compare(M o1, M o2) {
-            return -ascendingComparator.compare(o1, o2);
-        }
-        
-    };
     
     public ListModel() {
     }
@@ -129,10 +119,6 @@ public class ListModel<M> implements IListModel<M> {
     @Override
     public M get(int index) {
         return list.get(index);
-    }
-    
-    public Comparator<M> getComparator() {
-        return ascendingComparator;
     }
     
     @Override
@@ -250,26 +236,22 @@ public class ListModel<M> implements IListModel<M> {
         return result;
     }
     
-    public void setComparator(Comparator<M> comparator) {
-        this.ascendingComparator = comparator;
-    }
-    
     @Override
     public int size() {
         return list.size();
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     @Override
-    public void sort(boolean ascending) {
-        if (ascendingComparator != null) {
-            Object[] a = list.toArray();
-            Arrays.sort(a, (Comparator) (ascending ? ascendingComparator : descendingComparator));
-            
-            for (int newIndex = 0; newIndex < a.length; newIndex++) {
-                int oldIndex = list.indexOf(a[newIndex]);
-                swap(newIndex, oldIndex);
-            }
+    public void sort(Comparator<M> comparator, boolean ascending) {
+        comparator = comparator != null ? comparator : ComparatorUtils.NATURAL_COMPARATOR;
+        comparator = ascending ? comparator : ComparatorUtils.reversedComparator(comparator);
+        M[] a = (M[]) list.toArray();
+        Arrays.sort(a, comparator);
+        
+        for (int newIndex = 0; newIndex < a.length; newIndex++) {
+            int oldIndex = list.indexOf(a[newIndex]);
+            swap(newIndex, oldIndex);
         }
     }
     

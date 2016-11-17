@@ -50,13 +50,31 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			return $('<th>');
+			var dom = '<th>' + this.getDOMTemplate('label', ':sortdir') + '</th>';
+			return $(this.resolveEL(dom));
 		},
 		
 		/*------------------------------ State ------------------------------*/
 		
 		label: function(v) {
-			this.widget$.text(v);
+			this.sub$('lbl').text(v);
+		},
+		
+		sortOrder: function(v, old) {
+			var self = this;
+			!v !== !old ? this.rerender() : null;
+			
+			if (v) {
+				this.sub$('dir')
+					.toggleClass('glyphicon-chevron-up', v === 'ASCENDING')
+					.toggleClass('glyphicon-chevron-down', v === 'DESCENDING')
+					.toggleClass('glyphicon-sort', v === 'UNSORTED')
+					.on('click', _sort);
+			}
+			
+			function _sort() {
+				self.trigger('sort');
+			}
 		}
 	
 	});

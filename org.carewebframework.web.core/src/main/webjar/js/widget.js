@@ -12,7 +12,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			checkable: '<span id="${id}-chk" class="glyphicon"/>',
 			closable: '<span id="${id}-cls" class="glyphicon glyphicon-remove"/>',
 			image: '<img id="${id}-img" src="${_state.image}"/>',
-			label: '<span id="${id}-lbl"/>'
+			label: '<span id="${id}-lbl"/>',
+			sortdir: '<span id="${id}-dir" class="glyphicon"/>'
 	};
 	
 	cwf.widget._radio = {};
