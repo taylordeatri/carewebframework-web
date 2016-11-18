@@ -110,6 +110,7 @@ public class ClientRequest {
      * map of parameter values. If not, null will always be returned. Performs intelligent
      * conversion of datatypes where possible.
      * 
+     * @param <T> The expected parameter type.
      * @param name The parameter name.
      * @param type The expected parameter type.
      * @return The parameter value, or null if not found.
@@ -122,6 +123,7 @@ public class ClientRequest {
     /**
      * Returns the named event parameter from the request.
      * 
+     * @param <T> The expected parameter type.
      * @param name The parameter name.
      * @param type The expected parameter type.
      * @param deflt The default value for the parameter.

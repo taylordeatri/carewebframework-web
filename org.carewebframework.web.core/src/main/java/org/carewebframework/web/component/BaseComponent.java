@@ -534,6 +534,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     /**
      * Return the first child of the requested type.
      * 
+     * @param <T> The type of child sought.
      * @param type The type of child sought.
      * @return The requested child, or null if none exist of the requested type.
      */
@@ -594,6 +595,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     /**
      * Return first ancestor that is of the requested type.
      * 
+     * @param <T> The type of ancestor sought.
      * @param type The type of ancestor sought.
      * @return The ancestor component of the requested type, or null if none found.
      */
@@ -825,6 +827,7 @@ public abstract class BaseComponent implements IElementIdentifier {
      * Looks up a component of the specified type by its name within the namespace occupied by this
      * component.
      * 
+     * @param <T> The expected return type.
      * @param name Component name or path.
      * @param type Expected return type.
      * @return The component sought, or null if not found.

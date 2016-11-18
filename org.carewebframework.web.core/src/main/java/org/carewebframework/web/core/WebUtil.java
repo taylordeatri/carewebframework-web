@@ -154,8 +154,6 @@ public class WebUtil {
      * @param cookieName Name of cookie.
      * @see #getCookie(String, HttpServletRequest)
      * @return A cookie, or null if not found.
-     * @throws IllegalArgumentException if argument is null or {@link #getHttpServletRequest()}
-     *             returns null
      */
     public static Cookie getCookie(String cookieName) {
         return null; //TODO: getCookie(cookieName, getHttpServletRequest());
@@ -267,7 +265,6 @@ public class WebUtil {
      * @param cookieName Name of cookie.
      * @param value Value of cookie.
      * @return Newly created cookie.
-     * @throws IllegalArgumentException if {@link #getHttpServletResponse()} is null
      */
     public static Cookie setCookie(String cookieName, String value) {
         return null; //TODO: setCookie(cookieName, value, getHttpServletResponse(), getHttpServletRequest());

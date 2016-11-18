@@ -16,6 +16,7 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="image" type="xs:string"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -42,6 +43,7 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="image" type="xs:string"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -108,6 +110,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -133,6 +136,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="position">
@@ -168,8 +172,12 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="required" type="xs:boolean"/>
@@ -250,8 +258,20 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="sortColumn" type="xs:boolean"/>
+            <xs:attribute name="sortOrder">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="ascending"/>
+                        <xs:enumeration value="descending"/>
+                        <xs:enumeration value="native"/>
+                        <xs:enumeration value="unsorted"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -277,6 +297,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -304,8 +325,12 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="required" type="xs:boolean"/>
@@ -332,6 +357,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="selected" type="xs:boolean"/>
@@ -400,6 +426,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -423,8 +450,12 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="required" type="xs:boolean"/>
@@ -493,6 +524,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -516,10 +548,14 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
             <xs:attribute name="maxValue" type="xs:string"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="minValue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="required" type="xs:boolean"/>
@@ -559,6 +595,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="sandbox" type="xs:string"/>
             <xs:attribute name="src" type="xs:string"/>
@@ -585,6 +622,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="src" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -612,8 +650,12 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="required" type="xs:boolean"/>
@@ -652,6 +694,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="src" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -676,10 +719,14 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
             <xs:attribute name="maxValue" type="xs:string"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="minValue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="required" type="xs:boolean"/>
@@ -706,6 +753,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -733,6 +781,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="multiple" type="xs:boolean"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="size" type="xs:integer"/>
@@ -758,6 +807,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="selected" type="xs:boolean"/>
@@ -784,10 +834,14 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
             <xs:attribute name="maxValue" type="xs:string"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="minValue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="required" type="xs:boolean"/>
@@ -815,8 +869,12 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="required" type="xs:boolean"/>
@@ -849,6 +907,7 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="image" type="xs:string"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="open" type="xs:boolean"/>
@@ -875,6 +934,7 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="image" type="xs:string"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -907,6 +967,7 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="image" type="xs:string"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -936,6 +997,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -959,6 +1021,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -1076,6 +1139,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="splittable" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
@@ -1103,6 +1167,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="orientation">
                 <xs:simpleType>
@@ -1176,6 +1241,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -1202,8 +1268,12 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
@@ -1231,6 +1301,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="maxValue" type="xs:integer"/>
             <xs:attribute name="name" type="xs:string"/>
@@ -1258,6 +1329,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="position">
@@ -1332,6 +1404,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -1397,6 +1470,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -1423,6 +1497,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -1503,6 +1578,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -1593,6 +1669,7 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="image" type="xs:string"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="selected" type="xs:boolean"/>
@@ -1622,6 +1699,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -1648,6 +1726,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
@@ -1681,9 +1760,13 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="masked" type="xs:boolean"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="required" type="xs:boolean"/>
@@ -1774,6 +1857,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="orientation">
                 <xs:simpleType>
@@ -1810,6 +1894,7 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="image" type="xs:string"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="selected" type="xs:boolean"/>
@@ -1838,6 +1923,7 @@
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="showLines" type="xs:boolean"/>
             <xs:attribute name="showRoot" type="xs:boolean"/>
@@ -1917,6 +2003,7 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="image" type="xs:string"/>
             <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="maximizable" type="xs:boolean"/>
             <xs:attribute name="minimizable" type="xs:boolean"/>
             <xs:attribute name="mode">
