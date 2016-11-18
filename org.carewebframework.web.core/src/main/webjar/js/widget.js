@@ -1578,7 +1578,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			 var dom = '<a class="btn-link" href="#">'
+			 var dom = '<a class="btn-link">'
 				    + this.getDOMTemplate(':image', 'label')
 					+ '</a>';
 			 
@@ -1588,7 +1588,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ State ------------------------------*/
 		
 		href: function(v) {
-			this.attr('href', v || '#');
+			this.attr('href', v);
 		},
 		
 		target: function(v) {
@@ -1902,7 +1902,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		render$: function() {
 			var submenu = this.getState('_submenu'),
 				dom = '<li>'
-					+ '  <a href="#">'
+					+ '  <a>'
 					+ this.getDOMTemplate(':image', ':checkable', 'label')
 					+ '  </a>'
 					+ (submenu ? '<ul id="${id}-inner" class="dropdown-menu">' : '')

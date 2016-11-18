@@ -60,7 +60,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				}
 			} catch (e) {
 				this.processing = false;
-				throw e;
+				cwf.fatal(e);
 			}
 			
 			this.processing = false;

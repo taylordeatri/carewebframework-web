@@ -285,6 +285,7 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
             request.getPage().getEventQueue().processAll();
         } catch (Exception e) {
             request.getPage().getEventQueue().clearAll();
+            log.error(e);
             throw e;
         } finally {
             ExecutionContext.clear();

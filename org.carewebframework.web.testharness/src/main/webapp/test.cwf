@@ -74,6 +74,10 @@
 				<import src="pages/dnd.cwf" />
 			</tab>
 
+			<tab label="Table">
+				<import src="pages/tables.cwf" />
+			</tab>
+			
 			<tab label="Tree">
 				<import src="pages/trees.cwf" />
 			</tab>

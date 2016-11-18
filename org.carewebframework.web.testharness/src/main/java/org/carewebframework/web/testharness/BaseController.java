@@ -41,7 +41,9 @@ public class BaseController implements IAutoWired {
     
     public void log(String message) {
         MainController mainController = (MainController) page.getAttribute("mainController");
-        mainController.log(message);
+        if (mainController != null) {
+            mainController.log(message);
+        }
     }
     
     public void log(boolean condition, String messageIfTrue, String messageIfFalse) {

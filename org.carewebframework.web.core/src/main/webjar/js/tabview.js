@@ -65,7 +65,7 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 		render$: function() {
 			var dom = 
 				  '<li role="presentation">'
-				+ '  <a id="${id}-tab" href="#">'
+				+ '  <a id="${id}-tab">'
 				+ this.getDOMTemplate(':image', 'label', ':closable')
 				+ '  </a>'
 				+ '</li>',
