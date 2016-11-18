@@ -33,14 +33,19 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.model.IListModel;
-import org.carewebframework.web.model.SortOrder;
+import org.carewebframework.web.model.Sorting.SortOrder;
+import org.carewebframework.web.model.Sorting.SortToggle;
 
 @Component(value = "column", widgetClass = "Column", widgetPackage = "cwf-table", parentTag = "columns", childTag = @ChildTag("*"))
 public class Column extends BaseLabeledComponent {
     
     private Comparator<?> sortComparator;
     
-    private SortOrder sortOrder;
+    private SortOrder sortOrder = SortOrder.UNSORTED;
+    
+    private SortToggle sortToggle;
+    
+    private boolean sortColumn;
     
     public Comparator<?> getSortComparator() {
         return sortComparator;
@@ -49,7 +54,8 @@ public class Column extends BaseLabeledComponent {
     public void setSortComparator(Comparator<?> sortComparator) {
         if (sortComparator != this.sortComparator) {
             this.sortComparator = sortComparator;
-            sort();
+            this.sortOrder = SortOrder.UNSORTED;
+            updateClient();
         }
     }
     
@@ -60,18 +66,36 @@ public class Column extends BaseLabeledComponent {
     
     @PropertySetter("sortOrder")
     public void setSortOrder(SortOrder sortOrder) {
-        if (sortOrder != this.sortOrder) {
-            sync("sortOrder", this.sortOrder = sortOrder);
-            sort();
-        }
+        this.sortOrder = sortOrder == null ? SortOrder.UNSORTED : sortOrder;
+    }
+    
+    public SortToggle getSortToggle() {
+        return sortToggle;
+    }
+    
+    public void setSortToggle(SortToggle sortToggle) {
+        this.sortToggle = sortToggle;
+    }
+    
+    public void toggleSort() {
+        int i = sortOrder.ordinal() + 1;
+        int max = sortToggle == SortToggle.TRISTATE ? 3 : 2;
+        setSortOrder(SortOrder.values()[i >= max ? 0 : i]);
+        sort();
     }
     
     public void sort() {
-        IListModel<Object> model = sortComparator == null || sortOrder == null ? null : getModel();
+        if (!sortColumn) {
+            setSortColumn(true);
+            return;
+        }
+        
+        IListModel<Object> model = sortComparator == null || sortOrder == SortOrder.UNSORTED ? null : getModel();
+        updateClient();
         
         if (model != null) {
             @SuppressWarnings("unchecked")
-            Comparator<Object> comparator = sortOrder == null ? null : (Comparator<Object>) sortComparator;
+            Comparator<Object> comparator = sortOrder == SortOrder.NATIVE ? null : (Comparator<Object>) sortComparator;
             model.sort(comparator, sortOrder != SortOrder.DESCENDING);
         }
     }
@@ -84,9 +108,44 @@ public class Column extends BaseLabeledComponent {
     
     @EventHandler("sort")
     private void _sort() {
-        if (sortOrder != null) {
-            int i = sortOrder.ordinal() + 1;
-            setSortOrder(SortOrder.values()[i == 3 ? 0 : i]);
+        toggleSort();
+    }
+    
+    @PropertyGetter("sortColumn")
+    public boolean isSortColumn() {
+        return sortColumn;
+    }
+    
+    @PropertySetter("sortColumn")
+    public void setSortColumn(boolean sortColumn) {
+        _setSortColumn(sortColumn, true);
+    }
+    
+    protected void _setSortColumn(boolean sortColumn, boolean notifyParent) {
+        if (sortColumn != this.sortColumn) {
+            this.sortColumn = sortColumn;
+            
+            if (sortColumn) {
+                sort();
+            } else {
+                updateClient();
+            }
+            
+            if (notifyParent) {
+                Columns parent = (Columns) getParent();
+                
+                if (parent != null) {
+                    if (sortColumn) {
+                        parent.setSortColumn(this);
+                    } else if (parent.getSortColumn() == this) {
+                        parent.setSortColumn(null);
+                    }
+                }
+            }
         }
+    }
+    
+    private void updateClient() {
+        sync("sortOrder", sortComparator == null ? null : sortColumn ? sortOrder : SortOrder.UNSORTED);
     }
 }

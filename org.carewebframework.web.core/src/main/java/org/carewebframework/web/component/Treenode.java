@@ -169,7 +169,7 @@ public class Treenode extends BaseLabeledImageComponent implements Iterable<Tree
     }
     
     @Override
-    public void afterAddChild(BaseComponent child) {
+    protected void afterAddChild(BaseComponent child) {
         if (((Treenode) child).isSelected()) {
             _setTreeSelected((Treenode) child);
         }

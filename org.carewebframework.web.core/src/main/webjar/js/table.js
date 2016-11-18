@@ -47,7 +47,19 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 	
 	cwf.widget.Column = cwf.widget.LabeledWidget.extend({		
 
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.forwardToServer('sort');
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
+		
+		afterRender: function() {
+			this._super();
+			this.forward(this.sub$('dir'), 'click', 'sort');
+		},
 		
 		render$: function() {
 			var dom = '<th>' + this.getDOMTemplate('label', ':sortOrder') + '</th>';
@@ -62,18 +74,16 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 		
 		sortOrder: function(v, old) {
 			var self = this;
-			!v !== !old ? this.rerender() : null;
+			
+			if (!v !== !old) {
+				this.rerender();
+			}
 			
 			if (v) {
 				this.sub$('dir')
 					.toggleClass('glyphicon-chevron-up', v === 'ASCENDING')
 					.toggleClass('glyphicon-chevron-down', v === 'DESCENDING')
-					.toggleClass('glyphicon-sort', v === 'UNSORTED')
-					.on('click', _sort);
-			}
-			
-			function _sort() {
-				self.trigger('sort');
+					.toggleClass('glyphicon-sort', v === 'UNSORTED' || v === 'NATIVE');
 			}
 		}
 	

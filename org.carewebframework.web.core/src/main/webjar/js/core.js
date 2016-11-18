@@ -704,7 +704,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 * 
 	 * @param {string|string[]} value The string or string array value.
 	 * @param {string} [dlm] The delimiter used for split operation (required if value is a string).
-	 * @result {object} A map with split values as keys.
+	 * @return {object} A map with split values as keys.
 	 */
 	stringToSet: function(value, dlm) {
 		if (!_.isArray(value)) {
@@ -720,6 +720,31 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		});
 		
 		return result;
+	},
+	
+	/**
+	 * Converts a set to a delimited string.
+	 * 
+	 * @param {object} set Set whose values are to be concatenated.
+	 * @param {string} dlm Delimiter for separating values.
+	 * @return {string} The concatenated list of set values.
+	 */
+	setToString: function(set, dlm) {
+		return _.keys(set).join(dlm);
+	},
+	
+	/**
+	 * Removes a set of values from another set.
+	 * 
+	 * @param {object} set Set whose values are to be removed.
+	 * @param {object} values Set with values to be removed.
+	 */
+	removeFromSet: function(set, values) {
+		_.forOwn(values, function(x, key) {
+			delete set[key];
+		});
+		
+		return set;
 	},
 	
 	/**

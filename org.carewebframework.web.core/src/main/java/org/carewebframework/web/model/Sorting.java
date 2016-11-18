@@ -25,6 +25,16 @@
  */
 package org.carewebframework.web.model;
 
-public enum SortOrder {
-    ASCENDING, DESCENDING, UNSORTED;
+public class Sorting {
+    
+    public enum SortOrder {
+        ASCENDING, DESCENDING, NATIVE, UNSORTED;
+    }
+    
+    public enum SortToggle {
+        BINARY, TRISTATE;
+    }
+    
+    private Sorting() {
+    }
 }

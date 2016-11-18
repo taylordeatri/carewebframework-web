@@ -116,14 +116,14 @@ public class Treeview extends BaseUIComponent implements Iterable<Treenode> {
     }
     
     @Override
-    public void afterRemoveChild(BaseComponent child) {
+    protected void afterRemoveChild(BaseComponent child) {
         if (child == selectedNode) {
             selectedNode = null;
         }
     }
     
     @Override
-    public void afterAddChild(BaseComponent child) {
+    protected void afterAddChild(BaseComponent child) {
         if (((Treenode) child).isSelected()) {
             setSelectedNode((Treenode) child);
         }

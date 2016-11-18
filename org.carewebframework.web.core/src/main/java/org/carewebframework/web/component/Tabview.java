@@ -58,14 +58,14 @@ public class Tabview extends BaseUIComponent {
     }
     
     @Override
-    public void afterRemoveChild(BaseComponent child) {
+    protected void afterRemoveChild(BaseComponent child) {
         if (child == selectedTab) {
             selectedTab = null;
         }
     }
     
     @Override
-    public void afterAddChild(BaseComponent child) {
+    protected void afterAddChild(BaseComponent child) {
         if (((Tab) child).isSelected()) {
             setSelectedTab((Tab) child);
         }

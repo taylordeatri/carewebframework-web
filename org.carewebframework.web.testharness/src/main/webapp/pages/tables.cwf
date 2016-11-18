@@ -1,6 +1,6 @@
 <table name="table" controller="org.carewebframework.web.testharness.TablesController">
 	<columns>
-		<column name="col1" label="column 1" width="30%" sortOrder="ascending" />
+		<column name="col1" label="column 1" width="30%" sortOrder="ascending" sortColumn="true"/>
 		<column name="col2" label="column 2" width="70%" sortOrder="unsorted" />
 	</columns>
 	<rows />

@@ -80,6 +80,7 @@ define('cwf-treeview', ['cwf-core', 'cwf-widget', 'css!cwf-treeview-css.css'], f
 		init: function() {
 			this._super();
 			this.initState({collapsed: false});
+			this.forwardToServer('select toggle');
 		},
 				
 		/*------------------------------ Rendering ------------------------------*/
@@ -87,7 +88,6 @@ define('cwf-treeview', ['cwf-core', 'cwf-widget', 'css!cwf-treeview-css.css'], f
 		afterRender: function() {
 			this.forward(this.widget$.find('>a'), 'click', 'select');
 			this.sub$('ctl').on('click', this.handleClick.bind(this));
-			this.forwardToServer('select toggle');
 			this._updateToggle();
 		},
 		

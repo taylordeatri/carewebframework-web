@@ -290,7 +290,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 * @param {boolean} noforward If true, forwarding is enabled; if false, disabled.
 		 */ 
 		forwardToServer: function(eventTypes, noforward) {
-			this.widget$[noforward ? 'off' : 'on'](eventTypes, cwf.event.sendToServer);
+			var fwd = this.getState('forwarding'),
+				types = cwf.stringToSet(eventTypes, ' ');
+			
+			noforward ? cwf.removeFromSet(fwd, types) : _.assign(fwd, types);
+			
+			if (this.widget$) {
+				this.widget$[noforward ? 'off' : 'on'](eventTypes, cwf.event.sendToServer);
+			}
 		},
 		
 		/**
@@ -340,7 +347,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this.widget$ = null;
 			this._rendering = false;
 			this._state = {};
-			this._forwarding = {};
+			this._state.forwarding = {stateChange: true};
 			this.initState(state, true);
 			this.init();
 			this.rerender();
@@ -434,7 +441,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 * Override to apply event handlers, etc.
 		 */
 		afterRender: function() {
-			this.forwardToServer('stateChange');
+			// NOP
 		},
 		
 		rerender: function() {
@@ -561,6 +568,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			}
 		},
 
+		/**
+		 * Restore all server forwards.
+		 */
+		forwarding: function(v) {
+			this.widget$.on(cwf.setToString(v, ' '), cwf.event.sendToServer);
+		},
+		
 		/**
 		 * Returns the current state for the specified key.
 		 * 
@@ -1085,6 +1099,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._synchronized = false;
 			this._changed = false;
 			this._previous = '';
+			this.forwardToServer('change');
 		},
 		
 		synced: function(v) {
@@ -1102,7 +1117,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		afterRender: function() {
 			this._super();
 			this.toggleClass('cwf_inputbox', true);
-			this.forwardToServer('change');
 			var input$ = this.input$();
 			input$.on('input propertychange', this.handleInput.bind(this));
 			input$.on('blur', this.handleBlur.bind(this));
@@ -2239,12 +2253,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.Listitem = cwf.widget.LabeledWidget.extend({		
 		
-		/*------------------------------ Rendering ------------------------------*/
+		/*------------------------------ Lifecycle ------------------------------*/
 		
-		afterRender: function() {
+		init: function() {
 			this._super();
 			this.forwardToServer('select');
 		},
+		
+		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
 			return $('<option role="presentation">');
@@ -2383,12 +2399,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.Comboitem = cwf.widget.LabeledWidget.extend({		
 		
-		/*------------------------------ Rendering ------------------------------*/
+		/*------------------------------ Lifecycle ------------------------------*/
 		
-		afterRender: function() {
+		init: function() {
 			this._super();
 			this.forwardToServer('select');
 		},
+		
+		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
 			return $('<option>');
@@ -2518,6 +2536,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._super();
 			this.initState({mode: 'INLINE', size: 'NORMAL'});
 			this.toggleClass('cwf_titled panel', true);
+			this.forwardToServer('close');
 		},
 		
 		/*------------------------------ Other ------------------------------*/
@@ -2622,7 +2641,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		closable: function(v) {
 			this[v ? '_buttonAdd' : '_buttonRemove']('close', 'remove', 9999);
-			this.forwardToServer('close', !v);
 		},
 		
 		dragid: function(v) {

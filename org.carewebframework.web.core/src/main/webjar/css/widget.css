@@ -1,3 +1,21 @@
+/* global */
+
+body {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;    
+}
+
+:focus {
+	outline: 0!important;
+}
+
+a:not([href]) {
+	cursor: default;
+}
+
 /* jquery-ui mods */
 
 .ui-dialog-content {
@@ -75,20 +93,6 @@
     border-radius: 6px 0 6px 6px;
 }
 
-
-/* Root */
-
-body {
-    position: relative;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;    
-}
-
-:focus {
-	outline: 0!important;
-}
 
 /* Drag and Drop */
 

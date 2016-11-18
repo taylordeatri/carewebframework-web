@@ -130,12 +130,12 @@ public class Listbox extends BaseUIComponent {
     }
     
     @Override
-    public void afterAddChild(BaseComponent child) {
+    protected void afterAddChild(BaseComponent child) {
         _updateSelected((Listitem) child);
     }
     
     @Override
-    public void afterRemoveChild(BaseComponent child) {
+    protected void afterRemoveChild(BaseComponent child) {
         if (selected.remove(child)) {
             ((Listitem) child)._setSelected(false, true, false);
         }

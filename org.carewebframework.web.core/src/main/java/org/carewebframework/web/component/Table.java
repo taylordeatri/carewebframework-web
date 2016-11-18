@@ -41,7 +41,7 @@ public class Table extends BaseUIComponent {
     }
     
     @Override
-    public void afterAddChild(BaseComponent child) {
+    protected void afterAddChild(BaseComponent child) {
         super.afterAddChild(child);
         
         if (child instanceof Rows) {
@@ -54,7 +54,7 @@ public class Table extends BaseUIComponent {
     }
     
     @Override
-    public void afterRemoveChild(BaseComponent child) {
+    protected void afterRemoveChild(BaseComponent child) {
         super.afterRemoveChild(child);
         
         if (child == rows) {

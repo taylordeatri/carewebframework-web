@@ -78,7 +78,7 @@ public class Combobox extends BaseInputboxComponent<String> {
     }
     
     @Override
-    public void afterAddChild(BaseComponent child) {
+    protected void afterAddChild(BaseComponent child) {
         Comboitem item = (Comboitem) child;
         
         if (item.isSelected()) {
@@ -87,7 +87,7 @@ public class Combobox extends BaseInputboxComponent<String> {
     }
     
     @Override
-    public void afterRemoveChild(BaseComponent child) {
+    protected void afterRemoveChild(BaseComponent child) {
         if (child == selected) {
             selected = null;
         }

@@ -3,3 +3,18 @@
 .cwf_row > td {
 	vertical-align: middle!important;
 }
+
+/* Column */
+
+.cwf_column > .glyphicon {
+	margin-left: 5px;
+	padding: 2px;
+	font-size: 60%;
+	vertical-align: top;
+	opacity: .5
+}
+
+.cwf_column > .glyphicon:hover {
+	text-decoration: underline;
+	opacity: 1;
+}

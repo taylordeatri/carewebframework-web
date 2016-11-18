@@ -475,22 +475,22 @@ public abstract class BaseComponent implements IElementIdentifier {
         invoke("swapChildren", index1, index2);
     }
     
-    public void beforeSetParent(BaseComponent newParent) {
+    protected void beforeSetParent(BaseComponent newParent) {
     }
     
-    public void afterSetParent(BaseComponent oldParent) {
+    protected void afterSetParent(BaseComponent oldParent) {
     }
     
-    public void beforeAddChild(BaseComponent child) {
+    protected void beforeAddChild(BaseComponent child) {
     }
     
-    public void afterAddChild(BaseComponent child) {
+    protected void afterAddChild(BaseComponent child) {
     }
     
-    public void beforeRemoveChild(BaseComponent child) {
+    protected void beforeRemoveChild(BaseComponent child) {
     }
     
-    public void afterRemoveChild(BaseComponent child) {
+    protected void afterRemoveChild(BaseComponent child) {
     }
     
     public List<BaseComponent> getChildren() {

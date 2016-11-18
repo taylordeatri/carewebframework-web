@@ -36,13 +36,13 @@ public class Popupbox extends BaseInputboxComponent<String> {
     private Popup popup;
     
     @Override
-    public void afterAddChild(BaseComponent child) {
+    protected void afterAddChild(BaseComponent child) {
         super.afterAddChild(child);
         setPopup((Popup) child);
     }
     
     @Override
-    public void afterRemoveChild(BaseComponent child) {
+    protected void afterRemoveChild(BaseComponent child) {
         super.afterRemoveChild(child);
         
         if (child == popup) {

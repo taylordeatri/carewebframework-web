@@ -54,11 +54,17 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 			return this._ancillaries.pane$;
 		},
 		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.forwardToServer('select close');
+		},
+				
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
 			this._super();
-			this.forwardToServer('select close');
 			this.forward(this.sub$('tab'), 'click', 'select');
 		},
 				
