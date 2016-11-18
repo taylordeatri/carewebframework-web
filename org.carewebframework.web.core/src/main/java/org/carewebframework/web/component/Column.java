@@ -106,7 +106,7 @@ public class Column extends BaseLabeledComponent {
         return rows == null ? null : rows.getModelAndView(Object.class).getModel();
     }
     
-    @EventHandler("sort")
+    @EventHandler(value = "sort", syncToClient = false)
     private void _sort() {
         toggleSort();
     }
