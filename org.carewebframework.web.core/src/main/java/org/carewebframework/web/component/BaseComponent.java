@@ -39,6 +39,7 @@ import org.apache.commons.lang.reflect.FieldUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.ancillary.ComponentException;
 import org.carewebframework.web.ancillary.ConvertUtil;
+import org.carewebframework.web.ancillary.IAutoWired;
 import org.carewebframework.web.ancillary.IElementIdentifier;
 import org.carewebframework.web.ancillary.INamespace;
 import org.carewebframework.web.annotation.Component.AttributeProcessor;
@@ -692,6 +693,10 @@ public abstract class BaseComponent implements IElementIdentifier {
         
         this.page = page;
         page.registerComponent(this, true);
+        Map<String, Object> props = new HashMap<>();
+        _initProps(props);
+        page.getSynchronizer().createWidget(parent, props, inits);
+        inits = null;
         
         for (BaseComponent child : getChildren()) {
             child._setPage(page);
@@ -716,23 +721,23 @@ public abstract class BaseComponent implements IElementIdentifier {
     protected void _attach(Page page) {
         if (page != null && this.page != page) {
             _setPage(page);
-            _createWidget();
+            _flushQueue();
         }
     }
     
     /**
      * Creates this component's corresponding widget on the client.
      */
-    private void _createWidget() {
-        Map<String, Object> props = new HashMap<>();
-        _initProps(props);
-        page.getSynchronizer().createWidget(parent, props, inits, invocationQueue);
-        invocationQueue = null;
-        inits = null;
+    private void _flushQueue() {
+        if (invocationQueue != null) {
+            page.getSynchronizer().processQueue(invocationQueue);
+            invocationQueue = null;
+        }
+        
         EventHandlerScanner.wire(this, null);
         
         for (BaseComponent child : getChildren()) {
-            child._createWidget();
+            child._flushQueue();
         }
     }
     
@@ -902,6 +907,10 @@ public abstract class BaseComponent implements IElementIdentifier {
         
         WiredComponentScanner.wire(controller, this);
         EventHandlerScanner.wire(controller, this);
+        
+        if (controller instanceof IAutoWired) {
+            ((IAutoWired) controller).afterInitialized(this);
+        }
     }
     
     protected String nullify(String value) {

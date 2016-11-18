@@ -27,7 +27,6 @@ package org.carewebframework.web.annotation;
 
 import java.lang.reflect.Field;
 
-import org.carewebframework.web.ancillary.IAutoWired;
 import org.carewebframework.web.component.BaseComponent;
 
 /**
@@ -49,10 +48,6 @@ public class WiredComponentScanner {
         while (clazz != Object.class) {
             wire(instance, root, clazz);
             clazz = clazz.getSuperclass();
-        }
-        
-        if (instance instanceof IAutoWired) {
-            ((IAutoWired) instance).afterInitialized(root);
         }
     }
     

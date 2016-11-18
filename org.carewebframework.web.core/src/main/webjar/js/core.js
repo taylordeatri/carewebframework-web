@@ -77,6 +77,8 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		},
 		
 		_processAction: function(action) {
+			cwf.log.debug('Processing: ', action);
+			
 			if (!action.fcn) {
 				return;
 			}

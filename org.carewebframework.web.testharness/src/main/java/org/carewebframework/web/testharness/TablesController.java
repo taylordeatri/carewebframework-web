@@ -95,13 +95,13 @@ public class TablesController extends BaseController {
     @Override
     public void afterInitialized(BaseComponent root) {
         super.afterInitialized(root);
-        //col1.setSortComparator(comp1);
-        //col2.setSortComparator(comp2);
+        col1.setSortComparator(comp1);
+        col2.setSortComparator(comp2);
         IModelAndView<Row, RowModelObject> mv = table.getRows().getModelAndView(RowModelObject.class);
         ListModel<RowModelObject> model = new ListModel<>();
         
         for (int i = 1; i < 11; i++) {
-            model.add(new RowModelObject(RandomStringUtils.random(10), i));
+            model.add(new RowModelObject(RandomStringUtils.random(10, true, true), i));
         }
         
         mv.setModel(model);

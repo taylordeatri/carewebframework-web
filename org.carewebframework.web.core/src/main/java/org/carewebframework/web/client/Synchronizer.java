@@ -25,9 +25,7 @@
  */
 package org.carewebframework.web.client;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import org.carewebframework.web.ancillary.IElementIdentifier;
@@ -63,20 +61,12 @@ public class Synchronizer {
         queue.clear();
     }
     
-    public Synchronizer createWidget(BaseComponent parent, Map<String, Object> props, Map<String, Object> state,
-                                     ClientInvocationQueue pendingInvocations) {
-        ClientInvocation invocation = new ClientInvocation(null, "widget.create", parent, props, state);
-        
-        if (pendingInvocations == null) {
-            sendToClient(invocation);
-        } else {
-            List<ClientInvocation> invocations = new ArrayList<>();
-            invocations.add(invocation);
-            invocations.addAll(pendingInvocations.flush());
-            sendToClient(invocations);
-        }
-        
-        return this;
+    public Synchronizer createWidget(BaseComponent parent, Map<String, Object> props, Map<String, Object> state) {
+        return sendToClient(new ClientInvocation(null, "widget.create", parent, props, state));
+    }
+    
+    public Synchronizer processQueue(ClientInvocationQueue queue) {
+        return sendToClient(queue.flush());
     }
     
     public Synchronizer invokeClient(IElementIdentifier component, String function, Object... args) {
