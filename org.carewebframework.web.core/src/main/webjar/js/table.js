@@ -50,7 +50,7 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			var dom = '<th>' + this.getDOMTemplate('label', ':sortdir') + '</th>';
+			var dom = '<th>' + this.getDOMTemplate('label', ':sortOrder') + '</th>';
 			return $(this.resolveEL(dom));
 		},
 		

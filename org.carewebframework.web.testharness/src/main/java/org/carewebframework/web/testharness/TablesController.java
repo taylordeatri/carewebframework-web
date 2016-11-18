@@ -106,6 +106,7 @@ public class TablesController extends BaseController {
         
         mv.setModel(model);
         mv.setRenderer(renderer);
+        col1.sort();
     }
     
 }
