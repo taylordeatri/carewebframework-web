@@ -1,7 +1,6 @@
 package org.carewebframework.web.component;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -53,8 +52,8 @@ public class Rows extends BaseUIComponent {
         }
     }
     
-    public Collection<Row> getSelected() {
-        return Collections.unmodifiableCollection(selected);
+    public List<Row> getSelected() {
+        return Collections.unmodifiableList(selected);
     }
     
     private void unselect(Row excluded) {

@@ -25,14 +25,16 @@
  */
 package org.carewebframework.web.page;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
+import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.common.XMLUtil;
 import org.carewebframework.web.annotation.ComponentDefinition;
 import org.carewebframework.web.annotation.ComponentRegistry;
+import org.carewebframework.web.core.WebUtil;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -53,22 +55,28 @@ public class PageParser {
     private PageParser() {
     }
     
-    public PageDefinition parse(String url) {
-        try {
-            return parse(new UrlResource(url));
-        } catch (MalformedURLException e) {
-            throw MiscUtil.toUnchecked(e);
-        }
+    public PageDefinition parse(String src) {
+        return parse(WebUtil.getResource(src));
     }
     
     public PageDefinition parse(Resource resource) {
         try {
-            Document document = XMLUtil.parseXMLFromStream(resource.getInputStream());
+            return parse(resource.getInputStream());
+        } catch (IOException e) {
+            throw MiscUtil.toUnchecked(e);
+        }
+    }
+    
+    public PageDefinition parse(InputStream stream) {
+        try {
+            Document document = XMLUtil.parseXMLFromStream(stream);
             PageDefinition pageDefinition = new PageDefinition();
             parseNode(document.getDocumentElement(), pageDefinition.getRootElement());
             return pageDefinition;
         } catch (Exception e) {
             throw MiscUtil.toUnchecked(e);
+        } finally {
+            IOUtils.closeQuietly(stream);
         }
     }
     

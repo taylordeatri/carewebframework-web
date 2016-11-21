@@ -25,14 +25,17 @@
  */
 package org.carewebframework.web.core;
 
+import java.io.FileNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,8 +46,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.carewebframework.common.MiscUtil;
 import org.carewebframework.common.StrUtil;
 import org.carewebframework.web.client.ExecutionContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 /**
  * Class to manage instantiation of framework containers.
@@ -307,6 +314,31 @@ public class WebUtil {
         
         httpResponse.addCookie(cookie);
         return cookie;
+    }
+    
+    public static Resource getResource(String src) {
+        try {
+            Resource resource;
+            
+            if (src.startsWith("web/") || src.startsWith("/web/")) {
+                resource = new ClassPathResource(src);
+            } else if (src.matches("^.*\\:\\/.*")) {
+                resource = new UrlResource(src);
+            } else {
+                ServletContext ctx = ExecutionContext.getSession().getServletContext();
+                URL url = ctx.getResource(src);
+                resource = url == null ? null : new UrlResource(url);
+            }
+            
+            if (resource == null || !resource.exists()) {
+                throw new FileNotFoundException(src);
+            }
+            
+            return resource;
+            
+        } catch (Exception e) {
+            throw MiscUtil.toUnchecked(e);
+        }
     }
     
     /**

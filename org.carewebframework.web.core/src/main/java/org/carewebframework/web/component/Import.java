@@ -25,13 +25,10 @@
  */
 package org.carewebframework.web.component;
 
-import javax.servlet.ServletContext;
-
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
-import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.page.PageParser;
 
 /**
@@ -67,9 +64,7 @@ public class Import extends BaseUIComponent {
             
             if (src != null) {
                 try {
-                    ServletContext ctx = ExecutionContext.getSession().getServletContext();
-                    String path = ctx.getResource(src).toString();
-                    PageParser.getInstance().parse(path).materialize(this);
+                    PageParser.getInstance().parse(src).materialize(this);
                 } catch (Exception e) {
                     throw MiscUtil.toUnchecked(e);
                 }
