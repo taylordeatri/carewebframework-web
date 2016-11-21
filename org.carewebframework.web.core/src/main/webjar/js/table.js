@@ -95,10 +95,52 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 	
 	cwf.widget.Rows = cwf.widget.UIWidget.extend({
 		
+		/*------------------------------ Lifecycle ------------------------------*/
+		init: function() {
+			this._super();
+			this.initState({selectable: 'NO'});
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
 			return $('<tbody>');
+		},
+	
+		/*------------------------------ State ------------------------------*/
+		
+		selectable: function(v) {
+			var self = this,
+				active = !!this.widget$.selectable('instance');
+			
+			_selectable(v !== 'NO');
+			
+			function _selectable(selectable) {
+				if (selectable && !active) {
+					self.widget$.selectable({
+						appendTo: '#cwf_root',
+						filter: 'tr',
+						selected: _select,
+						unselected: _unselect
+					})
+				} else if (!selectable && active){
+					self.widget$.selectable('destroy');
+				}
+			};
+			
+			function _select(event, ui) {
+				_doSelect(ui.selected, true);
+			}
+			
+			function _unselect(event, ui) {
+				_doSelect(ui.unselected, false);
+			}
+			
+			function _doSelect(target, selected) {
+				var w = cwf.wgt(target);
+				w.updateState('selected', selected, true);
+				w.trigger('select', {selected: selected});
+			}
 		}
 	
 	});
@@ -123,12 +165,25 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 			}
 		},
 		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.initState({selected: false});
+			this.forwardToServer('select');
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
 			return $('<tr>');
-		}
+		},
 		
+		/*------------------------------ State ------------------------------*/
+		
+		selected: function(v) {
+			this.toggleClass('ui-selected', v);
+		}
 	});
 	
 	return cwf.widget;

@@ -26,6 +26,8 @@
 package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
+import org.carewebframework.web.event.ChangeEvent;
+import org.carewebframework.web.event.EventUtil;
 
 @Component(value = "radiobutton", widgetClass = "Radiobutton", parentTag = "*")
 public class Radiobutton extends Checkbox {
@@ -34,4 +36,13 @@ public class Radiobutton extends Checkbox {
         return getAncestor(Radiogroup.class);
     }
     
+    @Override
+    protected void _onChange(ChangeEvent event) {
+        super._onChange(event);
+        Radiogroup group = getGroup();
+        
+        if (group != null) {
+            EventUtil.send(event, group);
+        }
+    }
 }

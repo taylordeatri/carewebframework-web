@@ -26,6 +26,10 @@ a:not([href]) {
 	display: none;
 }
 
+.ui-selected {
+    background: orange;
+}
+
 /* bootstrap mods */
 
 .panel {

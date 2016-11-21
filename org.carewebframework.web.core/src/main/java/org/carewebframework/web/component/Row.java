@@ -28,8 +28,42 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
+import org.carewebframework.web.annotation.Component.PropertyGetter;
+import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.carewebframework.web.annotation.EventHandler;
+import org.carewebframework.web.event.SelectEvent;
 
 @Component(value = "row", widgetPackage = "cwf-table", widgetClass = "Row", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Row extends BaseUIComponent {
     
+    private boolean selected;
+    
+    @PropertyGetter("selected")
+    public boolean isSelected() {
+        return selected;
+    }
+    
+    @PropertySetter("selected")
+    public void setSelected(boolean selected) {
+        _setSelected(selected, true, true);
+    }
+    
+    protected void _setSelected(boolean selected, boolean notifyClient, boolean notifyParent) {
+        if (selected != this.selected) {
+            this.selected = selected;
+            
+            if (notifyClient) {
+                sync("selected", selected);
+            }
+            
+            if (notifyParent && getParent() != null) {
+                ((Rows) getParent())._selectChange(this);
+            }
+        }
+    }
+    
+    @EventHandler(value = "select", syncToClient = false)
+    private void _select(SelectEvent event) {
+        _setSelected(event.isSelected(), false, true);
+    }
 }

@@ -1,7 +1,15 @@
-<table name="table" controller="org.carewebframework.web.testharness.TablesController">
-	<columns>
-		<column name="col1" label="column 1" width="30%" sortOrder="ascending" sortColumn="true"/>
-		<column name="col2" label="column 2" width="70%" sortOrder="unsorted" />
-	</columns>
-	<rows />
-</table>
+<page>
+	<table name="table" controller="org.carewebframework.web.testharness.TablesController">
+		<columns>
+			<column name="col1" label="column 1" width="30%" sortOrder="ascending" sortColumn="true" />
+			<column name="col2" label="column 2" width="70%" sortOrder="unsorted" sortToggle="tristate" />
+		</columns>
+		<rows />
+	</table>
+	Selectable:
+	<radiogroup name="rgTables">
+		<radiobutton label="NO" checked="true" />
+		<radiobutton label="SINGLE" />
+		<radiobutton label="MULTIPLE" />
+	</radiogroup>
+</page>

@@ -28,11 +28,16 @@ package org.carewebframework.web.testharness;
 import java.util.Comparator;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.math.RandomUtils;
+import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.annotation.WiredComponent;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Cell;
 import org.carewebframework.web.component.Column;
+import org.carewebframework.web.component.Radiobutton;
+import org.carewebframework.web.component.Radiogroup;
 import org.carewebframework.web.component.Row;
+import org.carewebframework.web.component.Rows.Selectable;
 import org.carewebframework.web.component.Table;
 import org.carewebframework.web.model.IComponentRenderer;
 import org.carewebframework.web.model.IModelAndView;
@@ -40,15 +45,23 @@ import org.carewebframework.web.model.ListModel;
 
 public class TablesController extends BaseController {
     
-    private class RowModelObject {
+    private class RowModelObject implements Comparable<RowModelObject> {
         
         final String label;
         
         final int value;
         
-        RowModelObject(String label, int value) {
-            this.label = label;
-            this.value = value;
+        final int sequence;
+        
+        RowModelObject(int sequence) {
+            this.sequence = sequence;
+            this.label = RandomStringUtils.random(10, true, true);
+            this.value = RandomUtils.nextInt();
+        }
+        
+        @Override
+        public int compareTo(RowModelObject o) {
+            return sequence - o.sequence;
         }
         
     }
@@ -92,6 +105,9 @@ public class TablesController extends BaseController {
     @WiredComponent
     private Column col2;
     
+    @WiredComponent
+    private Radiogroup rgTables;
+    
     @Override
     public void afterInitialized(BaseComponent root) {
         super.afterInitialized(root);
@@ -101,7 +117,7 @@ public class TablesController extends BaseController {
         ListModel<RowModelObject> model = new ListModel<>();
         
         for (int i = 1; i < 11; i++) {
-            model.add(new RowModelObject(RandomStringUtils.random(10, true, true), i));
+            model.add(new RowModelObject(i));
         }
         
         mv.setModel(model);
@@ -109,4 +125,12 @@ public class TablesController extends BaseController {
         col1.sort();
     }
     
+    @EventHandler(value = "change", target = "@rgTables")
+    private void rgTablesSelectHandler() {
+        Radiobutton rb = rgTables.getSelected();
+        
+        if (rb != null) {
+            table.getRows().setSelectable(Selectable.valueOf(rb.getLabel()));
+        }
+    }
 }

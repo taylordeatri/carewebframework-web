@@ -69,10 +69,12 @@ public class Column extends BaseLabeledComponent {
         this.sortOrder = sortOrder == null ? SortOrder.UNSORTED : sortOrder;
     }
     
+    @PropertyGetter("sortToggle")
     public SortToggle getSortToggle() {
         return sortToggle;
     }
     
+    @PropertySetter("sortToggle")
     public void setSortToggle(SortToggle sortToggle) {
         this.sortToggle = sortToggle;
     }

@@ -924,6 +924,10 @@ public abstract class BaseComponent implements IElementIdentifier {
         return value == null ? null : nullify(value.trim());
     }
     
+    protected <T> T defaultify(T value, T deflt) {
+        return value == null ? deflt : value;
+    }
+    
     protected boolean areEqual(Object s1, Object s2) {
         return ObjectUtils.equals(s1, s2);
     }

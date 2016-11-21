@@ -78,7 +78,7 @@ public class Checkbox extends BaseLabeledComponent {
     }
     
     @EventHandler(value = "change", syncToClient = false)
-    private void _onChange(ChangeEvent event) {
+    protected void _onChange(ChangeEvent event) {
         checked = "true".equals(event.getValue());
     }
     

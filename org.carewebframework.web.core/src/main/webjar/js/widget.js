@@ -768,7 +768,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		subclazz: function(sub, wclazz) {
-			return sub ? (wclazz ? wclazz : this.wclazz) + '-' + sub.toLowerCase() : null;
+			return sub ? (wclazz || this.wclazz) + '-' + sub.toLowerCase() : null;
 		},
 		
 		/**
@@ -1669,14 +1669,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			cwf.event.sendToServer(event);
 		},
 		
-		/*------------------------------ Lifecycle ------------------------------*/
-		
-		init: function() {
-			this._super();
-			this.type = 'checkbox';
-			this.group = null;
-		},
-				
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
@@ -1687,7 +1679,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		render$: function() {
 			var dom =
 				'<div>'
-			  + '  <input id="${id}-real" type="${type}" name="${group}">'
+			  + '  <input id="${id}-real" type="checkbox">'
 			  + '  <label id="${id}-lbl" for="${id}-real"/>'
 			  + '</div>';
 			
@@ -1718,14 +1710,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.Radiobutton = cwf.widget.Checkbox.extend({
 	
-		/*------------------------------ Lifecycle ------------------------------*/
-		
-		init: function() {
-			this._super();
-			this.type = 'radio';
-		},		
-		
-		/*------------------------------ Rendering ------------------------------*/
+		/*------------------------------ Other ------------------------------*/
 		
 		getGroup: function() {
 			var wgt = this._parent;
@@ -1736,17 +1721,26 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			return wgt ? wgt.id : null;
 		},
+				
+		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			this.group = this.getGroup();
-			return this._super();
+			var dom =
+				'<div>'
+			  + '  <input id="${id}-real" type="radio" name="${getGroup}">'
+			  + '  <label id="${id}-lbl" for="${id}-real"/>'
+			  + '</div>';
+			
+			return $(this.resolveEL(dom));
 		},
 		
 		/*------------------------------ State ------------------------------*/
 		
 		_syncChecked: function(checked) {
-			if (this.group) {
-				var previous = cwf.widget._radio[this.group];
+			var group = this.getGroup();
+			
+			if (group) {
+				var previous = cwf.widget._radio[group];
 				previous = previous ? cwf.widget.find(previous) : null;
 				
 				if (checked) {
@@ -1754,9 +1748,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 						previous.trigger('change');
 					}
 					
-					cwf.widget._radio[this.group] = this.id;
+					cwf.widget._radio[group] = this.id;
 				} else if (previous === this) {
-					cwf.widget._radio[this.group] = null;
+					delete cwf.widget._radio[group];
 				}
 			}
 		}
