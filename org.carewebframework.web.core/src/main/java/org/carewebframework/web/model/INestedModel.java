@@ -26,11 +26,18 @@
 package org.carewebframework.web.model;
 
 /**
- * Describes a tracked list used to hold model objects.
+ * Extends the list model by adding support for nesting models within models.
  *
- * @param <T> The type of the model object.
+ * @param <M> The type of the model object.
  */
-public interface INestedModel<T> extends IListModel<T> {
+public interface INestedModel<M> extends IListModel<M> {
     
-    IListModel<T> getChildren(T parent);
+    /**
+     * Returns the child list model given the parent. May return null. Note that the return type is
+     * not required to be a nested model, though it typically will be.
+     * 
+     * @param parent Parent whose children are sought.
+     * @return The child list model. May be null.
+     */
+    IListModel<M> getChildren(M parent);
 }

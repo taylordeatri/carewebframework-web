@@ -35,6 +35,9 @@ import java.util.List;
  */
 public interface IListModel<M> extends List<M> {
     
+    /**
+     * Interface for listeners receiving events when the list is modified.
+     */
     interface IListModelListener {
         
         void onListChange(ListEventType type, int startIndex, int endIndex);
@@ -44,15 +47,49 @@ public interface IListModel<M> extends List<M> {
         ADD, DELETE, REPLACE, SWAP, CHANGE
     }
     
+    /**
+     * Register a listener to receive events when the list is modified.
+     * 
+     * @param listener The listener to add.
+     * @return True if the listener was registered. False if already registered.
+     */
     boolean addEventListener(IListModelListener listener);
     
+    /**
+     * Removes all listeners.
+     */
     void removeAllListeners();
     
+    /**
+     * Removes a single event listener.
+     * 
+     * @param listener The listener to remove.
+     * @return True if the listener was removed. False if it was not registered.
+     */
     boolean removeEventListener(IListModelListener listener);
     
+    /**
+     * Swap two list entries by index.
+     * 
+     * @param index1 Index of first entry.
+     * @param index2 Index of second entry.
+     */
     void swap(int index1, int index2);
     
+    /**
+     * Swap two list entries.
+     * 
+     * @param value1 The first entry.
+     * @param value2 The second entry.
+     */
     void swap(M value1, M value2);
     
+    /**
+     * Sorts the list given the comparator and the sort direction.
+     * 
+     * @param comparator The comparator to use in sorting. If null, a comparator using the model
+     *            objects' native sort order will be applied.
+     * @param ascending If true, sort list in ascending order; otherwise, in descending order.
+     */
     void sort(Comparator<M> comparator, boolean ascending);
 }
