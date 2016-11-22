@@ -25,8 +25,6 @@
  */
 package org.carewebframework.web.expression;
 
-import java.util.Locale;
-
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -82,11 +80,24 @@ public class MessageAccessor implements PropertyAccessor {
         
         @Override
         public String toString() {
+            String message = getMessage(name);
+            int i = 0;
+            int k = 0;
+            
+            while ((i = message.indexOf("${")) > -1 && k++ < 20) {
+                int j = message.indexOf("}", i);
+                String repl = getMessage(message.substring(i + 2, j));
+                message = message.substring(0, i) + repl + message.substring(j + 1);
+            }
+            
+            return message;
+        }
+        
+        private String getMessage(String name) {
             try {
-                Locale locale = LocaleContextHolder.getLocale();
-                return messageSource.getMessage(name, null, locale);
+                return messageSource.getMessage(name, null, LocaleContextHolder.getLocale());
             } catch (NoSuchMessageException e) {
-                return null;
+                return "";
             }
         }
         
