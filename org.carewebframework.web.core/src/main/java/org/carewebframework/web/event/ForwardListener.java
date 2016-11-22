@@ -33,14 +33,11 @@ public class ForwardListener implements IEventListener {
     
     private final String forwardType;
     
-    private final Class<? extends Event> forwardClass;
-    
     private final BaseComponent target;
     
     public ForwardListener(String forwardType, BaseComponent target) {
         Assert.notNull(this.forwardType = forwardType);
         Assert.notNull(this.target = target);
-        this.forwardClass = EventUtil.getEventClass(forwardType);
     }
     
     @Override
@@ -54,7 +51,7 @@ public class ForwardListener implements IEventListener {
         }
         
         try {
-            Event newEvent = forwardClass.newInstance();
+            Event newEvent = new ForwardedEvent(forwardType, event);
             EventUtil.send(newEvent, target);
         } catch (Exception e) {
             throw MiscUtil.toUnchecked(e);

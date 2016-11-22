@@ -33,6 +33,7 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.model.IListModel;
+import org.carewebframework.web.model.SmartComparator;
 import org.carewebframework.web.model.Sorting.SortOrder;
 import org.carewebframework.web.model.Sorting.SortToggle;
 
@@ -57,6 +58,11 @@ public class Column extends BaseLabeledComponent {
             this.sortOrder = SortOrder.UNSORTED;
             updateClient();
         }
+    }
+    
+    @PropertySetter("sortBy")
+    public void setSortComparator(String propertyName) {
+        setSortComparator(new SmartComparator(propertyName));
     }
     
     @PropertyGetter("sortOrder")

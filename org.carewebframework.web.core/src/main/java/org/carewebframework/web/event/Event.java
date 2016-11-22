@@ -88,7 +88,7 @@ public class Event {
     }
     
     public BaseComponent getTarget() {
-        return target == null ? page : target;
+        return target != null ? target : currentTarget != null ? currentTarget : page;
     }
     
     public BaseComponent getRelatedTarget() {

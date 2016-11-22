@@ -44,9 +44,6 @@ import org.carewebframework.web.component.Page;
  */
 public class EventUtil {
     
-    private EventUtil() {
-    }
-    
     /**
      * Sends an event to its designated target.
      * 
@@ -54,7 +51,8 @@ public class EventUtil {
      *            to the page in the current execution context.
      */
     public static void send(Event event) {
-        send(event, event.getTarget());
+        BaseComponent target = event.getCurrentTarget();
+        send(event, target == null ? event.getTarget() : target);
     }
     
     /**
@@ -237,6 +235,24 @@ public class EventUtil {
     }
     
     /**
+     * Creates an event from the specified event type. If an event class exists for the specified
+     * type, will create an event of that class. Otherwise, will create a generic event.
+     * 
+     * @param eventType The event type.
+     * @return The newly created event.
+     */
+    public static Event toEvent(String eventType) {
+        eventType = stripOn(eventType);
+        Class<? extends Event> eventClass = getEventClass(eventType);
+        
+        try {
+            return eventClass == Event.class ? new Event(eventType) : eventClass.newInstance();
+        } catch (Exception e) {
+            throw MiscUtil.toUnchecked(e);
+        }
+    }
+    
+    /**
      * Extracts an event of the expected class from the client request.
      * 
      * @param clazz The expected class.
@@ -257,4 +273,8 @@ public class EventUtil {
         
         return null;
     }
+    
+    private EventUtil() {
+    }
+    
 }

@@ -1,0 +1,125 @@
+package org.carewebframework.web.model;
+
+import java.util.Comparator;
+
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.reflect.FieldUtils;
+import org.carewebframework.common.MiscUtil;
+
+/**
+ * General purpose comparator that will compare two objects using a specified property or field
+ * name.
+ */
+public class SmartComparator implements Comparator<Object> {
+    
+    private final String name;
+    
+    private final boolean nullsFirst;
+    
+    private final boolean caseSensitive;
+    
+    private final boolean isField;
+    
+    /**
+     * Smart comparator for given property or field name and default settings for nullsFirst (true)
+     * and caseSensitive (false).
+     * 
+     * @param name If prefixed with an "@", is treated as the name of an instance field; otherwise,
+     *            is treated as a property name.
+     */
+    public SmartComparator(String name) {
+        this(name, true, false);
+    }
+    
+    /**
+     * Smart comparator for given property or field name with explicit settings for nullsFirst and
+     * caseSensitive.
+     * 
+     * @param name If prefixed with an "@", is treated as the name of an instance field; otherwise,
+     *            is treated as a property name.
+     * @param nullsFirst If true, nulls sort before non-nulls.
+     * @param caseSensitive If true, string comparisons are case-sensitive.
+     */
+    public SmartComparator(String name, boolean nullsFirst, boolean caseSensitive) {
+        isField = name.startsWith("@");
+        this.name = isField ? name.substring(1) : name;
+        this.nullsFirst = nullsFirst;
+        this.caseSensitive = caseSensitive;
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public int compare(Object bean1, Object bean2) {
+        Object value1 = getValue(bean1);
+        Object value2 = getValue(bean2);
+        
+        if (value1 == value2) {
+            return 0;
+        }
+        
+        if (value1 == null) {
+            return nullsFirst ? -1 : 1;
+        }
+        
+        if (value2 == null) {
+            return nullsFirst ? 1 : -1;
+        }
+        
+        if (value1.getClass() != value2.getClass()) {
+            return value1.hashCode() - value2.hashCode();
+        }
+        
+        if (value1 instanceof String) {
+            String s1 = (String) value1;
+            String s2 = (String) value2;
+            return caseSensitive ? s1.compareTo(s2) : s1.compareToIgnoreCase(s2);
+        }
+        
+        if (value1 instanceof Comparable) {
+            return ((Comparable<Object>) value1).compareTo(value2);
+        }
+        
+        if (value1 instanceof Integer) {
+            return ((Integer) value1).compareTo((Integer) value2);
+        }
+        
+        if (value1 instanceof Long) {
+            return ((Long) value1).compareTo((Long) value2);
+        }
+        
+        if (value1 instanceof Short) {
+            return ((Short) value1).compareTo((Short) value2);
+        }
+        
+        if (value1 instanceof Byte) {
+            return ((Byte) value1).compareTo((Byte) value2);
+        }
+        
+        if (value1 instanceof Float) {
+            return ((Float) value1).compareTo((Float) value2);
+        }
+        
+        if (value1 instanceof Double) {
+            return ((Double) value1).compareTo((Double) value2);
+        }
+        
+        return value1.hashCode() - value2.hashCode();
+    }
+    
+    private Object getValue(Object bean) {
+        try {
+            return bean == null ? null : isField ? getFieldValue(bean) : getPropertyValue(bean);
+        } catch (Exception e) {
+            throw MiscUtil.toUnchecked(e);
+        }
+    }
+    
+    private Object getPropertyValue(Object bean) throws Exception {
+        return PropertyUtils.getProperty(bean, name);
+    }
+    
+    private Object getFieldValue(Object bean) throws Exception {
+        return FieldUtils.readField(bean, name, true);
+    }
+    
+}

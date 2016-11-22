@@ -678,6 +678,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 * @param {string} key The name of the state.
 		 * @param {boolean} [fromServer] If true, do not sync state back to server..
 		 * @param {*} value The new value for the state.
+		 * @return {boolean} True if the state value changed.
 		 */
 		updateState: function(key, value, fromServer) {
 			var old = this._state[key],
@@ -690,6 +691,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 					this.stateChanged(key, value);
 				}
 			}
+			
+			return changed;
 		}
 
 	});

@@ -138,8 +138,10 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 			
 			function _doSelect(target, selected) {
 				var w = cwf.wgt(target);
-				w.updateState('selected', selected, true);
-				w.trigger('select', {selected: selected});
+				
+				if (w.updateState('selected', selected, true)) {
+					w.trigger('select', {selected: selected});
+				}
 			}
 		}
 	

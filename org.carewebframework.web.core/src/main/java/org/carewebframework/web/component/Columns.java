@@ -1,6 +1,5 @@
 package org.carewebframework.web.component;
 
-import org.carewebframework.web.ancillary.ComponentException;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 
@@ -15,9 +14,7 @@ public class Columns extends BaseUIComponent {
     
     public void setSortColumn(Column sortColumn) {
         if (sortColumn != this.sortColumn) {
-            if (sortColumn != null && sortColumn.getParent() != this) {
-                throw new ComponentException("Sort column does not belong to this parent.");
-            }
+            validateIsChild(sortColumn);
             
             if (this.sortColumn != null) {
                 this.sortColumn._setSortColumn(false, false);
