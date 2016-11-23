@@ -339,6 +339,25 @@ public abstract class BaseComponent implements IElementIdentifier {
         return attributes.get(name);
     }
     
+    @SuppressWarnings("unchecked")
+    public <T> T getAttribute(String name, T dflt) {
+        try {
+            T value = (T) attributes.get(name);
+            return value == null ? dflt : value;
+        } catch (ClassCastException e) {
+            return dflt;
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public <T> T getAttribute(String name, Class<T> clazz) {
+        try {
+            return (T) attributes.get(name);
+        } catch (ClassCastException e) {
+            return null;
+        }
+    }
+    
     public Object findAttribute(String name) {
         Object value = null;
         BaseComponent cmp = this;

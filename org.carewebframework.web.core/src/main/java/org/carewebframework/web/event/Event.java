@@ -27,6 +27,7 @@ package org.carewebframework.web.event;
 
 import org.carewebframework.web.annotation.EventType.EventParameter;
 import org.carewebframework.web.annotation.OnFailure;
+import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Page;
 
@@ -56,7 +57,6 @@ public class Event {
     private boolean stopPropagation;
     
     public Event() {
-        
     }
     
     public Event(String type) {
@@ -81,6 +81,8 @@ public class Event {
         this.data = data;
         this.currentTarget = target;
         this.relatedTarget = relatedTarget;
+        this.page = target != null ? target.getPage() : null;
+        this.page = this.page == null ? ExecutionContext.getPage() : this.page;
     }
     
     public String getType() {
@@ -91,12 +93,12 @@ public class Event {
         return target != null ? target : currentTarget != null ? currentTarget : page;
     }
     
-    public BaseComponent getRelatedTarget() {
-        return relatedTarget;
+    public BaseComponent getCurrentTarget() {
+        return currentTarget != null ? currentTarget : target != null ? target : page;
     }
     
-    public BaseComponent getCurrentTarget() {
-        return currentTarget;
+    public BaseComponent getRelatedTarget() {
+        return relatedTarget;
     }
     
     public Object getData() {

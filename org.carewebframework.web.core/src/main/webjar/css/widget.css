@@ -350,7 +350,7 @@ a:not([href]) {
 /* Checkbox */
 
 .cwf_checkbox {
-	display: inline-block;
+	display: inline-flex;
 	margin: 0 5px 0 5px;
 }
 

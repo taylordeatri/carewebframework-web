@@ -2689,6 +2689,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 					my: 'center',
 					at: 'center',
 					of: 'body'});
+				this.scrollIntoView();
 			}
 			
 			function _mode(mode, remove) {

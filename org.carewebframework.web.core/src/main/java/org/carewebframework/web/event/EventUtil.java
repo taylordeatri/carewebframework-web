@@ -52,7 +52,7 @@ public class EventUtil {
      */
     public static void send(Event event) {
         BaseComponent target = event.getCurrentTarget();
-        send(event, target == null ? event.getTarget() : target);
+        send(event, target);
     }
     
     /**
