@@ -365,7 +365,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 */
 		attr: function(attr, value, tgt$) {
 			tgt$ = tgt$ || this.widget$;
-			tgt$.cwf$attr(attr, value);
+			tgt$ ? tgt$.cwf$attr(attr, value) : null;
 		},
 		
 		/**
@@ -2672,7 +2672,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this.applyState('dragid');
 			
 			if (v === 'MODAL') {
-				mask$ = mask$ || $('#cwf_root').cwf$mask();
+				mask$ = mask$ || $('body').cwf$mask();
 				mask$.cwf$show(this.getState('visible'));
 				this.widget$.css('z-index', mask$.css('z-index'));
 				this._ancillaries.mask$ = mask$;
