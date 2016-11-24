@@ -97,6 +97,14 @@ a:not([href]) {
     border-radius: 6px 0 6px 6px;
 }
 
+/* Root */
+
+#cwf_root {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: auto;    
+}
 
 /* Drag and Drop */
 

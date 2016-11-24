@@ -2684,11 +2684,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			if (v !== 'INLINE') {
 				this.widget$.draggable({
-					containment: 'window'})
+					containment: '#cwf_root'})
 				.position({
 					my: 'center',
 					at: 'center',
-					of: 'body'});
+					of: '#cwf_root'});
 				this.scrollIntoView();
 			}
 			
