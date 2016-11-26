@@ -34,6 +34,7 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
+import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.IEventListener;
 
@@ -239,6 +240,10 @@ public class Window extends BaseUIComponent implements INamespace {
     private void doShow(Mode mode, IEventListener closeListener) {
         if (this.closeListener != null) {
             throw new IllegalStateException("Window is already open.");
+        }
+        
+        if (getParent() == null) {
+            setParent(ExecutionContext.getPage());
         }
         
         this.closeListener = closeListener;
