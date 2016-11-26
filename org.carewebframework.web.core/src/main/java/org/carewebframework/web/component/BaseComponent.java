@@ -542,6 +542,22 @@ public abstract class BaseComponent implements IElementIdentifier {
     }
     
     /**
+     * Find the first child containing the specified data object.
+     * 
+     * @param data The data object to find.
+     * @return The child with the data object, or null if not found.
+     */
+    public BaseComponent getChildByData(Object data) {
+        for (BaseComponent child : children) {
+            if (ObjectUtils.equals(data, child.getData())) {
+                return child;
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
      * Returns true if this component may contain children.
      * 
      * @return True if this component may contain children.

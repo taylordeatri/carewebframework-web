@@ -32,13 +32,13 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 public class ImagePicker extends BasePickerComponent<String> {
     
     @Component(value = "imagepickeritem", widgetPackage = "cwf-picker", widgetClass = "Imagepickeritem", parentTag = "imagepicker")
-    public static class Imagepickeritem extends BasePickerItem<String> {
+    public static class ImagePickeritem extends BasePickerItem<String> {
         
-        public Imagepickeritem() {
+        public ImagePickeritem() {
             
         }
         
-        public Imagepickeritem(String item) {
+        public ImagePickeritem(String item) {
             super(item);
         }
         
@@ -55,7 +55,7 @@ public class ImagePicker extends BasePickerComponent<String> {
     }
     
     public ImagePicker() {
-        super(Imagepickeritem.class);
+        super(ImagePickeritem.class);
     }
     
 }

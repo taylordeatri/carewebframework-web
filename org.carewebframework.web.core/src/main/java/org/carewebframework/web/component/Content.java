@@ -33,7 +33,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
  * This is a simple container for text content.
  */
 @Component(value = "#text", widgetClass = "Content", parentTag = "*")
-public class Content extends BaseComponent {
+public class Content extends BaseUIComponent {
     
     private String content;
     

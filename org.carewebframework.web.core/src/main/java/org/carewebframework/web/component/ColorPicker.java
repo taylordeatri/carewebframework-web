@@ -35,13 +35,13 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 public class ColorPicker extends BasePickerComponent<Color> {
     
     @Component(value = "colorpickeritem", widgetPackage = "cwf-picker", widgetClass = "Colorpickeritem", parentTag = "colorpicker")
-    public static class Colorpickeritem extends BasePickerItem<Color> {
+    public static class ColorPickeritem extends BasePickerItem<Color> {
         
-        public Colorpickeritem() {
+        public ColorPickeritem() {
             super();
         }
         
-        public Colorpickeritem(Color color) {
+        public ColorPickeritem(Color color) {
             super(color);
         }
         
@@ -58,7 +58,7 @@ public class ColorPicker extends BasePickerComponent<Color> {
     }
     
     public ColorPicker() {
-        super(Colorpickeritem.class);
+        super(ColorPickeritem.class);
     }
     
 }
