@@ -13,7 +13,8 @@
 }
    
 .cwf_treeview-noroot > ul,
-.cwf_treeview-noroot > ul > li {
+.cwf_treeview-noroot > ul > li,
+.cwf_treeview-noroot > ul > li > .cwf_treenode-nochildren {
     background-image: none!important;
     margin-left: -10px;
 }
@@ -53,6 +54,27 @@
     font-weight: normal;
 }
 
+.cwf_treenode > a > * {
+    vertical-align: middle;
+}
+
+.cwf_treenode > a > img {
+    padding-right: 4px;
+    max-height: 16px;
+    max-width: 16px;
+}
+
 .cwf_treenode-selected > a > span {
     background: lightgray;
 }
+
+.cwf_treenode-nochildren {
+    background-image: url(../img/tree-hline.png);
+    margin-left: -4px;
+    margin-right: 4px;
+}
+
+.cwf_treenode-nochildren:before {
+    visibility: hidden;
+}
+

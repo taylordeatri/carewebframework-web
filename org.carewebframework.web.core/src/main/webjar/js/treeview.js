@@ -105,7 +105,7 @@ define('cwf-treeview', ['cwf-core', 'cwf-widget', 'css!cwf-treeview-css.css'], f
 		},
 		
 		_updateToggle: function() {
-			this.sub$('ctl').toggleClass('hidden', !this.getChildCount());
+			this.sub$('ctl').toggleClass('cwf_treenode-nochildren', !this.getChildCount());
 		},
 		
 		/*------------------------------ State ------------------------------*/
