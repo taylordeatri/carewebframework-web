@@ -47,6 +47,10 @@ a:not([href]) {
 	overflow: auto;
 }
 
+.label-default {
+    background-color: transparent;
+}
+
 /* bootstrap extensions */
 
 .dropdown-submenu {
