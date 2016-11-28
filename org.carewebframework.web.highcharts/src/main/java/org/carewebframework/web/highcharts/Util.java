@@ -31,7 +31,7 @@ public class Util {
      * @return List of converted items.
      */
     public static List<OptionsMap> toMaps(Collection<? extends IMapConverter> items) {
-        List<OptionsMap> list = new ArrayList<OptionsMap>();
+        List<OptionsMap> list = new ArrayList<>();
         
         for (IMapConverter mc : items) {
             list.add(mc.toMap());

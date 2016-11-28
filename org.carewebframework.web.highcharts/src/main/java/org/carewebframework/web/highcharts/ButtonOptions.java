@@ -74,7 +74,7 @@ public class ButtonOptions extends Options {
      * available export types. Menu items can be customized by defining a new array of items and
      * assigning null to unwanted positions.
      */
-    public final List<ActionOptions> menuItems = new ArrayList<ActionOptions>();
+    public final List<ActionOptions> menuItems = new ArrayList<>();
     
     /**
      * A click handler callback to use on the button directly instead of the default. The "this"

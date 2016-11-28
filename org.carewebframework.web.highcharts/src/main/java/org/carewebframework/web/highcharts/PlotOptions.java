@@ -28,7 +28,7 @@ public abstract class PlotOptions extends Options {
      * The text identifier of the plot type.
      */
     protected transient String type;
-
+    
     /**
      * Allow this series' points to be selected by clicking on the markers, bars or pie slices.
      * Defaults to false.
@@ -71,7 +71,7 @@ public abstract class PlotOptions extends Options {
      * A series specific or series type specific color set to apply instead of the global colors
      * when colorByPoint is true.
      */
-    public List<String> colors = new ArrayList<String>();
+    public List<String> colors = new ArrayList<>();
     
     /**
      * Polar charts only. Whether to connect the ends of a line series plot across the extremes.
@@ -264,14 +264,14 @@ public abstract class PlotOptions extends Options {
     @Override
     public OptionsMap toMap() {
         OptionsMap map = super.toMap();
-
+        
         if (type != null) {
             OptionsMap newMap = new OptionsMap();
             newMap.put(type, map);
             map = newMap;
         }
-
+        
         return map;
     }
-
+    
 }

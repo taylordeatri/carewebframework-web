@@ -5,7 +5,7 @@ define('cwf-hchart', ['cwf-core', 'cwf-widget', 'highcharts'], function(cwf) {
 	/**
 	 * Wrapper for HighCharts
 	 */
-	cwf.widget.HChart = cwf.widget.BaseUIComponent.extend({
+	cwf.widget.HChart = cwf.widget.UIWidget.extend({
 	
 		/*------------------------------ Events ------------------------------*/
 
@@ -30,11 +30,20 @@ define('cwf-hchart', ['cwf-core', 'cwf-widget', 'highcharts'], function(cwf) {
 			this._run();
 		},
 	
-		_run : function(options) {
-			this._resizing = true;
-			this._reset();
-			this._chart = new Highcharts.Chart(options);
-			this._resizing = false;
+		_export : function(func) {
+			if (this._chart) {
+				func ? func.call(this._chart) : this._chart.exportChart();
+			}
+		},
+	
+		_global : function(options) {
+			if (options)
+				Highcharts.setOptions(options);
+		},
+		
+		_print : function(func) {
+			if (this._chart)
+				func ? func.call(this._chart) : this._chart.print();
 		},
 	
 		_redraw : function() {
@@ -49,20 +58,16 @@ define('cwf-hchart', ['cwf-core', 'cwf-widget', 'highcharts'], function(cwf) {
 			}
 		},
 		
+		_run : function(options) {
+			this._resizing = true;
+			this._reset();
+			this._chart = new Highcharts.Chart(options);
+			this._resizing = false;
+		},
+	
 		_title : function(options) {
 			if (this._chart) {
 				this._chart.setTitle(options.title, options.subtitle);
-			}
-		},
-	
-		_print : function(func) {
-			if (this._chart)
-				func ? func.call(this._chart) : this._chart.print();
-		},
-	
-		_export : function(func) {
-			if (this._chart) {
-				func ? func.call(this._chart) : this._chart.exportChart();
 			}
 		},
 	

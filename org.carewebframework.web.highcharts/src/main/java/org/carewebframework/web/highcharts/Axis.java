@@ -36,13 +36,13 @@ public class Axis extends Options {
      * If categories are present for the x-axis, names are used instead of numbers for that axis.
      * Example: categories: ['Apples', 'Bananas', 'Oranges'] Defaults to none.
      */
-    public final List<String> categories = new ArrayList<String>();
+    public final List<String> categories = new ArrayList<>();
     
     /**
      * The highest allowed value for automatically computed axis extremes.
      */
     public Double ceiling;
-
+    
     /**
      * For a date/time axis, the scale will automatically adjust to the appropriate unit. This
      * member gives the default string representations used for each unit.
@@ -61,7 +61,7 @@ public class Axis extends Options {
      * The lowest allowed value for automatically computed axis extremes. Defaults to null.
      */
     public Double floor;
-
+    
     /**
      * Color of the grid lines extending the ticks across the plot area. Defaults to "#C0C0C0".
      */
@@ -216,14 +216,14 @@ public class Axis extends Options {
      *
      * @see PlotBandOptions
      */
-    public final List<PlotBandOptions> plotBands = new ArrayList<PlotBandOptions>();
+    public final List<PlotBandOptions> plotBands = new ArrayList<>();
     
     /**
      * A line stretching across the plot area, marking a specific value on one of the axes.
      *
      * @see PlotLineOptions
      */
-    public final PlotLineOptions plotLines = new PlotLineOptions();
+    public final List<PlotLineOptions> plotLines = new ArrayList<>();
     
     /**
      * Whether to reverse the axis so that the highest number is closest to origin. If the chart is

@@ -530,18 +530,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 */
 	fatal: function(error) {
 		if (!(error instanceof Error)) {
-			error = new Error(error);
+			error = $.error(error);
 		}
 		
-		var message = 'Fatal error:\n\n' + error.message;
-		
-		if (error.lineNumber) {
-			message += ' at line ' + error.lineNumber;
-		}
-		
-		if (error.fileName) {
-			message += ' in ' + error.fileName;
-		}
+		var message = 'Fatal error:\n\n' + (error.stack ? error.stack : error);
 		
 		alert(message);
 	},

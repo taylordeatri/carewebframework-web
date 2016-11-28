@@ -29,7 +29,7 @@ public class Series extends Options {
      * }]
      * </pre>
      */
-    public final List<DataPoint> data = new ArrayList<DataPoint>();
+    public final List<DataPoint> data = new ArrayList<>();
     
     /**
      * The index of the series in the chart, affecting the internal index in the chart.series array,

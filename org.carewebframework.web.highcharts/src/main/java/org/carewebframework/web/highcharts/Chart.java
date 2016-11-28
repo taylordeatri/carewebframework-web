@@ -30,7 +30,7 @@ public class Chart extends BaseUIComponent implements IMapConverter {
         
         public final ChartOptions chart = new ChartOptions();
         
-        public final List<String> colors = new ArrayList<String>();
+        public final List<String> colors = new ArrayList<>();
         
         public final CreditsOptions credits = new CreditsOptions();
         
@@ -46,7 +46,7 @@ public class Chart extends BaseUIComponent implements IMapConverter {
         
         public final PlotOptions plotOptions = null;
         
-        public final List<Series> series = new ArrayList<Series>();
+        public final List<Series> series = new ArrayList<>();
         
         public final TitleOptions subtitle = new TitleOptions();
         
@@ -54,9 +54,9 @@ public class Chart extends BaseUIComponent implements IMapConverter {
         
         public final TooltipOptions tooltip = new TooltipOptions();
         
-        public final List<Axis> xAxis = new ArrayList<Axis>();
+        public final List<Axis> xAxis = new ArrayList<>();
         
-        public final List<Axis> yAxis = new ArrayList<Axis>();
+        public final List<Axis> yAxis = new ArrayList<>();
         
     }
     
@@ -220,7 +220,7 @@ public class Chart extends BaseUIComponent implements IMapConverter {
      */
     private void init() {
         if (shouldInitialize()) {
-            invoke("_init", new GlobalSettings().toMap());
+            invoke("_global", new GlobalSettings().toMap());
         }
     }
     

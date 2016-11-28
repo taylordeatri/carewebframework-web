@@ -61,7 +61,7 @@ public class OptionsMap extends HashMap<String, Object> {
             return null;
         }
         
-        Collection<Object> list = new ArrayList<Object>();
+        Collection<Object> list = new ArrayList<>();
         
         for (Object item : items) {
             list.add(convert(item));
