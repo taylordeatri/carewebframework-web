@@ -62,7 +62,7 @@ public class Synchronizer {
     }
     
     public Synchronizer createWidget(BaseComponent parent, Map<String, Object> props, Map<String, Object> state) {
-        return sendToClient(new ClientInvocation(null, "widget.create", parent, props, state));
+        return sendToClient(new ClientInvocation(null, "cwf.widget.create", parent, props, state));
     }
     
     public Synchronizer processQueue(ClientInvocationQueue queue) {

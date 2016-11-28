@@ -95,11 +95,8 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				if (!tgt) {
 					throw new Error('No target matching ' + action.tgt);
 				}
-			} else {
-					tgt = cwf;
-					action.tgt = 'cwf';
 			}
-		
+			
 			var fcn = cwf.resolveReference(tgt, action.fcn);
 		
 			if (!fcn) {
@@ -567,6 +564,13 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	},
 	
 	/**
+	 * Performs an eval operation in the cwf context.
+	 */
+	eval: function(value) {
+		return eval(value);
+	},
+	
+	/**
 	 * Return a unique identifier.
 	 */
 	uniqueId: function() {
@@ -577,9 +581,14 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 * Resolve a hierarchical reference relative to the specified base.
 	 */
 	resolveReference: function(base, path) {
-		var ref = base;
 		var i = 0;
 		path = path === null ? [] : path.split('.');
+		
+		if (!base) {
+			base = eval(path[i++]);
+		}
+		
+		var ref = base;
 		
 		while (i < path.length && ref) {
 			base = ref;

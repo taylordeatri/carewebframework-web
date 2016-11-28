@@ -26,6 +26,7 @@
 package org.carewebframework.web.client;
 
 import org.carewebframework.web.component.BaseComponent;
+import org.carewebframework.web.component.BaseUIComponent;
 
 public class ClientUtil {
     
@@ -47,23 +48,27 @@ public class ClientUtil {
     }
     
     public static void eval(String expression) {
-        invoke("eval", expression);
+        invoke("cwf.eval", expression);
     }
     
     public static void submit(BaseComponent form) {
-        invoke("submit", form);
+        invoke("cwf.submit", form);
     }
     
-    public static void busy(BaseComponent target, String message) {
-        // TODO:  Implement this
+    public static void busy(BaseUIComponent target, String message) {
+        if (message == null || message.isEmpty()) {
+            target.removeMask();
+        } else {
+            target.addMask(message);
+        }
     }
     
     public static void canClose(boolean value) {
-        invoke("canClose", value);
+        invoke("cwf.canClose", value);
     }
     
     public static void saveToFile(String content, String mimeType, String fileName) {
-        invoke("saveToFile", content, mimeType, fileName);
+        invoke("cwf.saveToFile", content, mimeType, fileName);
     }
     
     public static boolean debugEnabled() {
