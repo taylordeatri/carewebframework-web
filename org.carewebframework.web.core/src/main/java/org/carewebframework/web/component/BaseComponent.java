@@ -890,6 +890,40 @@ public abstract class BaseComponent implements IElementIdentifier {
         unregisterEventListener(eventType, createForwardListener(eventType, target, forwardType));
     }
     
+    @PropertySetter(value = "forward", defer = true)
+    private void setForward(String forwards) {
+        forwards = trimify(forwards);
+        
+        if (forwards != null) {
+            for (String forward : forwards.split("\\ ")) {
+                if (!forward.isEmpty()) {
+                    int i = forward.indexOf("=");
+                    
+                    if (i <= 0) {
+                        throw new IllegalArgumentException(forward);
+                    }
+                    
+                    String original = forward.substring(0, i);
+                    forward = forward.substring(i + 1);
+                    i = forward.lastIndexOf(".");
+                    String name = i == -1 ? null : forward.substring(0, i);
+                    forward = forward.substring(i + 1);
+                    BaseComponent target = name == null ? this : findByName(name);
+                    
+                    if (target == null) {
+                        throw new ComponentException(this, "No component named \"%s\" found", name);
+                    }
+                    
+                    if (forward.isEmpty()) {
+                        throw new IllegalArgumentException("No forward event specified");
+                    }
+                    
+                    registerEventForward(original, target, forward);
+                }
+            }
+        }
+    }
+    
     private ForwardListener createForwardListener(String eventType, BaseComponent target, String forwardType) {
         return new ForwardListener(forwardType == null ? eventType : forwardType, target == null ? this : target);
     }

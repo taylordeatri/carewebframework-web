@@ -10,6 +10,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="href" type="xs:string"/>
@@ -38,6 +39,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -106,6 +108,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -132,6 +135,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -168,6 +172,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -194,6 +199,7 @@
     <xs:element name="colorpickeritem">
         <xs:complexType>
             <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
@@ -254,6 +260,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -261,6 +268,7 @@
             <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="sortBy" type="xs:string"/>
             <xs:attribute name="sortColumn" type="xs:boolean"/>
             <xs:attribute name="sortOrder">
                 <xs:simpleType>
@@ -269,6 +277,14 @@
                         <xs:enumeration value="descending"/>
                         <xs:enumeration value="native"/>
                         <xs:enumeration value="unsorted"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="sortToggle">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="binary"/>
+                        <xs:enumeration value="tristate"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
@@ -293,6 +309,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -321,6 +338,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -353,6 +371,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -422,6 +441,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -446,6 +466,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -520,6 +541,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -544,6 +566,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -571,11 +594,27 @@
         <xs:complexType>
             <xs:simpleContent>
                 <xs:extension base="xs:string">
+                    <xs:attribute name="balloon" type="xs:string"/>
+                    <xs:attribute name="class" type="xs:string"/>
+                    <xs:attribute name="context" type="xs:string"/>
                     <xs:attribute name="controller" type="xs:string"/>
+                    <xs:attribute name="css" type="xs:string"/>
+                    <xs:attribute name="disabled" type="xs:boolean"/>
+                    <xs:attribute name="dragid" type="xs:string"/>
+                    <xs:attribute name="dropid" type="xs:string"/>
+                    <xs:attribute name="focus" type="xs:boolean"/>
+                    <xs:attribute name="forward" type="xs:string"/>
+                    <xs:attribute name="height" type="xs:string"/>
+                    <xs:attribute name="hint" type="xs:string"/>
                     <xs:attribute name="if" type="xs:boolean"/>
                     <xs:attribute name="impl" type="xs:string"/>
+                    <xs:attribute name="keycapture" type="xs:string"/>
                     <xs:attribute name="name" type="xs:string"/>
+                    <xs:attribute name="style" type="xs:string"/>
+                    <xs:attribute name="tabindex" type="xs:integer"/>
                     <xs:attribute name="unless" type="xs:boolean"/>
+                    <xs:attribute name="visible" type="xs:boolean"/>
+                    <xs:attribute name="width" type="xs:string"/>
                 </xs:extension>
             </xs:simpleContent>
         </xs:complexType>
@@ -591,6 +630,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -618,6 +658,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -646,6 +687,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -672,6 +714,7 @@
     <xs:element name="imagepickeritem">
         <xs:complexType>
             <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
@@ -690,6 +733,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -715,6 +759,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -749,6 +794,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -777,6 +823,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -803,6 +850,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -830,6 +878,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -865,6 +914,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -902,6 +952,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -929,6 +980,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -962,6 +1014,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -993,6 +1046,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1017,6 +1071,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1075,6 +1130,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
@@ -1135,6 +1191,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1163,6 +1220,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1237,6 +1295,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1264,6 +1323,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1297,6 +1357,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1325,6 +1386,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1400,6 +1462,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1466,12 +1529,14 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="selected" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -1493,12 +1558,22 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="selectable">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="multiple"/>
+                        <xs:enumeration value="no"/>
+                        <xs:enumeration value="single"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -1510,13 +1585,29 @@
         <xs:complexType>
             <xs:simpleContent>
                 <xs:extension base="xs:string">
+                    <xs:attribute name="balloon" type="xs:string"/>
+                    <xs:attribute name="class" type="xs:string"/>
+                    <xs:attribute name="context" type="xs:string"/>
                     <xs:attribute name="controller" type="xs:string"/>
+                    <xs:attribute name="css" type="xs:string"/>
+                    <xs:attribute name="disabled" type="xs:boolean"/>
+                    <xs:attribute name="dragid" type="xs:string"/>
+                    <xs:attribute name="dropid" type="xs:string"/>
+                    <xs:attribute name="focus" type="xs:boolean"/>
+                    <xs:attribute name="forward" type="xs:string"/>
+                    <xs:attribute name="height" type="xs:string"/>
+                    <xs:attribute name="hint" type="xs:string"/>
                     <xs:attribute name="if" type="xs:boolean"/>
                     <xs:attribute name="impl" type="xs:string"/>
+                    <xs:attribute name="keycapture" type="xs:string"/>
                     <xs:attribute name="name" type="xs:string"/>
                     <xs:attribute name="src" type="xs:string"/>
+                    <xs:attribute name="style" type="xs:string"/>
+                    <xs:attribute name="tabindex" type="xs:integer"/>
                     <xs:attribute name="type" type="xs:string"/>
                     <xs:attribute name="unless" type="xs:boolean"/>
+                    <xs:attribute name="visible" type="xs:boolean"/>
+                    <xs:attribute name="width" type="xs:string"/>
                 </xs:extension>
             </xs:simpleContent>
         </xs:complexType>
@@ -1574,6 +1665,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1591,11 +1683,27 @@
         <xs:complexType>
             <xs:simpleContent>
                 <xs:extension base="xs:string">
+                    <xs:attribute name="balloon" type="xs:string"/>
+                    <xs:attribute name="class" type="xs:string"/>
+                    <xs:attribute name="context" type="xs:string"/>
                     <xs:attribute name="controller" type="xs:string"/>
+                    <xs:attribute name="css" type="xs:string"/>
+                    <xs:attribute name="disabled" type="xs:boolean"/>
+                    <xs:attribute name="dragid" type="xs:string"/>
+                    <xs:attribute name="dropid" type="xs:string"/>
+                    <xs:attribute name="focus" type="xs:boolean"/>
+                    <xs:attribute name="forward" type="xs:string"/>
+                    <xs:attribute name="height" type="xs:string"/>
+                    <xs:attribute name="hint" type="xs:string"/>
                     <xs:attribute name="if" type="xs:boolean"/>
                     <xs:attribute name="impl" type="xs:string"/>
+                    <xs:attribute name="keycapture" type="xs:string"/>
                     <xs:attribute name="name" type="xs:string"/>
+                    <xs:attribute name="style" type="xs:string"/>
+                    <xs:attribute name="tabindex" type="xs:integer"/>
                     <xs:attribute name="unless" type="xs:boolean"/>
+                    <xs:attribute name="visible" type="xs:boolean"/>
+                    <xs:attribute name="width" type="xs:string"/>
                 </xs:extension>
             </xs:simpleContent>
         </xs:complexType>
@@ -1603,6 +1711,7 @@
     <xs:element name="stylesheet">
         <xs:complexType>
             <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="href" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
@@ -1664,6 +1773,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1695,6 +1805,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1722,6 +1833,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1756,6 +1868,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1782,6 +1895,7 @@
     <xs:element name="timer">
         <xs:complexType>
             <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="interval" type="xs:string"/>
@@ -1853,6 +1967,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1889,6 +2004,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1919,6 +2035,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
@@ -1998,6 +2115,7 @@
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
