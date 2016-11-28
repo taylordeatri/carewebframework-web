@@ -43,8 +43,10 @@ a:not([href]) {
 }
 
 .panel-body {
-	flex: auto;
-	overflow: auto;
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    overflow: auto;
 }
 
 .label-default {
