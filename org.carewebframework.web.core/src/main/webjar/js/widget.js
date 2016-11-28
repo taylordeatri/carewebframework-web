@@ -1095,6 +1095,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		    }
 		},
 		
+		handleKeyup: function(event) {
+			if (event.keyCode === 13) {
+				this.trigger('enter');
+			}
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 				
 		init: function() {
@@ -1123,6 +1129,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			var input$ = this.input$();
 			input$.on('input propertychange', this.handleInput.bind(this));
 			input$.on('blur', this.handleBlur.bind(this));
+			input$.on('keyup', this.handleKeyup.bind(this));
 			this._constraint ? input$.on('keypress', cwf.event.constrainInput.bind(this, this._constraint)) : null;
 		},
 		
