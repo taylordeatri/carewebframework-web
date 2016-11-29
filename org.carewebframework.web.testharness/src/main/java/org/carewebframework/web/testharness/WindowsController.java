@@ -31,11 +31,17 @@ import org.carewebframework.web.client.ClientUtil;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Button;
 import org.carewebframework.web.component.Div;
+import org.carewebframework.web.component.Label;
+import org.carewebframework.web.component.MessagePane;
+import org.carewebframework.web.component.MessageWindow;
 import org.carewebframework.web.component.Window;
 import org.carewebframework.web.component.Window.Mode;
 import org.carewebframework.web.event.ResizeEvent;
 
 public class WindowsController extends BaseController {
+    
+    @WiredComponent("^.messagewindow")
+    private MessageWindow messagewindow;
     
     @WiredComponent("window1.window_div")
     private Div windowdiv1;
@@ -71,6 +77,14 @@ public class WindowsController extends BaseController {
     @EventHandler(value = "click", target = "window3.btnAlert")
     private void btnAlertHandler() {
         ClientUtil.invoke("cwf.alert", "This is a test alert", "TEST!", "danger");
+    }
+    
+    @EventHandler(value = "click", target = "window3.btnMessage")
+    private void btnMessageHandler() {
+        MessagePane pane = new MessagePane("Message Title", "category", 8000, false);
+        pane.addClass("flavor: alert-success");
+        pane.addChild(new Label("This is a test message"));
+        messagewindow.addChild(pane);
     }
     
     @EventHandler(value = "resize", target = "window3")
