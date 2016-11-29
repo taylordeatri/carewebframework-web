@@ -70,7 +70,7 @@ public class WindowsController extends BaseController {
     
     @EventHandler(value = "click", target = "window3.btnAlert")
     private void btnAlertHandler() {
-        ClientUtil.invoke("alert", "This is a test alert", "TEST!", "danger");
+        ClientUtil.invoke("cwf.alert", "This is a test alert", "TEST!", "danger");
     }
     
     @EventHandler(value = "resize", target = "window3")

@@ -2525,7 +2525,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		onAddChild: function(child) {
 			this.widget$.show();
-			child._slide(true);
+			child._slide(true, 'fast', function() {
+				child.widget$.height('auto');
+			});
 		},
 		
 		onRemoveChild: function(child) {
@@ -2560,6 +2562,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._super(destroy);
 		},
 		
+		/*------------------------------ Events ------------------------------*/
+		
+		handleResize: function() {
+			this._slide(true);
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
@@ -2591,13 +2599,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		afterRender: function() {
 			this._super();
 			this._buttonAdd('remove', 'close');
+			this.widget$.on('resize', this.handleResize.bind(this));
 		},
 		
 		render$: function() {
 			var dom = '<div>'
 				    +   '<div>'
 				    +     '<span id="${id}-title" class="${wclazz}-title"/>'
-				    +     '<span id="${id}-icons" class="${wclazz}-icons"/>'
+				    +     '<span id="${id}-icons" class="cwf_titled-icons"/>'
 				    +   '</div>'
 				    +	'<div id="${id}-inner"/>'
 				    + '</div>';
@@ -2618,9 +2627,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		duration: function(v) {
 			var self = this;
 			this._clearTimeout();
-			this._timeout = setTimeout(_timeout, v);
+			
+			if (v > 0) {
+				this._timeout = setTimeout(_timeout, v);
+			}
 			
 			function _timeout() {
+				delete self._timeout;
 				self._slide(false, null, function() {
 					self.trigger('close');
 				});

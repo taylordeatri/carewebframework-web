@@ -438,8 +438,10 @@ a:not([href]) {
 
 .cwf_messagepane {
 	min-width: 200px;
-    padding: 1px!important;
-    background-color: lightblue;
+    padding: 1px;
+    margin-bottom: 5px;
+    border-color: lightgray;
+    overflow: hidden;
 }
 
 .cwf_messagepane > div:first-child {
@@ -448,18 +450,8 @@ a:not([href]) {
     zoom: 0.8;
 }
 
-.cwf_messagepane-icons {
-    float: right;
-}
-
-.cwf_messagepane-icons > .glyphicon {
-	opacity: .6;
-	cursor: pointer;
-	z-index: 15;
-}
-
-.cwf_messagepane-icons > .glyphicon:hover {
-	opacity: 1;
+.cwf_messagepane > div:first-child > .cwf_titled-icons {
+    zoom: .5;
 }
 
 .cwf_messagepane-title {
