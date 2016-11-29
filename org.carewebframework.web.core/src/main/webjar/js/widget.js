@@ -2215,6 +2215,21 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	});
 	
 	/******************************************************************************************************************
+	 * A time box widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Timebox = cwf.widget.InputboxWidget.extend({
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._type = 'time';
+			this._super();
+		}
+		
+	});
+	
+	/******************************************************************************************************************
 	 * A list box widget
 	 ******************************************************************************************************************/ 
 	
@@ -2562,12 +2577,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._super(destroy);
 		},
 		
-		/*------------------------------ Events ------------------------------*/
-		
-		handleResize: function() {
-			this._slide(true);
-		},
-		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
@@ -2599,7 +2608,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		afterRender: function() {
 			this._super();
 			this._buttonAdd('remove', 'close');
-			this.widget$.on('resize', this.handleResize.bind(this));
 		},
 		
 		render$: function() {

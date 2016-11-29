@@ -28,6 +28,10 @@
 				datebox: placeholder="datebox"
 			</row>
 			<row>
+				<timebox placeholder="timebox" />
+				timebox: placeholder="timebox"
+			</row>
+			<row>
 				<integerbox placeholder="integer value" />
 				integerbox placeholder="integer value"
 			</row>
