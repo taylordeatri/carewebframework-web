@@ -414,3 +414,58 @@ a:not([href]) {
 	background-color: #d9edf7;
 }
 
+/* Messagewindow */
+
+.cwf_messagewindow {
+	text-align: center;
+	display: none;
+	position: fixed; 
+	background: transparent;
+	z-index: 9999;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 0;
+}
+
+.cwf_messagewindow > div {
+	text-align: left;
+	display: inline-block;
+	max-width: 75%;
+}
+
+/* Messagepane */
+
+.cwf_messagepane {
+	min-width: 200px;
+    padding: 1px!important;
+    background-color: lightblue;
+}
+
+.cwf_messagepane > div:first-child {
+    border-bottom: 1px solid;
+    min-height: 18px;
+    zoom: 0.8;
+}
+
+.cwf_messagepane-icons {
+    float: right;
+}
+
+.cwf_messagepane-icons > .glyphicon {
+	opacity: .6;
+	cursor: pointer;
+	z-index: 15;
+}
+
+.cwf_messagepane-icons > .glyphicon:hover {
+	opacity: 1;
+}
+
+.cwf_messagepane-title {
+	padding-left: 4px;
+}
+
+
+
+

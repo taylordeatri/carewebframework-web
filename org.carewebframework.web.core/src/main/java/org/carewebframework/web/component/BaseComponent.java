@@ -997,19 +997,43 @@ public abstract class BaseComponent implements IElementIdentifier {
         return value == null ? deflt : value;
     }
     
-    protected boolean areEqual(Object s1, Object s2) {
-        return ObjectUtils.equals(s1, s2);
+    /**
+     * Returns true if two objects are equal, allowing for null values.
+     * 
+     * @param obj1 First object to compare.
+     * @param obj2 Second object to compare.
+     * @return True if the objects are equal.
+     */
+    protected boolean areEqual(Object obj1, Object obj2) {
+        return ObjectUtils.equals(obj1, obj2);
     }
     
+    /**
+     * Returns the data object associated with the component.
+     * 
+     * @return The data object; may be null.
+     */
     public Object getData() {
         return data;
     }
     
+    /**
+     * Returns the data object associated with the component if it is of the specified type;
+     * otherwise returns null.
+     * 
+     * @param type The expected type.
+     * @return The data object if it is of the expected type; null otherwise.
+     */
     @SuppressWarnings("unchecked")
     public <T> T getData(Class<T> type) {
         return type.isInstance(data) ? (T) data : null;
     }
     
+    /**
+     * Sets the data object to be associated with the component.
+     * 
+     * @param data The data object.
+     */
     public void setData(Object data) {
         this.data = data;
     }

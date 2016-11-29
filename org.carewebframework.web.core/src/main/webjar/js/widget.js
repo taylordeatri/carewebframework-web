@@ -2510,6 +2510,129 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	});
 	
 	
+	
+	/******************************************************************************************************************
+	 * A slide-down message window.
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Messagewindow = cwf.widget.UIWidget.extend({
+		
+		/*------------------------------ Containment ------------------------------*/
+		
+		anchor$: function() {
+			return this.sub$('inner');
+		},
+		
+		onAddChild: function(child) {
+			this.widget$.show();
+			child._slide(true);
+		},
+		
+		onRemoveChild: function(child) {
+			!this.getChildCount() ? this.widget$.hide() : null;
+		},
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		render$: function() {
+			var dom = '<div>'
+					+   '<div id="${id}-inner"/>'
+					+ '</div>';
+			return $(this.resolveEL(dom));
+		}
+		
+	});
+	
+	/******************************************************************************************************************
+	 * Message pane for slide-down message window.
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Messagepane = cwf.widget.UIWidget.extend({
+		
+		/*------------------------------ Containment ------------------------------*/
+		
+		anchor$: function() {
+			return this.sub$('inner');
+		},
+		
+		_detach: function(destroy) {
+			destroy ? this._clearTimeout() : null;
+			this._super(destroy);
+		},
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.initState({duration: 8000});
+			this.toggleClass('alert', true);
+			this.forwardToServer('close');
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		_slide : function(down, duration, complete) {
+			var w$ = this.widget$,
+				start = down ? 0 : w$.outerHeight(),
+				end = down ? w$.outerHeight() : 0;
+			w$.outerHeight(start);
+			w$.animate({height: end}, duration || 'slow', complete);
+		},
+		
+		_clearTimeout: function() {
+			if (this._timeout) {
+				clearTimeout(this._timeout);
+				delete this._timeout;
+			}
+		},
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		afterRender: function() {
+			this._super();
+			this._buttonAdd('remove', 'close');
+		},
+		
+		render$: function() {
+			var dom = '<div>'
+				    +   '<div>'
+				    +     '<span id="${id}-title" class="${wclazz}-title"/>'
+				    +     '<span id="${id}-icons" class="${wclazz}-icons"/>'
+				    +   '</div>'
+				    +	'<div id="${id}-inner"/>'
+				    + '</div>';
+			return $(this.resolveEL(dom));
+		},
+		
+		_buttonAdd: function(type, forward) {
+			var btn$ = $('<span>').addClass('glyphicon glyphicon-' + type).appendTo(this.sub$('icons'));
+			this.forward(btn$, 'click', forward);
+		},
+		
+		/*------------------------------ State ------------------------------*/
+		
+		actionable: function(v) {
+			v ? this._buttonAdd('flash', 'action') : null;
+		},
+		
+		duration: function(v) {
+			var self = this;
+			this._clearTimeout();
+			this._timeout = setTimeout(_timeout, v);
+			
+			function _timeout() {
+				self._slide(false, null, function() {
+					self.trigger('close');
+				});
+			}
+		},
+		
+		title: function(v) {
+			this.sub$('title').text(v);
+		}
+		
+	});
+	
 	/******************************************************************************************************************
 	 * A window widget
 	 ******************************************************************************************************************/ 
