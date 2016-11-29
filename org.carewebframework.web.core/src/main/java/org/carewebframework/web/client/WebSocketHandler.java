@@ -207,7 +207,7 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
         
         try (StringWriter writer = new StringWriter(); PrintWriter print = new PrintWriter(writer);) {
             exception.printStackTrace(print);
-            ClientInvocation invocation = new ClientInvocation(null, "alert", writer.toString(), "Error", "danger");
+            ClientInvocation invocation = new ClientInvocation(null, "cwf.alert", writer.toString(), "Error", "danger");
             send(socket, invocation);
         } catch (Exception e) {
             log.error("Could not send exception to client.", exception);
