@@ -119,7 +119,7 @@ public class PageDefinition {
         }
         
         if (parent != null) {
-            parent._addChild(component, -1, true);
+            parent.addChild(component);
         }
         
         materialize(element.getChildren(), component, deferrals, null);

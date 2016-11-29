@@ -397,10 +397,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     }
     
     public void addChild(BaseComponent child, int index) {
-        _addChild(child, index, false);
-    }
-    
-    public void _addChild(BaseComponent child, int index, boolean noSync) {
+        boolean noSync = child.getPage() == null;
         child.validate();
         validateChild(child);
         BaseComponent before = index < 0 || index == children.size() ? null : children.get(index);
