@@ -13,12 +13,6 @@
     flex-direction: column;
 }
 
-.cwf_paneview > *:first-child {
-    border-bottom: 1px solid lightgray;
-    background: lightblue;
-    text-align: center;
-}
-
 /* Pane */
 
 .cwf_pane {

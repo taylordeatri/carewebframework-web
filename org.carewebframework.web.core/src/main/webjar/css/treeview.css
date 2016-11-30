@@ -3,6 +3,7 @@
 .cwf_treeview {
     display: inline-flex;
     overflow: auto;
+    margin: 2px;
 }
 
 .cwf_treeview ul {
