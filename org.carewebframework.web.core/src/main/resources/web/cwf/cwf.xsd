@@ -94,6 +94,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -246,6 +247,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -427,6 +429,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -527,6 +530,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -1124,6 +1128,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -1220,6 +1225,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -1273,6 +1279,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -1377,6 +1384,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -1429,6 +1437,7 @@
             <xs:attribute name="maxvalue" type="xs:string"/>
             <xs:attribute name="minvalue" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="open" type="xs:boolean"/>
             <xs:attribute name="pattern" type="xs:string"/>
             <xs:attribute name="placeholder" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
@@ -1544,6 +1553,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -1565,6 +1575,14 @@
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="orientation">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="horizontal"/>
+                        <xs:enumeration value="vertical"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -1611,6 +1629,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -1747,6 +1766,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -1854,6 +1874,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -1988,6 +2009,39 @@
             <xs:attribute name="width" type="xs:string"/>
         </xs:complexType>
     </xs:element>
+    <xs:element name="timebox">
+        <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
+            <xs:attribute name="class" type="xs:string"/>
+            <xs:attribute name="context" type="xs:string"/>
+            <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="css" type="xs:string"/>
+            <xs:attribute name="disabled" type="xs:boolean"/>
+            <xs:attribute name="dragid" type="xs:string"/>
+            <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="hint" type="xs:string"/>
+            <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
+            <xs:attribute name="maxlength" type="xs:integer"/>
+            <xs:attribute name="maxvalue" type="xs:string"/>
+            <xs:attribute name="minvalue" type="xs:string"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pattern" type="xs:string"/>
+            <xs:attribute name="placeholder" type="xs:string"/>
+            <xs:attribute name="readonly" type="xs:boolean"/>
+            <xs:attribute name="required" type="xs:boolean"/>
+            <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="value" type="xs:string"/>
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="width" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="timer">
         <xs:complexType>
             <xs:attribute name="controller" type="xs:string"/>
@@ -2040,6 +2094,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
@@ -2187,6 +2242,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>

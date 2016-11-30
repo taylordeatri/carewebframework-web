@@ -28,9 +28,17 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
+import org.carewebframework.web.annotation.Component.PropertyGetter;
+import org.carewebframework.web.annotation.Component.PropertySetter;
 
 @Component(value = "radiogroup", widgetClass = "Radiogroup", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Radiogroup extends BaseUIComponent {
+    
+    public enum Orientation {
+        HORIZONTAL, VERTICAL
+    };
+    
+    private Orientation orientation = Orientation.HORIZONTAL;
     
     public Radiobutton getSelected() {
         return getSelected(this);
@@ -52,5 +60,19 @@ public class Radiogroup extends BaseUIComponent {
         }
         
         return null;
+    }
+    
+    @PropertyGetter("orientation")
+    public Orientation getOrientation() {
+        return orientation;
+    }
+    
+    @PropertySetter("orientation")
+    public void setOrientation(Orientation orientation) {
+        orientation = orientation == null ? Orientation.HORIZONTAL : orientation;
+        
+        if (orientation != this.orientation) {
+            sync("orientation", this.orientation = orientation);
+        }
     }
 }

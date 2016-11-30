@@ -756,13 +756,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/**
 		 * Replace one class with another.
 		 * 
-		 * @param {string} oldcls The class to remove (may be nil).
-		 * @param {string} newcls The class to add (may be nil).
+		 * @param {string} class1 The class to remove (may be nil).
+		 * @param {string} class2 The class to add (may be nil).
+		 * @param {boolean} [flip] If true, class1 and class2 meanings are flipped.
 		 * @return {boolean} True if a class was added or removed.
 		 */
-		replaceClass: function(oldcls, newcls) {
-			var result = oldcls && this.toggleClass(oldcls, false);
-			result |= newcls && this.toggleClass(newcls, true);
+		replaceClass: function(class1, class2, flip) {
+			var result = class1 && this.toggleClass(class1, flip);
+			result |= class2 && this.toggleClass(class2, !flip);
 			return result;
 		},
 		
@@ -1771,7 +1772,22 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	 * Widget for grouping radio buttons
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.Radiogroup = cwf.widget.Span.extend();
+	cwf.widget.Radiogroup = cwf.widget.Span.extend({
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.initState({orientation: 'HORIZONTAL'});
+		},		
+		
+		/*------------------------------ State ------------------------------*/
+		
+		orientation: function(v) {
+			this.toggleClass(this.subclazz(v.toLowerCase()), true);
+			this.toggleClass(this.subclazz(v === 'VERTICAL' ? 'horizontal' : 'vertical'), false);
+		}
+	});
 	
 	/******************************************************************************************************************
 	 * A menu popup widget

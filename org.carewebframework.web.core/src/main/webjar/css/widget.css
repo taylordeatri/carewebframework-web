@@ -368,6 +368,12 @@ a:not([href]) {
 	margin: 0 5px 0 5px;
 }
 
+/* Radiogroup */
+
+.cwf_radiogroup-vertical > .cwf_radiobutton {
+	display: flex;
+}
+
 /* Radiobutton */
 
 .cwf_radiobutton {

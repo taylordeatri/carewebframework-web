@@ -26,6 +26,25 @@
 				This is just a standalone image.
 			</row>
 			<row>
+				<radiogroup>
+					<radiobutton label="button #1" />
+					<radiobutton label="button #2" checked="true" />
+					<radiobutton label="button #3" />
+					<radiobutton label="button #4" />
+				</radiogroup>
+				This is a group of horizontally arranged radio buttons.  The second should be selected initially
+				and selection should be mutually exclusive.
+			</row>
+			<row>
+				<radiogroup orientation="vertical">
+					<radiobutton label="button #1" />
+					<radiobutton label="button #2" checked="true" />
+					<radiobutton label="button #3" />
+					<radiobutton label="button #4" />
+				</radiogroup>
+				Same as above, but vertically arranged.
+			</row>
+			<row>
 				<toolbar>
 					<button class="flavor:btn-default" label="default" />
 					<button class="flavor:btn-primary" label="primary" />
