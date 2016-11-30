@@ -294,6 +294,15 @@ public abstract class BaseComponent implements IElementIdentifier {
         id = DEAD_ID;
     }
     
+    @Override
+    public void finalize() throws Throwable {
+        super.finalize();
+        
+        if (id != null) {
+            destroy();
+        }
+    }
+    
     public void destroyChildren() {
         while (!children.isEmpty()) {
             children.get(0).destroy();

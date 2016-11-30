@@ -67,7 +67,11 @@ define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css.css'], f
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			return $(this.resolveEL('<div><div id="${id}-inner"/></div>'));
+			var dom = '<div>'
+					+    '<div id="${id}-title"/>'
+					+    '<div id="${id}-inner"/>'
+					+ '</div>';
+			return $(this.resolveEL(dom));
 		},
 		
 		_updateSplitter: function() {
@@ -90,6 +94,10 @@ define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css.css'], f
 		
 		splittable: function(v) {
 			this._updateSplitter();
+		},
+		
+		title: function(v) {
+			this.sub$('title').text(v);
 		}
 		
 	});

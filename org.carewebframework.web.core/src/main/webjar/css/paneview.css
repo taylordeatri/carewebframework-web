@@ -13,6 +13,12 @@
     flex-direction: column;
 }
 
+.cwf_paneview > *:first-child {
+    border-bottom: 1px solid lightgray;
+    background: lightblue;
+    text-align: center;
+}
+
 /* Pane */
 
 .cwf_pane {
@@ -22,7 +28,13 @@
     margin: 2px;
 }
 
-.cwf_pane > div:first-child {
+.cwf_pane > :first-child {
+    border-bottom: 1px solid lightgray;
+    background: lightblue;
+    text-align: center;
+}
+
+.cwf_pane > :nth-child(2) {
     overflow: hidden;
 }
 

@@ -36,6 +36,8 @@ public class Pane extends BaseUIComponent {
     
     private boolean splittable;
     
+    private String title;
+    
     @PropertyGetter("splittable")
     public boolean isSplittable() {
         return splittable;
@@ -45,6 +47,18 @@ public class Pane extends BaseUIComponent {
     public void setSplittable(boolean splittable) {
         if (splittable != this.splittable) {
             sync("splittable", this.splittable = splittable);
+        }
+    }
+    
+    @PropertyGetter("title")
+    public String getTitle() {
+        return title;
+    }
+    
+    @PropertySetter("title")
+    public void setTitle(String title) {
+        if (!areEqual(title = nullify(title), this.title)) {
+            sync("title", this.title = title);
         }
     }
     
