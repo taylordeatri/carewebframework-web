@@ -349,11 +349,10 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
     }
     
-    @SuppressWarnings("unchecked")
     public <T> T getAttribute(String name, Class<T> clazz) {
         try {
-            return (T) attributes.get(name);
-        } catch (ClassCastException e) {
+            return ConvertUtil.convert(attributes.get(name), clazz, this);
+        } catch (Exception e) {
             return null;
         }
     }
