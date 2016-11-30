@@ -527,7 +527,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 */
 	fatal: function(error) {
 		if (!(error instanceof Error)) {
-			error = $.error(error);
+			error = new Error(error);
 		}
 		
 		var message = 'Fatal error:\n\n' + (error.stack ? error.stack : error);
