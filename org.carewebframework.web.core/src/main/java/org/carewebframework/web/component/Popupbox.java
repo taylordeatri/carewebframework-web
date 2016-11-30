@@ -35,6 +35,16 @@ public class Popupbox extends BaseInputboxComponent<String> {
     
     private Popup popup;
     
+    private boolean open;
+    
+    public void open() {
+        setOpen(true);
+    }
+    
+    public void close() {
+        setOpen(false);
+    }
+    
     @Override
     protected void afterAddChild(BaseComponent child) {
         super.afterAddChild(child);
@@ -71,6 +81,19 @@ public class Popupbox extends BaseInputboxComponent<String> {
         if (popup != getPopup()) {
             validate(popup);
             sync("popup", this.popup = popup);
+            open = false;
+        }
+    }
+    
+    @PropertyGetter("open")
+    public boolean isOpen() {
+        return open;
+    }
+    
+    @PropertySetter("open")
+    public void setOpen(boolean open) {
+        if (open != this.open) {
+            sync("open", this.open = open);
         }
     }
     

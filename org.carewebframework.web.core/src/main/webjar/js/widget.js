@@ -2136,6 +2136,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		init: function() {
 			this._type = 'text';
 			this._super();
+			this.initState({open: false});
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -2152,7 +2153,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ Other ------------------------------*/
 		
-		open: function() {
+		_open: function(nosync) {
 			if (this._popup && !this.isOpen()) {
 				this._popup.open({
 					my: 'right top',
@@ -2160,17 +2161,19 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 					of: this.widget$,
 					anchor: this.widget$
 				});
+				nosync ? null : this.updateState('open', true);
 			}
 		},
 		
-		close: function() {
+		_close: function(nosync) {
 			if (this.isOpen()) {
 				this._popup.close();
+				nosync ? null : this.updateState('open', false);
 			}
 		},
 		
 		toggle: function() {
-			this.isOpen() ? this.close() : this.open();
+			this.isOpen() ? this._close() : this._open();
 		},
 		
 		isOpen: function() {
@@ -2178,6 +2181,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/*------------------------------ State ------------------------------*/
+		
+		open: function(v) {
+			v ? this._open(true) : this._close(true);
+		},
 		
 		popup: function(v) {
 			this._popup = v;
