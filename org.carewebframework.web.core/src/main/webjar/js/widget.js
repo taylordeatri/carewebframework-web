@@ -639,7 +639,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 * @param {string] v Name value.
 		 */
 		name: function(v) {
-			this.attr('cwf_name', v);
+			this.attr('data-cwf-name', v);
 		},
 		
 		/**
