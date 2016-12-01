@@ -59,11 +59,8 @@
 	<bean id="cwf_ELEvaluator" class="org.carewebframework.web.expression.ELEvaluator"
 		factory-method="getInstance" />
 
-	<bean id="messageSource" name="msg,message"
-		class="org.carewebframework.web.spring.ClasspathMessageSource">
-		<property name="basename" value="classpath*:messages" />
-		<property name="defaultEncoding" value="UTF-8" />
-	</bean>
+	<bean id="messageSource" name="msg,message" factory-method="getInstance"
+		class="org.carewebframework.web.spring.ClasspathMessageSource" />
 
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
@@ -88,6 +85,5 @@
 			</map>
 		</property>
 	</bean>
-	
-	<import resource="classpath*:META-INF/*-spring.xml" />
+
 </beans>

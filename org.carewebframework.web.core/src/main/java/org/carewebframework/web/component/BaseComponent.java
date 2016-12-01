@@ -55,6 +55,7 @@ import org.carewebframework.web.client.ClientInvocation;
 import org.carewebframework.web.client.ClientInvocationQueue;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.EventListeners;
+import org.carewebframework.web.event.EventUtil;
 import org.carewebframework.web.event.ForwardListener;
 import org.carewebframework.web.event.IEventListener;
 import org.springframework.util.Assert;
@@ -448,13 +449,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         child.afterSetParent(this);
     }
     
-    public void addChildren(Collection<? extends BaseComponent> children) {
-        for (BaseComponent child : children) {
-            addChild(child);
-        }
-    }
-    
-    public void insertChild(BaseComponent child, BaseComponent before) {
+    public void addChild(BaseComponent child, BaseComponent before) {
         if (before == null) {
             addChild(child);
             return;
@@ -466,6 +461,12 @@ public abstract class BaseComponent implements IElementIdentifier {
         
         int i = children.indexOf(before);
         addChild(child, i);
+    }
+    
+    public void addChildren(Collection<? extends BaseComponent> children) {
+        for (BaseComponent child : children) {
+            addChild(child);
+        }
     }
     
     public void removeChild(BaseComponent child) {
@@ -887,14 +888,6 @@ public abstract class BaseComponent implements IElementIdentifier {
         return new SubComponent(this, subId);
     }
     
-    public void registerEventForward(String eventType, BaseComponent target, String forwardType) {
-        registerEventListener(eventType, createForwardListener(eventType, target, forwardType));
-    }
-    
-    public void unregisterEventForward(String eventType, BaseComponent target, String forwardType) {
-        unregisterEventListener(eventType, createForwardListener(eventType, target, forwardType));
-    }
-    
     @PropertySetter(value = "forward", defer = true)
     private void setForward(String forwards) {
         forwards = trimify(forwards);
@@ -929,6 +922,24 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
     }
     
+    public void registerEventForward(String eventType, BaseComponent target, String forwardType) {
+        registerEventListener(eventType, createForwardListener(eventType, target, forwardType));
+    }
+    
+    public void registerEventForward(Class<? extends Event> eventClass, BaseComponent target, String forwardType) {
+        String eventType = getEventType(eventClass);
+        registerEventListener(eventType, createForwardListener(eventType, target, forwardType));
+    }
+    
+    public void unregisterEventForward(String eventType, BaseComponent target, String forwardType) {
+        unregisterEventListener(eventType, createForwardListener(eventType, target, forwardType));
+    }
+    
+    public void unregisterEventForward(Class<? extends Event> eventClass, BaseComponent target, String forwardType) {
+        String eventType = getEventType(eventClass);
+        unregisterEventListener(eventType, createForwardListener(eventType, target, forwardType));
+    }
+    
     private ForwardListener createForwardListener(String eventType, BaseComponent target, String forwardType) {
         return new ForwardListener(forwardType == null ? eventType : forwardType, target == null ? this : target);
     }
@@ -937,16 +948,40 @@ public abstract class BaseComponent implements IElementIdentifier {
         updateEventListener(eventType, eventListener, true, true);
     }
     
+    public void registerEventListener(Class<? extends Event> eventClass, IEventListener eventListener) {
+        updateEventListener(eventClass, eventListener, true, true);
+    }
+    
     public void registerEventListener(String eventType, IEventListener eventListener, boolean syncToClient) {
         updateEventListener(eventType, eventListener, true, syncToClient);
+    }
+    
+    public void registerEventListener(Class<? extends Event> eventClass, IEventListener eventListener,
+                                      boolean syncToClient) {
+        updateEventListener(eventClass, eventListener, true, syncToClient);
     }
     
     public void unregisterEventListener(String eventType, IEventListener eventListener) {
         updateEventListener(eventType, eventListener, false, true);
     }
     
+    public void unregisterEventListener(Class<? extends Event> eventClass, IEventListener eventListener) {
+        updateEventListener(eventClass, eventListener, false, true);
+    }
+    
     public void unregisterEventListener(String eventType, IEventListener eventListener, boolean syncToClient) {
         updateEventListener(eventType, eventListener, false, syncToClient);
+    }
+    
+    public void unregisterEventListener(Class<? extends Event> eventClass, IEventListener eventListener,
+                                        boolean syncToClient) {
+        updateEventListener(eventClass, eventListener, false, syncToClient);
+    }
+    
+    private void updateEventListener(Class<? extends Event> eventClass, IEventListener eventListener, boolean register,
+                                     boolean syncToClient) {
+        updateEventListener(getEventType(eventClass), eventListener, register, syncToClient);
+        
     }
     
     private void updateEventListener(String eventType, IEventListener eventListener, boolean register,
@@ -966,6 +1001,23 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     private void syncEventListeners(String eventType, boolean remove) {
         invoke("forwardToServer", eventType, remove);
+    }
+    
+    /**
+     * Returns the event type given its implementation class, throwing an exception if not a
+     * concrete class.
+     * 
+     * @param eventClass The event class.
+     * @return The event type (never null).
+     */
+    private String getEventType(Class<? extends Event> eventClass) {
+        String eventType = EventUtil.getEventType(eventClass);
+        
+        if (eventType == null) {
+            throw new IllegalArgumentException("Not a concrete event type: " + eventClass);
+        }
+        
+        return eventType;
     }
     
     public void fireEvent(Event event) {

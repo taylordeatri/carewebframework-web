@@ -41,6 +41,18 @@ public class ClasspathMessageSource extends ReloadableResourceBundleMessageSourc
     
     private static final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
     
+    private static final ClasspathMessageSource instance = new ClasspathMessageSource();
+    
+    public static ClasspathMessageSource getInstance() {
+        return instance;
+    }
+    
+    private ClasspathMessageSource() {
+        super();
+        setBasename("classpath*:messages");
+        setDefaultEncoding("UTF-8");
+    }
+    
     @Override
     protected PropertiesHolder refreshProperties(String filename, PropertiesHolder propHolder) {
         if (filename.startsWith(PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX)) {
