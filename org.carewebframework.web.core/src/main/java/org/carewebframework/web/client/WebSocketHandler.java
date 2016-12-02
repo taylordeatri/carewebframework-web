@@ -105,7 +105,7 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
      * 
      * @param handler The request handler.
      */
-    public static void registerHandler(IRequestHandler handler) {
+    public static void registerRequestHandler(IRequestHandler handler) {
         String type = handler.getRequestType();
         
         if (handlers.containsKey(type)) {
@@ -113,6 +113,14 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
         }
         
         handlers.put(type, handler);
+    }
+    
+    public static void registerSessionTracker(ISessionTracker tracker) {
+        sessionTrackers.add(tracker);
+    }
+    
+    public static void unregisterSessionTracker(ISessionTracker tracker) {
+        sessionTrackers.remove(tracker);
     }
     
     /**
@@ -214,6 +222,16 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
         }
     }
     
+    protected static void notifySessionTrackers(Session session, boolean created) {
+        for (ISessionTracker tracker : sessionTrackers) {
+            if (created) {
+                tracker.onSessionCreate(session);
+            } else {
+                tracker.onSessionDestroy(session);
+            }
+        }
+    }
+    
     /**
      * Processes a client request sent via the web socket session. Extracts the client request from
      * the message, creates a new execution context, and invokes registered request handlers. If no
@@ -259,7 +277,7 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
             }
             
             Map<String, Object> map = reader.readValue(payload);
-            session.validatePage((String) map.get("pid"));
+            session.init((String) map.get("pid"));
             ClientRequest request = new ClientRequest(session, map);
             processRequest(request);
             
@@ -300,8 +318,6 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
         if (log.isDebugEnabled()) {
             logSessionEvent(session, "established");
         }
-        
-        notifySessionTrackers(session, true);
     }
     
     @Override
@@ -315,20 +331,6 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
             
             notifySessionTrackers(session, false);
             session.destroy();
-        }
-    }
-    
-    private void notifySessionTrackers(Session session, boolean created) {
-        for (ISessionTracker tracker : sessionTrackers) {
-            try {
-                if (created) {
-                    tracker.onSessionCreate(session);
-                } else {
-                    tracker.onSessionDestroy(session);
-                }
-            } catch (Exception e) {
-                log.error("Session tracker callback generated an exception.", e);
-            }
         }
     }
     
@@ -355,9 +357,9 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof IRequestHandler) {
-            registerHandler((IRequestHandler) bean);
+            registerRequestHandler((IRequestHandler) bean);
         } else if (bean instanceof ISessionTracker) {
-            sessionTrackers.add((ISessionTracker) bean);
+            registerSessionTracker((ISessionTracker) bean);
         }
         
         return bean;

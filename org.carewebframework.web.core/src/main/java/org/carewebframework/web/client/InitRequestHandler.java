@@ -42,6 +42,7 @@ public class InitRequestHandler implements IRequestHandler {
         Synchronizer synchronizer = request.getSession().getSynchronizer();
         synchronizer.startQueueing();
         Page._init(page, (Map<String, Object>) request.getData(), synchronizer);
+        WebSocketHandler.notifySessionTrackers(request.getSession(), true);
         
         try {
             pageDefinition.materialize(page);

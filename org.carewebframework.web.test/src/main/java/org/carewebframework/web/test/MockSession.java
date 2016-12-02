@@ -8,7 +8,7 @@ public class MockSession extends Session {
     public MockSession(MockServletContext servletContext, MockWebSocketSession socket) {
         super(servletContext, socket);
         Page page = Page._create("mockpage");
-        validatePage(page.getId());
+        init(page.getId());
     }
     
     @Override

@@ -25,9 +25,9 @@
  */
 package org.carewebframework.web.servlet;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +41,7 @@ import org.carewebframework.web.client.ClientUtil;
 import org.carewebframework.web.client.WebJarLocator;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.logging.LogUtil;
-import org.springframework.core.io.AbstractResource;
+import org.springframework.core.io.AbstractFileResolvingResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.resource.EncodedResource;
 import org.springframework.web.servlet.resource.ResourceTransformerChain;
@@ -49,7 +49,7 @@ import org.springframework.web.servlet.resource.ResourceTransformerSupport;
 
 public class CwfResourceTransformer extends ResourceTransformerSupport {
     
-    private static class BootstrapperResource extends AbstractResource implements EncodedResource {
+    private static class BootstrapperResource extends AbstractFileResolvingResource implements EncodedResource {
         
         private final Resource resource;
         
@@ -64,18 +64,18 @@ public class CwfResourceTransformer extends ResourceTransformerSupport {
         }
         
         @Override
-        public File getFile() throws IOException {
-            return resource.getFile();
+        public long contentLength() throws IOException {
+            return content.length();
         }
         
         @Override
         public String getFilename() {
-            return resource.getFilename() + ".htm";
+            return resource.getFilename();
         }
         
         @Override
-        public long contentLength() throws IOException {
-            return content.length();
+        public URL getURL() throws IOException {
+            return resource.getURL();
         }
         
         @Override

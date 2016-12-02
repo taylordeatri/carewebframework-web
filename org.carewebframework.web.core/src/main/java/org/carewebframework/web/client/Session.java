@@ -96,17 +96,21 @@ public class Session {
         return page;
     }
     
-    protected void validatePage(String pageId) {
+    protected boolean init(String pageId) {
         if (page != null) {
             if (!page.getId().equals(pageId)) {
                 throw new RuntimeException("Page ids do not match.");
             }
+            
+            return false;
         } else {
             page = PageRegistry.getPage(pageId);
             
             if (page == null) {
                 throw new RuntimeException("Unknown page id.");
             }
+            
+            return true;
         }
     }
 }
