@@ -73,9 +73,6 @@ public class EventHandlerScanner {
         
     }
     
-    private EventHandlerScanner() {
-    }
-    
     /**
      * Recursively scans the controller's class and superclasses for {@literal @EventHandler}
      * -annotated methods.
@@ -201,5 +198,8 @@ public class EventHandlerScanner {
         } catch (Exception e) {
             return null;
         }
+    }
+    
+    private EventHandlerScanner() {
     }
 }
