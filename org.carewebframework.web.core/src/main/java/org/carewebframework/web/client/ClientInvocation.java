@@ -27,6 +27,7 @@ package org.carewebframework.web.client;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,6 +138,10 @@ public class ClientInvocation {
             Collection<Object> col = (Collection<Object>) source;
             Object[] ary = new Object[col.size()];
             return transform(col.toArray(ary));
+        }
+        
+        if (source instanceof Date) {
+            return ((Date) source).getTime();
         }
         
         return source;

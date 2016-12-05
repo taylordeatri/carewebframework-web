@@ -61,7 +61,7 @@ public abstract class BaseInputComponent<T> extends BaseUIComponent {
             this.value = value;
             
             if (notifyClient) {
-                sync("value", value == null ? null : _toString(value));
+                sync("value", value == null ? null : _toClient(value));
             }
         }
     }
@@ -69,6 +69,17 @@ public abstract class BaseInputComponent<T> extends BaseUIComponent {
     protected abstract T _toValue(String value);
     
     protected abstract String _toString(T value);
+    
+    /**
+     * Override to provide alternate serialization format for sending to client. Default action is
+     * to serialize to string.
+     * 
+     * @param value
+     * @return
+     */
+    protected Object _toClient(T value) {
+        return _toString(value);
+    }
     
     @EventHandler(value = "change", syncToClient = false)
     private void _onChange(ChangeEvent event) {

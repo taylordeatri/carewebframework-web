@@ -25,22 +25,55 @@
  */
 package org.carewebframework.web.component;
 
+import java.text.ParseException;
 import java.util.Date;
 
-import org.carewebframework.common.DateUtil;
+import org.apache.commons.lang.time.FastDateFormat;
+import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.annotation.Component;
+import org.carewebframework.web.annotation.Component.PropertyGetter;
+import org.carewebframework.web.annotation.Component.PropertySetter;
 
 @Component(value = "datebox", widgetClass = "Datebox", parentTag = "*")
 public class Datebox extends BaseInputboxComponent<Date> {
     
+    private static final FastDateFormat serializer = FastDateFormat.getInstance("yyyy-MM-dd");
+    
+    private FastDateFormat formatter = FastDateFormat.getDateInstance(FastDateFormat.SHORT);
+    
+    private String format;
+    
     @Override
     protected Date _toValue(String value) {
-        return DateUtil.parseDate(value);
+        try {
+            return (Date) serializer.parseObject(value);
+        } catch (ParseException e) {
+            throw MiscUtil.toUnchecked(e);
+        }
     }
     
     @Override
     protected String _toString(Date value) {
-        return DateUtil.formatDate(value);
+        return formatter.format(value);
+    }
+    
+    @Override
+    protected String _toClient(Date value) {
+        return serializer.format(value);
+    }
+    
+    @PropertyGetter("format")
+    public String getFormat() {
+        return format;
+    }
+    
+    @PropertySetter("format")
+    public void setFormat(String format) {
+        if (!areEqual(format = trimify(format), this.format)) {
+            this.format = format;
+            formatter = format == null ? FastDateFormat.getDateInstance(FastDateFormat.SHORT)
+                    : FastDateFormat.getInstance(format);
+        }
     }
     
 }

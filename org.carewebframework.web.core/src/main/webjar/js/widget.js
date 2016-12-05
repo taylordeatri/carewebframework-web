@@ -1454,7 +1454,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			return this.sub$('inner');
 		},
 		
-		/*------------------------------ Lifecycle ------------------------------*/
+		/*------------------------------ Events ------------------------------*/
 		
 		_trigger: function(which) {
 			var event = $.Event(which, {
@@ -1501,8 +1501,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._super();
 			this.toggleClass('hidden', true);
 			this.anchor$().addClass(this.wclazz).hide();
-			this._allowClickBubble ? null : this.widget$.on('click', function(event) {
-				event.stopPropagation();
+			this._allowClickBubble ? null : this.anchor$().on('click', function(event) {
+				cwf.event.stop(event);
 			});
 		},
 		
