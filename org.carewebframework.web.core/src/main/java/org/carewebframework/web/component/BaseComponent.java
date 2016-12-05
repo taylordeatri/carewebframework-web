@@ -1028,7 +1028,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     public void wireController(Object controller) {
         if (controller instanceof String) {
             try {
-                controller = Class.forName((String) controller).newInstance();
+                controller = "this".equals(controller) ? this : Class.forName((String) controller).newInstance();
             } catch (Exception e) {
                 throw MiscUtil.toUnchecked(e);
             }
