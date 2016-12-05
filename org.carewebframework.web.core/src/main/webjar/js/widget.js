@@ -1062,7 +1062,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		fireChanged: function() {
 			this._changed = false;
-			this.trigger('change', {value: this.input$()[0].value});
+			this.trigger('change', {value: this._value()});
 		},
 				
 		handleBlur: function(event) {
@@ -1110,6 +1110,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._changed = false;
 			this._previous = '';
 			this.forwardToServer('change');
+			this.toggleClass('cwf_inputbox', true);
 		},
 		
 		synced: function(v) {
@@ -1122,11 +1123,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this.input$().val('');
 		},
 		
+		_value: function() {
+			return this.input$()[0].value;
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
 			this._super();
-			this.toggleClass('cwf_inputbox', true);
 			var input$ = this.input$();
 			input$.on('input propertychange', this.handleInput.bind(this));
 			input$.on('blur', this.handleBlur.bind(this));
@@ -2170,8 +2174,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Other ------------------------------*/
 		
 		_open: function(nosync) {
-			if (this._popup && !this.isOpen()) {
-				this._popup.open({
+			if (this.popupExists && !this.isOpen()) {
+				this._popup().open({
 					my: 'right top',
 					at: 'right bottom',
 					of: this.widget$,
@@ -2183,9 +2187,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		_close: function(nosync) {
 			if (this.isOpen()) {
-				this._popup.close();
+				this._popup().close();
 				nosync ? null : this.updateState('open', false);
 			}
+		},
+		
+		popupExists: function() {
+			return this._popup && this._popup();
 		},
 		
 		toggle: function() {
@@ -2193,7 +2201,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		isOpen: function() {
-			return this._popup && this._popup.isOpen();
+			return this.popupExists() && this._popup().isOpen();
 		},
 		
 		/*------------------------------ State ------------------------------*/
@@ -2203,7 +2211,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		popup: function(v) {
-			this._popup = v;
+			this._popup = !v ? null : function() {
+				return cwf.wgt(v);
+			};
 			
 			var btn$ = this.sub$('btn'),
 				self = this;

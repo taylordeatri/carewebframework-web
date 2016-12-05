@@ -777,7 +777,7 @@ public abstract class BaseComponent implements IElementIdentifier {
             invocationQueue = null;
         }
         
-        EventHandlerScanner.wire(this, null);
+        wireController(this);
         
         for (BaseComponent child : getChildren()) {
             child._flushQueue();
@@ -1028,7 +1028,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     public void wireController(Object controller) {
         if (controller instanceof String) {
             try {
-                controller = "this".equals(controller) ? this : Class.forName((String) controller).newInstance();
+                controller = Class.forName((String) controller).newInstance();
             } catch (Exception e) {
                 throw MiscUtil.toUnchecked(e);
             }

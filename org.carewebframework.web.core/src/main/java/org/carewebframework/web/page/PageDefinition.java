@@ -118,11 +118,12 @@ public class PageDefinition {
             }
         }
         
+        materialize(element.getChildren(), component, deferrals, null);
+        
         if (parent != null) {
             parent.addChild(component);
         }
         
-        materialize(element.getChildren(), component, deferrals, null);
         return component;
     }
 }

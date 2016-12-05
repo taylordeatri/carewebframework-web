@@ -25,11 +25,10 @@
  */
 package org.carewebframework.web.component;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.commons.lang.time.FastDateFormat;
-import org.carewebframework.common.MiscUtil;
+import org.carewebframework.common.DateUtil;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
@@ -45,11 +44,7 @@ public class Datebox extends BaseInputboxComponent<Date> {
     
     @Override
     protected Date _toValue(String value) {
-        try {
-            return (Date) serializer.parseObject(value);
-        } catch (ParseException e) {
-            throw MiscUtil.toUnchecked(e);
-        }
+        return DateUtil.parseDate(value);
     }
     
     @Override
