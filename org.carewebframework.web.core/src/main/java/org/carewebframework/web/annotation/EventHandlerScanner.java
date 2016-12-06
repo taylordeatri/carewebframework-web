@@ -148,7 +148,7 @@ public class EventHandlerScanner {
                     onFailure.doAction("No suitable event handler target found for \"" + target + "\"");
                 } else {
                     for (String type : types) {
-                        component.registerEventListener(type, new EventListener(instance, method), annot.syncToClient());
+                        component.addEventListener(type, new EventListener(instance, method), annot.syncToClient());
                     }
                 }
             }

@@ -925,65 +925,71 @@ public abstract class BaseComponent implements IElementIdentifier {
                         throw new IllegalArgumentException("No forward event specified");
                     }
                     
-                    registerEventForward(original, target, forward);
+                    addEventForward(original, target, forward);
                 }
             }
         }
     }
     
-    public void registerEventForward(String eventType, BaseComponent target, String forwardType) {
-        registerEventListener(eventType, createForwardListener(eventType, target, forwardType));
+    public void addEventForward(String eventType, BaseComponent target, String forwardType) {
+        addEventListener(eventType, createForwardListener(eventType, target, forwardType));
     }
     
-    public void registerEventForward(Class<? extends Event> eventClass, BaseComponent target, String forwardType) {
+    public void addEventForward(Class<? extends Event> eventClass, BaseComponent target, String forwardType) {
         String eventType = getEventType(eventClass);
-        registerEventListener(eventType, createForwardListener(eventType, target, forwardType));
+        addEventListener(eventType, createForwardListener(eventType, target, forwardType));
     }
     
-    public void unregisterEventForward(String eventType, BaseComponent target, String forwardType) {
-        unregisterEventListener(eventType, createForwardListener(eventType, target, forwardType));
+    public void removeEventForward(String eventType, BaseComponent target, String forwardType) {
+        removeEventListener(eventType, createForwardListener(eventType, target, forwardType));
     }
     
-    public void unregisterEventForward(Class<? extends Event> eventClass, BaseComponent target, String forwardType) {
+    public void removeEventForward(Class<? extends Event> eventClass, BaseComponent target, String forwardType) {
         String eventType = getEventType(eventClass);
-        unregisterEventListener(eventType, createForwardListener(eventType, target, forwardType));
+        removeEventListener(eventType, createForwardListener(eventType, target, forwardType));
     }
     
     private ForwardListener createForwardListener(String eventType, BaseComponent target, String forwardType) {
         return new ForwardListener(forwardType == null ? eventType : forwardType, target == null ? this : target);
     }
     
-    public void registerEventListener(String eventType, IEventListener eventListener) {
+    public boolean hasEventListener(String eventType) {
+        return eventListeners.hasListeners(eventType);
+    }
+    
+    public boolean hasEventListener(Class<? extends Event> eventClass) {
+        return hasEventListener(getEventType(eventClass));
+    }
+    
+    public void addEventListener(String eventType, IEventListener eventListener) {
         updateEventListener(eventType, eventListener, true, true);
     }
     
-    public void registerEventListener(Class<? extends Event> eventClass, IEventListener eventListener) {
+    public void addEventListener(Class<? extends Event> eventClass, IEventListener eventListener) {
         updateEventListener(eventClass, eventListener, true, true);
     }
     
-    public void registerEventListener(String eventType, IEventListener eventListener, boolean syncToClient) {
+    public void addEventListener(String eventType, IEventListener eventListener, boolean syncToClient) {
         updateEventListener(eventType, eventListener, true, syncToClient);
     }
     
-    public void registerEventListener(Class<? extends Event> eventClass, IEventListener eventListener,
-                                      boolean syncToClient) {
+    public void addEventListener(Class<? extends Event> eventClass, IEventListener eventListener, boolean syncToClient) {
         updateEventListener(eventClass, eventListener, true, syncToClient);
     }
     
-    public void unregisterEventListener(String eventType, IEventListener eventListener) {
+    public void removeEventListener(String eventType, IEventListener eventListener) {
         updateEventListener(eventType, eventListener, false, true);
     }
     
-    public void unregisterEventListener(Class<? extends Event> eventClass, IEventListener eventListener) {
+    public void removeEventListener(Class<? extends Event> eventClass, IEventListener eventListener) {
         updateEventListener(eventClass, eventListener, false, true);
     }
     
-    public void unregisterEventListener(String eventType, IEventListener eventListener, boolean syncToClient) {
+    public void removeEventListener(String eventType, IEventListener eventListener, boolean syncToClient) {
         updateEventListener(eventType, eventListener, false, syncToClient);
     }
     
-    public void unregisterEventListener(Class<? extends Event> eventClass, IEventListener eventListener,
-                                        boolean syncToClient) {
+    public void removeEventListener(Class<? extends Event> eventClass, IEventListener eventListener, boolean syncToClient) {
         updateEventListener(eventClass, eventListener, false, syncToClient);
     }
     
@@ -998,9 +1004,9 @@ public abstract class BaseComponent implements IElementIdentifier {
         boolean before = eventListeners.hasListeners(eventType);
         
         if (register) {
-            eventListeners.register(eventType, eventListener);
+            eventListeners.add(eventType, eventListener);
         } else {
-            eventListeners.unregister(eventType, eventListener);
+            eventListeners.remove(eventType, eventListener);
         }
         
         if (syncToClient && before != eventListeners.hasListeners(eventType)) {

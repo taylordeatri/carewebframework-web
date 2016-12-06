@@ -35,11 +35,11 @@ public class EventListeners {
     
     private final Map<String, Set<IEventListener>> allListeners = new HashMap<>();
     
-    public void register(String eventType, IEventListener eventListener) {
+    public void add(String eventType, IEventListener eventListener) {
         getListeners(eventType, true).add(eventListener);
     }
     
-    public void unregister(String eventType, IEventListener eventListener) {
+    public void remove(String eventType, IEventListener eventListener) {
         Set<IEventListener> listeners = getListeners(eventType, false);
         
         if (listeners != null) {
@@ -51,7 +51,7 @@ public class EventListeners {
         }
     }
     
-    public void unregisterAll(String eventType) {
+    public void removeAll(String eventType) {
         allListeners.remove(eventType);
     }
     
