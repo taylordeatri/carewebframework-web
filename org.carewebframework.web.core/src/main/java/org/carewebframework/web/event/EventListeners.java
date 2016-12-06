@@ -51,6 +51,10 @@ public class EventListeners {
         }
     }
     
+    public void removeAll() {
+        allListeners.clear();
+    }
+    
     public void removeAll(String eventType) {
         allListeners.remove(eventType);
     }

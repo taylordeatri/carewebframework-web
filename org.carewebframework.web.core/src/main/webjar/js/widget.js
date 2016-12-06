@@ -196,7 +196,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 * @param {number} Position of the widget relative to its siblings.
 		 */
 		_attach: function(index) {
-			this._attachWidgetAt(this.widget$, this._parent.anchor$(), this._parent._children[index])
+			this._attachWidgetAt(this.widget$, this._parent.anchor$(this.widget$), this._parent._children[index])
 			this._attachAncillaries();
 		},
 		
@@ -1843,11 +1843,18 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._open(true);
 		},
 		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.forwardToServer('open close');
+		},
+		
 		/*------------------------------ Other ------------------------------*/
 		
 		_open: function(v) {
 			this.setState('open', v);
-			this.stateChanged('open', v);
+			this.trigger(v ? 'open' : 'close');
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -2500,6 +2507,32 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		src: function(v) {
 			this.attr('src', v);
 		}	
+		
+	});
+	
+	/******************************************************************************************************************
+	 * A group box widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Groupbox = cwf.widget.UIWidget.extend({
+				
+		/*------------------------------ Rendering ------------------------------*/
+		
+		render$: function() {
+			var dom = 
+				'<div>'
+			  +   '<h1>'
+			  +     '<span id="${id}-title"/>'
+			  +   '</h1>'
+			  + '</div>';
+			return $(this.resolveEL(dom));
+		},
+		
+		/*------------------------------ State ------------------------------*/
+		
+		title: function(v) {
+			this.sub$('title').text(v);
+		}
 		
 	});
 	

@@ -27,32 +27,25 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
+import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
-import org.carewebframework.web.annotation.EventHandler;
-import org.carewebframework.web.event.Event;
-import org.carewebframework.web.event.OpenEvent;
 
-@Component(value = "menu", widgetClass = "Menu", parentTag = "*", childTag = { @ChildTag("menuitem"),
-        @ChildTag("menuheader"), @ChildTag("menuseparator") })
-public class Menu extends BaseLabeledImageComponent {
+@Component(value = "groupbox", widgetClass = "Groupbox", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
+public class Groupbox extends BaseUIComponent {
     
-    private boolean open;
+    private String title;
     
-    @PropertyGetter("open")
-    public boolean isOpen() {
-        return open;
+    @PropertyGetter("title")
+    public String getTitle() {
+        return title;
     }
     
-    @PropertySetter("open")
-    public void setOpen(boolean open) {
-        if (open != this.open) {
-            sync("open", this.open = open);
+    @PropertySetter("title")
+    public void setTitle(String title) {
+        if (!areEqual(title = nullify(title), this.title)) {
+            sync("title", this.title = title);
         }
     }
     
-    @EventHandler(value = { "open", "close" }, syncToClient = false)
-    private void onOpenOrClose(Event event) {
-        open = event instanceof OpenEvent;
-    }
 }

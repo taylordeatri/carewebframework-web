@@ -40,6 +40,7 @@ a:not([href]) {
 .panel-heading {
 	flex: none;
 	padding: 5px;
+	overflow: visible!important;
 }
 
 .panel-body {
@@ -207,8 +208,8 @@ a:not([href]) {
 /* Div */
 
 .cwf_div {
-	height: inherit;
-	width: inherit;
+	height: auto;
+	width: auto;
 	overflow: auto;
 }
 
@@ -438,6 +439,45 @@ a:not([href]) {
 	text-align: left;
 	display: inline-block;
 	max-width: 75%;
+}
+
+/* Groupbox */
+
+.cwf_groupbox {
+    border: 1px groove threedface;
+    border-top: none;
+    padding: 0.5em;
+    margin: 1em 2px;
+    display: inline-block;
+}
+
+.cwf_groupbox > h1 {
+    font: 1em normal;
+    font-weight: bold;
+    margin: -1em -0.5em 0;
+}   
+
+.cwf_groupbox > h1 > span {
+    float: left;
+}
+
+.cwf_groupbox > h1:before {
+    border-top: 1px groove threedface;
+    content: ' ';
+    float: left;
+    margin: 0.5em 2px 0 -1px;
+    width: 0.75em;
+}
+.cwf_groupbox > h1:after {
+    border-top: 1px groove threedface;
+    content: ' ';
+    display: block;
+    height: 1.5em;
+    left: 2px;
+    margin: 0 1px 0 0;
+    overflow: hidden;
+    position: relative;
+    top: 0.5em;
 }
 
 /* Messagepane */

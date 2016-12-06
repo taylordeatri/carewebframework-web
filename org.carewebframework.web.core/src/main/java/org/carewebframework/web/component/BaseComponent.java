@@ -120,8 +120,10 @@ public abstract class BaseComponent implements IElementIdentifier {
         private void _validate(BaseComponent component, BaseComponent root) {
             _validate(component.getName(), root);
             
-            for (BaseComponent child : component.getChildren()) {
-                _validate(child, root);
+            if (!(component instanceof INamespace)) {
+                for (BaseComponent child : component.getChildren()) {
+                    _validate(child, root);
+                }
             }
         }
         
@@ -293,6 +295,8 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
         
         id = DEAD_ID;
+        fireEvent("destroy");
+        eventListeners.removeAll();
     }
     
     @Override
@@ -755,6 +759,9 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
     }
     
+    protected void onAttach(Page page) {
+    }
+    
     /**
      * Validates that the specified page can be an owner of this component.
      * 
@@ -774,6 +781,8 @@ public abstract class BaseComponent implements IElementIdentifier {
         if (page != null && this.page != page) {
             _setPage(page);
             _flushQueue();
+            onAttach(page);
+            fireEvent("attach");
         }
     }
     
@@ -1033,6 +1042,12 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
         
         return eventType;
+    }
+    
+    protected void fireEvent(String eventType) {
+        if (hasEventListener(eventType)) {
+            fireEvent(new Event(eventType, this));
+        }
     }
     
     public void fireEvent(Event event) {

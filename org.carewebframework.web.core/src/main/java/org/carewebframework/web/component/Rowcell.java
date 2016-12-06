@@ -27,32 +27,25 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
+import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
-import org.carewebframework.web.annotation.EventHandler;
-import org.carewebframework.web.event.Event;
-import org.carewebframework.web.event.OpenEvent;
 
-@Component(value = "menu", widgetClass = "Menu", parentTag = "*", childTag = { @ChildTag("menuitem"),
-        @ChildTag("menuheader"), @ChildTag("menuseparator") })
-public class Menu extends BaseLabeledImageComponent {
+@Component(value = "rowcell", widgetPackage = "cwf-table", widgetClass = "Rowcell", content = ContentHandling.AS_CHILD, parentTag = "row", childTag = @ChildTag("*"))
+public class Rowcell extends BaseUIComponent {
     
-    private boolean open;
+    private int colspan = 1;
     
-    @PropertyGetter("open")
-    public boolean isOpen() {
-        return open;
+    @PropertyGetter("colspan")
+    public int getColspan() {
+        return colspan;
     }
     
-    @PropertySetter("open")
-    public void setOpen(boolean open) {
-        if (open != this.open) {
-            sync("open", this.open = open);
+    @PropertySetter("colspan")
+    public void setColspan(int colspan) {
+        if (colspan != this.colspan) {
+            sync("colspan", this.colspan = colspan);
         }
     }
     
-    @EventHandler(value = { "open", "close" }, syncToClient = false)
-    private void onOpenOrClose(Event event) {
-        open = event instanceof OpenEvent;
-    }
 }

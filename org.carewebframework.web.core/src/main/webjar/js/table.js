@@ -155,14 +155,14 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 		
 		/*------------------------------ Containment ------------------------------*/
 		
-		anchor$: function() {
-			return $('<td>').appendTo(this.widget$);
+		anchor$: function(child$) {
+			return child$.is('td') ? this.widget$ : $('<td>').appendTo(this.widget$);
 		},
 		
 		onRemoveChild: function(child, destroyed, anchor$) {
 			this._super(child, destroyed, anchor$);
 			
-			if (anchor$) {
+			if (anchor$ && anchor$ !== this.widget$) {
 				anchor$.remove();
 			}
 		},
@@ -186,7 +186,28 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 		selected: function(v) {
 			this.toggleClass('ui-selected', v);
 		}
+		
 	});
+
+	/******************************************************************************************************************
+	 * Table row cell widget
+	 ******************************************************************************************************************/
 	
+	cwf.widget.Rowcell = cwf.widget.UIWidget.extend({
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		render$: function() {
+			return $('<td>');
+		},
+		
+		/*------------------------------ State ------------------------------*/
+		
+		colspan: function(v) {
+			this.attr('colspan', v);
+		}
+		
+	});
+
 	return cwf.widget;
 });
