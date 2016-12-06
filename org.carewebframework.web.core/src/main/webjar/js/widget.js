@@ -1013,7 +1013,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		selectRange: function(start, end) {
-			this.input$()[0].setSelectionRange(start, end);
+			try {
+				this.input$()[0].setSelectionRange(start, end);
+			} catch (e) {
+			}
 		},
 		
 		/*------------------------------ State ------------------------------*/

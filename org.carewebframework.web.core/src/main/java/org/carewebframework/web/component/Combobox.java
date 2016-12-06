@@ -56,7 +56,7 @@ public class Combobox extends BaseInputboxComponent<String> {
     
     public int getSelectedIndex() {
         Comboitem item = getSelectedItem();
-        return item == null ? -1 : item.indexOf();
+        return item == null ? -1 : item.getIndex();
     }
     
     public void setSelectedIndex(int index) {

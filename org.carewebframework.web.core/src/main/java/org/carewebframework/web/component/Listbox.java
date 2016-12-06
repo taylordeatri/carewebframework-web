@@ -98,7 +98,7 @@ public class Listbox extends BaseUIComponent {
     
     public int getSelectedIndex() {
         Listitem item = getSelectedItem();
-        return item == null ? -1 : item.indexOf();
+        return item == null ? -1 : item.getIndex();
     }
     
     public void setSelectedIndex(int index) {

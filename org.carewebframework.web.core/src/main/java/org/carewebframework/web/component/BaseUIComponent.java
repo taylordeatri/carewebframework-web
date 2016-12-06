@@ -344,4 +344,45 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     public void scrollIntoView(boolean alignToTop) {
         invoke("scrollIntoView", alignToTop);
     }
+    
+    /**
+     * Returns the first visible child, if any.
+     * 
+     * @param recurse If true, all descendant levels are also searched using a breadth first
+     *            strategy.
+     * @return The first visible child encountered, or null if not found.
+     */
+    public BaseUIComponent getFirstVisibleChild(boolean recurse) {
+        return getFirstVisibleChild(BaseUIComponent.class, recurse);
+    }
+    
+    /**
+     * Returns the first visible child of a given class, if any.
+     * 
+     * @param <T> The child class.
+     * @param clazz The child class to consider.
+     * @param recurse If true, all descendant levels are also searched using a breadth first
+     *            strategy.
+     * @return The first visible child encountered, or null if not found.
+     */
+    public <T extends BaseUIComponent> T getFirstVisibleChild(Class<T> clazz, boolean recurse) {
+        for (T child : getChildren(clazz)) {
+            if (child.isVisible()) {
+                return child;
+            }
+        }
+        
+        if (recurse) {
+            for (T child : getChildren(clazz)) {
+                T comp = child.getFirstVisibleChild(clazz, recurse);
+                
+                if (comp != null) {
+                    return comp;
+                }
+            }
+        }
+        
+        return null;
+    }
+    
 }

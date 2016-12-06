@@ -29,7 +29,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.carewebframework.common.MiscUtil;
+import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.component.BaseComponent;
+import org.carewebframework.web.component.Page;
 import org.springframework.core.io.ByteArrayResource;
 
 public class PageUtil {
@@ -65,6 +67,16 @@ public class PageUtil {
     public static List<BaseComponent> createPageFromContent(String content, BaseComponent parent, Map<String, Object> args) {
         ByteArrayResource resource = new ByteArrayResource(content.getBytes());
         return createPage(PageParser.getInstance().parse(resource), parent, args);
+    }
+    
+    /**
+     * Returns true if in the specified page's execution context.
+     * 
+     * @param page Page instance.
+     * @return True if the current execution context belongs to this page.
+     */
+    public static boolean inExecutionContext(Page page) {
+        return page != null && ExecutionContext.getPage() == page;
     }
     
     private PageUtil() {

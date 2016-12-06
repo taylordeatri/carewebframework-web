@@ -25,6 +25,8 @@
  */
 package org.carewebframework.web.client;
 
+import java.util.List;
+
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.BaseUIComponent;
 
@@ -73,6 +75,28 @@ public class ClientUtil {
     
     public static boolean debugEnabled() {
         return debugEnabled;
+    }
+    
+    /**
+     * Send a print request to the browser client.
+     * 
+     * @param selectors List of selectors whose content shall be printed.
+     * @param styleSheets List of stylesheets to be applied before printing.
+     * @param preview If true, open in preview mode. If false, submit directly for printing.
+     */
+    public static void printToClient(List<String> selectors, List<String> styleSheets, boolean preview) {
+        invoke("cwf_print", null, selectors, styleSheets, preview);
+    }
+    
+    /**
+     * Send a print request to the browser client.
+     * 
+     * @param selectors Comma-delimited list of selectors whose content shall be printed.
+     * @param styleSheets Comma-delimited list of stylesheets to be applied before printing.
+     * @param preview If true, open in preview mode. If false, submit directly for printing.
+     */
+    public static void printToClient(String selectors, String styleSheets, boolean preview) {
+        invoke("cwf_print", null, selectors, styleSheets, preview);
     }
     
     private ClientUtil() {

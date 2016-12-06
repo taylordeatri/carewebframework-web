@@ -671,8 +671,17 @@ public abstract class BaseComponent implements IElementIdentifier {
      * 
      * @return Index of this child within its parent. If the component has not parent, returns -1.
      */
-    public int indexOf() {
+    public int getIndex() {
         return getParent() == null ? -1 : getParent().children.indexOf(this);
+    }
+    
+    /**
+     * Moves this child to the specified index within its parent.
+     * 
+     * @param index New index for this child.
+     */
+    public void setIndex(int index) {
+        getParent().addChild(this, index);
     }
     
     /**
@@ -701,7 +710,7 @@ public abstract class BaseComponent implements IElementIdentifier {
      * @return The requested sibling, or null if none exists at the requested offset.
      */
     private BaseComponent getRelativeSibling(int offset) {
-        int i = indexOf();
+        int i = getIndex();
         i = i == -1 ? -1 : i + offset;
         return i < 0 || i >= getParent().getChildCount() ? null : getParent().children.get(i);
     }
