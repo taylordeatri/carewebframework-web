@@ -32,13 +32,27 @@
 	order: 2;
 	flex: 1;
 	overflow: auto;
-	outline: 1px solid lightgray;
+	border: 1px solid lightgray;
 }
 
-.cwf_tabview-bottom > .cwf_tabview-panes,
-.cwf_tabview-right > .cwf_tabview-panes {
-	order: 0;	
+.cwf_tabview-top > .cwf_tabview-panes {
+	margin-top: -1px;	
 }
+
+.cwf_tabview-bottom > .cwf_tabview-panes {
+	margin-bottom: -1px;
+    order: 0;	
+}
+
+.cwf_tabview-right > .cwf_tabview-panes {
+	margin-right: -1px;	
+	order: 0;
+}
+
+.cwf_tabview-left > .cwf_tabview-panes {
+	margin-left: -1px;	
+}
+
 .cwf_tabview-panes > div {
 	flex: 1;
 	padding: 2px;
@@ -49,7 +63,7 @@
 	position: relative;
 	opacity: .75;
 	background: #eee;
-	border: solid 1px #999;
+	border: 1px solid lightgray;
 }
 
 .cwf_tabview-bottom > .cwf_tabview-tabs > .cwf_tab {
@@ -99,7 +113,6 @@
 
 .cwf_tab-selected {
 	background: inherit;
-	border-color: #666;
 	opacity: 1;
 }
 
