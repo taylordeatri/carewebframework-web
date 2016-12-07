@@ -906,6 +906,19 @@ public abstract class BaseComponent implements IElementIdentifier {
         return new SubComponent(this, subId);
     }
     
+    /**
+     * Causes one or more events to be forwarded. Multiple entries must be separated by a space.
+     * 
+     * @param forwards One or more forwarding directives, multiple entries separated by spaces. Each
+     *            entry is of the form <code>event=target</code> where <code>event</code> is the
+     *            name of the event to forward and <code>target</code> is the forwarding target. The
+     *            target is the name of the forwarded event optionally prefixed by a resolvable
+     *            component name or path. In the absence of such a prefix, the target is the
+     *            component itself. For example, <code>click=window.listbox.select</code> would
+     *            forward this component's <code>click</code> event as a <code>select</code> event
+     *            targeting the component that is the result of resolving the
+     *            <code>window.listbox</code> path.
+     */
     @PropertySetter(value = "forward", defer = true)
     private void setForward(String forwards) {
         forwards = trimify(forwards);
@@ -1054,6 +1067,14 @@ public abstract class BaseComponent implements IElementIdentifier {
         eventListeners.invoke(event);
     }
     
+    /**
+     * Wires a controller's annotated components and event handlers, using this component to resolve
+     * name references.
+     * 
+     * @param controller The controller to wire. If a string, is assumed to be the name of the
+     *            controller's implementation class in which case an instance of that class is
+     *            created.
+     */
     @PropertySetter(value = "controller", defer = true)
     public void wireController(Object controller) {
         if (controller instanceof String) {
@@ -1072,14 +1093,42 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
     }
     
+    /**
+     * Override to cause a UI component to be brought to the forefront of the UI.
+     */
+    public void bringToFront() {
+        if (getParent() != null) {
+            getParent().bringToFront();
+        }
+    }
+    
+    /**
+     * Converts empty string to null.
+     * 
+     * @param value String value.
+     * @return Original value or null if empty string.
+     */
     protected String nullify(String value) {
         return value == null || value.isEmpty() ? null : value;
     }
     
+    /**
+     * Trims whitespace from a string and nullifies it.
+     * 
+     * @param value String value.
+     * @return Trimmed and nullified value.
+     */
     protected String trimify(String value) {
         return value == null ? null : nullify(value.trim());
     }
     
+    /**
+     * Returns the input value if it is not null, or the default value otherwise.
+     * 
+     * @param value The input value.
+     * @param deflt The default value.
+     * @return Original value or the default if the input value was null.
+     */
     protected <T> T defaultify(T value, T deflt) {
         return value == null ? deflt : value;
     }
@@ -1125,6 +1174,13 @@ public abstract class BaseComponent implements IElementIdentifier {
         this.data = data;
     }
     
+    /**
+     * Handle state change events from the client. These events cause the field whose name matches
+     * the state name to be directly updated with the new value. This is the principal mechanism by
+     * which the client communicates simple state changes to the server.
+     * 
+     * @param event The state change event.
+     */
     @EventHandler(value = "stateChange", syncToClient = false)
     private void _onStateChange(Event event) {
         @SuppressWarnings("unchecked")
@@ -1135,18 +1191,25 @@ public abstract class BaseComponent implements IElementIdentifier {
             Field field = FieldUtils.getField(this.getClass(), state, true);
             field.set(this, ConvertUtil.convert(params.get("value"), field.getType(), this));
         } catch (Exception e) {
-            throw new RuntimeException("Error updating state: " + state, e);
+            throw new ComponentException("Error updating state: " + state, e);
         }
     }
     
+    /**
+     * Returns basic information about this component for display purposes.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         
         //@formatter:off
-        sb.append(getClass().getName()).append(", ")
-        .append("id: ").append(id).append(", ")
-        .append("name: ").append(name);
+        sb.append(getClass().getName())
+          .append(", ")
+          .append("id: ")
+          .append(id)
+          .append(", ")
+          .append("name: ")
+          .append(name);
         //@formatter:on
         
         return sb.toString();

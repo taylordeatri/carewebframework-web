@@ -123,4 +123,10 @@ public class Tab extends BaseLabeledImageComponent {
     public void setOnCanClose(BooleanSupplier onCanClose) {
         this.onCanClose = onCanClose;
     }
+    
+    @Override
+    public void bringToFront() {
+        setSelected(true);
+        super.bringToFront();
+    }
 }
