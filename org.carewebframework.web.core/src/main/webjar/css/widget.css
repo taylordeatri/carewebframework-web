@@ -44,7 +44,6 @@ a:not([href]) {
 }
 
 .panel-body {
-    display: flex;
     flex-direction: column;
     flex: auto;
     overflow: auto;

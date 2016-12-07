@@ -48,6 +48,14 @@ public class Column extends BaseLabeledComponent {
     
     private boolean sortColumn;
     
+    public Column() {
+        super();
+    }
+    
+    public Column(String label) {
+        super(label);
+    }
+    
     public Comparator<?> getSortComparator() {
         return sortComparator;
     }

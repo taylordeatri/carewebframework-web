@@ -55,4 +55,12 @@ public class Menu extends BaseLabeledImageComponent {
     private void onOpenOrClose(Event event) {
         open = event instanceof OpenEvent;
     }
+    
+    public void open() {
+        setOpen(true);
+    }
+    
+    public void close() {
+        setOpen(false);
+    }
 }
