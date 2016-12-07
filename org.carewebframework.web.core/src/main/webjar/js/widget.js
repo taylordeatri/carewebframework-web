@@ -170,7 +170,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		removeChild: function(child, destroy) {
-			var currentIndex = child.getIndex();
+			var currentIndex = this.getChildIndex(child);
 			
 			if (currentIndex >= 0) {
 				var anchor$ = child.widget$.parent();

@@ -31,9 +31,9 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 
 /**
- * This is an extension of a Div component that implements its own namespace.
+ * This is an extension of a Span component that implements its own namespace.
  */
-@Component(value = "container", widgetClass = "Div", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
-public class Container extends Div implements INamespace {
+@Component(value = "container", widgetClass = "Span", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
+public class Container extends Span implements INamespace {
     
 }
