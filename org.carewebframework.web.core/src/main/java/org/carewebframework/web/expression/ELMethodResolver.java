@@ -2,7 +2,6 @@ package org.carewebframework.web.expression;
 
 import java.util.List;
 
-import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.taglib.TagLibrary;
 import org.carewebframework.web.taglib.TagLibrary.Function;
 import org.springframework.core.convert.TypeDescriptor;
@@ -11,8 +10,17 @@ import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.MethodExecutor;
 import org.springframework.expression.spel.support.ReflectiveMethodResolver;
 
+/**
+ * A subclass of the ReflectiveMethodResolver that can resolve methods declared in a tag library
+ * definition file.
+ */
 public class ELMethodResolver extends ReflectiveMethodResolver {
     
+    /**
+     * If the target object is a tag library, replace the name and targetObject parameters with the
+     * method name and implementing class, respectively, of the named tag library function before
+     * calling the super method.
+     */
     @Override
     public MethodExecutor resolve(EvaluationContext context, Object targetObject, String name,
                                   List<TypeDescriptor> argumentTypes) throws AccessException {
@@ -24,9 +32,11 @@ public class ELMethodResolver extends ReflectiveMethodResolver {
                 try {
                     targetObject = Class.forName(function.getClassName());
                 } catch (ClassNotFoundException e) {
-                    throw MiscUtil.toUnchecked(e);
+                    throw new AccessException("Error evaluating " + function, e);
                 }
                 name = function.getMethodName();
+            } else {
+                throw new AccessException("Unknown function \"" + name + "\" in tag library " + lib.getUri());
             }
         }
         

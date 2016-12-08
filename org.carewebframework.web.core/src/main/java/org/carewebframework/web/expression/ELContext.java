@@ -3,6 +3,9 @@ package org.carewebframework.web.expression;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.page.PageElement;
 
+/**
+ * This serves as the context root for an EL expression evaluation.
+ */
 public class ELContext {
     
     private final BaseComponent component;
