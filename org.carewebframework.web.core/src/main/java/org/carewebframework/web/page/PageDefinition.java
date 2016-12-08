@@ -46,11 +46,11 @@ public class PageDefinition {
         return root;
     }
     
-    public List<BaseComponent> materialize(BaseComponent parent) throws Exception {
+    public List<BaseComponent> materialize(BaseComponent parent) {
         return materialize(parent, null);
     }
     
-    public List<BaseComponent> materialize(BaseComponent parent, Map<String, Object> args) throws Exception {
+    public List<BaseComponent> materialize(BaseComponent parent, Map<String, Object> args) {
         List<DeferredSetter> deferrals = new ArrayList<>();
         List<BaseComponent> created = new ArrayList<>();
         materialize(root.getChildren(), parent, deferrals, created);
@@ -69,7 +69,7 @@ public class PageDefinition {
     }
     
     private void materialize(Iterable<PageElement> children, BaseComponent parent, List<DeferredSetter> deferrals,
-                             List<BaseComponent> created) throws Exception {
+                             List<BaseComponent> created) {
         if (children != null) {
             for (PageElement child : children) {
                 BaseComponent component = materialize(child, parent, deferrals);
@@ -81,8 +81,7 @@ public class PageDefinition {
         }
     }
     
-    private BaseComponent materialize(PageElement element, BaseComponent parent,
-                                      List<DeferredSetter> deferrals) throws Exception {
+    private BaseComponent materialize(PageElement element, BaseComponent parent, List<DeferredSetter> deferrals) {
         ComponentDefinition def = element.getDefinition();
         boolean merge = parent instanceof Page && def.getComponentClass() == Page.class;
         boolean skip = def.getComponentClass() == Page.class && parent != null;

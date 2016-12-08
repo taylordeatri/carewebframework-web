@@ -263,7 +263,7 @@ public class ComponentDefinition {
      * @return A component instance. May be null if creation is suppressed.
      * @throws Exception Unspecified exception
      */
-    public BaseComponent create(FactoryContext context) throws Exception {
+    public BaseComponent create(FactoryContext context) {
         Map<String, String> attributes = context.getAttributes();
         
         if (attributes != null) {
@@ -282,7 +282,11 @@ public class ComponentDefinition {
             }
         }
         
-        return context.clazz.newInstance();
+        try {
+            return context.clazz.newInstance();
+        } catch (Exception e) {
+            throw MiscUtil.toUnchecked(e);
+        }
     }
     
     /**
@@ -312,7 +316,7 @@ public class ComponentDefinition {
      * @return Null if the operation occurred, or a DeferredSetter object if deferred.
      * @throws Exception Unspecified exception.
      */
-    public DeferredSetter setProperty(Object instance, String name, Object value) throws Exception {
+    public DeferredSetter setProperty(Object instance, String name, Object value) {
         Method method = setters.get(name);
         
         if (method == null) {

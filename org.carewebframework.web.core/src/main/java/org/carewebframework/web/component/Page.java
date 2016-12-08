@@ -161,6 +161,8 @@ public final class Page extends BaseComponent implements INamespace {
         } else {
             ids.remove(id);
         }
+        
+        this.fireEvent(register ? "register" : "unregister", component);
     }
     
     public BaseComponent findById(String id) {

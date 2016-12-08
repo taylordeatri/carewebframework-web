@@ -39,6 +39,18 @@ public class Memobox extends BaseInputboxComponent<String> {
         addStyle("resize", "none");
     }
     
+    @Override
+    @PropertyGetter("synchronized")
+    public boolean getSynchronized() {
+        return super.getSynchronized();
+    }
+    
+    @Override
+    @PropertySetter("synchronized")
+    public void setSynchronized(boolean synchronize) {
+        super.setSynchronized(synchronize);
+    }
+    
     @PropertyGetter("autoScroll")
     public boolean isAutoScroll() {
         return autoScroll;

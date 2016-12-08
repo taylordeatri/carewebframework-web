@@ -1021,18 +1021,20 @@ public abstract class BaseComponent implements IElementIdentifier {
         
     }
     
-    private void updateEventListener(String eventType, IEventListener eventListener, boolean register,
+    private void updateEventListener(String eventTypes, IEventListener eventListener, boolean register,
                                      boolean syncToClient) {
-        boolean before = eventListeners.hasListeners(eventType);
-        
-        if (register) {
-            eventListeners.add(eventType, eventListener);
-        } else {
-            eventListeners.remove(eventType, eventListener);
-        }
-        
-        if (syncToClient && before != eventListeners.hasListeners(eventType)) {
-            syncEventListeners(eventType, before);
+        for (String eventType : eventTypes.split("\\ ")) {
+            boolean before = eventListeners.hasListeners(eventType);
+            
+            if (register) {
+                eventListeners.add(eventType, eventListener);
+            } else {
+                eventListeners.remove(eventType, eventListener);
+            }
+            
+            if (syncToClient && before != eventListeners.hasListeners(eventType)) {
+                syncEventListeners(eventType, before);
+            }
         }
     }
     
@@ -1058,8 +1060,12 @@ public abstract class BaseComponent implements IElementIdentifier {
     }
     
     protected void fireEvent(String eventType) {
+        fireEvent(eventType, null);
+    }
+    
+    protected void fireEvent(String eventType, BaseComponent relatedTarget) {
         if (hasEventListener(eventType)) {
-            fireEvent(new Event(eventType, this));
+            fireEvent(new Event(eventType, this, relatedTarget));
         }
     }
     

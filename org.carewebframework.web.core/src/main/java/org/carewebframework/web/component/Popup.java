@@ -25,11 +25,12 @@
  */
 package org.carewebframework.web.component;
 
+import org.carewebframework.web.ancillary.INamespace;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 
 @Component(value = "popup", widgetClass = "Popup", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
-public class Popup extends BaseUIComponent {
+public class Popup extends BaseUIComponent implements INamespace {
     
 }

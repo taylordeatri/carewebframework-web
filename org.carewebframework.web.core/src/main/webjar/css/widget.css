@@ -44,6 +44,7 @@ a:not([href]) {
 }
 
 .panel-body {
+    display: flex;
     flex-direction: column;
     flex: auto;
     overflow: auto;
@@ -314,13 +315,14 @@ a:not([href]) {
 .cwf_toolbar {
 	border: 1px solid lightgray;
     display: inline-flex;
+    flex-flow: wrap;
     padding-left: 2px;
     padding-right: 2px;
     align-items: center;
 }
 
-.cwf_toolbar > * {
-	margin: 2px;
+.cwf_toolbar:empty {
+    display: none;
 }
 
 .cwf_toolbar-horizontal {
@@ -341,6 +343,11 @@ a:not([href]) {
 
 .cwf_toolbar-center {
 	justify-content: center;
+}
+
+.cwf_toolbar > * {
+	margin: 2px;
+	padding: 5px;
 }
 
 /* Labeled input */

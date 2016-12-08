@@ -28,7 +28,6 @@ package org.carewebframework.web.page;
 import java.util.List;
 import java.util.Map;
 
-import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Page;
@@ -53,11 +52,7 @@ public class PageUtil {
     }
     
     public static List<BaseComponent> createPage(PageDefinition def, BaseComponent parent, Map<String, Object> args) {
-        try {
-            return def.materialize(parent, args);
-        } catch (Exception e) {
-            throw MiscUtil.toUnchecked(e);
-        }
+        return def.materialize(parent, args);
     }
     
     public static List<BaseComponent> createPageFromContent(String content, BaseComponent parent) {
@@ -80,6 +75,5 @@ public class PageUtil {
     }
     
     private PageUtil() {
-        
     }
 }

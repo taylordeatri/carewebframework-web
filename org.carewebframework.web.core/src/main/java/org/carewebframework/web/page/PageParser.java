@@ -37,6 +37,7 @@ import org.carewebframework.web.core.WebUtil;
 import org.carewebframework.web.taglib.TagLibrary;
 import org.carewebframework.web.taglib.TagLibraryRegistry;
 import org.springframework.core.io.Resource;
+import org.springframework.util.Assert;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -153,6 +154,7 @@ public class PageParser {
                     String uri = getAttribute(pi, "uri");
                     String prefix = getAttribute(pi, "prefix");
                     TagLibrary tagLibrary = TagLibraryRegistry.getInstance().get(uri);
+                    Assert.notNull(tagLibrary, "Tag library not found: " + uri);
                     parentElement.addTagLibrary(prefix, tagLibrary);
                 }
                 
