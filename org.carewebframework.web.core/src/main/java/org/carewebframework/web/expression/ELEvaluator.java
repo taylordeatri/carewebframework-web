@@ -62,6 +62,8 @@ public class ELEvaluator extends StandardEvaluationContext implements BeanPostPr
     private ELEvaluator() {
         addPropertyAccessor(new EnvironmentAccessor());
         addPropertyAccessor(new MessageAccessor());
+        addPropertyAccessor(new ContextAccessor());
+        addMethodResolver(new ELMethodResolver());
         conversionService.addConverter(new MessageAccessor.MessageContextConverter());
         setTypeConverter(new StandardTypeConverter(conversionService));
     }

@@ -34,12 +34,15 @@ import org.carewebframework.common.XMLUtil;
 import org.carewebframework.web.annotation.ComponentDefinition;
 import org.carewebframework.web.annotation.ComponentRegistry;
 import org.carewebframework.web.core.WebUtil;
+import org.carewebframework.web.taglib.TagLibrary;
+import org.carewebframework.web.taglib.TagLibraryRegistry;
 import org.springframework.core.io.Resource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.ProcessingInstruction;
 import org.w3c.dom.Text;
 
 public class PageParser {
@@ -71,7 +74,7 @@ public class PageParser {
         try {
             Document document = XMLUtil.parseXMLFromStream(stream);
             PageDefinition pageDefinition = new PageDefinition();
-            parseNode(document.getDocumentElement(), pageDefinition.getRootElement());
+            parseNode(document, pageDefinition.getRootElement());
             return pageDefinition;
         } catch (Exception e) {
             throw MiscUtil.toUnchecked(e);
@@ -103,14 +106,7 @@ public class PageParser {
                     childElement.setAttribute(attr.getNodeName(), attr.getNodeValue());
                 }
                 
-                NodeList children = ele.getChildNodes();
-                int childCount = children.getLength();
-                
-                for (int i = 0; i < childCount; i++) {
-                    Node childNode = children.item(i);
-                    parseNode(childNode, childElement);
-                }
-                
+                parseChildren(node, childElement);
                 childElement.validate();
                 break;
             
@@ -143,14 +139,54 @@ public class PageParser {
                 
                 break;
             
+            case Node.DOCUMENT_NODE:
+                parseChildren(node, parentElement);
+                break;
+            
             case Node.COMMENT_NODE:
                 break;
             
             case Node.PROCESSING_INSTRUCTION_NODE:
+                ProcessingInstruction pi = (ProcessingInstruction) node;
+                
+                if ("taglib".equals(pi.getTarget())) {
+                    String uri = getAttribute(pi, "uri");
+                    String prefix = getAttribute(pi, "prefix");
+                    TagLibrary tagLibrary = TagLibraryRegistry.getInstance().get(uri);
+                    parentElement.addTagLibrary(prefix, tagLibrary);
+                }
+                
                 break;
             
             default:
                 throw new RuntimeException("Unrecognized document content: " + node.getNodeName());
+        }
+    }
+    
+    private String getAttribute(ProcessingInstruction pi, String name) {
+        String data = pi.getData();
+        int i = data.indexOf(name + "=");
+        data = data.substring(i + name.length() + 1);
+        String dlm = data.startsWith("\"") || data.startsWith("'") ? data.substring(0, 1) : null;
+        i = data.indexOf(dlm == null ? " " : dlm, 1);
+        data = data.substring(dlm == null ? 0 : 1, i < 0 ? data.length() : i);
+        data = data.isEmpty() ? null : data;
+        
+        if (data == null) {
+            throw new IllegalArgumentException(
+                    "Processing instruction \"" + pi.getTarget() + "\" is missing expected attribute \"" + name + "\"");
+        }
+        
+        return data;
+    }
+    
+    private void parseChildren(Node node, PageElement parentElement) {
+        NodeList children = node.getChildNodes();
+        int childCount = children.getLength();
+        
+        for (int i = 0; i < childCount; i++) {
+            Node childNode = children.item(i);
+            parseNode(childNode, parentElement);
         }
     }
     

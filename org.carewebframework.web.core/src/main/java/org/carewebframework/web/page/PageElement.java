@@ -33,12 +33,17 @@ import java.util.Map.Entry;
 
 import org.carewebframework.web.annotation.ComponentDefinition;
 import org.carewebframework.web.annotation.ComponentDefinition.Cardinality;
+import org.carewebframework.web.taglib.TagLibrary;
 
 public class PageElement {
+    
+    private final PageElement parent;
     
     private final ComponentDefinition definition;
     
     private Map<String, String> attributes;
+    
+    private Map<String, TagLibrary> tagLibraries;
     
     private List<PageElement> children;
     
@@ -46,6 +51,7 @@ public class PageElement {
     
     /*package*/ PageElement(ComponentDefinition definition, PageElement parent) {
         this.definition = definition;
+        this.parent = parent;
         
         if (parent != null) {
             parent.addChild(this);
@@ -122,11 +128,25 @@ public class PageElement {
         return definition;
     }
     
+    public PageElement getParent() {
+        return parent;
+    }
+    
     public Iterable<PageElement> getChildren() {
         return children;
     }
     
     public Map<String, String> getAttributes() {
         return attributes == null ? null : new HashMap<>(attributes);
+    }
+    
+    public void addTagLibrary(String prefix, TagLibrary tagLibrary) {
+        tagLibraries = tagLibraries == null ? new HashMap<>() : tagLibraries;
+        tagLibraries.put(prefix, tagLibrary);
+    }
+    
+    public TagLibrary getTagLibrary(String prefix) {
+        TagLibrary lib = tagLibraries == null ? null : tagLibraries.get(prefix);
+        return lib != null ? lib : parent == null ? null : parent.getTagLibrary(prefix);
     }
 }

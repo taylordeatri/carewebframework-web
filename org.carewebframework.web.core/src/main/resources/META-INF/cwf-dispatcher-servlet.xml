@@ -67,6 +67,9 @@
 		<property name="defaultLocale" value="en" />
 	</bean>
 	
+	<bean factory-method="getInstance" 
+		class="org.carewebframework.web.taglib.TagLibraryRegistry" />
+	
 	<bean class="org.springframework.beans.factory.config.MethodInvokingBean">
 		<property name="staticMethod" value="org.carewebframework.web.spring.InitLocalizer.init" />
 		<property name="arguments" ref="messageSource" />

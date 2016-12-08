@@ -929,7 +929,7 @@ public abstract class BaseComponent implements IElementIdentifier {
                     int i = forward.indexOf("=");
                     
                     if (i <= 0) {
-                        throw new IllegalArgumentException(forward);
+                        throw new IllegalArgumentException("Illegal forward directive:  " + forward);
                     }
                     
                     String original = forward.substring(0, i);

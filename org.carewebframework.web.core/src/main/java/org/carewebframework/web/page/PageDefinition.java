@@ -35,6 +35,7 @@ import org.carewebframework.web.annotation.ComponentDefinition.DeferredSetter;
 import org.carewebframework.web.annotation.ComponentDefinition.FactoryContext;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Page;
+import org.carewebframework.web.expression.ELContext;
 import org.carewebframework.web.expression.ELEvaluator;
 
 public class PageDefinition {
@@ -108,8 +109,10 @@ public class PageDefinition {
         }
         
         if (attributes != null) {
+            ELContext elContext = new ELContext(component, parent, element);
+            
             for (Entry<String, String> attribute : attributes.entrySet()) {
-                Object value = ELEvaluator.getInstance().evaluate(attribute.getValue(), component);
+                Object value = ELEvaluator.getInstance().evaluate(attribute.getValue(), elContext);
                 DeferredSetter deferral = def.setProperty(component, attribute.getKey(), value);
                 
                 if (deferral != null) {
