@@ -118,7 +118,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
         
         private void _validate(BaseComponent component, BaseComponent root) {
-            _validate(component.getName(), root);
+            _validate(component.getName(), root, component);
             
             if (!(component instanceof INamespace)) {
                 for (BaseComponent child : component.getChildren()) {
@@ -127,15 +127,15 @@ public abstract class BaseComponent implements IElementIdentifier {
             }
         }
         
-        public void validate(String name) {
-            _validate(name, getNameRoot());
+        private void validate(String name) {
+            _validate(name, getNameRoot(), null);
         }
         
-        private void _validate(String name, BaseComponent root) {
+        private void _validate(String name, BaseComponent root, BaseComponent component) {
             if (name != null) {
                 BaseComponent cmp = _find(name, root);
                 
-                if (cmp != null) {
+                if (cmp != null && cmp != component) {
                     throw new ComponentException("Name \"" + name + "\"already exists in current namespace");
                 }
             }
@@ -401,8 +401,10 @@ public abstract class BaseComponent implements IElementIdentifier {
     }
     
     protected void validateChild(BaseComponent child) {
-        componentDefinition.validateChild(child.componentDefinition, () -> getChildCount(child.getClass()));
-        nameIndex.validate(child);
+        if (child.getParent() != this) {
+            componentDefinition.validateChild(child.componentDefinition, () -> getChildCount(child.getClass()));
+            nameIndex.validate(child);
+        }
     }
     
     public void addChild(BaseComponent child) {
