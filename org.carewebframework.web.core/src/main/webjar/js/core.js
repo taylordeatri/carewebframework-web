@@ -194,14 +194,8 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				timezoneOffset: new Date().getTimezoneOffset()
 			};
 			
-			_.forIn(screen, function(value, key) {
-				_.isObject(value) || _.isNil(value) ? null : data['screen' + _.upperFirst(key)] = value;
-			});
-			
-			_.forIn(navigator, function(value, key) {
-				_.isObject(value) || _.isNil(value) ? null : data[key] = value;
-			});
-			
+			cwf.flatten(screen, data, 'screen', 1);
+			cwf.flatten(navigator, data, 'browser', 1);
 			cwf.ws.sendData('init', data);
 		},
 	
@@ -671,6 +665,31 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		}
 		
 		return target;
+	},
+	
+	/**
+	 * Recursively copies members from source into destination in flattened form.
+	 * 
+	 * @param {object} source Source object to copy.
+	 * @param {object} dest Destination of copy operation.
+	 * @param {String} [prefix] Prefix to be prepended to key when writing to destination.
+	 * @param {int} [maxdepth] Maximum recursion depth.  Defaults to no recursion.
+	 */
+	flatten: function(source, dest, prefix, maxdepth) {
+		maxdepth = maxdepth ? maxdepth : 0;
+		
+		_.forIn(source, function(value, key) {
+			if (!_.isNil(value) && !_.isFunction(value)) {
+				key = _.isArray(source) ? '[' + key + ']' : key;
+				key = prefix ? (prefix + _.upperFirst(key)) : key;
+				
+				if (_.isObject(value)) {
+					maxdepth <= 0 ? null : cwf.flatten(value, dest, key, maxdepth - 1);
+				} else {
+					dest[key] = value;
+				}
+			}
+		});
 	},
 	
 	/**
