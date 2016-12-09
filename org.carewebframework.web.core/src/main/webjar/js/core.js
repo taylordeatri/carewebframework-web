@@ -194,6 +194,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				timezoneOffset: new Date().getTimezoneOffset()
 			};
 			
+			_.forIn(screen, function(value, key) {
+				_.isObject(value) || _.isNil(value) ? null : data['screen' + _.upperFirst(key)] = value;
+			});
+			
 			_.forIn(navigator, function(value, key) {
 				_.isObject(value) || _.isNil(value) ? null : data[key] = value;
 			});
