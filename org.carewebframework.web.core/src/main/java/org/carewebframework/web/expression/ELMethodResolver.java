@@ -2,8 +2,8 @@ package org.carewebframework.web.expression;
 
 import java.util.List;
 
+import org.carewebframework.web.taglib.TagLibraryFunction;
 import org.carewebframework.web.taglib.TagLibrary;
-import org.carewebframework.web.taglib.TagLibrary.Function;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.expression.AccessException;
 import org.springframework.expression.EvaluationContext;
@@ -26,7 +26,7 @@ public class ELMethodResolver extends ReflectiveMethodResolver {
                                   List<TypeDescriptor> argumentTypes) throws AccessException {
         if (targetObject instanceof TagLibrary) {
             TagLibrary lib = (TagLibrary) targetObject;
-            Function function = lib.getFunction(name);
+            TagLibraryFunction function = lib.getFunction(name);
             
             if (function != null) {
                 try {

@@ -23,13 +23,13 @@
  *
  * #L%
  */
-package org.carewebframework.web.spring;
+package org.carewebframework.web.core;
 
-import java.util.Locale;
+import java.util.TimeZone;
 
 import org.carewebframework.common.Localizer;
-import org.carewebframework.common.Localizer.ILocaleFinder;
-import org.carewebframework.common.Localizer.IMessageSource;
+import org.carewebframework.web.client.ExecutionContext;
+import org.carewebframework.web.component.Page;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
@@ -39,22 +39,28 @@ import org.springframework.context.i18n.LocaleContextHolder;
 public class InitLocalizer {
     
     public static void init(MessageSource messageSource) {
-        Localizer.registerMessageSource(new IMessageSource() {
-            
-            @Override
-            public String getMessage(String id, Locale locale, Object... args) {
-                return messageSource.getMessage(id, args, locale);
-            }
+        Localizer.registerMessageSource((id, locale, args) -> {
+            return messageSource.getMessage(id, args, locale);
             
         });
         
-        Localizer.setLocaleFinder(new ILocaleFinder() {
+        Localizer.setLocaleResolver(() -> {
+            return LocaleContextHolder.getLocale();
+        });
+        
+        Localizer.setTimeZoneResolver(() -> {
+            TimeZone tz = null;
+            Page page = ExecutionContext.getPage();
+            Integer offset = page == null ? null : page.getBrowserInfo("timezoneOffset", Integer.class);
             
-            @Override
-            public Locale getLocale() {
-                return LocaleContextHolder.getLocale();
+            if (offset != null) {
+                String id = "GMT" + (offset < 0 ? "-" : "+") + "%02d:%02d";
+                offset = Math.abs(offset);
+                id = String.format(id, offset / 60, offset % 60);
+                tz = TimeZone.getTimeZone(id);
             }
             
+            return tz == null ? TimeZone.getDefault() : tz;
         });
     }
     
