@@ -48,6 +48,13 @@
 				<button name="btnToggleBalloon" label="Click Here" balloon="Balloon Text" />
 				Click to toggle balloon text.
 			</row>
+			<row>
+				<span name="custom">
+					This span has a custom attribute.
+					<?attribute key="test" value="this is a custom attribute"?>
+				</span>
+				Test of custom attribute: ${custom.test}
+			</row>
 		</rows>
 	</table>
 	

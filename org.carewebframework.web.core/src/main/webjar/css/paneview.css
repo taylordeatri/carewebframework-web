@@ -16,6 +16,7 @@
 /* Pane */
 
 .cwf_pane {
+    overflow: auto;
     position: relative;
     border-radius: 5px;
     border: 1px solid lightgray;

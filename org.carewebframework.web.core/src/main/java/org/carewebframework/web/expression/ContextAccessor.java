@@ -1,5 +1,6 @@
 package org.carewebframework.web.expression;
 
+import org.carewebframework.web.component.BaseComponent;
 import org.springframework.expression.AccessException;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.PropertyAccessor;
@@ -10,7 +11,7 @@ import org.springframework.expression.TypedValue;
  */
 public class ContextAccessor implements PropertyAccessor {
     
-    private static final Class<?>[] TARGET_CLASSES = { ELContext.class };
+    private static final Class<?>[] TARGET_CLASSES = { ELContext.class, BaseComponent.class };
     
     @Override
     public Class<?>[] getSpecificTargetClasses() {
@@ -19,13 +20,20 @@ public class ContextAccessor implements PropertyAccessor {
     
     @Override
     public boolean canRead(EvaluationContext context, Object target, String name) throws AccessException {
-        return true;
+        return !(target instanceof BaseComponent) || ((BaseComponent) target).hasAttribute(name);
     }
     
     @Override
     public TypedValue read(EvaluationContext context, Object target, String name) throws AccessException {
-        Object result = ((ELContext) target).getValue(name);
-        return result == null ? null : new TypedValue(result);
+        Object result = null;
+        
+        if (target instanceof ELContext) {
+            result = ((ELContext) target).getValue(name);
+        } else if (target instanceof BaseComponent) {
+            result = ((BaseComponent) target).getAttribute(name);
+        }
+        
+        return new TypedValue(result);
     }
     
     @Override

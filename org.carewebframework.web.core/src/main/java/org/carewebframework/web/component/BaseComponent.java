@@ -1157,6 +1157,7 @@ public abstract class BaseComponent implements IElementIdentifier {
      * 
      * @return The data object; may be null.
      */
+    @PropertyGetter("data")
     public Object getData() {
         return data;
     }
@@ -1178,6 +1179,7 @@ public abstract class BaseComponent implements IElementIdentifier {
      * 
      * @param data The data object.
      */
+    @PropertySetter("data")
     public void setData(Object data) {
         this.data = data;
     }

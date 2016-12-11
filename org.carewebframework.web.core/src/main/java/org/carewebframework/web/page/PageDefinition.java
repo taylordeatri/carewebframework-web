@@ -112,10 +112,16 @@ public class PageDefinition {
             
             for (Entry<String, String> attribute : attributes.entrySet()) {
                 Object value = ELEvaluator.getInstance().evaluate(attribute.getValue(), elContext);
-                DeferredSetter deferral = def.setProperty(component, attribute.getKey(), value);
+                String key = attribute.getKey();
                 
-                if (deferral != null) {
-                    deferrals.add(deferral);
+                if (key.startsWith("@")) {
+                    component.setAttribute(key.substring(1), value);
+                } else {
+                    DeferredSetter deferral = def.setProperty(component, attribute.getKey(), value);
+                    
+                    if (deferral != null) {
+                        deferrals.add(deferral);
+                    }
                 }
             }
         }

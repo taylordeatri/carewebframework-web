@@ -30,14 +30,13 @@ import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.carewebframework.common.MiscUtil;
+import org.carewebframework.common.RegistryMap;
+import org.carewebframework.common.RegistryMap.DuplicateAction;
 import org.carewebframework.common.XMLUtil;
 import org.carewebframework.web.annotation.ComponentDefinition;
 import org.carewebframework.web.annotation.ComponentRegistry;
 import org.carewebframework.web.core.WebUtil;
-import org.carewebframework.web.taglib.TagLibrary;
-import org.carewebframework.web.taglib.TagLibraryRegistry;
 import org.springframework.core.io.Resource;
-import org.springframework.util.Assert;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -52,11 +51,15 @@ public class PageParser {
     
     private static final String CONTENT_TAG = "#text";
     
+    private final RegistryMap<String, PIParserBase> piParsers = new RegistryMap<>(DuplicateAction.ERROR);
+    
     public static PageParser getInstance() {
         return instance;
     }
     
     private PageParser() {
+        registerPIParser(new PIParserTagLibrary());
+        registerPIParser(new PIParserAttribute());
     }
     
     public PageDefinition parse(String src) {
@@ -84,10 +87,14 @@ public class PageParser {
         }
     }
     
+    public void registerPIParser(PIParserBase piParser) {
+        piParsers.put(piParser.getTarget(), piParser);
+    }
+    
     private void parseNode(Node node, PageElement parentElement) {
         ComponentDefinition def;
-        PageElement childElement;
         ComponentDefinition parentDef = parentElement.getDefinition();
+        PageElement childElement;
         
         switch (node.getNodeType()) {
             case Node.ELEMENT_NODE:
@@ -149,13 +156,12 @@ public class PageParser {
             
             case Node.PROCESSING_INSTRUCTION_NODE:
                 ProcessingInstruction pi = (ProcessingInstruction) node;
+                PIParserBase piParser = piParsers.get(pi.getTarget());
                 
-                if ("taglib".equals(pi.getTarget())) {
-                    String uri = getAttribute(pi, "uri");
-                    String prefix = getAttribute(pi, "prefix");
-                    TagLibrary tagLibrary = TagLibraryRegistry.getInstance().get(uri);
-                    Assert.notNull(tagLibrary, "Tag library not found: " + uri);
-                    parentElement.addTagLibrary(prefix, tagLibrary);
+                if (piParser != null) {
+                    piParser.parse(pi, parentElement);
+                } else {
+                    throw new RuntimeException("Unrecognized prosessing instruction: " + pi.getTarget());
                 }
                 
                 break;
@@ -163,23 +169,6 @@ public class PageParser {
             default:
                 throw new RuntimeException("Unrecognized document content: " + node.getNodeName());
         }
-    }
-    
-    private String getAttribute(ProcessingInstruction pi, String name) {
-        String data = pi.getData();
-        int i = data.indexOf(name + "=");
-        data = data.substring(i + name.length() + 1);
-        String dlm = data.startsWith("\"") || data.startsWith("'") ? data.substring(0, 1) : null;
-        i = data.indexOf(dlm == null ? " " : dlm, 1);
-        data = data.substring(dlm == null ? 0 : 1, i < 0 ? data.length() : i);
-        data = data.isEmpty() ? null : data;
-        
-        if (data == null) {
-            throw new IllegalArgumentException(
-                    "Processing instruction \"" + pi.getTarget() + "\" is missing expected attribute \"" + name + "\"");
-        }
-        
-        return data;
     }
     
     private void parseChildren(Node node, PageElement parentElement) {
