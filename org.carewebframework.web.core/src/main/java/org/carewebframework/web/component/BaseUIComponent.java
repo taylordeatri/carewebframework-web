@@ -43,6 +43,8 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     
     private String width;
     
+    private String flex;
+    
     private String hint;
     
     private String balloon;
@@ -100,6 +102,7 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     protected void _syncStyles() {
         height = _syncStyle("height", height);
         width = _syncStyle("width", width);
+        flex = _syncStyle("flex", flex);
         sync("style", styles.toString());
     }
     
@@ -190,6 +193,21 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
         if (!areEqual(width, this.width)) {
             this.width = width;
             addStyle("width", width);
+        }
+    }
+    
+    @PropertyGetter("flex")
+    public String getFlex() {
+        return flex;
+    }
+    
+    @PropertySetter("flex")
+    public void setFlex(String flex) {
+        flex = trimify(flex);
+        
+        if (!areEqual(flex, this.flex)) {
+            this.flex = flex;
+            addStyle("flex", flex);
         }
     }
     
