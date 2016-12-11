@@ -297,7 +297,7 @@ public class ComponentDefinition {
      * @return The property value.
      * @throws Exception Unspecified exception
      */
-    public Object getProperty(Object instance, String name) throws Exception {
+    public Object getProperty(BaseComponent instance, String name) throws Exception {
         Method method = getters.get(name);
         
         if (method == null) {
@@ -316,7 +316,12 @@ public class ComponentDefinition {
      * @return Null if the operation occurred, or a DeferredSetter object if deferred.
      * @throws Exception Unspecified exception.
      */
-    public DeferredSetter setProperty(Object instance, String name, Object value) {
+    public DeferredSetter setProperty(BaseComponent instance, String name, Object value) {
+        if (name.startsWith("@")) {
+            instance.setAttribute(name.substring(1), value);
+            return null;
+        }
+        
         Method method = setters.get(name);
         
         if (method == null) {
