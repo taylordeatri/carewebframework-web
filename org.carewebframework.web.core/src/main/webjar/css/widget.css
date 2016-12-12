@@ -194,6 +194,16 @@ a:not([href]) {
     border-radius: 6px 6px 6px 6px;
 }
 
+/* Menu */
+
+.cwf_menu {
+	margin-right: 5px
+}
+
+.cwf_menu > .dropdown > a > .caret {
+	margin-left: 0;	
+}
+
 /* Menuitem */
 
 .cwf_menuitem img {
@@ -203,6 +213,7 @@ a:not([href]) {
 
 .cwf_menuitem > a > span.glyphicon {
     margin-left: -14px;    
+    margin-right: 2px; 
 }
 
 /* Div */
@@ -392,6 +403,7 @@ a:not([href]) {
 
 .cwf_inputbox {
     border: 1px solid lightgray;
+    background-color: white;
     display: inline-flex;
     position: relative;
 }
@@ -453,7 +465,7 @@ a:not([href]) {
     border: 1px groove threedface;
     border-top: none;
     padding: 0.5em;
-    margin: 1em 2px;
+    margin: 1em 0 1em 0;
     display: inline-block;
 }
 
