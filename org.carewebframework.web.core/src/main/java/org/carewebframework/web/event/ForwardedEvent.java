@@ -8,7 +8,7 @@ public class ForwardedEvent extends Event {
     private final Event originalEvent;
     
     public ForwardedEvent(String forwardType, Event originalEvent) {
-        super(forwardType, originalEvent.getTarget(), originalEvent.getRelatedTarget(), originalEvent.getData());
+        super(forwardType, originalEvent);
         this.originalEvent = originalEvent;
     }
     

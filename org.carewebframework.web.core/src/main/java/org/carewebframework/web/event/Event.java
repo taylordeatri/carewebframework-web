@@ -60,7 +60,7 @@ public class Event {
     }
     
     public Event(String type) {
-        this(type, null);
+        this(type, null, null);
     }
     
     public Event(String type, BaseComponent target) {
@@ -83,6 +83,19 @@ public class Event {
         this.relatedTarget = relatedTarget;
         this.page = target != null ? target.getPage() : null;
         this.page = this.page == null ? ExecutionContext.getPage() : this.page;
+    }
+    
+    public Event(Event source) {
+        this(source.type, source);
+    }
+    
+    public Event(String type, Event source) {
+        this.type = type;
+        this.target = source.target;
+        this.data = source.data;
+        this.currentTarget = source.currentTarget;
+        this.relatedTarget = source.relatedTarget;
+        this.page = source.page;
     }
     
     public String getType() {
