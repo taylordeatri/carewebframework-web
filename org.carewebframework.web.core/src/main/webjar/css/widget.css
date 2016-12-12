@@ -358,7 +358,6 @@ a:not([href]) {
 
 .cwf_toolbar > * {
 	margin: 2px;
-	padding: 5px;
 }
 
 /* Labeled input */
