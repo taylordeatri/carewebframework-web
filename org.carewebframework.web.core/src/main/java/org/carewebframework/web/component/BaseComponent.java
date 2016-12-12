@@ -875,8 +875,11 @@ public abstract class BaseComponent implements IElementIdentifier {
             
             if ("^".equals(pc)) {
                 cmp = cmp.getNamespace();
-                cmp = cmp == null ? null : cmp.getParent();
-                cmp = cmp == null ? null : cmp.getNamespace();
+                
+                if (i != pcs.length) {
+                    cmp = cmp == null ? null : cmp.getParent();
+                    cmp = cmp == null ? null : cmp.getNamespace();
+                }
             } else {
                 cmp = cmp.nameIndex.find(pc);
             }
