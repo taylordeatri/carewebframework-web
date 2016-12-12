@@ -16,8 +16,7 @@
 /* Pane */
 
 .cwf_pane {
-    display: flex;
-    overflow: auto;
+    overflow: visible;
     position: relative;
     border-radius: 5px;
     border: 1px solid lightgray;
@@ -32,8 +31,6 @@
 
 .cwf_pane > :nth-child(2) {
     overflow: hidden;
-    display: flex;
-    flex: 1;
 }
 
 .cwf_pane > .ui-resizable-e {
