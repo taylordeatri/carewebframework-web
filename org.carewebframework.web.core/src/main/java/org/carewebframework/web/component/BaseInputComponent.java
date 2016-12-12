@@ -25,6 +25,7 @@
  */
 package org.carewebframework.web.component;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
@@ -83,7 +84,11 @@ public abstract class BaseInputComponent<T> extends BaseUIComponent {
     
     @EventHandler(value = "change", syncToClient = false)
     private void _onChange(ChangeEvent event) {
-        _setValue(_toValue(event.getValue(String.class)), false);
+        try {
+            _setValue(_toValue(event.getValue(String.class)), false);
+        } catch (Exception e) {
+            setBalloon(ExceptionUtils.getRootCauseMessage(e));
+        }
     }
     
 }
