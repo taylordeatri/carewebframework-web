@@ -29,7 +29,7 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
-import org.carewebframework.web.event.SelectEvent;
+import org.carewebframework.web.event.ChangeEvent;
 
 @Component(value = "comboitem", widgetClass = "Comboitem", parentTag = "combobox")
 public class Comboitem extends BaseLabeledComponent {
@@ -86,8 +86,8 @@ public class Comboitem extends BaseLabeledComponent {
         return (Combobox) getParent();
     }
     
-    @EventHandler(value = "select", syncToClient = false)
-    private void _onSelect(SelectEvent event) {
-        _setSelected(event.isSelected(), false, true);
+    @EventHandler(value = "change", syncToClient = false)
+    private void _onChange(ChangeEvent event) {
+        _setSelected(defaultify(event.getValue(Boolean.class), true), false, true);
     }
 }

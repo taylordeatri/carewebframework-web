@@ -29,7 +29,7 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
-import org.carewebframework.web.event.SelectEvent;
+import org.carewebframework.web.event.ChangeEvent;
 
 @Component(value = "listitem", widgetClass = "Listitem", parentTag = "listbox")
 public class Listitem extends BaseLabeledComponent {
@@ -68,9 +68,9 @@ public class Listitem extends BaseLabeledComponent {
         }
     }
     
-    @EventHandler(value = "select", syncToClient = false)
-    private void _onSelect(SelectEvent event) {
-        _setSelected(event.isSelected(), false, true);
+    @EventHandler(value = "change", syncToClient = false)
+    private void _onChange(ChangeEvent event) {
+        _setSelected(defaultify(event.getValue(Boolean.class), true), false, true);
     }
     
     /*package*/ void _setSelected(boolean selected, boolean notifyClient, boolean notifyParent) {

@@ -27,27 +27,27 @@ package org.carewebframework.web.event;
 
 import org.carewebframework.web.annotation.EventType;
 import org.carewebframework.web.annotation.EventType.EventParameter;
-import org.carewebframework.web.component.BaseComponent;
 
-@EventType(SelectEvent.TYPE)
-public class SelectEvent extends Event {
+@EventType(StatechangeEvent.TYPE)
+public class StatechangeEvent extends Event {
     
-    public static final String TYPE = "select";
+    public static final String TYPE = "statechange";
     
     @EventParameter
-    private boolean selected = true;
+    private String state;
     
-    public SelectEvent() {
+    @EventParameter
+    private Object value;
+    
+    public StatechangeEvent() {
         super(TYPE);
     }
     
-    public SelectEvent(BaseComponent target, Object data, boolean selected) {
-        super(TYPE, target, data);
-        this.selected = selected;
+    public String getState() {
+        return state;
     }
     
-    public boolean isSelected() {
-        return selected;
+    public Object getValue() {
+        return value;
     }
-    
 }

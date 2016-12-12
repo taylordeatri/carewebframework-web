@@ -33,8 +33,8 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
+import org.carewebframework.web.event.ChangeEvent;
 import org.carewebframework.web.event.Event;
-import org.carewebframework.web.event.SelectEvent;
 
 @Component(value = "tab", widgetPackage = "cwf-tabview", widgetClass = "Tab", content = ContentHandling.AS_CHILD, parentTag = "tabview", childTag = @ChildTag("*"))
 
@@ -75,9 +75,9 @@ public class Tab extends BaseLabeledImageComponent {
         _setSelected(selected, true);
     }
     
-    @EventHandler(value = "select", syncToClient = false)
-    private void _onSelect(SelectEvent event) {
-        setSelected(event.isSelected());
+    @EventHandler(value = "change", syncToClient = false)
+    private void _onSelect(ChangeEvent event) {
+        setSelected(defaultify(event.getValue(Boolean.class), true));
     }
     
     @EventHandler(value = "close", syncToClient = false)

@@ -140,7 +140,7 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 				var w = cwf.wgt(target);
 				
 				if (w.updateState('selected', selected, true)) {
-					w.trigger('select', {selected: selected});
+					w.trigger('change', {value: selected});
 				}
 			}
 		}
@@ -172,7 +172,7 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 		init: function() {
 			this._super();
 			this.initState({selected: false});
-			this.forwardToServer('select');
+			this.forwardToServer('change');
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/

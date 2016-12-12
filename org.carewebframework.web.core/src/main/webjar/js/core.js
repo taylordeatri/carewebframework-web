@@ -252,7 +252,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			this.registerPostProcessor('resize', _ppResize);
 			
 			function _ppChangeInput(event, data) {
-				data.value = data.value || event.target.value;
+				data.value = _.defaultTo(data.value, event.target.value);
 			}
 			
 			function _ppResize(event, data) {

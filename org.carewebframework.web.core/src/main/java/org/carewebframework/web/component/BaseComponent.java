@@ -58,6 +58,7 @@ import org.carewebframework.web.event.EventListeners;
 import org.carewebframework.web.event.EventUtil;
 import org.carewebframework.web.event.ForwardListener;
 import org.carewebframework.web.event.IEventListener;
+import org.carewebframework.web.event.StatechangeEvent;
 import org.springframework.util.Assert;
 
 /**
@@ -916,8 +917,8 @@ public abstract class BaseComponent implements IElementIdentifier {
      *            name of the event to forward and <code>target</code> is the forwarding target. The
      *            target is the name of the forwarded event optionally prefixed by a resolvable
      *            component name or path. In the absence of such a prefix, the target is the
-     *            component itself. For example, <code>click=window.listbox.select</code> would
-     *            forward this component's <code>click</code> event as a <code>select</code> event
+     *            component itself. For example, <code>click=window.listbox.change</code> would
+     *            forward this component's <code>click</code> event as a <code>change</code> event
      *            targeting the component that is the result of resolving the
      *            <code>window.listbox</code> path.
      */
@@ -1191,15 +1192,13 @@ public abstract class BaseComponent implements IElementIdentifier {
      * 
      * @param event The state change event.
      */
-    @EventHandler(value = "stateChange", syncToClient = false)
-    private void _onStateChange(Event event) {
-        @SuppressWarnings("unchecked")
-        Map<String, Object> params = (Map<String, Object>) event.getData();
-        String state = (String) params.get("state");
+    @EventHandler(value = "statechange", syncToClient = false)
+    private void _onStateChange(StatechangeEvent event) {
+        String state = event.getState();
         
         try {
             Field field = FieldUtils.getField(this.getClass(), state, true);
-            field.set(this, ConvertUtil.convert(params.get("value"), field.getType(), this));
+            field.set(this, ConvertUtil.convert(event.getValue(), field.getType(), this));
         } catch (Exception e) {
             throw new ComponentException("Error updating state: " + state, e);
         }

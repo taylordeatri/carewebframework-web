@@ -25,6 +25,7 @@
  */
 package org.carewebframework.web.event;
 
+import org.carewebframework.web.ancillary.ConvertUtil;
 import org.carewebframework.web.annotation.EventType;
 import org.carewebframework.web.annotation.EventType.EventParameter;
 import org.carewebframework.web.component.BaseComponent;
@@ -35,7 +36,7 @@ public class ChangeEvent extends Event {
     public static final String TYPE = "change";
     
     @EventParameter
-    private String value;
+    private Object value;
     
     public ChangeEvent() {
         super(TYPE);
@@ -50,7 +51,11 @@ public class ChangeEvent extends Event {
         this.value = value;
     }
     
-    public String getValue() {
+    public Object getValue() {
         return value;
+    }
+    
+    public <T> T getValue(Class<T> type) {
+        return ConvertUtil.convert(value, type);
     }
 }

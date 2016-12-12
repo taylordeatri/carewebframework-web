@@ -90,8 +90,8 @@ public class BoxesController extends BaseController {
         });
     }
     
-    @EventHandler(value = "select", target = "tabInputBoxes")
-    private void InputBoxTabSelectHandler() {
+    @EventHandler(value = "change", target = "tabInputBoxes")
+    private void InputBoxTabChangeHandler() {
         txtInput.setValue("Value set programmatically");
         txtSelect.selectRange(2, 5);
         txtSelect.focus();

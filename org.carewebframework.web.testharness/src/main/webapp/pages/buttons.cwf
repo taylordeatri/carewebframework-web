@@ -26,7 +26,7 @@
 				This is just a standalone image.
 			</row>
 			<row>
-				<radiogroup>
+				<radiogroup name="rg1">
 					<radiobutton label="button #1" />
 					<radiobutton label="button #2" checked="true" />
 					<radiobutton label="button #3" />
@@ -36,7 +36,7 @@
 				and selection should be mutually exclusive.
 			</row>
 			<row>
-				<radiogroup orientation="vertical">
+				<radiogroup name="rg2" orientation="vertical">
 					<radiobutton label="button #1" />
 					<radiobutton label="button #2" checked="true" />
 					<radiobutton label="button #3" />

@@ -25,7 +25,6 @@
  */
 package org.carewebframework.web.component;
 
-import org.apache.commons.lang.math.NumberUtils;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
@@ -65,6 +64,6 @@ public class Progressbar extends BaseLabeledComponent {
     
     @EventHandler("change")
     private void _onChange(ChangeEvent event) {
-        value = NumberUtils.toInt(event.getValue(), value);
+        value = defaultify(event.getValue(Integer.class), value);
     }
 }

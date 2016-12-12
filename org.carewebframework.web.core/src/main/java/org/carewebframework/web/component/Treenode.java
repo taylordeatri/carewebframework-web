@@ -32,7 +32,7 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
-import org.carewebframework.web.event.SelectEvent;
+import org.carewebframework.web.event.ChangeEvent;
 
 @Component(value = "treenode", widgetPackage = "cwf-treeview", widgetClass = "Treenode", parentTag = { "treeview",
         "treenode" }, childTag = @ChildTag("treenode"))
@@ -206,9 +206,9 @@ public class Treenode extends BaseLabeledImageComponent implements Iterable<Tree
         collapsed = !collapsed;
     }
     
-    @EventHandler(value = "select", syncToClient = false)
-    private void _onSelect(SelectEvent event) {
-        setSelected(event.isSelected());
+    @EventHandler(value = "change", syncToClient = false)
+    private void _onChange(ChangeEvent event) {
+        setSelected(defaultify(event.getValue(Boolean.class), true));
     }
     
     @Override

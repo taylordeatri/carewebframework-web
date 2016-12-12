@@ -38,6 +38,18 @@ public class ConvertUtil {
      * @param <T> The target type.
      * @param value The value to convert.
      * @param targetType The type to which to convert.
+     * @return The converted value.
+     */
+    public static <T> T convert(Object value, Class<T> targetType) {
+        return convert(value, targetType, null);
+    }
+    
+    /**
+     * Converts an input value to a target type.
+     * 
+     * @param <T> The target type.
+     * @param value The value to convert.
+     * @param targetType The type to which to convert.
      * @param instance The object instance whose property value is to be set (necessary when the
      *            target type is a component and the value is the component name or id).
      * @return The converted value.

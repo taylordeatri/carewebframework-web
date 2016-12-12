@@ -58,14 +58,14 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 		
 		init: function() {
 			this._super();
-			this.forwardToServer('select close');
+			this.forwardToServer('change close');
 		},
 				
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
 			this._super();
-			this.forward(this.sub$('tab'), 'click', 'select');
+			this.forward(this.sub$('tab'), 'click', 'change');
 		},
 				
 		render$: function() {

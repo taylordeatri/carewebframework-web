@@ -28,6 +28,8 @@ package org.carewebframework.web.testharness;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.annotation.WiredComponent;
 import org.carewebframework.web.component.Button;
+import org.carewebframework.web.component.Radiobutton;
+import org.carewebframework.web.event.ChangeEvent;
 
 /*
  * Buttons demonstration.
@@ -41,8 +43,14 @@ public class ButtonsController extends BaseController {
      * Sample button event handler.
      */
     @EventHandler(value = "click", target = "@btnWithEvent")
-    public void btnEventHandler() {
+    private void btnEventHandler() {
         log("Button event handler was invoked");
     }
     
+    @EventHandler(value = "change", target = { "rg1", "rg2" })
+    private void radiobuttonChangeHandler(ChangeEvent event) {
+        boolean isSelected = event.getValue(Boolean.class);
+        log("Radiobutton '" + ((Radiobutton) event.getTarget()).getLabel() + "' was "
+                + (isSelected ? "selected." : "deselected."));
+    }
 }

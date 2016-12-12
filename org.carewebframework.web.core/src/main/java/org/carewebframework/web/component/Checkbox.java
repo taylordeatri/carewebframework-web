@@ -79,7 +79,7 @@ public class Checkbox extends BaseLabeledComponent {
     
     @EventHandler(value = "change", syncToClient = false)
     protected void _onChange(ChangeEvent event) {
-        checked = "true".equals(event.getValue());
+        checked = defaultify(event.getValue(Boolean.class), true);
     }
     
 }

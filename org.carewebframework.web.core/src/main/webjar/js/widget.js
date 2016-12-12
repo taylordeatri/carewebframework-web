@@ -307,7 +307,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 * @param {*} value New value of the state.
 		 */
 		stateChanged: function(state, value) {
-			this.trigger('stateChange', {data: {state: state, value: value}});
+			this.trigger('statechange', {state: state, value: value});
 		},
 		
 		/**
@@ -347,7 +347,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this.widget$ = null;
 			this._rendering = false;
 			this._state = {};
-			this._state.forwarding = {stateChange: true};
+			this._state.forwarding = {statechange: true};
 			this.initState(state, true);
 			this.init();
 			this.rerender();
@@ -1680,11 +1680,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ Events ------------------------------*/
 		
-		handleChange: function(event) {
+		handleChange: function(event, params) {
 			this._syncChecked(true);
 			var target = event.target;
 			target.value = target.checked;
-			cwf.event.sendToServer(event);
+			cwf.event.sendToServer(event, params);
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -1763,7 +1763,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				
 				if (checked) {
 					if (previous && previous !== this) {
-						previous.trigger('change');
+						previous.trigger('change', {value: false});
 					}
 					
 					cwf.widget._radio[group] = this.id;
@@ -2059,7 +2059,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ State ------------------------------*/
 		
 		masked: function(v) {
-			this.attr('type', v ? 'password' : this._type);
+			this.attr('type', v ? 'password' : this._type, this.input$());
 		}
 		
 	});
@@ -2319,7 +2319,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		init: function() {
 			this._super();
-			this.forwardToServer('select');
+			this.forwardToServer('change');
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -2338,7 +2338,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			var selected = this.widget$.is(':selected');
 			
 			if (this.setState('selected', selected)) {
-				this.trigger('select', {selected: selected});
+				this.trigger('change', {value: selected});
 			}
 		},
 		
@@ -2401,10 +2401,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			}
 		},
 		
-		handleSelect: function(event, ui) {
+		handleChange: function(event, ui) {
 			var wgt = cwf.widget.find(ui.item.id);
 			wgt.selected(true);
-			wgt.trigger('select', {selected: true});
+			wgt.trigger('change', {value: true});
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -2420,7 +2420,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	            autoFocus: false,
 	            appendTo: this.widget$,
 	            source: this.source.bind(this),
-				select: this.handleSelect.bind(this)
+				change: this.handleChange.bind(this)
 			});
 			
 			inp$.data('ui-autocomplete')._renderItem = this.renderItem$.bind(this);
@@ -2465,7 +2465,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		init: function() {
 			this._super();
-			this.forwardToServer('select');
+			this.forwardToServer('change');
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
