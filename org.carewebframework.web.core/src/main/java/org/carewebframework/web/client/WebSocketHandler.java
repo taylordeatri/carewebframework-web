@@ -41,6 +41,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.carewebframework.common.MiscUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.web.context.ServletContextAware;
@@ -162,6 +163,7 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
             sendData(socket, json);
         } catch (Exception e) {
             log.error(e);
+            throw MiscUtil.toUnchecked(e);
         }
     }
     

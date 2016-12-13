@@ -30,6 +30,7 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.reflect.FieldUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.event.Event;
@@ -193,7 +194,7 @@ public class EventHandlerScanner {
      */
     private static Field findField(Class<?> clazz, String name) {
         try {
-            Field result = clazz.getDeclaredField(name);
+            Field result = FieldUtils.getField(clazz, name, true);
             return isComponent(result.getType()) ? result : null;
         } catch (Exception e) {
             return null;

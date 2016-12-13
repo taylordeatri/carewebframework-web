@@ -31,12 +31,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.carewebframework.web.ancillary.IElementIdentifier;
 
 /**
  * Represents a function invocation request to be sent to the client.
  */
 public class ClientInvocation {
+    
+    private static final Log log = LogFactory.getLog(ClientInvocation.class);
     
     private final String function;
     
@@ -127,7 +131,12 @@ public class ClientInvocation {
     private Object transform(Object source) {
         if (source instanceof IElementIdentifier) {
             String id = ((IElementIdentifier) source).getId();
-            return Collections.singletonMap("__cwf__", id);
+            
+            if (id == null) {
+                log.error("Component is not attached to a page: " + source);
+            }
+            
+            return id == null ? null : Collections.singletonMap("__cwf__", id);
         }
         
         if (source instanceof Map) {

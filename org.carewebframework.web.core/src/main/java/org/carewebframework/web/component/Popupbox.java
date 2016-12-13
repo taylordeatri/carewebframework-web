@@ -48,7 +48,10 @@ public class Popupbox extends BaseInputboxComponent<String> {
     @Override
     protected void afterAddChild(BaseComponent child) {
         super.afterAddChild(child);
-        setPopup((Popup) child);
+        
+        if (getPage() != null) {
+            setPopup((Popup) child);
+        }
     }
     
     @Override
@@ -57,6 +60,15 @@ public class Popupbox extends BaseInputboxComponent<String> {
         
         if (child == popup) {
             setPopup(null);
+        }
+    }
+    
+    @Override
+    protected void onAttach(Page page) {
+        super.onAttach(page);
+        
+        if (getChildCount() > 0) {
+            setPopup((Popup) getChildAt(0));
         }
     }
     
