@@ -2159,12 +2159,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	 * A popup box widget
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.Popupbox = cwf.widget.InputboxWidget.extend({
+	cwf.widget.Popupbox = cwf.widget.Textbox.extend({
 		
 		/*------------------------------ Lifecycle ------------------------------*/
 				
 		init: function() {
-			this._type = 'text';
 			this._super();
 			this.initState({open: false});
 		},

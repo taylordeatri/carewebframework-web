@@ -31,7 +31,7 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
 @Component(value = "popupbox", widgetClass = "Popupbox", parentTag = "*", childTag = @ChildTag(value = "popup", maximum = 1))
-public class Popupbox extends BaseInputboxComponent<String> {
+public class Popupbox extends Textbox {
     
     private Popup popup;
     
@@ -68,7 +68,7 @@ public class Popupbox extends BaseInputboxComponent<String> {
         super.onAttach(page);
         
         if (getChildCount() > 0) {
-            setPopup((Popup) getChildAt(0));
+            setPopup((Popup) getFirstChild());
         }
     }
     
@@ -107,16 +107,6 @@ public class Popupbox extends BaseInputboxComponent<String> {
         if (open != this.open) {
             sync("open", this.open = open);
         }
-    }
-    
-    @Override
-    protected String _toValue(String value) {
-        return value;
-    }
-    
-    @Override
-    protected String _toString(String value) {
-        return value;
     }
     
 }

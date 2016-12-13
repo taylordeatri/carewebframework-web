@@ -784,8 +784,6 @@ public abstract class BaseComponent implements IElementIdentifier {
         if (page != null && this.page != page) {
             _setPage(page);
             _flushQueue();
-            onAttach(page);
-            fireEvent("attach");
         }
     }
     
@@ -803,6 +801,9 @@ public abstract class BaseComponent implements IElementIdentifier {
         for (BaseComponent child : getChildren()) {
             child._flushQueue();
         }
+        
+        onAttach(page);
+        fireEvent("attach");
     }
     
     /**
