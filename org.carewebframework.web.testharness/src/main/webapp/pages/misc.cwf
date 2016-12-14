@@ -26,6 +26,9 @@
 				Cell with content only.
 			</row>
 			<row>
+				<rowcell colspan="2" label="Row cell spanning both columns" />
+			</row>
+			<row>
 				<span name="dynamicContent" />
 				This is dynamically-generated content.
 			</row>

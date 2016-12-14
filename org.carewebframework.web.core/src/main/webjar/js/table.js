@@ -155,16 +155,14 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 		
 		/*------------------------------ Containment ------------------------------*/
 		
-		anchor$: function(child$) {
-			return $(child$.is('td') ? '<span>' : '<td>').appendTo(this.widget$);
-		},
-		
-		onRemoveChild: function(child, destroyed, anchor$) {
-			this._super(child, destroyed, anchor$);
-			
-			if (anchor$) {
-				anchor$.remove();
+		addChild: function(child, index) {
+			if (child.wclass !== 'Rowcell') {
+				var rc = cwf.widget.create(null, {wclass: 'Rowchild', cntr: true});
+				rc.addChild(child);
+				child = rc;
 			}
+			
+			this._super(child, index);
 		},
 		
 		/*------------------------------ Lifecycle ------------------------------*/
@@ -227,5 +225,29 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 		
 	});
 
+	/******************************************************************************************************************
+	 * Connector for row children other than a rowcell.
+	 ******************************************************************************************************************/
+	
+	cwf.widget.Rowchild = cwf.widget.UIWidget.extend({
+		
+		/*------------------------------ Containment ------------------------------*/
+		
+		_detach: function(destroy) {
+			if (this._children.length) {
+				this.removeChild(this._children[0], destroy);
+			}
+			
+			this._super(destroy);
+		},
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		render$: function() {
+			return $('<td>');
+		}
+		
+	});
+	
 	return cwf.widget;
 });
