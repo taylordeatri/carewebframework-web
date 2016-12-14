@@ -30,7 +30,7 @@
 }
 
 .cwf_pane > :nth-child(2) {
-    overflow: visible;
+    overflow: hidden;
 }
 
 .cwf_pane > .ui-resizable-e {
