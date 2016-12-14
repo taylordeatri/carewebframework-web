@@ -976,6 +976,40 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	});
 	
 	/******************************************************************************************************************
+	 * Connector widget.
+	 ******************************************************************************************************************/
+	
+	cwf.widget.Connector = cwf.widget.BaseWidget.extend({
+		
+		/*------------------------------ Containment ------------------------------*/
+		
+		onRemoveChild: function(child, destroyed, anchor$) {
+			this._parent ? this._parent.removeChild(this, true) : null;
+		},
+		
+		_detach: function(destroy) {
+			if (destroy && this._children.length) {
+				this.removeChild(this._children[0], destroy);
+			}
+			
+			this._super(destroy);
+		},
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		render$: function() {
+			return $(this.resolveEL(this._dom));
+		}
+		
+	});
+	
+	cwf.widget.Connector.create = function(dom, child) {
+		var wgt = cwf.widget.create(null, {wclass: 'Connector', cntr: true, _dom: dom});
+		wgt.addChild(child);
+		return wgt;
+	};
+	
+	/******************************************************************************************************************
 	 * Base class for widgets wrapping input elements
 	 ******************************************************************************************************************/ 
 	
