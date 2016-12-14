@@ -378,31 +378,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/**
-		 * Returns the page to which this widget belongs.
-		 * 
-		 * @return {Page} The owning page.
-		 */
-		page: function() {
-			return cwf.widget.find(this.pageId());
-		},
-		
-		/**
-		 * Returns the page$ to which this widget belongs.
-		 * 
-		 * @return {jquery} The owning page.
-		 */
-		page$: function() {
-			return $('#' + this.pageId());
-		},
-		
-		/**
-		 * Returns the id of the page to which this widget belongs.
-		 */
-		pageId: function() {
-			return '_cwf_' + this.id.split('_')[2];
-		},
-		
-		/**
 		 * Convenience method for resolving embedded EL references.
 		 * 
 		 * @param {string} v Value containing EL references.
@@ -1203,6 +1178,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			}
 			
 			this._super();
+			cwf.widget._page = this;
 		},
 			
 		afterInitialize: function() {
