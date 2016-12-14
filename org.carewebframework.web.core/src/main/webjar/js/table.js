@@ -156,13 +156,13 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 		/*------------------------------ Containment ------------------------------*/
 		
 		anchor$: function(child$) {
-			return child$.is('td') ? this.widget$ : $('<td>').appendTo(this.widget$);
+			return $(child$.is('td') ? '<span>' : '<td>').appendTo(this.widget$);
 		},
 		
 		onRemoveChild: function(child, destroyed, anchor$) {
 			this._super(child, destroyed, anchor$);
 			
-			if (anchor$ && anchor$ !== this.widget$) {
+			if (anchor$) {
 				anchor$.remove();
 			}
 		},
@@ -193,18 +193,36 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 	 * Table row cell widget
 	 ******************************************************************************************************************/
 	
-	cwf.widget.Rowcell = cwf.widget.UIWidget.extend({
+	cwf.widget.Rowcell = cwf.widget.LabeledWidget.extend({
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			return $('<td>');
+			var dom = 
+				'<td>'
+			  + this.getDOMTemplate(':label')
+			  + '</td>';
+			
+			return $(this.resolveEL(dom));
 		},
 		
 		/*------------------------------ State ------------------------------*/
 		
 		colspan: function(v) {
 			this.attr('colspan', v);
+		},
+		
+		
+		label: function(v, old) {
+			if (!!old !== !!v) {
+				this.rerender();
+			}
+			
+			this._super(v, old);
+		},
+		
+		rowspan: function(v) {
+			this.attr('rowspan', v);
 		}
 		
 	});

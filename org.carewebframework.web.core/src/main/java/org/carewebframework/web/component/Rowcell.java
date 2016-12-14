@@ -32,9 +32,11 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
 @Component(value = "rowcell", widgetPackage = "cwf-table", widgetClass = "Rowcell", content = ContentHandling.AS_CHILD, parentTag = "row", childTag = @ChildTag("*"))
-public class Rowcell extends BaseUIComponent {
+public class Rowcell extends BaseLabeledComponent {
     
     private int colspan = 1;
+    
+    private int rowspan = 1;
     
     @PropertyGetter("colspan")
     public int getColspan() {
@@ -45,6 +47,18 @@ public class Rowcell extends BaseUIComponent {
     public void setColspan(int colspan) {
         if (colspan != this.colspan) {
             sync("colspan", this.colspan = colspan);
+        }
+    }
+    
+    @PropertyGetter("rowspan")
+    public int getRowspan() {
+        return rowspan;
+    }
+    
+    @PropertySetter("rowspan")
+    public void setRowspan(int rowspan) {
+        if (rowspan != this.rowspan) {
+            sync("rowspan", this.rowspan = rowspan);
         }
     }
     
