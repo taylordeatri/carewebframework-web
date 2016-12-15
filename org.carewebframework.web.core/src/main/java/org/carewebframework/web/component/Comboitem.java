@@ -30,6 +30,7 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
+import org.carewebframework.web.event.EventUtil;
 
 @Component(value = "comboitem", widgetClass = "Comboitem", parentTag = "combobox")
 public class Comboitem extends BaseLabeledComponent {
@@ -89,5 +90,6 @@ public class Comboitem extends BaseLabeledComponent {
     @EventHandler(value = "change", syncToClient = false)
     private void _onChange(ChangeEvent event) {
         _setSelected(defaultify(event.getValue(Boolean.class), true), false, true);
+        EventUtil.send(event, getParent());
     }
 }

@@ -30,6 +30,7 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
+import org.carewebframework.web.event.EventUtil;
 
 @Component(value = "listitem", widgetClass = "Listitem", parentTag = "listbox")
 public class Listitem extends BaseLabeledComponent {
@@ -44,6 +45,30 @@ public class Listitem extends BaseLabeledComponent {
     
     public Listitem(String label) {
         super(label);
+    }
+    
+    /*package*/ void _setSelected(boolean selected, boolean notifyClient, boolean notifyParent) {
+        if (selected != this.selected) {
+            this.selected = selected;
+            
+            if (notifyClient) {
+                sync("selected", selected);
+            }
+            
+            if (notifyParent) {
+                notifyParent();
+            }
+        }
+    }
+    
+    private void notifyParent() {
+        if (getParent() != null) {
+            getListbox()._updateSelected(this);
+        }
+    }
+    
+    public Listbox getListbox() {
+        return (Listbox) getParent();
     }
     
     @PropertyGetter("selected")
@@ -71,29 +96,7 @@ public class Listitem extends BaseLabeledComponent {
     @EventHandler(value = "change", syncToClient = false)
     private void _onChange(ChangeEvent event) {
         _setSelected(defaultify(event.getValue(Boolean.class), true), false, true);
+        EventUtil.send(event, getParent());
     }
     
-    /*package*/ void _setSelected(boolean selected, boolean notifyClient, boolean notifyParent) {
-        if (selected != this.selected) {
-            this.selected = selected;
-            
-            if (notifyClient) {
-                sync("selected", selected);
-            }
-            
-            if (notifyParent) {
-                notifyParent();
-            }
-        }
-    }
-    
-    private void notifyParent() {
-        if (getParent() != null) {
-            getListbox()._updateSelected(this);
-        }
-    }
-    
-    public Listbox getListbox() {
-        return (Listbox) getParent();
-    }
 }

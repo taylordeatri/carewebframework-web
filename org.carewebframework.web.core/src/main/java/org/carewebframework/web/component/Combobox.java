@@ -74,6 +74,8 @@ public class Combobox extends BaseInputboxComponent<String> {
             if (selected != null) {
                 selected._setSelected(true, true, false);
             }
+            
+            setValue(selected == null ? null : selected.getLabel());
         }
     }
     
