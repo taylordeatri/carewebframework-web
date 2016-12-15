@@ -1015,6 +1015,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.InputWidget = cwf.widget.UIWidget.extend({
 		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.initState({readonly: false});
+		},
+		
 		/*------------------------------ Other ------------------------------*/
 		
 		selectAll: function() {
@@ -2394,6 +2401,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		handleClick: function(event) {
+			if (event.target.tagName === 'LI') {
+				return;
+			}
+			
 			var inp$ = this.input$();
 			
 			if (inp$.is(':disabled')) {
@@ -2411,9 +2422,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		handleChange: function(event, ui) {
-			var wgt = cwf.widget.find(ui.item.id);
-			wgt.selected(true);
-			wgt.trigger('change', {value: true});
+			var wgt = ui.item ? cwf.widget.find(ui.item.id) : null;
+			
+			if (wgt && wgt.setState('selected', true)) {
+				wgt.trigger('change', {value: true});
+			}
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -2429,11 +2442,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	            autoFocus: false,
 	            appendTo: this.widget$,
 	            source: this.source.bind(this),
-				change: this.handleChange.bind(this)
+				change: this.handleChange.bind(this),
+				select: this.handleChange.bind(this)
 			});
 			
 			inp$.data('ui-autocomplete')._renderItem = this.renderItem$.bind(this);
-			this.sub$('btn').on('click', this.handleClick.bind(this));
 			inp$.on('blur', this.handleBlur.bind(this));
 		},
 		
@@ -2460,7 +2473,18 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 
 		autoFilter: function(v) {
 			// NOP
-		}	
+		},
+		
+		readonly: function(v) {
+			this._super.apply(this, arguments);
+			var self = this;
+			this.widget$[v ? 'on' : 'off']('click', _dropdown);
+			this.sub$('btn')[v ? 'off' : 'on']('click', _dropdown);
+			
+			function _dropdown(event) {
+				self.handleClick(event);
+			}
+		}
 		
 	});
 	

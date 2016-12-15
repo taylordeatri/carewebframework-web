@@ -120,6 +120,7 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 					self.widget$.selectable({
 						appendTo: '#cwf_root',
 						filter: 'tr',
+			            cancel: 'input,textarea,button,select,option,.glyphicon',
 						selected: _select,
 						unselected: _unselect
 					})

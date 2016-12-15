@@ -76,7 +76,7 @@
 				combobox
 			</row>
 			<row>
-				<combobox name="cboxRender" />
+				<combobox name="cboxRender" readonly="true"/>
 				combobox populated from model
 			</row>
 			<row>
