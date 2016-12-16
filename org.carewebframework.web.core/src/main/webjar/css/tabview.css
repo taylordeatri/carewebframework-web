@@ -132,6 +132,10 @@
 	border-right: 1px solid white;
 }
 
+.cwf_tab > a > .badge {
+	margin-right: 5px;
+}
+
 .cwf_tab > a > .glyphicon-remove {
 	font-size: 70%;
 	position: absolute;

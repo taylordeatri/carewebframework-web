@@ -76,6 +76,12 @@ define('cwf-treeview', ['cwf-core', 'cwf-widget', 'css!cwf-treeview-css.css'], f
 			this.trigger('toggle', {collapsed: collapsed});
 		},
 		
+		handleSelect: function(event) {
+			if (this.updateState('selected', true, true)) {
+				this.trigger('change', {value: true});
+			}
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
@@ -87,7 +93,7 @@ define('cwf-treeview', ['cwf-core', 'cwf-widget', 'css!cwf-treeview-css.css'], f
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
-			this.forward(this.widget$.find('>a'), 'click', 'change');
+			this.widget$.find('>a').on('click', this.handleSelect.bind(this));
 			this.sub$('ctl').on('click', this.handleClick.bind(this));
 			this._updateToggle();
 		},
@@ -97,7 +103,7 @@ define('cwf-treeview', ['cwf-core', 'cwf-widget', 'css!cwf-treeview-css.css'], f
 				  '<li>'
 				+ ' <span id="${id}-ctl" class="glyphicon"/>'
 				+ ' <a>'
-				+ this.getDOMTemplate(':image', 'label')
+				+ this.getDOMTemplate(':image', 'badge', 'label')
 				+ ' </a>'
 				+ ' <ul id="${id}-inner"/>'
 				+ '</li>';

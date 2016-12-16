@@ -25,26 +25,50 @@
  */
 package org.carewebframework.web.ancillary;
 
+import org.carewebframework.web.component.BaseComponent;
+import org.carewebframework.web.event.Event;
+
 /**
- * Helper class for displaying badges.
+ * Helper class for displaying a badge with numeric counter.
  */
 public class Badge {
     
-    private final String classes;
+    private final BaseComponent owner;
     
-    private final String label;
+    private int count;
     
-    public Badge() {
-        this(null, null);
+    public Badge(BaseComponent owner) {
+        this(owner, 0);
     }
     
-    public Badge(String label) {
-        this(label, null);
+    public Badge(BaseComponent owner, int count) {
+        this.owner = owner;
+        updateCount(count);
     }
     
-    public Badge(String label, String classes) {
-        this.label = label;
-        this.classes = classes;
+    public BaseComponent getOwner() {
+        return owner;
+    }
+    
+    public int getCount() {
+        return count;
+    }
+    
+    public void setCount(int count) {
+        updateCount(count);
+    }
+    
+    public void incCount(int increment) {
+        updateCount(count + increment);
+    }
+    
+    private void updateCount(int newCount) {
+        if (newCount != count) {
+            int delta = newCount - count;
+            count = newCount;
+            Event event = new Event("badge", owner, delta);
+            owner.notifyAncestors(event, true);
+        }
     }
     
 }

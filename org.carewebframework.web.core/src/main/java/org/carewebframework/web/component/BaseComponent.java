@@ -647,9 +647,8 @@ public abstract class BaseComponent implements IElementIdentifier {
      * @param type The type of ancestor sought.
      * @return The ancestor component of the requested type, or null if none found.
      */
-    @SuppressWarnings("unchecked")
     public <T extends BaseComponent> T getAncestor(Class<T> type) {
-        return (T) getAncestorByType(type, false);
+        return getAncestor(type, false);
     }
     
     /**
@@ -659,7 +658,8 @@ public abstract class BaseComponent implements IElementIdentifier {
      * @param includeSelf If true, include this component in the search.
      * @return The ancestor component of the requested type, or null if none found.
      */
-    private BaseComponent getAncestorByType(Class<?> type, boolean includeSelf) {
+    @SuppressWarnings("unchecked")
+    protected <T> T getAncestor(Class<T> type, boolean includeSelf) {
         BaseComponent cmp = includeSelf ? this : this.getParent();
         
         while (cmp != null) {
@@ -670,7 +670,21 @@ public abstract class BaseComponent implements IElementIdentifier {
             }
         }
         
-        return cmp;
+        return (T) cmp;
+    }
+    
+    /**
+     * Returns true if this component is the same as or an ancestor of the specified component.
+     * 
+     * @param comp Component to test.
+     * @return True if this component is the same as or an ancestor of the specified component.
+     */
+    public boolean isAncestor(BaseComponent comp) {
+        while (comp != null && comp != this) {
+            comp = comp.getParent();
+        }
+        
+        return comp != null;
     }
     
     /**
@@ -728,7 +742,7 @@ public abstract class BaseComponent implements IElementIdentifier {
      * @return The namespace to which this component belongs.
      */
     public BaseComponent getNamespace() {
-        return getAncestorByType(INamespace.class, true);
+        return (BaseComponent) getAncestor(INamespace.class, true);
     }
     
     /**
@@ -1076,8 +1090,29 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
     }
     
+    /**
+     * Send an event to this component's registered event listeners.
+     * 
+     * @param event Event to send.
+     */
     public void fireEvent(Event event) {
         eventListeners.invoke(event);
+    }
+    
+    /**
+     * Send an event to all the ancestors of this component. Event propagation stops if any
+     * recipient invokes the <code>stopPropagation</code> method on the event.
+     * 
+     * @param event Event to send.
+     * @param includeThis If true, include this component in the recipient chain.
+     */
+    public void notifyAncestors(Event event, boolean includeThis) {
+        BaseComponent next = includeThis ? this : getParent();
+        
+        while (next != null && !event.isStopped()) {
+            next.fireEvent(event);
+            next = next.getParent();
+        }
     }
     
     /**

@@ -104,6 +104,14 @@ a:not([href]) {
     border-radius: 6px 0 6px 6px;
 }
 
+.badge-pos {
+	background-color: #5cb85c;
+}
+
+.badge-neg {
+	background-color: #d9534f;
+}
+
 /* Root */
 
 #cwf_root {

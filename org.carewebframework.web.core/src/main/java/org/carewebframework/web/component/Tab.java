@@ -46,6 +46,8 @@ public class Tab extends BaseLabeledImageComponent {
     
     private BooleanSupplier onCanClose;
     
+    private int badgeCounter;
+    
     public Tab() {
     }
     
@@ -128,5 +130,15 @@ public class Tab extends BaseLabeledImageComponent {
     public void bringToFront() {
         setSelected(true);
         super.bringToFront();
+    }
+    
+    @EventHandler("badge")
+    private void _onBadge(Event event) {
+        int delta = (Integer) event.getData();
+        
+        if (delta != 0) {
+            badgeCounter += delta;
+            sync("badge", badgeCounter);
+        }
     }
 }

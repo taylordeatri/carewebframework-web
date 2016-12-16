@@ -72,15 +72,18 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 			var dom = 
 				  '<li role="presentation">'
 				+ '  <a id="${id}-tab">'
-				+ this.getDOMTemplate(':image', 'label', ':closable')
+				+ this.getDOMTemplate(':image', 'badge', 'label', ':closable')
 				+ '  </a>'
 				+ '</li>',
-				pane = '<div id="${id}-pane" class="cwf_tab-pane hidden"/>',
 				self = this;
 				
-			this._ancillaries.pane$ = $(this.resolveEL(pane));
-			_attachPane();
-			this._ancillaries.pane$.data('attach', _attachPane);
+			if (!this._ancillaries.pane$) {
+				var pane = '<div id="${id}-pane" class="cwf_tab-pane hidden"/>';
+				this._ancillaries.pane$ = $(this.resolveEL(pane));
+				this._ancillaries.pane$.data('attach', _attachPane);
+				_attachPane();
+			}
+			
 			return $(this.resolveEL(dom));
 			
 			function _attachPane() {

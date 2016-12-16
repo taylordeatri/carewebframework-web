@@ -104,29 +104,51 @@ public class Treeview extends BaseUIComponent implements Iterable<Treenode> {
     }
     
     public void setSelectedNode(Treenode selectedNode) {
+        if (selectedNode == this.selectedNode) {
+            return;
+        }
+        
         if (this.selectedNode != null) {
-            this.selectedNode._setSelected(false, false);
+            this.selectedNode._setSelected(false, true, false);
         }
         
         this.selectedNode = selectedNode;
         
         if (selectedNode != null) {
-            selectedNode._setSelected(true, false);
+            selectedNode._setSelected(true, true, false);
         }
     }
     
     @Override
     protected void afterRemoveChild(BaseComponent child) {
-        if (child == selectedNode) {
+        if (child.isAncestor(selectedNode)) {
             selectedNode = null;
         }
     }
     
     @Override
     protected void afterAddChild(BaseComponent child) {
-        if (((Treenode) child).isSelected()) {
-            setSelectedNode((Treenode) child);
+        Treenode selnode = findSelected((Treenode) child, null);
+        
+        if (selnode != null) {
+            setSelectedNode(selnode);
         }
+    }
+    
+    private Treenode findSelected(Treenode node, Treenode selnode) {
+        if (node.isSelected()) {
+            if (selnode != null) {
+                selnode._setSelected(false, true, false);
+            }
+            
+            selnode = node;
+        }
+        
+        for (BaseComponent child : node.getChildren()) {
+            selnode = findSelected((Treenode) child, selnode);
+        }
+        
+        return selnode;
     }
     
     @Override

@@ -9,6 +9,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	cwf.widget.fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 	
 	cwf.widget._domTemplates = {
+			badge: '<span id="${id}-badge" class="badge" />',
 			checkable: '<span id="${id}-chk" class="glyphicon"/>',
 			closable: '<span id="${id}-cls" class="glyphicon glyphicon-remove"/>',
 			image: '<img id="${id}-img" src="${_state.image}"/>',
@@ -426,7 +427,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			try {
 				this._rendering = true;
-				
+
 				if (this.isContainer()) {
 					this.forEachChild(function(child){child._detach();});
 				}
@@ -786,6 +787,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/*------------------------------ State ------------------------------*/
+		
+		badge: function(v) {
+			this.sub$('badge').text(v).cwf$swapClasses('badge-pos', 'badge-neg', v > 0).cwf$show(v);
+		},
 		
 		balloon: function(v) {
 			if (v) {

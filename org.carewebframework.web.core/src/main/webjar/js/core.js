@@ -160,11 +160,14 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			for (var i in sub) {
 				this.removeClass(base + sub[i]);
 			}
+			
+			return this;
 		},
 		
 		cwf$swapClasses: function(trueClass, falseClass, value) {
 			this.removeClass(value ? falseClass : trueClass);
 			this.addClass(value ? trueClass : falseClass);
+			return this;
 		},
 		
 		cwf$mask: function(parent) {

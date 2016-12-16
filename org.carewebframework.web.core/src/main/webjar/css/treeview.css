@@ -65,7 +65,11 @@
     max-width: 16px;
 }
 
-.cwf_treenode-selected > a > span {
+.cwf_treenode > a > .badge {
+    margin-right: 5px;
+}
+
+.cwf_treenode-selected > a > span:last-child {
     background: lightgray;
 }
 

@@ -15,4 +15,9 @@
 		This closable tab has a close event handler that prevents it from being
 		closed.
 	</tab>
+	<tab label="With Badge" name="tabWithBadge">
+		<button label="Increment" name="btnIncBadge" class="flavor:btn-success" />
+		<button label="Decrement" name="btnDecBadge" class="flavor:btn-danger" />
+		<button label="Reset" name="btnClrBadge" class="flavor:btn-warning" />
+	</tab>
 </tabview>

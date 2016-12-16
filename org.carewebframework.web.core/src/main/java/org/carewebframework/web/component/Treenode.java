@@ -33,6 +33,7 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
+import org.carewebframework.web.event.Event;
 
 @Component(value = "treenode", widgetPackage = "cwf-treeview", widgetClass = "Treenode", parentTag = { "treeview",
         "treenode" }, childTag = @ChildTag("treenode"))
@@ -136,6 +137,8 @@ public class Treenode extends BaseLabeledImageComponent implements Iterable<Tree
     
     private boolean selected;
     
+    private int badgeCounter;
+    
     @PropertyGetter("selected")
     public boolean isSelected() {
         return selected;
@@ -143,15 +146,27 @@ public class Treenode extends BaseLabeledImageComponent implements Iterable<Tree
     
     @PropertySetter("selected")
     public void setSelected(boolean selected) {
-        _setSelected(selected, true);
+        _setSelected(selected, true, true);
     }
     
-    /*package*/ void _setSelected(boolean selected, boolean notifyParent) {
+    /*package*/ void _setSelected(boolean selected, boolean notifyClient, boolean notifyParent) {
         if (selected != this.selected) {
-            sync("selected", this.selected = selected);
+            this.selected = selected;
+            
+            if (notifyClient) {
+                sync("selected", selected);
+            }
             
             if (notifyParent) {
-                _setTreeSelected(selected ? this : null);
+                Treeview treeview = getTreeview();
+                
+                if (treeview != null) {
+                    if (selected) {
+                        treeview.setSelectedNode(this);
+                    } else if (treeview.getSelectedNode() == this) {
+                        treeview.setSelectedNode(null);
+                    }
+                }
             }
         }
     }
@@ -172,6 +187,13 @@ public class Treenode extends BaseLabeledImageComponent implements Iterable<Tree
     protected void afterAddChild(BaseComponent child) {
         if (((Treenode) child).isSelected()) {
             _setTreeSelected((Treenode) child);
+        }
+    }
+    
+    @Override
+    protected void afterRemoveChild(BaseComponent child) {
+        if (((Treenode) child).isSelected()) {
+            _setTreeSelected(null);
         }
     }
     
@@ -208,12 +230,26 @@ public class Treenode extends BaseLabeledImageComponent implements Iterable<Tree
     
     @EventHandler(value = "change", syncToClient = false)
     private void _onChange(ChangeEvent event) {
-        setSelected(defaultify(event.getValue(Boolean.class), true));
+        _setSelected(defaultify(event.getValue(Boolean.class), false), false, true);
+        Treeview tree = getTreeview();
+        
+        if (tree != null) {
+            tree.fireEvent(event);
+        }
+    }
+    
+    @EventHandler("badge")
+    private void _onBadge(Event event) {
+        int delta = (Integer) event.getData();
+        
+        if (delta != 0) {
+            badgeCounter += delta;
+            sync("badge", badgeCounter);
+        }
     }
     
     @Override
     public Iterator<Treenode> iterator() {
         return new TreenodeIterator(this);
     }
-    
 }
