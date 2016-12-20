@@ -250,10 +250,13 @@ public class ComponentDefinition {
      * Creates a component instance from the definition.
      * 
      * @return A component instance.
-     * @throws Exception Unspecified exception
      */
-    public BaseComponent create() throws Exception {
-        return componentClass.newInstance();
+    public BaseComponent create() {
+        try {
+            return componentClass.newInstance();
+        } catch (Exception e) {
+            throw MiscUtil.toUnchecked(e);
+        }
     }
     
     /**
@@ -261,7 +264,6 @@ public class ComponentDefinition {
      * 
      * @param context The factory context.
      * @return A component instance. May be null if creation is suppressed.
-     * @throws Exception Unspecified exception
      */
     public BaseComponent create(FactoryContext context) {
         Map<String, String> attributes = context.getAttributes();
@@ -314,7 +316,6 @@ public class ComponentDefinition {
      * @param name Name of property.
      * @param value The value to set.
      * @return Null if the operation occurred, or a DeferredSetter object if deferred.
-     * @throws Exception Unspecified exception.
      */
     public DeferredSetter setProperty(BaseComponent instance, String name, Object value) {
         if (name.startsWith("@")) {

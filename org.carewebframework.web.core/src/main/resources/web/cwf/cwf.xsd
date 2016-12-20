@@ -10,6 +10,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -40,6 +41,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -89,7 +91,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -112,6 +113,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -140,6 +142,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -178,6 +181,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -247,7 +251,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -270,6 +273,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -320,6 +324,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -350,6 +355,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -384,6 +390,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -434,7 +441,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -457,6 +463,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -483,6 +490,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="format" type="xs:string"/>
             <xs:attribute name="forward" type="xs:string"/>
@@ -539,7 +547,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -562,6 +569,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -588,6 +596,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -645,7 +654,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -668,6 +676,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -697,6 +706,7 @@
                     <xs:attribute name="disabled" type="xs:boolean"/>
                     <xs:attribute name="dragid" type="xs:string"/>
                     <xs:attribute name="dropid" type="xs:string"/>
+                    <xs:attribute name="flex" type="xs:string"/>
                     <xs:attribute name="focus" type="xs:boolean"/>
                     <xs:attribute name="forward" type="xs:string"/>
                     <xs:attribute name="height" type="xs:string"/>
@@ -725,6 +735,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -754,6 +765,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -784,6 +796,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -832,6 +845,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -859,6 +873,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -895,6 +910,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -925,6 +941,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -953,6 +970,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -982,6 +1000,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1019,6 +1038,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1059,6 +1079,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1088,6 +1109,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1123,6 +1145,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1156,6 +1179,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1182,6 +1206,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1229,7 +1254,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1252,6 +1276,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1281,6 +1306,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1329,7 +1355,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1385,7 +1410,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1408,6 +1432,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1439,6 +1464,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1494,7 +1520,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1517,6 +1542,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1546,6 +1572,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1553,6 +1580,7 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="keycapture" type="xs:string"/>
+            <xs:attribute name="masked" type="xs:boolean"/>
             <xs:attribute name="maxlength" type="xs:integer"/>
             <xs:attribute name="maxvalue" type="xs:string"/>
             <xs:attribute name="minvalue" type="xs:string"/>
@@ -1564,6 +1592,7 @@
             <xs:attribute name="readonly" type="xs:boolean"/>
             <xs:attribute name="required" type="xs:boolean"/>
             <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="synchronized" type="xs:boolean"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
             <xs:attribute name="value" type="xs:string"/>
@@ -1582,6 +1611,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1612,6 +1642,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1668,7 +1699,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1691,6 +1721,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1746,7 +1777,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="rowcell"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
@@ -1770,6 +1800,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1818,7 +1849,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1842,6 +1872,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1849,7 +1880,9 @@
             <xs:attribute name="if" type="xs:boolean"/>
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="keycapture" type="xs:string"/>
+            <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="rowspan" type="xs:integer"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -1871,6 +1904,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -1908,6 +1942,7 @@
                     <xs:attribute name="disabled" type="xs:boolean"/>
                     <xs:attribute name="dragid" type="xs:string"/>
                     <xs:attribute name="dropid" type="xs:string"/>
+                    <xs:attribute name="flex" type="xs:string"/>
                     <xs:attribute name="focus" type="xs:boolean"/>
                     <xs:attribute name="forward" type="xs:string"/>
                     <xs:attribute name="height" type="xs:string"/>
@@ -1959,7 +1994,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1982,6 +2016,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -2010,6 +2045,7 @@
                     <xs:attribute name="disabled" type="xs:boolean"/>
                     <xs:attribute name="dragid" type="xs:string"/>
                     <xs:attribute name="dropid" type="xs:string"/>
+                    <xs:attribute name="flex" type="xs:string"/>
                     <xs:attribute name="focus" type="xs:boolean"/>
                     <xs:attribute name="forward" type="xs:string"/>
                     <xs:attribute name="height" type="xs:string"/>
@@ -2071,7 +2107,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -2095,6 +2130,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -2128,6 +2164,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -2157,6 +2194,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -2193,6 +2231,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -2229,6 +2268,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="format" type="xs:string"/>
             <xs:attribute name="forward" type="xs:string"/>
@@ -2299,7 +2339,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -2331,6 +2370,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -2369,6 +2409,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -2401,6 +2442,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
@@ -2451,7 +2493,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="row"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="script"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -2484,6 +2525,7 @@
             <xs:attribute name="disabled" type="xs:boolean"/>
             <xs:attribute name="dragid" type="xs:string"/>
             <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
             <xs:attribute name="focus" type="xs:boolean"/>
             <xs:attribute name="forward" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>

@@ -75,8 +75,8 @@ public abstract class BaseInputComponent<T> extends BaseUIComponent {
      * Override to provide alternate serialization format for sending to client. Default action is
      * to serialize to string.
      * 
-     * @param value
-     * @return
+     * @param value The raw value.
+     * @return The serialized value.
      */
     protected Object _toClient(T value) {
         return _toString(value);
