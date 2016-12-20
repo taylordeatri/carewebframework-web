@@ -1099,18 +1099,16 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			var ele = this.input$()[0],
 				value = ele.value;
 			
-			this.setState('value', value);
-			
 			if (value.length && this.validate && !this.validate(value)) {
 				cwf.event.stop(event);
 				var cpos = ele.selectionStart - 1;
-				ele.value = this._previous;
+				ele.value = this.getState('value');
 				ele.selectionStart = cpos;
 				ele.selectionEnd = cpos;
 				return;
 			}
 		    
-		    this._previous = value;
+			this.setState('value', value);
 			
 		    if (this._synchronized) {
 		    	this.fireChanged();
@@ -1131,7 +1129,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._super();
 			this._synchronized = false;
 			this._changed = false;
-			this._previous = '';
 			this.forwardToServer('change');
 			this.toggleClass('cwf_inputbox', true);
 		},
