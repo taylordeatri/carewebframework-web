@@ -87,7 +87,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     }
     
     /**
-     * An index of child component names for a parent component.
+     * An index of child component names maintained by a parent component.
      */
     private class NameIndex {
         

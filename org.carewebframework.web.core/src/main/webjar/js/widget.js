@@ -1099,6 +1099,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			var ele = this.input$()[0],
 				value = ele.value;
 			
+			this.setState('value', value);
+			
 			if (value.length && this.validate && !this.validate(value)) {
 				cwf.event.stop(event);
 				var cpos = ele.selectionStart - 1;
