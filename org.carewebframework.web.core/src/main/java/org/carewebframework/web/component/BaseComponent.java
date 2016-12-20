@@ -395,7 +395,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         return attributes.containsKey(name);
     }
     
-    protected void validateIsChild(BaseComponent child) {
+    public void validateIsChild(BaseComponent child) {
         if (child != null && child.getParent() != this) {
             throw new ComponentException("Child does not belong to this parent.");
         }

@@ -54,6 +54,12 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 			return this._ancillaries.pane$;
 		},
 		
+		/*------------------------------ Events ------------------------------*/
+		
+		handleSelect: function(event) {
+			this.trigger('change', {value: true});
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
@@ -65,7 +71,7 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 		
 		afterRender: function() {
 			this._super();
-			this.forward(this.sub$('tab'), 'click', 'change');
+			this.sub$('tab').on('click', this.handleSelect.bind(this));
 		},
 				
 		render$: function() {

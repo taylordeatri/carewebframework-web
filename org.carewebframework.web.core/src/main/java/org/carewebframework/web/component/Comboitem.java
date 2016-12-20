@@ -69,7 +69,7 @@ public class Comboitem extends BaseLabeledComponent {
         }
     }
     
-    /*package*/ void _setSelected(boolean selected, boolean notifyClient, boolean notifyParent) {
+    protected void _setSelected(boolean selected, boolean notifyClient, boolean notifyParent) {
         if (selected != this.selected) {
             this.selected = selected;
             

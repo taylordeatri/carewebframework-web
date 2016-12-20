@@ -78,7 +78,7 @@ public class Tab extends BaseLabeledImageComponent {
     }
     
     @EventHandler(value = "change", syncToClient = false)
-    private void _onSelect(ChangeEvent event) {
+    private void _onChange(ChangeEvent event) {
         setSelected(defaultify(event.getValue(Boolean.class), true));
     }
     

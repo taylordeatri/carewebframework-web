@@ -105,7 +105,7 @@ public class Listbox extends BaseUIComponent {
         setSelectedItem((Listitem) getChildAt(index));
     }
     
-    /*package*/ void _updateSelected(Listitem item) {
+    protected void _updateSelected(Listitem item) {
         if (item.isSelected() != selected.contains(item)) {
             if (!multiple) {
                 clearSelected(null);

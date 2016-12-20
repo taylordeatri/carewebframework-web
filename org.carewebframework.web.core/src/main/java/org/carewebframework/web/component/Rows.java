@@ -73,7 +73,7 @@ public class Rows extends BaseUIComponent {
         return selected.size();
     }
     
-    protected void _selectChange(Row row) {
+    protected void _updateSelected(Row row) {
         if (row.isSelected()) {
             selected.add(row);
             
@@ -97,7 +97,7 @@ public class Rows extends BaseUIComponent {
         Row row = (Row) child;
         
         if (row.isSelected()) {
-            _selectChange(row);
+            _updateSelected(row);
         }
     }
 }

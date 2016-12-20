@@ -47,7 +47,7 @@ public class Listitem extends BaseLabeledComponent {
         super(label);
     }
     
-    /*package*/ void _setSelected(boolean selected, boolean notifyClient, boolean notifyParent) {
+    protected void _setSelected(boolean selected, boolean notifyClient, boolean notifyParent) {
         if (selected != this.selected) {
             this.selected = selected;
             
@@ -55,15 +55,9 @@ public class Listitem extends BaseLabeledComponent {
                 sync("selected", selected);
             }
             
-            if (notifyParent) {
-                notifyParent();
+            if (notifyParent && getParent() != null) {
+                getListbox()._updateSelected(this);
             }
-        }
-    }
-    
-    private void notifyParent() {
-        if (getParent() != null) {
-            getListbox()._updateSelected(this);
         }
     }
     

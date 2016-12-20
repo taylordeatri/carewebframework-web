@@ -63,19 +63,21 @@ public class Combobox extends BaseInputboxComponent<String> {
         setSelectedItem((Comboitem) getChildAt(index));
     }
     
-    /*package*/ void _updateSelected(Comboitem item) {
-        if (item != selected) {
-            if (selected != null) {
-                selected._setSelected(false, true, false);
+    protected void _updateSelected(Comboitem item) {
+        if (item == null || item.isSelected()) {
+            if (item != selected) {
+                if (selected != null) {
+                    selected._setSelected(false, true, false);
+                }
+                
+                selected = item;
+                
+                if (selected != null) {
+                    setValue(selected.getLabel());
+                }
             }
-            
-            selected = item;
-            
-            if (selected != null) {
-                selected._setSelected(true, true, false);
-            }
-            
-            setValue(selected == null ? null : selected.getLabel());
+        } else if (item == selected) {
+            selected = null;
         }
     }
     
@@ -84,7 +86,7 @@ public class Combobox extends BaseInputboxComponent<String> {
         Comboitem item = (Comboitem) child;
         
         if (item.isSelected()) {
-            setSelectedItem(item);
+            _updateSelected(item);
         }
     }
     

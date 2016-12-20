@@ -58,7 +58,7 @@ public class Row extends BaseUIComponent {
             }
             
             if (notifyParent && getParent() != null) {
-                ((Rows) getParent())._selectChange(this);
+                ((Rows) getParent())._updateSelected(this);
             }
         }
     }

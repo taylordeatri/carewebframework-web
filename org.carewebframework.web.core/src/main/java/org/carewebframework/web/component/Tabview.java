@@ -46,6 +46,8 @@ public class Tabview extends BaseUIComponent {
     }
     
     public void setSelectedTab(Tab selectedTab) {
+        validateIsChild(selectedTab);
+        
         if (this.selectedTab != null) {
             this.selectedTab._setSelected(false, false);
         }
