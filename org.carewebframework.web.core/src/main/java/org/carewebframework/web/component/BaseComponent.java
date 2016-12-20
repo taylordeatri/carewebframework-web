@@ -858,7 +858,18 @@ public abstract class BaseComponent implements IElementIdentifier {
      * @param args Arguments for the function.
      */
     public void invoke(String function, Object... args) {
-        ClientInvocation invocation = new ClientInvocation(this, function, args);
+        invoke(this, function, args);
+    }
+    
+    /**
+     * Invoke a widget or sub-widget function on the client.
+     * 
+     * @param id The id of the widget or sub-widget.
+     * @param function The name of the function.
+     * @param args Arguments for the function.
+     */
+    public void invoke(IElementIdentifier id, String function, Object... args) {
+        ClientInvocation invocation = new ClientInvocation(id, function, args);
         
         if (page == null) {
             if (invocationQueue == null) {

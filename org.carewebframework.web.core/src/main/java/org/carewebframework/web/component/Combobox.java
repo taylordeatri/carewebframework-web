@@ -41,17 +41,18 @@ public class Combobox extends BaseInputboxComponent<String> {
     
     private final ModelAndView<Comboitem, Object> modelAndView = new ModelAndView<>(this);
     
-    public Comboitem getSelected() {
-        return selected;
-    }
-    
     public Comboitem getSelectedItem() {
         return selected;
     }
     
     public void setSelectedItem(Comboitem item) {
         validateIsChild(item);
-        _updateSelected(item);
+        
+        if (item == null) {
+            _updateSelected(item);
+        } else {
+            item.setSelected(true);
+        }
     }
     
     public int getSelectedIndex() {
@@ -64,20 +65,14 @@ public class Combobox extends BaseInputboxComponent<String> {
     }
     
     protected void _updateSelected(Comboitem item) {
-        if (item == null || item.isSelected()) {
-            if (item != selected) {
-                if (selected != null) {
-                    selected._setSelected(false, true, false);
-                }
-                
-                selected = item;
-                
-                if (selected != null) {
-                    setValue(selected.getLabel());
-                }
-            }
-        } else if (item == selected) {
-            selected = null;
+        if (selected != null) {
+            selected._setSelected(false, true, false);
+        }
+        
+        selected = item;
+        
+        if (selected != null) {
+            setValue(selected.getLabel());
         }
     }
     

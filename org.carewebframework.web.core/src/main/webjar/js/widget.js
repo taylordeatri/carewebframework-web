@@ -809,11 +809,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		context: function(v) {
-			if (v) {
-				this.widget$.on('contextmenu', _showContextPopup);
-			} else {
-				this.widget$.off('contextmenu', _showContextPopup);
-			}
+			this.widget$.off('contextmenu.cwf');
+			v ? this.widget$.on('contextmenu.cwf', _showContextPopup) : null;
 			
 			function _showContextPopup(event) {
 				cwf.event.stop(event);
@@ -888,7 +885,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			if (newactive !== active) {
 				if (active) {
-					this.widget$.off('drop', _dropped);
+					this.widget$.off('drop.cwf');
 					this.widget$.droppable('destroy');
 				} else {
 					this.widget$.droppable({
@@ -899,7 +896,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 						}
 					});
 					
-					this.widget$.on('drop', _dropped);
+					this.widget$.on('drop.cwf', _dropped);
 				}
 			}
 			
@@ -943,10 +940,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			if (v) {
 				this._keycapture = v.split(' ');
-				this.widget$.on('keydown', _keyevent);
+				this.widget$.on('keydown.cwf', _keyevent);
 			} else {
 				this._keycapture = null;
-				this.widget$.off('keydown', _keyevent);
+				this.widget$.off('keydown.cwf');
 			}
 			
 			function _keyevent(event) {
@@ -2250,9 +2247,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				self = this;
 			
 			if (v) {
-				btn$.on('click', _showPopup);
+				btn$.on('click.cwf', _showPopup);
 			} else {
-				btn$.off('click', _showPopup);
+				btn$.off('click.cwf');
 			}
 			
 			function _showPopup(event) {

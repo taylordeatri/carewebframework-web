@@ -78,7 +78,7 @@ public class Comboitem extends BaseLabeledComponent {
             }
             
             if (notifyParent && getParent() != null) {
-                getCombobox()._updateSelected(this);
+                getCombobox()._updateSelected(selected ? this : null);
             }
         }
     }

@@ -90,11 +90,16 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 					return;
 				}
 			
-				tgt = cwf.widget.find(tgt);
+				var i = tgt.indexOf('-'),
+					sub = i == -1 ? null : tgt.substring(i + 1);
+				
+				tgt = cwf.widget.find(i > 0 ? tgt.substring(0, i) : tgt);
 			
 				if (!tgt) {
 					throw new Error('No target matching ' + action.tgt);
 				}
+				
+				tgt = sub ? tgt.sub$(sub) : tgt;
 			}
 			
 			var fcn = cwf.resolveReference(tgt, action.fcn);
@@ -148,6 +153,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		
 		cwf$show: function(visible) {
 			return visible ? this.show() : this.hide();
+		},
+		
+		cwf$on: function(name, handler) {
+			return this.off(name).on(name, handler);
 		},
 		
 		cwf$removeSubclass: function(base, sub) {
@@ -336,6 +345,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			
 			cwf.event._postprocess(event, pkt);
 			cwf.ws.sendData('event', pkt);
+			cwf.event.stop(event);
 		}
 	},
 	

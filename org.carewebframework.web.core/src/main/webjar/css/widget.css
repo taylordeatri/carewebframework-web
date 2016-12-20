@@ -214,7 +214,8 @@ a:not([href]) {
 
 /* Menuitem */
 
-.cwf_menuitem img {
+.cwf_menuitem img,
+.cwf_menuheader img {
 	margin-left: -18px;
 	position: absolute;
 }
