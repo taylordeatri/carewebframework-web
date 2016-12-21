@@ -346,6 +346,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._children = this.cntr ? [] : null;
 			this._ancillaries = {};
 			this.widget$ = null;
+			this.wclazz = 'cwf_' + this.wclass.toLowerCase();
 			this._rendering = false;
 			this._state = {};
 			this._state.forwarding = {statechange: true};
@@ -718,7 +719,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		init: function() {
 			this._super();
-			this.wclazz = 'cwf_' + this.wclass.toLowerCase();
 			this.initState({_clazz: this.wclazz, clazz: '', visible: true});
 		},
 				
@@ -813,12 +813,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			v ? this.widget$.on('contextmenu.cwf', _showContextPopup) : null;
 			
 			function _showContextPopup(event) {
-				cwf.event.stop(event);
 				cwf.wgt(v).open({
 					my: 'left top',
 					at: 'right bottom',
 					of: event
 				});
+				
+				return false;
 			}
 		},
 		
@@ -1471,19 +1472,24 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	 * A popup widget
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.Popup = cwf.widget.UIWidget.extend({
+	cwf.widget.Popup = cwf.widget.BaseWidget.extend({
 		
 		/*------------------------------ Containment ------------------------------*/
 		
 		anchor$: function() {
-			return this.sub$('inner');
+			return this.real$;
 		},
 		
 		/*------------------------------ Events ------------------------------*/
 		
+		moveHandler: function(event) {
+			this._options.of = event.relatedTarget;
+			this.real$.position(this._options);
+		},
+		
 		_trigger: function(which) {
 			var event = $.Event(which, {
-				relatedTarget: !this._related ? null : this._related.target ? this._related.target : this._related
+				relatedTarget: this._related$
 			});
 			
 			this.trigger(event);
@@ -1494,29 +1500,34 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		init: function() {
 			this._super();
 			this._allowClickBubble = false;
+			this._clickid = 'click.cwf.' + this.id;
 		},
 
 		/*------------------------------ Other ------------------------------*/
 		
 		close: function() {
-			this.anchor$().hide().appendTo(this.widget$);
-			this._trigger('close');
-			this._related = null;
+			if (this._related$) {
+				$('body').off(this._clickid);
+				this.real$.hide().cwf$track(this._related$, true);
+				this._trigger('close');
+				this._related$ = null;
+				this._options = null;
+			}
 		},
 		
 		isOpen: function() {
-			return this.anchor$().css('display') !== 'none';
+			return this.real$ && 'none' !== this.real$.css('display');
 		},
 		
-		open: function(position) {
-			$('body').one('click', this.close.bind(this));
-			this._related = position.of;
-			
-			this.anchor$()
-				.appendTo(position.anchor || '#cwf_root')
-				.show()
-				.position(position);
-			
+		open: function(options) {
+			this.close();
+			$('body').off(this._clickid).one(this._clickid, this.close.bind(this));
+			this._related$ = $(options.of.currentTarget ? options.of.currentTarget : options.of);
+			this.real$.css('z-index', this._related$.cwf$zindex());
+			this.real$.cwf$track(this._related$);
+			options.collision = options.collision || 'none';
+			this._options = options;
+			this.real$.show().position(options);
 			this._trigger('open');
 		},
 		
@@ -1524,15 +1535,25 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		afterRender: function() {
 			this._super();
-			this.toggleClass('hidden', true);
-			this.anchor$().addClass(this.wclazz).hide();
-			this._allowClickBubble ? null : this.anchor$().on('click', function(event) {
-				cwf.event.stop(event);
-			});
+			this.real$.on('move', this.moveHandler.bind(this));
+			this._allowClickBubble ? null : this.real$.on('click', false);
 		},
 		
 		render$: function() {
-			return $(this.resolveEL('<span><div id="${id}-inner"></span'));
+			if (!this.real$) {
+				this.real$ = this.renderReal$()
+					.appendTo('#cwf_root')
+					.attr('id', this.subId('real'))
+					.hide()
+					.addClass(this.wclazz);
+				this._ancillaries.real$ = this.real$;
+			}
+			
+			return $('<span>');
+		},
+		
+		renderReal$: function() {
+			return $('<div>')
 		}
 		
 	});
@@ -1829,12 +1850,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
-		render$: function() {
-			var dom = 
-				'<span>'
-			  +   '<ul id="${id}-inner" role="menu" class="dropdown-menu multi-level" />'
-			  + '</span>';
-			return $(this.resolveEL(dom));
+		renderReal$: function() {
+			return $('<ul role="menu" class="dropdown-menu multi-level" />');
 		}
 		
 	});
@@ -2205,8 +2222,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				this._popup().open({
 					my: 'right top',
 					at: 'right bottom',
-					of: this.widget$,
-					anchor: this.widget$
+					of: this.widget$
 				});
 				nosync ? null : this.updateState('open', true);
 			}

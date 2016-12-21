@@ -146,7 +146,58 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			 
 			return wgt;
 		},
+		
+		/**
+		 * Notifies the caller (via move events) when the source element moves.  
+		 * Note this uses background polling, so should be used sparingly.
+		 */
+		cwf$track: function(src$, untrack) {
+			var lst = src$.data('cwf$track.ele') || [],
+				poll = src$.data('cwf$track.poll');
+			
+			this.each(function() {
+				var i = lst.indexOf(this);
 				
+				if (i == -1) {
+					untrack ? null : lst.push(this);
+				} else {
+					untrack ? lst.splice(i, 1) : null;
+				}
+			});
+			
+			if (!lst.length) {
+				if (poll) {
+					clearInterval(poll);
+					src$.data('cwf$track.poll', null);
+				}
+				
+				src$.data('cwf$track.ele', null);
+			} else if (!poll) {
+				src$.data('cwf$track.ele', lst);
+				src$.data('cwf$track.pos', src$.offset());
+				poll = setInterval(_poll, 500);
+				src$.data('cwf$track.poll', poll);
+			}
+			
+			return this;
+			
+			function _poll() {
+				var lastpos = src$.data('cwf$track.pos'),
+					currpos = src$.offset();
+				
+				if (lastpos.left !== currpos.left || lastpos.top !== currpos.top) {
+					lastpos.left = currpos.left;
+					lastpos.top = currpos.top;
+					var event = $.Event('move', {
+						relatedTarget: src$, 
+						position: currpos,
+						pageX: currpos.left,
+						pageY: currpos.top});
+					$(src$.data('cwf$track.ele')).trigger(event);
+				}
+			}
+		},
+		
 		cwf$attr: function(name, value) {
 			return _.isNil(value) || value === '' ? this.removeAttr(name): this.attr(name, value);
 		},
@@ -185,6 +236,18 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			return $('<div class="cwf_mask"/>')
 				.css('z-index', ++cwf.widget._zmodal)
 				.prependTo(parent);
+		},
+		
+		cwf$zindex: function() {
+			var ele = this[0],
+				zindex = 'auto';
+			
+			while (ele && !_.isFinite(zindex)) {
+				zindex = getComputedStyle(ele).zIndex;
+				ele = ele.parentElement;
+			}
+			
+			return zindex;
 		}
 	},
 	
