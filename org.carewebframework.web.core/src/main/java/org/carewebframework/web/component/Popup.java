@@ -25,6 +25,9 @@
  */
 package org.carewebframework.web.component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.carewebframework.web.ancillary.INamespace;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
@@ -33,4 +36,13 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 @Component(value = "popup", widgetClass = "Popup", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Popup extends BaseComponent implements INamespace {
     
+    public void open(BaseComponent reference) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("of", reference);
+        invoke("open", map, true);
+    }
+    
+    public void close() {
+        invoke("close", true);
+    }
 }

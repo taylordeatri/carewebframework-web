@@ -33,6 +33,7 @@ import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Button;
 import org.carewebframework.web.component.Checkbox;
 import org.carewebframework.web.component.Div;
+import org.carewebframework.web.component.Popup;
 import org.carewebframework.web.event.ChangeEvent;
 import org.carewebframework.web.page.PageUtil;
 
@@ -43,6 +44,9 @@ public class MiscController extends BaseController {
     
     @WiredComponent
     private BaseComponent dynamicContent;
+    
+    @WiredComponent
+    private Popup contextMenu;
     
     @Override
     public void afterInitialized(BaseComponent root) {
@@ -74,7 +78,7 @@ public class MiscController extends BaseController {
     @EventHandler(value = "click", target = "btnMaskTest")
     private void btnMaskTestClickHandler() {
         if (masked = !masked) {
-            divMaskTest.addMask("Mask Test");
+            divMaskTest.addMask("Mask Test", contextMenu);
         } else {
             divMaskTest.removeMask();
         }

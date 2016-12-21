@@ -240,14 +240,14 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		
 		cwf$zindex: function() {
 			var ele = this[0],
-				zindex = 'auto';
+				zindex = null;
 			
 			while (ele && !_.isFinite(zindex)) {
-				zindex = getComputedStyle(ele).zIndex;
+				zindex = +getComputedStyle(ele).zIndex;
 				ele = ele.parentElement;
 			}
 			
-			return zindex;
+			return _.isFinite(zindex) ? zindex : 'auto';
 		}
 	},
 	
@@ -392,6 +392,12 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		},
 		
 		sendToServer: function(event, params) {
+			var orig = event.originalEvent || event;
+			
+			if (orig.cwf_sent) {
+				return;
+			}
+			
 			var pkt = {};
 			
 			if (params) {
@@ -406,9 +412,9 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				}
 			});
 			
+			orig.cwf_sent = true;
 			cwf.event._postprocess(event, pkt);
 			cwf.ws.sendData('event', pkt);
-			cwf.event.stop(event);
 		}
 	},
 	

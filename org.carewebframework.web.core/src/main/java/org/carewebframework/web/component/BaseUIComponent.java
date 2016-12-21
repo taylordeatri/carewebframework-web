@@ -70,11 +70,15 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     }
     
     public void addMask(String label) {
-        sync("mask", label);
+        invoke("addMask", label);
+    }
+    
+    public void addMask(String label, Popup popup) {
+        invoke("addMask", label, popup);
     }
     
     public void removeMask() {
-        sync("mask", false);
+        invoke("removeMask");
     }
     
     @PropertyGetter("style")

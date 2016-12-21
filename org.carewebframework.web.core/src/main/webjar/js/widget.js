@@ -358,6 +358,17 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Other ------------------------------*/
 		
 		/**
+		 * Creates a translucent mask over this widget.
+		 */
+		addMask: function(label, popup) {
+			this.removeMask();
+			this._mask$ = this.widget$.cwf$mask().append('<span>').css('display', 'flex');
+			var span$ = this._mask$.children().first();
+			span$.text(label).css('display', label ? '' : 'none');
+			popup ? this.contextMenu(this._mask$, popup) : null;
+		},
+		
+		/**
 		 * Convenience method for setting an attribute value.
 		 * 
 		 * @param {string} attr The attribute name.
@@ -377,6 +388,16 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 */
 		getIndex: function() {
 			return this._parent ? this._parent.getChildIndex(this) : -1;
+		},
+		
+		/**
+		 * Removes any existing mask;
+		 */
+		removeMask: function() {
+			if (this._mask$) {
+				this._mask$.remove();
+				delete this._mask$;
+			}
 		},
 		
 		/**
@@ -590,27 +611,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/**
-		 * Creates/removes a translucent mask over this widget.
-		 */
-		mask: function(v) {
-			var destroy = v === false;
-			
-			if (!this._mask$ === !destroy) {
-				if (destroy) {
-					this._mask$.remove();
-					delete this._mask$;
-				} else {
-					this._mask$ = this.widget$.cwf$mask().append('<span>').css('display', 'flex');
-				}
-			}
-			
-			if (!destroy) {
-				var span$ = this._mask$.children().first();
-				span$.text(v).css('display', v ? '' : 'none');
-			}
-		},
-		
-		/**
 		 * Assign name associated with the widget.
 		 * 
 		 * @param {string] v Name value.
@@ -724,6 +724,27 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				
 		/*------------------------------ Other ------------------------------*/
 		
+		contextMenu: function(ele$, popup) {
+			ele$.off('contextmenu.cwf');
+			popup ? ele$.on('contextmenu.cwf', _showContextPopup) : null;
+			
+			function _showContextPopup(event) {
+				var wgt = cwf.wgt(popup);
+				
+				if (!wgt) {
+					ele$.off('contextmenu.cwf');
+				} else {
+					wgt.open({
+						my: 'left top',
+						at: 'right bottom',
+						of: event
+					});
+				}
+				
+				return false;
+			}
+		},
+		
 		input$: function() {
 			var input$ = this.sub$('inp');
 			return input$.length ? input$ : this.widget$;
@@ -809,18 +830,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		context: function(v) {
-			this.widget$.off('contextmenu.cwf');
-			v ? this.widget$.on('contextmenu.cwf', _showContextPopup) : null;
-			
-			function _showContextPopup(event) {
-				cwf.wgt(v).open({
-					my: 'left top',
-					at: 'right bottom',
-					of: event
-				});
-				
-				return false;
-			}
+			this.contextMenu(this.widget$, v);
 		},
 		
 		css: function(v) {
@@ -1505,11 +1515,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 
 		/*------------------------------ Other ------------------------------*/
 		
-		close: function() {
+		close: function(noEvent) {
 			if (this._related$) {
 				$('body').off(this._clickid);
 				this.real$.hide().cwf$track(this._related$, true);
-				this._trigger('close');
+				noEvent ? null : this._trigger('close');
 				this._related$ = null;
 				this._options = null;
 			}
@@ -1519,8 +1529,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			return this.real$ && 'none' !== this.real$.css('display');
 		},
 		
-		open: function(options) {
-			this.close();
+		open: function(options, noEvent) {
+			this.close(noEvent);
 			$('body').off(this._clickid).one(this._clickid, this.close.bind(this));
 			this._related$ = $(options.of.currentTarget ? options.of.currentTarget : options.of);
 			this.real$.css('z-index', this._related$.cwf$zindex());
@@ -1528,7 +1538,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			options.collision = options.collision || 'none';
 			this._options = options;
 			this.real$.show().position(options);
-			this._trigger('open');
+			noEvent ? null : this._trigger('open');
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
