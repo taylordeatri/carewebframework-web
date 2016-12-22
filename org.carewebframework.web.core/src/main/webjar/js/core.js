@@ -230,12 +230,11 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			return this;
 		},
 		
-		cwf$mask: function(parent) {
-			parent = parent || this;
-			parent.css('position', 'relative');
+		cwf$mask: function(zindex) {
+			this.css('position', 'relative');
 			return $('<div class="cwf_mask"/>')
-				.css('z-index', ++cwf.widget._zmodal)
-				.prependTo(parent);
+				.css('z-index', zindex)
+				.prependTo(this);
 		},
 		
 		cwf$zindex: function() {

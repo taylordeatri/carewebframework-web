@@ -148,7 +148,6 @@ a:not([href]) {
     left: 0;
     top: 0;
     bottom: 0;
-    z-index: 99;
     overflow: hidden;
     align-items: center;
     justify-content: center;

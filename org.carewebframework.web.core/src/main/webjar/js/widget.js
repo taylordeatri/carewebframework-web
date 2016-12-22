@@ -2952,7 +2952,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this.applyState('dragid');
 			
 			if (v === 'MODAL') {
-				mask$ = mask$ || $('body').cwf$mask();
+				mask$ = mask$ || $('body').cwf$mask(++cwf.widget._zmodal);
 				mask$.cwf$show(this.getState('visible'));
 				this.widget$.css('z-index', mask$.css('z-index'));
 				this._ancillaries.mask$ = mask$;
