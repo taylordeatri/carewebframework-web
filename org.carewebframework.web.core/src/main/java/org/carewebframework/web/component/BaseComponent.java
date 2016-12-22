@@ -292,7 +292,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         if (parent != null) {
             parent._removeChild(this, false, true);
         } else {
-            invoke("destroy");
+            invokeIfAttached("destroy");
         }
         
         id = DEAD_ID;
@@ -449,7 +449,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         nameIndex.add(child);
         
         if (!noSync) {
-            invoke("addChild", child, index);
+            invokeIfAttached("addChild", child, index);
         }
         
         afterAddChild(child);
@@ -493,7 +493,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         children.remove(child);
         
         if (!noSync) {
-            invoke("removeChild", child, destroy);
+            invokeIfAttached("removeChild", child, destroy);
         }
         
         afterRemoveChild(child);
@@ -504,7 +504,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         BaseComponent child2 = children.get(index2);
         children.set(index1, child2);
         children.set(index2, child1);
-        invoke("swapChildren", index1, index2);
+        invokeIfAttached("swapChildren", index1, index2);
     }
     
     protected void beforeSetParent(BaseComponent newParent) {
@@ -859,6 +859,18 @@ public abstract class BaseComponent implements IElementIdentifier {
      */
     public void invoke(String function, Object... args) {
         invoke(this, function, args);
+    }
+    
+    /**
+     * Invoke a widget function on the client only if attached to a page.
+     * 
+     * @param function The name of the function.
+     * @param args Arguments for the function.
+     */
+    public void invokeIfAttached(String function, Object... args) {
+        if (page != null) {
+            invoke(function, args);
+        }
     }
     
     /**

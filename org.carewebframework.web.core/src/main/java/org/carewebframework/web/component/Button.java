@@ -36,6 +36,6 @@ public class Button extends BaseLabeledImageComponent {
     
     public Button(String label) {
         super(label);
-        addClass("btn size:btn-sm flavor:btn-default");
+        addClass("flavor:btn-default size:btn-sm");
     }
 }

@@ -37,7 +37,7 @@ public class Hyperlink extends BaseLabeledImageComponent {
     private String target;
     
     public Hyperlink() {
-        addClass("btn-link");
+        addClass("flavor:btn-link size:btn-sm");
     }
     
     @PropertyGetter("href")

@@ -1499,7 +1499,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		_trigger: function(which) {
 			var event = $.Event(which, {
-				relatedTarget: this._related$
+				relatedTarget: this._related$ ? this._related$.cwf$widget() : null
 			});
 			
 			this.trigger(event);
@@ -1638,10 +1638,17 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.Button = cwf.widget.LabeledImageWidget.extend({
 
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.toggleClass('btn', true);
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			var dom = '<button class="btn btn-sm btn-success">'
+			var dom = '<button>'
 				    + this.getDOMTemplate(':image', 'label')
 					+ '</button>';
 			
@@ -1654,12 +1661,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	 * A hyperlink widget
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.Hyperlink = cwf.widget.LabeledImageWidget.extend({
+	cwf.widget.Hyperlink = cwf.widget.Button.extend({
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			 var dom = '<a class="btn-link">'
+			 var dom = '<a>'
 				    + this.getDOMTemplate(':image', 'label')
 					+ '</a>';
 			 
@@ -2278,8 +2285,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			}
 			
 			function _showPopup(event) {
-				cwf.event.stop(event);
 				self.toggle();
+				return false;
 			}
 		}		
 		

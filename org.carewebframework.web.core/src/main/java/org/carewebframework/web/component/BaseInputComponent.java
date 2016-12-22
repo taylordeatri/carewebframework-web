@@ -83,7 +83,7 @@ public abstract class BaseInputComponent<T> extends BaseUIComponent {
     }
     
     @EventHandler(value = "change", syncToClient = false)
-    private void _onChange(ChangeEvent event) {
+    protected void _onChange(ChangeEvent event) {
         try {
             _setValue(_toValue(event.getValue(String.class)), false);
         } catch (Exception e) {

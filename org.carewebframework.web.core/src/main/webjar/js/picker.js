@@ -33,7 +33,7 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 		
 		handleSelect: function(item) {
 			this.open(false);
-			this.value(item);
+			this.updateState('value', item);
 			this._updateSelection();
 			this.fireChanged();
 		},
