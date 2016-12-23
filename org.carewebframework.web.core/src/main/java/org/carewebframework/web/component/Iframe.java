@@ -28,6 +28,8 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.carewebframework.web.annotation.EventHandler;
+import org.carewebframework.web.event.LoadEvent;
 
 @Component(value = "iframe", widgetClass = "Iframe", parentTag = "*")
 public class Iframe extends BaseUIComponent {
@@ -57,6 +59,15 @@ public class Iframe extends BaseUIComponent {
     public void setSandbox(String sandbox) {
         if (!areEqual(sandbox, this.sandbox)) {
             sync("sandbox", this.sandbox = sandbox);
+        }
+    }
+    
+    @EventHandler(value = "load", syncToClient = false)
+    private void _onLoad(LoadEvent event) {
+        String src = nullify(event.getSrc());
+        
+        if (src != null) {
+            this.src = src;
         }
     }
 }

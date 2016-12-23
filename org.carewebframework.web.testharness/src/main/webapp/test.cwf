@@ -36,7 +36,7 @@
 
 			
 			<tab label="IFrame">
-				<iframe src="http://www.regenstrief.org" height="100%" width="100%"/>
+				<import src="pages/iframe.cwf" />
 			</tab>
 			
 			

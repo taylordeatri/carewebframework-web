@@ -2559,7 +2559,30 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.Iframe = cwf.widget.UIWidget.extend({
 				
+		/*------------------------------ Events ------------------------------*/
+		
+		handleLoad: function(event) {
+			event.src = '';
+			
+			try {
+				var src = event.target.contentWindow.location.href;
+				this.setState('src', src);
+				event.src = src;
+			} catch(e) {};
+		},
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.forwardToServer('load');
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
+		
+		afterRender: function() {
+			this.widget$.on('load', this.handleLoad.bind(this));
+		},
 		
 		render$: function() {
 			return $('<iframe>');
