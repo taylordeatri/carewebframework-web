@@ -52,6 +52,7 @@ a:not([href]) {
 
 .label-default {
     background-color: transparent;
+    color: black;
 }
 
 /* bootstrap extensions */
@@ -119,6 +120,11 @@ a:not([href]) {
     height: 100%;
     width: 100%;
     overflow: auto;    
+}
+
+#cwf_root div,
+#cwf_root span {
+    position: relative;
 }
 
 /* Drag and Drop */
