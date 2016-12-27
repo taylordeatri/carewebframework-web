@@ -384,10 +384,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			var key = String.fromCharCode(keyPressEvent.which),
 				test = constraint.test ? constraint.test(key) : constraint(key);
 			
-		   	if (!test) {
-		   		keyPressEvent.stopPropagation();
-		   		keyPressEvent.preventDefault();
-		   	}
+			test ? null : cwf.event.stop(keyPressEvent);
 		},
 		
 		sendToServer: function(event, params) {
@@ -398,10 +395,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			}
 			
 			var pkt = {};
-			
-			if (params) {
-				_.assign(event, params);
-			}
+			params ? _.assign(event, params) : null;
 			
 			_.forIn(event, function(value, pname) {
 				value = pname === 'data' || !_.isObject(value) ? value : cwf.id(value);
