@@ -125,6 +125,17 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			return this.widget$;
 		},
 		
+		getAncestor: function(wclass, wpkg) {
+			var parent = this._parent;
+			wpkg = wpkg || this.wpkg;
+			
+			while (parent && parent.wclass !== wclass && parent.wpkg !== wpkg) {
+				parent = parent._parent;
+			}
+			
+			return parent;
+		},
+		
 		/**
 		 * @return The count of children belonging to this parent.
 		 */
@@ -346,7 +357,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._children = this.cntr ? [] : null;
 			this._ancillaries = {};
 			this.widget$ = null;
-			this.wclazz = 'cwf_' + this.wclass.toLowerCase();
+			this.wclazz = this.wclazz || 'cwf_' + this.wclass.toLowerCase();
 			this._rendering = false;
 			this._state = {};
 			this._state.forwarding = {statechange: true};

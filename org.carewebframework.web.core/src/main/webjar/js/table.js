@@ -7,12 +7,6 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 	
 	cwf.widget.Table = cwf.widget.UIWidget.extend({
 		
-		/*------------------------------ Lifecycle ------------------------------*/
-		
-		init: function() {
-			this._super();
-		},
-		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
