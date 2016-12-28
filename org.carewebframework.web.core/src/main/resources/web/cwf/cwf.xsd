@@ -2320,7 +2320,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
-            <xs:attribute name="align">
+            <xs:attribute name="alignment">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="center"/>

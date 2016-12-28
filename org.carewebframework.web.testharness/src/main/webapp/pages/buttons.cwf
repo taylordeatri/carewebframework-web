@@ -57,17 +57,17 @@
 			</row>
 			<row>
 				<span style="display: flex">
-					<toolbar orientation="vertical" align="start" height="200px">
+					<toolbar orientation="vertical" alignment="start" height="200px">
 						<button class="flavor:btn-danger" label="danger" />
 						<button class="flavor:btn-success" label="success" />
 						<button class="flavor:btn-warning" label="warning" />
 					</toolbar>
-					<toolbar orientation="vertical" align="center" height="200px">
+					<toolbar orientation="vertical" alignment="center" height="200px">
 						<button class="flavor:btn-danger" label="danger" />
 						<button class="flavor:btn-success" label="success" />
 						<button class="flavor:btn-warning" label="warning" />
 					</toolbar>
-					<toolbar orientation="vertical" align="end" height="200px">
+					<toolbar orientation="vertical" alignment="end" height="200px">
 						<button class="flavor:btn-danger" label="danger" />
 						<button class="flavor:btn-success" label="success" />
 						<button class="flavor:btn-warning" label="warning" />
@@ -77,17 +77,17 @@
 			</row>
 			<row>
 				<span>
-					<toolbar orientation="horizontal" align="start" width="250px">
+					<toolbar orientation="horizontal" alignment="start" width="250px">
 						<button class="flavor:btn-danger" label="danger" />
 						<button class="flavor:btn-success" label="success" />
 						<button class="flavor:btn-warning" label="warning" />
 					</toolbar>
-					<toolbar orientation="horizontal" align="center" width="250px">
+					<toolbar orientation="horizontal" alignment="center" width="250px">
 						<button class="flavor:btn-danger" label="danger" />
 						<button class="flavor:btn-success" label="success" />
 						<button class="flavor:btn-warning" label="warning" />
 					</toolbar>
-					<toolbar orientation="horizontal" align="end" width="250px">
+					<toolbar orientation="horizontal" alignment="end" width="250px">
 						<button class="flavor:btn-danger" label="danger" />
 						<button class="flavor:btn-success" label="success" />
 						<button class="flavor:btn-warning" label="warning" />
