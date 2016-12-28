@@ -1578,7 +1578,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		init: function() {
 			this._super();
-			this.initState({align: 'START', orientation: 'HORIZONTAL'});
+			this.initState({alignment: 'START', orientation: 'HORIZONTAL'});
 		},
 				
 		/*------------------------------ Rendering ------------------------------*/
@@ -1589,7 +1589,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ State ------------------------------*/
 		
-		align: function(v, old) {
+		alignment: function(v, old) {
 			v = this.subclazz(v ? v : 'start');
 			old = old ? this.subclazz(old) : null;
 			this.replaceClass(old, v);

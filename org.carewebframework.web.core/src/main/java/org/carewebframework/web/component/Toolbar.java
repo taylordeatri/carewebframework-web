@@ -34,7 +34,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 @Component(value = "toolbar", widgetClass = "Toolbar", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Toolbar extends BaseUIComponent {
     
-    public enum Align {
+    public enum Alignment {
         START, CENTER, END
     };
     
@@ -42,21 +42,21 @@ public class Toolbar extends BaseUIComponent {
         HORIZONTAL, VERTICAL;
     }
     
-    private Align align = Align.START;
+    private Alignment alignment = Alignment.START;
     
     private Orientation orientation = Orientation.HORIZONTAL;
     
-    @PropertyGetter("align")
-    public Align getAlign() {
-        return align;
+    @PropertyGetter("alignment")
+    public Alignment getAlignment() {
+        return alignment;
     }
     
-    @PropertySetter("align")
-    public void setAlign(Align align) {
-        align = align == null ? Align.START : align;
+    @PropertySetter("alignment")
+    public void setAlignment(Alignment alignment) {
+        alignment = alignment == null ? Alignment.START : alignment;
         
-        if (align != this.align) {
-            sync("align", this.align = align);
+        if (alignment != this.alignment) {
+            sync("alignment", this.alignment = alignment);
         }
     }
     
