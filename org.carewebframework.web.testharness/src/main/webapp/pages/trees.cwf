@@ -1,5 +1,5 @@
 <table controller="org.carewebframework.web.testharness.TreesController">
-	<columns>
+	<columns style="visibility:hidden">
 		<column width="30%" />
 		<column width="70%" />
 	</columns>

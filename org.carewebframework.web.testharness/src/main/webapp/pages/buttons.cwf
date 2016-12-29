@@ -1,6 +1,6 @@
 <page>
 	<table controller="org.carewebframework.web.testharness.ButtonsController">
-		<columns>
+		<columns style="visibility:hidden">
 			<column width="40%" />
 			<column width="80%" />
 		</columns>

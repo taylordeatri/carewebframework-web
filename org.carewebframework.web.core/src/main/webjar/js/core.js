@@ -345,7 +345,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		forward: function(event, type, target) {
 			var target$ = cwf.$(target || event.target);
 			event.type = type || event.type;
-			target$.triggerHandler(event);
+			target$ ? target$.triggerHandler(event) : null;
 		},
 		
 		stop: function(event) {

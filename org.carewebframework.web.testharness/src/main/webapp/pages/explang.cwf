@@ -1,5 +1,5 @@
 <table>
-	<columns>
+	<columns style="visibility:hidden">
 		<column width="60%" />
 		<column width="40%" />
 	</columns>

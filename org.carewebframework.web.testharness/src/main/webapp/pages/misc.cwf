@@ -1,6 +1,6 @@
 <span controller="org.carewebframework.web.testharness.MiscController">
 	<table>
-		<columns>
+		<columns style="visibility:hidden">
 			<column width="30%" />
 			<column width="70%" />
 		</columns>
