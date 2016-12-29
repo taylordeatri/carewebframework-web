@@ -14,7 +14,7 @@
 	</servlet-mapping>
 
 	<context-param>
-		<param-name>cwf-debug</param-name>
+		<param-name>cwf.debug</param-name>
 		<param-value>true</param-value>
 	</context-param>
 </web-app>
