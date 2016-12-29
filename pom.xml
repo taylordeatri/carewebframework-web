@@ -54,13 +54,14 @@
 				<plugin>
 					<groupId>com.samaxes.maven</groupId>
 					<artifactId>minify-maven-plugin</artifactId>
-					<version>1.7.4</version>
+					<version>1.7.6</version>
 					<executions>
 						<execution>
 							<id>default-minify</id>
 							<configuration>
 								<skipMerge>true</skipMerge>
-								<closureLanguage>ECMASCRIPT5_STRICT</closureLanguage>
+								<yuiNoMunge>true</yuiNoMunge>
+								<closureLanguageIn>ECMASCRIPT5_STRICT</closureLanguageIn>
 								<webappSourceDir>${basedir}/src/main/webjar</webappSourceDir>
 								<webappTargetDir>
 									${project.build.directory}/classes/META-INF/resources/webjars/${webjar.name}/${webjar.version}
