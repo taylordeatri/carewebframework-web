@@ -57,6 +57,8 @@ public class WindowsController extends BaseController {
     
     private boolean isModal;
     
+    private int messageClass = -1;
+    
     @Override
     public void afterInitialized(BaseComponent root) {
         super.afterInitialized(root);
@@ -79,11 +81,15 @@ public class WindowsController extends BaseController {
         ClientUtil.invoke("cwf.alert", "This is a test alert", "TEST!", "danger");
     }
     
+    private static final String[] MSG_CLASS = { "success", "warning", "danger", "info" };
+    
     @EventHandler(value = "click", target = "window3.btnMessage")
     private void btnMessageHandler() {
         MessagePane pane = new MessagePane("Message Title", "category", 8000, false);
-        pane.addClass("flavor: alert-success");
-        pane.addChild(new Label("This is a test message"));
+        messageClass++;
+        messageClass = messageClass >= MSG_CLASS.length ? 0 : messageClass;
+        pane.addClass("flavor: alert-" + MSG_CLASS[messageClass]);
+        pane.addChild(new Label("This is a test " + MSG_CLASS[messageClass] + " message"));
         messagewindow.addChild(pane);
     }
     
