@@ -75,7 +75,7 @@ public class WebUtil {
         
         String debug = System.getProperty("cwf.debug");
         debug = debug != null ? debug : servletContext.getInitParameter("cwf.debug");
-        debugEnabled = debug != null && BooleanUtils.toBoolean(debug);
+        debugEnabled = debug != null && (debug.isEmpty() || BooleanUtils.toBoolean(debug));
     }
     
     /**
