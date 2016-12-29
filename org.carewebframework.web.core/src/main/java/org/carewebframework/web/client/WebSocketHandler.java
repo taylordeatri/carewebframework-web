@@ -38,10 +38,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
-import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.carewebframework.common.MiscUtil;
+import org.carewebframework.web.core.WebUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.web.context.ServletContextAware;
@@ -370,8 +370,7 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
     @Override
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
-        String debug = servletContext.getInitParameter("cwf-debug");
-        ClientUtil.debugEnabled = BooleanUtils.toBoolean(debug);
+        WebUtil.initDebug(servletContext);
     }
     
 }

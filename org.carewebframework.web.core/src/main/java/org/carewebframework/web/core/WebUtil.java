@@ -60,10 +60,34 @@ public class WebUtil {
     
     private static Boolean debugEnabled;
     
+    /**
+     * Initialize the debug state. This is determined by the <code>cwf.debug</code> property value
+     * taken from the system properties or, absent that, from the the context parameter settings in
+     * the web.xml file. This method is called during server startup and cannot be called more than
+     * one.
+     * 
+     * @param servletContext
+     */
+    public static void initDebug(ServletContext servletContext) {
+        if (debugEnabled != null) {
+            throw new IllegalStateException("Debug status has already been initialized.");
+        }
+        
+        String debug = System.getProperty("cwf.debug");
+        debug = debug != null ? debug : servletContext.getInitParameter("cwf.debug");
+        debugEnabled = debug != null && BooleanUtils.toBoolean(debug);
+    }
+    
+    /**
+     * Returns the debug state of the servlet. When enabled (see {@link #initDebug}), the debug
+     * state can affect various application behaviors such as disabling javascript minification.
+     * 
+     * @return The debug state.
+     * @exception IllegalStateException Thrown if debug status has not been initialized.
+     */
     public static boolean isDebugEnabled() {
         if (debugEnabled == null) {
-            String prop = System.getProperty("cwf.debug");
-            debugEnabled = prop != null && prop.isEmpty() || BooleanUtils.toBoolean(prop);
+            throw new IllegalStateException("Debug status has not been initialized.");
         }
         
         return debugEnabled;

@@ -37,9 +37,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.carewebframework.common.MiscUtil;
-import org.carewebframework.web.client.ClientUtil;
 import org.carewebframework.web.client.WebJarLocator;
 import org.carewebframework.web.component.Page;
+import org.carewebframework.web.core.WebUtil;
 import org.carewebframework.web.logging.LogUtil;
 import org.springframework.core.io.AbstractFileResolvingResource;
 import org.springframework.core.io.Resource;
@@ -129,7 +129,7 @@ public class CwfResourceTransformer extends ResourceTransformerSupport {
         map.put("rootUrl", rootUrl);
         map.put("wsUrl", wsUrl);
         map.put("webjarInit", WebJarLocator.getInstance().getWebJarInit());
-        map.put("debug", Boolean.toString(ClientUtil.debugEnabled()));
+        map.put("debug", Boolean.toString(WebUtil.isDebugEnabled()));
         map.put("logging", LogUtil.getSettingsForClient());
         StrSubstitutor sub = new StrSubstitutor(map);
         

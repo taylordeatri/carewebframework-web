@@ -32,8 +32,6 @@ import org.carewebframework.web.component.BaseUIComponent;
 
 public class ClientUtil {
     
-    protected static boolean debugEnabled;
-    
     /**
      * Invoke a function on the client.
      * 
@@ -71,10 +69,6 @@ public class ClientUtil {
     
     public static void saveToFile(String content, String mimeType, String fileName) {
         invoke("cwf.saveToFile", content, mimeType, fileName);
-    }
-    
-    public static boolean debugEnabled() {
-        return debugEnabled;
     }
     
     /**
