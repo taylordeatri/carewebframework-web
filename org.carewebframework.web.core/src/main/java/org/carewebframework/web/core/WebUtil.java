@@ -66,7 +66,7 @@ public class WebUtil {
      * the web.xml file. This method is called during server startup and cannot be called more than
      * one.
      * 
-     * @param servletContext
+     * @param servletContext The servlet context.
      */
     public static void initDebug(ServletContext servletContext) {
         if (debugEnabled != null) {
