@@ -29,11 +29,6 @@
 				'cwf-picker': 'js/picker',
 				'cwf-picker-css': 'css/picker'
 			},
-		    'shim': {
-		        'bootstrap-js': { 
-		            'deps': ['jquery']
-		        }
-		    },
 			'map': {
 				'*': {
 					'css': 'web/require-css/css'
