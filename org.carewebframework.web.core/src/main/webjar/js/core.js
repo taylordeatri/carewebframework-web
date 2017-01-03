@@ -405,7 +405,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			params ? _.assign(event, params) : null;
 			
 			_.forIn(event, function(value, pname) {
-				value = pname === 'data' || !_.isObject(value) ? value : cwf.id(value);
+				value = pname === 'data' || pname === 'blob' || !_.isObject(value) ? value : cwf.id(value);
 				
 				if (value !== null) {
 					pkt[pname] = value;

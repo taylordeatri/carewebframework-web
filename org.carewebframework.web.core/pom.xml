@@ -27,7 +27,8 @@
 				'cwf-paneview': 'js/paneview',
 				'cwf-paneview-css': 'css/paneview',
 				'cwf-picker': 'js/picker',
-				'cwf-picker-css': 'css/picker'
+				'cwf-picker-css': 'css/picker',
+				'cwf-upload': 'js/upload'
 			},
 			'map': {
 				'*': {
@@ -124,11 +125,6 @@
 		    <groupId>org.webjars.npm</groupId>
 		    <artifactId>balloon-css</artifactId>
 		    <version>0.4.0</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.webjars.bower</groupId>
-		    <artifactId>jquery-file-upload</artifactId>
-		    <version>9.12.6</version>
 		</dependency>
 		<!-- Apache HTTP components -->
 		<dependency>

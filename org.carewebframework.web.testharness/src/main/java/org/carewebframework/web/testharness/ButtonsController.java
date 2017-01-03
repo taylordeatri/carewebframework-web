@@ -25,11 +25,17 @@
  */
 package org.carewebframework.web.testharness;
 
+import java.io.FileOutputStream;
+
+import org.apache.commons.io.IOUtils;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.annotation.WiredComponent;
 import org.carewebframework.web.component.Button;
+import org.carewebframework.web.component.Checkbox;
 import org.carewebframework.web.component.Radiobutton;
+import org.carewebframework.web.component.Upload;
 import org.carewebframework.web.event.ChangeEvent;
+import org.carewebframework.web.event.UploadEvent;
 
 /*
  * Buttons demonstration.
@@ -38,6 +44,12 @@ public class ButtonsController extends BaseController {
     
     @WiredComponent
     private Button btnWithEvent;
+    
+    @WiredComponent
+    private Checkbox chkMultiple;
+    
+    @WiredComponent
+    private Upload upload;
     
     /**
      * Sample button event handler.
@@ -52,5 +64,20 @@ public class ButtonsController extends BaseController {
         boolean isSelected = event.getValue(Boolean.class);
         log("Radiobutton '" + ((Radiobutton) event.getTarget()).getLabel() + "' was "
                 + (isSelected ? "selected." : "deselected."));
+    }
+    
+    @EventHandler(value = "upload", target = "@upload")
+    private void uploadHandler(UploadEvent event) throws Exception {
+        String tmpdir = System.getProperty("java.io.tmpdir");
+        String file = tmpdir + event.getFile();
+        FileOutputStream out = new FileOutputStream(file);
+        IOUtils.copy(event.getBlob(), out);
+        out.close();
+        log("Uploaded contents to " + file);
+    }
+    
+    @EventHandler(value = "change", target = "@chkMultiple")
+    private void chkMultipleChangeHandler(ChangeEvent event) {
+        upload.setMultiple(chkMultiple.isChecked());
     }
 }

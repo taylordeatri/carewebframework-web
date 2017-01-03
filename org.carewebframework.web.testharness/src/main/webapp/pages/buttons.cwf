@@ -96,6 +96,13 @@
 				Horizontally-oriented toolbars with start, center, and end
 				alignments.
 			</row>
+			<row>
+				<toolbar>
+					<upload name="upload" />
+					<checkbox name="chkMultiple" label="multiple" />
+				</toolbar>
+				File uploader
+			</row>
 		</rows>
 	</table>
 </page>
