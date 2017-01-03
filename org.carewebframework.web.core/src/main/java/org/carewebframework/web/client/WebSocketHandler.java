@@ -25,9 +25,11 @@
  */
 package org.carewebframework.web.client;
 
+import java.io.ByteArrayInputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,6 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.carewebframework.common.MiscUtil;
@@ -45,10 +48,11 @@ import org.carewebframework.web.core.WebUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -57,7 +61,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 /**
  * Handler for all web socket communications.
  */
-public class WebSocketHandler extends TextWebSocketHandler implements BeanPostProcessor, ServletContextAware {
+public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPostProcessor, ServletContextAware {
     
     /**
      * Interface for handling a client request. A request handler must be registered for each
@@ -244,23 +248,17 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
      * @param message The message containing the client request.
      */
     @Override
-    public void handleTextMessage(WebSocketSession socket, TextMessage message) {
-        Session session = sessions.get(socket.getId());
-        
-        if (session == null) {
-            throw new RuntimeException("Request received on unknown socket.");
-        }
-        
+    protected void handleTextMessage(WebSocketSession socket, TextMessage message) {
+        Session session = getSession(socket.getId());
         Map<String, Object> attribs = socket.getAttributes();
         
         try {
-            session.updateLastActivity();
-            StringBuffer buffer = (StringBuffer) attribs.get(ATTR_BUFFER);
+            StringBuilder buffer = (StringBuilder) attribs.get(ATTR_BUFFER);
             String payload = message.getPayload();
             
             if (!message.isLast()) {
                 if (buffer == null) {
-                    attribs.put(ATTR_BUFFER, buffer = new StringBuffer(payload));
+                    attribs.put(ATTR_BUFFER, buffer = new StringBuilder(payload));
                 } else {
                     buffer.append(payload);
                 }
@@ -279,9 +277,7 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
             }
             
             Map<String, Object> map = reader.readValue(payload);
-            session.init((String) map.get("pid"));
-            ClientRequest request = new ClientRequest(session, map);
-            processRequest(request);
+            processRequest(session, map);
             
         } catch (Exception e) {
             attribs.remove(ATTR_BUFFER);
@@ -290,7 +286,71 @@ public class WebSocketHandler extends TextWebSocketHandler implements BeanPostPr
         }
     }
     
-    private void processRequest(ClientRequest request) throws Exception {
+    @Override
+    protected void handleBinaryMessage(WebSocketSession socket, BinaryMessage message) throws Exception {
+        Session session = getSession(socket.getId());
+        Map<String, Object> attribs = socket.getAttributes();
+        
+        try {
+            byte[] buffer = (byte[]) attribs.get(ATTR_BUFFER);
+            byte[] payload = new byte[message.getPayloadLength()];
+            message.getPayload().get(payload);
+            buffer = buffer == null ? payload : ArrayUtils.addAll(buffer, payload);
+            
+            if (!message.isLast()) {
+                attribs.put(ATTR_BUFFER, buffer);
+                return;
+            }
+            
+            if (attribs.remove(ATTR_BUFFER) != null && log.isWarnEnabled()) {
+                log.warn("Large payload received from client (" + buffer.length + " bytes).");
+            }
+            
+            ByteArrayInputStream is = new ByteArrayInputStream(buffer);
+            byte[] preamble = new byte[100];
+            int i = 0;
+            
+            while (true) {
+                int b = is.read();
+                
+                if (b == 10 || b == -1) {
+                    break;
+                }
+                
+                if (i >= preamble.length) {
+                    preamble = Arrays.copyOf(preamble, i + 100);
+                }
+                
+                preamble[i++] = (byte) b;
+            }
+            
+            Map<String, Object> map = reader.readValue(preamble, 0, i);
+            @SuppressWarnings("unchecked")
+            Map<String, Object> data = (Map<String, Object>) map.get("data");
+            data.put("blob", is);
+            processRequest(session, map);
+            
+        } catch (Exception e) {
+            attribs.remove(ATTR_BUFFER);
+            log.error("Error processing client request.", e);
+            sendError(socket, e);
+        }
+    }
+    
+    private Session getSession(String id) {
+        Session session = sessions.get(id);
+        
+        if (session == null) {
+            throw new RuntimeException("Request received on unknown socket.");
+        }
+        
+        session.updateLastActivity();
+        return session;
+    }
+    
+    private void processRequest(Session session, Map<String, Object> map) throws Exception {
+        session.init((String) map.get("pid"));
+        ClientRequest request = new ClientRequest(session, map);
         IRequestHandler handler = handlers.get(request.getType());
         
         if (handler == null) {

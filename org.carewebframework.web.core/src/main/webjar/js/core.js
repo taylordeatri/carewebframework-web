@@ -257,6 +257,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			this.socket.onerror = this._onerror;
 			this.socket.onmessage = this._onmessage;
 			this.socket.onopen = this._onopen;
+			this.socket.binaryType = 'blob';
 		},
 		
 		_onopen: function() {
@@ -292,7 +293,14 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			}
 			
 			var pkt = {type: type, pid: cwf.pid, data: data};
-			this.socket.send(JSON.stringify(pkt));
+			
+			if (data.blob) {
+				var blob = data.blob;
+				delete data.blob;
+				this.socket.send(new Blob([JSON.stringify(pkt), '\n', blob]));
+			} else {
+				this.socket.send(JSON.stringify(pkt));
+			}
 			
 			if (!nolog) {
 				cwf.log.debug('Sent: ', pkt);
