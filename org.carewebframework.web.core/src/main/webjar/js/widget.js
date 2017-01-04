@@ -208,7 +208,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 * @param {number} Position of the widget relative to its siblings.
 		 */
 		_attach: function(index) {
-			this._attachWidgetAt(this.widget$, this._parent.anchor$(this.widget$), this._parent._children[index])
+			this._attachWidgetAt(this.widget$, this._parent.anchor$(this.widget$), index);
 			this._attachAncillaries();
 		},
 		
@@ -235,9 +235,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			var ref$ = _.isNil(ref) ? null 
 					: _.isObject(ref) ? cwf.$(ref) 
 					: ref < 0 ? null 
-					: parent$.children().eq(ref)[0];
+					: parent$.children().eq(ref);
 			
-			if (ref$) {
+			if (ref$ && ref$.length) {
 				ref$.before(widget$);
 			} else {
 				parent$.append(widget$);

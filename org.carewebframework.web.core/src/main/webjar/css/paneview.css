@@ -3,6 +3,7 @@
 .cwf_paneview {
     overflow: auto;
     display: inline-flex;
+    background-color: white;
 }
 
 .cwf_paneview-horizontal {
