@@ -28,6 +28,7 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.springframework.util.Assert;
 
 @Component(value = "upload", widgetPackage = "cwf-upload", widgetClass = "Upload", parentTag = "*")
 public class Upload extends BaseUIComponent {
@@ -35,6 +36,8 @@ public class Upload extends BaseUIComponent {
     private boolean multiple;
     
     private String accept;
+    
+    private int maxsize = 1024 * 1024 * 100;
     
     public Upload() {
         super();
@@ -62,5 +65,34 @@ public class Upload extends BaseUIComponent {
         if (!areEqual(accept = nullify(accept), this.accept)) {
             sync("accept", this.accept = accept);
         }
+    }
+    
+    @PropertyGetter("maxsize")
+    public int getMaxsize() {
+        return maxsize;
+    }
+    
+    @PropertySetter("maxsize")
+    public void setMaxsize(int maxsize) {
+        if (maxsize != this.maxsize) {
+            Assert.isTrue(maxsize >= 0, "maxsize must be >= 0");
+            sync("_maxsize", this.maxsize = maxsize);
+        }
+    }
+    
+    public void abortAll() {
+        invokeIfAttached("abortAll");
+    }
+    
+    public void abort(String filename) {
+        invokeIfAttached("abort", filename);
+    }
+    
+    public void bind(BaseUIComponent comp) {
+        invoke("bind", comp);
+    }
+    
+    public void unbind(BaseUIComponent comp) {
+        invoke("unbind", comp);
     }
 }

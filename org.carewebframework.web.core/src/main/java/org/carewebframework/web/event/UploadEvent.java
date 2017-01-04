@@ -34,11 +34,24 @@ import org.carewebframework.web.component.BaseComponent;
 @EventType(UploadEvent.TYPE)
 public class UploadEvent extends MouseEvent {
     
+    public enum UploadState {
+        UNKNOWN, MAXSIZE, ABORTED, EMPTY, LOADING, DONE
+    }
+    
     @EventParameter
     private String file;
     
     @EventParameter
     private InputStream blob;
+    
+    @EventParameter
+    private int total;
+    
+    @EventParameter
+    private int loaded;
+    
+    @EventParameter
+    private int state;
     
     public static final String TYPE = "upload";
     
@@ -56,5 +69,21 @@ public class UploadEvent extends MouseEvent {
     
     public InputStream getBlob() {
         return blob;
+    }
+    
+    public int getTotal() {
+        return total;
+    }
+    
+    public int getLoaded() {
+        return loaded;
+    }
+    
+    public UploadState getState() {
+        try {
+            return UploadState.values()[state + 3];
+        } catch (Exception e) {
+            return UploadState.UNKNOWN;
+        }
     }
 }

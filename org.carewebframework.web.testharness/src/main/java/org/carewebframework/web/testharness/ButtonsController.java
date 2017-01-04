@@ -68,12 +68,31 @@ public class ButtonsController extends BaseController {
     
     @EventHandler(value = "upload", target = "@upload")
     private void uploadHandler(UploadEvent event) throws Exception {
-        String tmpdir = System.getProperty("java.io.tmpdir");
-        String file = tmpdir + event.getFile();
-        FileOutputStream out = new FileOutputStream(file);
-        IOUtils.copy(event.getBlob(), out);
-        out.close();
-        log("Uploaded contents to " + file);
+        String file = event.getFile();
+        
+        switch (event.getState()) {
+            case DONE:
+                String tmpdir = System.getProperty("java.io.tmpdir");
+                file = tmpdir + file;
+                FileOutputStream out = new FileOutputStream(file);
+                IOUtils.copy(event.getBlob(), out);
+                out.close();
+                log("Uploaded contents to " + file);
+                break;
+            
+            case MAXSIZE:
+                log("File too large: " + file);
+                break;
+            
+            case ABORTED:
+                log("Upload aborted for " + file);
+                break;
+            
+            case LOADING:
+                double pct = event.getLoaded() * 100.0 / event.getTotal();
+                log("Upload " + pct + "% completed for " + file);
+                break;
+        }
     }
     
     @EventHandler(value = "change", target = "@chkMultiple")
