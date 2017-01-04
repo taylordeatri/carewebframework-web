@@ -12,7 +12,11 @@ define('cwf-upload', ['cwf-core', 'cwf-widget'], function(cwf) {
 		
 		changeHandler: function(event) {
 			var files = event.target.files,
+				wgt = this._requestor,
+				progress = this.getState('_progress'),
 				self = this;
+			
+			delete this._requestor;
 			
 			if (files) {
 				this.rerender();
@@ -38,17 +42,21 @@ define('cwf-upload', ['cwf-core', 'cwf-widget'], function(cwf) {
 						_fire(-1);
 					};
 					
-					reader.onprogress = function(event) {
-						if (event.lengthComputable && event.loaded !== event.total) {
-							_fire(event.loaded);
+					if (progress) {
+						reader.onprogress = function(event) {
+							if (event.lengthComputable && event.loaded !== event.total) {
+								_fire(event.loaded);
+							}
 						}
 					}
 					
 					reader.readAsArrayBuffer(file);
 					
 					function _fire(loaded, blob) {
-						var state = loaded < 0 ? loaded : reader.readyState;
-						self.trigger('upload', {file: file.name, blob: blob || null, state: state, loaded: loaded < 0 ? 0 : loaded, total: file.size});
+						var state = loaded < 0 ? loaded : reader.readyState,
+							params = {file: file.name, blob: blob || null, state: state, loaded: loaded < 0 ? 0 : loaded, total: file.size};
+						wgt ? wgt.trigger('upload', params) : null;
+						wgt !== self ? self.trigger('upload', params) : null;
 					}
 				});
 			}
@@ -56,11 +64,15 @@ define('cwf-upload', ['cwf-core', 'cwf-widget'], function(cwf) {
 			return false;
 		},
 		
+		clickHandler: function(event, wgt) {
+			this._requestor = wgt || this;
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
 			this._super();
-			this.initState({multiple: false, accept: null, _maxsize: 1024*1024*100});
+			this.initState({multiple: false, accept: null, _progress: false, _maxsize: 1024*1024*100});
 			this._readers = {};
 		},
 		
@@ -84,15 +96,15 @@ define('cwf-upload', ['cwf-core', 'cwf-widget'], function(cwf) {
 			if (wgt$) {
 				this.unbind(wgt);
 				
-				wgt$.on('click.cwf.update', function() {
-					self.widget$.focus().trigger('click');
+				wgt$.on('click.cwf.upload', function() {
+					self.widget$.trigger('click', wgt);
 				});
 			}
 		},
 		
 		unbind: function(wgt) {
 			var wgt$ = cwf.$(wgt);
-			wgt$ ? wgt$.off('click.cwf.update') : null;
+			wgt$ ? wgt$.off('click.cwf.upload') : null;
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -100,6 +112,7 @@ define('cwf-upload', ['cwf-core', 'cwf-widget'], function(cwf) {
 		afterRender: function() {
 			this._super();
 			this.widget$.on('change', this.changeHandler.bind(this));
+			this.widget$.on('click', this.clickHandler.bind(this));
 		},
 		
 		render$: function() {

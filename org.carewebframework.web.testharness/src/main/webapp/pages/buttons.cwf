@@ -98,7 +98,7 @@
 			</row>
 			<row>
 				<toolbar>
-					<upload name="upload" maxsize="100000"/>
+					<upload name="upload" maxsize="100000" progress="true" />
 					<checkbox name="chkMultiple" label="multiple" />
 				</toolbar>
 				File uploader

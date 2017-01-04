@@ -35,6 +35,8 @@ public class Upload extends BaseUIComponent {
     
     private boolean multiple;
     
+    private boolean progress;
+    
     private String accept;
     
     private int maxsize = 1024 * 1024 * 100;
@@ -80,6 +82,18 @@ public class Upload extends BaseUIComponent {
         }
     }
     
+    @PropertyGetter("progress")
+    public boolean getProgress() {
+        return progress;
+    }
+    
+    @PropertySetter("progress")
+    public void setProgress(boolean progress) {
+        if (progress != this.progress) {
+            sync("_progress", this.progress = progress);
+        }
+    }
+    
     public void abortAll() {
         invokeIfAttached("abortAll");
     }
@@ -95,4 +109,5 @@ public class Upload extends BaseUIComponent {
     public void unbind(BaseUIComponent comp) {
         invoke("unbind", comp);
     }
+    
 }
