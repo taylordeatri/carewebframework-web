@@ -229,6 +229,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     public BaseComponent() {
         componentDefinition = ComponentRegistry.getInstance().get(getClass());
+        EventHandlerScanner.wire(this, this);
     }
     
     public ComponentDefinition getDefinition() {
@@ -811,8 +812,6 @@ public abstract class BaseComponent implements IElementIdentifier {
             invocationQueue = null;
         }
         
-        wireController(this);
-        
         for (BaseComponent child : getChildren()) {
             child._flushQueue();
         }
@@ -1253,7 +1252,8 @@ public abstract class BaseComponent implements IElementIdentifier {
     /**
      * Handle state change events from the client. These events cause the field whose name matches
      * the state name to be directly updated with the new value. This is the principal mechanism by
-     * which the client communicates simple state changes to the server.
+     * which the client communicates simple state changes to the server. It should NOT be used on
+     * generically typed fields.
      * 
      * @param event The state change event.
      */
