@@ -6,7 +6,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	 * is always a jquery object), we mean the jquery object contained by the widget.
 	 */
 	
-	cwf.widget.fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
+	cwf.widget._fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 	
 	cwf.widget._domTemplates = {
 			badge: '<span id="${id}-badge" class="badge" />',
@@ -43,7 +43,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	    			supervalue = _super[name];
 	    		
 	    		if (_.isFunction(subvalue) && _.isFunction(supervalue)) {
-	    			if (!cwf.widget.fnTest.test(subvalue)) {
+	    			if (!cwf.widget._fnTest.test(subvalue)) {
 	    				cwf.debug ? cwf.log.warn('_super method not called for ', name) : null;
 	    				prototype[name] = subvalue;
 	    			} else {
@@ -92,29 +92,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				throw new Error('Not a container widget: ' + this.wclass)
 			}
 			
-			var wgt = cwf.wgt(child);
+			child = cwf.wgt(child);
 			
-			if (!wgt) {
+			if (!child) {
 				throw new Error('Child is not a valid widget.');
 			}
 			
-			child = wgt;
-			var currentIndex = child._parent === this ? child.getIndex() : -1;
-			index = _.isNil(index) || index < -1 ? -1 : index;
-			
-			if (currentIndex >= 0 && currentIndex === index) {
-				return;
-			}
-			
-			var maxIndex = currentIndex >= 0 ? this._children.length - 1 : this._children.length;
-			
-			if (index > maxIndex) {
-				throw new Error('Index out of range: ' + index);
-			} else if (index === maxIndex) {
-				index = -1;
-			}
-			
 			child._parent ? child._parent.removeChild(child) : null;
+			index = _.isNil(index) || index >= this._children.length ? -1 : index;
 			index < 0 ? this._children.push(child) : this._children.splice(index, 0, child);
 			child._parent = this;
 			child._attach(index);
@@ -205,10 +190,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/**
 		 * Attaches a widget to the DOM at the specified position.
 		 * 
-		 * @param {number} Position of the widget relative to its siblings.
+		 * @param {number} [index] Position of the widget relative to its siblings.
 		 */
 		_attach: function(index) {
-			this._attachWidgetAt(this.widget$, this._parent.anchor$(this.widget$), index);
+			var ref = _.isNil(index) || index < 0 ? null : this._children[index];
+			this._attachWidgetAt(this.widget$, this._parent.anchor$(this.widget$), cwf.$(ref));
 			this._attachAncillaries();
 		},
 		
@@ -228,16 +214,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 * Attaches a widget to the DOM at the specified reference point.
 		 * 
 		 * @param {jquery} widget$ The widget to attach.
-		 * @param {jquery} parent$ The widget to become the parent (if nil, must specify <code>ref</code>).
-		 * @param {number | jq | Widget} ref The reference point for insertion (if nil, must specify <code>parent$</code>).
+		 * @param {jquery} parent$ The widget to become the parent (if nil, must specify <code>ref$</code>).
+		 * @param {jquery} ref$ The reference point for insertion (if nil, must specify <code>parent$</code>).
 		 */
-		_attachWidgetAt: function(widget$, parent$, ref) {
-			var ref$ = _.isNil(ref) ? null 
-					: _.isObject(ref) ? cwf.$(ref) 
-					: ref < 0 ? null 
-					: parent$.children().eq(ref);
-			
-			if (ref$ && ref$.length) {
+		_attachWidgetAt: function(widget$, parent$, ref$) {
+			if (ref$) {
 				ref$.before(widget$);
 			} else {
 				parent$.append(widget$);
