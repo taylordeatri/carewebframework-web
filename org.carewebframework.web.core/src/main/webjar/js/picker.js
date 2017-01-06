@@ -228,7 +228,8 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 		
 	});
 	
-	cwf.widget.DEFAULT_PALETTE = [ null, '#F7E214', '#F4ED7C', '#F4ED47', '#F9E814', '#FCE016', '#C6AD0F',
+	cwf.widget.DEFAULT_PALETTE = [ 
+		     null, '#000000', '#FFFFFF', '#F7E214', '#F4ED7C', '#F4ED47', '#F9E814', '#FCE016', '#C6AD0F',
         '#AD9B0C', '#82750F', '#F7E859', '#F9E526', '#F7DD16', '#F9D616', '#D8B511', '#AA930A', '#99840A', '#F9E55B',
         '#F9E24C', '#F9E04C', '#FCD116', '#C6A00C', '#AA8E0A', '#897719', '#F9E27F', '#F9E070', '#FCD856', '#FFC61E',
         '#E0AA0F', '#B58C0A', '#F7E8AA', '#F9E08C', '#FFCC49', '#FCB514', '#BF910C', '#A37F14', '#7C6316', '#F4E287',

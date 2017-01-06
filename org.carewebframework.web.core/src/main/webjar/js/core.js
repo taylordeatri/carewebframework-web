@@ -427,9 +427,14 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		
 		_zmodal: 999,
 		
+		_popup: null,
+		
 		_init: function() {
 		    $.widget.bridge('uitooltip', $.ui.tooltip);
 		    $.widget.bridge('uibutton', $.ui.button);
+			$('body').on('click', function() {
+				cwf.widget._popup ? cwf.widget._popup.close() : null;
+			});
 		},
 		
 		/**

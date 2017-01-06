@@ -1,5 +1,5 @@
 <page>
-	<paneview orientation="horizontal">
+	<paneview orientation="horizontal" height="90%" width="50%">
 		<pane splittable="true">
 			Should have a vertical splitter to the right
 		</pane>
@@ -7,7 +7,7 @@
 			Should not have a splitter to the right
 		</pane>
 	</paneview>
-	<paneview orientation="vertical">
+	<paneview orientation="vertical" height="90%" width="50%">
 		<pane splittable="true">
 			Should have a horizontal splitter below
 		</pane>

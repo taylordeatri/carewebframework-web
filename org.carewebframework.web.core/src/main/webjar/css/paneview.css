@@ -1,7 +1,7 @@
 /* Pane View */
 
 .cwf_paneview {
-    overflow: auto;
+    overflow: hidden;
     display: inline-flex;
     background-color: white;
 }
@@ -10,8 +10,18 @@
     flex-direction: row;
 }
 
+.cwf_paneview-horizontal > .cwf_pane {
+    height: 100%;
+    margin: 0 2px 0 2px;
+}
+
 .cwf_paneview-vertical {
     flex-direction: column;
+}
+
+.cwf_paneview-vertical > .cwf_pane {
+    width: 100%;
+    margin: 2px 0 2px 0;
 }
 
 /* Pane */
@@ -21,7 +31,6 @@
     position: relative;
     border-radius: 5px;
     border: 1px solid lightgray;
-    margin: 2px;
 }
 
 .cwf_pane > :first-child {

@@ -1502,14 +1502,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		init: function() {
 			this._super();
 			this._allowClickBubble = false;
-			this._clickid = 'click.cwf.' + this.id;
 		},
 
 		/*------------------------------ Other ------------------------------*/
 		
 		close: function(noEvent) {
-			if (this._related$) {
-				$('body').off(this._clickid);
+			if (this.isOpen()) {
+				cwf.widget._popup = null;
 				this.real$.hide().cwf$track(this._related$, true);
 				noEvent ? null : this._trigger('close');
 				this._related$ = null;
@@ -1518,19 +1517,21 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		isOpen: function() {
-			return this.real$ && 'none' !== this.real$.css('display');
+			return cwf.widget._popup === this;
 		},
 		
 		open: function(options, noEvent) {
-			this.close(noEvent);
-			$('body').off(this._clickid).one(this._clickid, this.close.bind(this));
-			this._related$ = $(options.of.currentTarget ? options.of.currentTarget : options.of);
-			this.real$.css('z-index', this._related$.cwf$zindex());
-			this.real$.cwf$track(this._related$);
-			options.collision = options.collision || 'none';
-			this._options = options;
-			this.real$.show().position(options);
-			noEvent ? null : this._trigger('open');
+			if (!this.isOpen()) {
+				cwf.widget._popup ? cwf.widget._popup.close() : null;
+				cwf.widget._popup = this;
+				this._related$ = $(options.of.currentTarget ? options.of.currentTarget : options.of);
+				this.real$.css('z-index', this._related$.cwf$zindex());
+				this.real$.cwf$track(this._related$);
+				options.collision = options.collision || 'none';
+				this._options = options;
+				this.real$.show().position(options);
+				noEvent ? null : this._trigger('open');
+			}
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -2280,7 +2281,21 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				self.toggle();
 				return false;
 			}
-		}		
+		},
+		
+		readonly: function(v) {
+			this._super.apply(this, arguments);
+			var self = this,
+				inp$ = this.input$();
+			
+			inp$.off('click.cwf');
+			v ? inp$.on('click.cwf', _click) : null;
+			
+			function _click() {
+				self.sub$('btn').triggerHandler('click');
+				return false;
+			}
+		}
 		
 	});
 	
@@ -2503,9 +2518,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		readonly: function(v) {
 			this._super.apply(this, arguments);
-			var self = this;
-			this.widget$[v ? 'on' : 'off']('click', _dropdown);
-			this.sub$('btn')[v ? 'off' : 'on']('click', _dropdown);
+			var self = this,
+				btn$ = this.sub$('btn');
+			
+			this.widget$.off('click.cwf');
+			btn$.off('click.cwf');
+			v ? this.widget$.on('click.cwf', _dropdown) : null;
+			v ? null : btn$.on('click.cwf', _dropdown);
 			
 			function _dropdown(event) {
 				self.handleClick(event);
