@@ -231,6 +231,8 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		},
 		
 		cwf$mask: function(zindex) {
+			this.css('position', 'relative');
+			
 			return $('<div class="cwf_mask"/>')
 				.css('z-index', zindex)
 				.prependTo(this);

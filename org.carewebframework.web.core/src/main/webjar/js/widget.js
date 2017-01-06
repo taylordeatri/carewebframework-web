@@ -373,7 +373,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 */
 		addMask: function(label, popup) {
 			this.removeMask();
-			this._mask$ = this.widget$.cwf$mask().append('<span>').css('display', 'flex');
+			this._mask$ = this.anchor$().cwf$mask().append('<span>').css('display', 'flex');
 			var span$ = this._mask$.children().first();
 			span$.text(label).css('display', label ? '' : 'none');
 			popup ? this.contextMenu(this._mask$, popup) : null;
