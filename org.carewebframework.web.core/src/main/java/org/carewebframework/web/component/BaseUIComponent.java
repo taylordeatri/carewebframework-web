@@ -39,6 +39,12 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     
     private final CssClasses classes = new CssClasses();
     
+    private String height;
+    
+    private String width;
+    
+    private String flex;
+    
     private String hint;
     
     private String balloon;
@@ -86,7 +92,21 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
         _syncStyles();
     }
     
+    private String _syncStyle(String name, String dflt) {
+        String current = styles.get(name);
+        
+        if (current != null) {
+            return current;
+        }
+        
+        styles.put(name, dflt);
+        return dflt;
+    }
+    
     protected void _syncStyles() {
+        height = _syncStyle("height", height);
+        width = _syncStyle("width", width);
+        flex = _syncStyle("flex", flex);
         sync("style", styles.toString());
     }
     
@@ -152,42 +172,45 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     
     @PropertyGetter("height")
     public String getHeight() {
-        return styles.get("height");
+        return height;
     }
     
     @PropertySetter("height")
     public void setHeight(String height) {
         height = trimify(height);
         
-        if (!areEqual(height, getHeight())) {
+        if (!areEqual(height, this.height)) {
+            this.height = height;
             addStyle("height", height);
         }
     }
     
     @PropertyGetter("width")
     public String getWidth() {
-        return styles.get("width");
+        return width;
     }
     
     @PropertySetter("width")
     public void setWidth(String width) {
         width = trimify(width);
         
-        if (!areEqual(width, getWidth())) {
+        if (!areEqual(width, this.width)) {
+            this.width = width;
             addStyle("width", width);
         }
     }
     
     @PropertyGetter("flex")
     public String getFlex() {
-        return getStyle("flex");
+        return flex;
     }
     
     @PropertySetter("flex")
     public void setFlex(String flex) {
         flex = trimify(flex);
         
-        if (!areEqual(flex, getFlex())) {
+        if (!areEqual(flex, this.flex)) {
+            this.flex = flex;
             addStyle("flex", flex);
         }
     }
