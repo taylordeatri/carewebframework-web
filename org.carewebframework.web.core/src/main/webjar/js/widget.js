@@ -2226,12 +2226,18 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 					at: 'right bottom',
 					of: this.widget$
 				});
+				
+				this.setState('_open', true);
 			}
 		},
 		
 		close: function() {
 			var popup = this._popup();
-			popup ? popup.close() : null;
+			
+			if (popup) {
+				popup.close();
+				this.setState('_open', false);
+			}
 		},
 		
 		_popup: function() {
