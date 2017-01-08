@@ -145,12 +145,7 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 			if (this._parent.getState('showHints')) {
 				this.attr('title', v);
 			}
-		},
-		
-		value: function(v) {
-			this.valueChanged(v);
 		}
-		
 	});
 	
 	/******************************************************************************************************************
@@ -220,7 +215,9 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 			return $('<div>');
 		},
 		
-		valueChanged: function(v) {
+		/*------------------------------ State ------------------------------*/
+		
+		value: function(v) {
 			this.widget$.css('background-color', v ? v : 'none');
 			this.toggleClass('glyphicon glyphicon-remove', !v);
 			this._hint(v);
@@ -355,7 +352,9 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 			return $('<img>');
 		},
 		
-		valueChanged: function(v) {
+		/*------------------------------ Rendering ------------------------------*/
+		
+		value: function(v) {
 			this.attr('src', v);
 			this.toggleClass('glyphicon glyphicon-remove', !v);
 			this._hint(v ? v.substring(v.lastIndexOf('/') + 1) : v);

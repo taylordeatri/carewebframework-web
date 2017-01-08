@@ -1489,12 +1489,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this.real$.position(this._options);
 		},
 		
-		_trigger: function(which) {
+		_trigger: function(which, notself) {
 			var event = $.Event(which, {
 				relatedTarget: this._related$ ? this._related$.cwf$widget() : null
 			});
 			
-			this.trigger(event);
+			notself ? null : this.trigger(event);
+			event.relatedTarget ? event.relatedTarget.trigger(event) : null;
 		},
 		
 		/*------------------------------ Lifecycle ------------------------------*/
@@ -1506,11 +1507,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 
 		/*------------------------------ Other ------------------------------*/
 		
-		close: function(noEvent) {
+		close: function(notself) {
 			if (this.isOpen()) {
 				cwf.widget._popup = null;
 				this.real$.hide().cwf$track(this._related$, true);
-				noEvent ? null : this._trigger('close');
+				this._trigger('close', notself);
 				this._related$ = null;
 				this._options = null;
 			}
@@ -1520,7 +1521,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			return cwf.widget._popup === this;
 		},
 		
-		open: function(options, noEvent) {
+		open: function(options, notself) {
 			if (!this.isOpen()) {
 				cwf.widget._popup ? cwf.widget._popup.close() : null;
 				cwf.widget._popup = this;
@@ -1530,7 +1531,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				options.collision = options.collision || 'none';
 				this._options = options;
 				this.real$.show().position(options);
-				noEvent ? null : this._trigger('open');
+				this._trigger('open', notself);
 			}
 		},
 		
@@ -2207,10 +2208,38 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	cwf.widget.Popupbox = cwf.widget.Textbox.extend({
 		
 		/*------------------------------ Lifecycle ------------------------------*/
-				
+		
 		init: function() {
 			this._super();
-			this.initState({open: false});
+			this.initState({_open: false});
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		open: function() {
+			this.close();
+			var popup = this._popup();
+			
+			if (popup) {
+				popup.open({
+					my: 'right top',
+					at: 'right bottom',
+					of: this.widget$
+				});
+			}
+		},
+		
+		close: function() {
+			var popup = this._popup();
+			popup ? popup.close() : null;
+		},
+		
+		_popup: function() {
+			return cwf.wgt(this.getState('popup'));
+		},
+		
+		toggle: function() {
+			this.getState('_open') ? this.close() : this.open();
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -2225,57 +2254,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			return $(this.resolveEL(dom));
 		},
 		
-		/*------------------------------ Other ------------------------------*/
-		
-		_open: function(nosync) {
-			if (this.popupExists && !this.isOpen()) {
-				this._popup().open({
-					my: 'right top',
-					at: 'right bottom',
-					of: this.widget$
-				});
-				nosync ? null : this.updateState('open', true);
-			}
-		},
-		
-		_close: function(nosync) {
-			if (this.isOpen()) {
-				this._popup().close();
-				nosync ? null : this.updateState('open', false);
-			}
-		},
-		
-		popupExists: function() {
-			return this._popup && this._popup();
-		},
-		
-		toggle: function() {
-			this.isOpen() ? this._close() : this._open();
-		},
-		
-		isOpen: function() {
-			return this.popupExists() && this._popup().isOpen();
-		},
-		
 		/*------------------------------ State ------------------------------*/
 		
-		open: function(v) {
-			v ? this._open(true) : this._close(true);
-		},
-		
 		popup: function(v) {
-			this._popup = !v ? null : function() {
-				return cwf.wgt(v);
-			};
-			
 			var btn$ = this.sub$('btn'),
 				self = this;
 			
-			if (v) {
-				btn$.on('click.cwf', _showPopup);
-			} else {
-				btn$.off('click.cwf');
-			}
+			btn$.off('click.cwf');
+			v ? btn$.on('click.cwf', _showPopup) : null;
 			
 			function _showPopup(event) {
 				self.toggle();
