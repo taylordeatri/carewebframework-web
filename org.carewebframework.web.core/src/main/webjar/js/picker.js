@@ -6,33 +6,23 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 	 * Base class for picker widgets.
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.PickerWidget = cwf.widget.InputboxWidget.extend({
+	cwf.widget.PickerWidget = cwf.widget.Popupbox.extend({
 
 		/*------------------------------ Containment ------------------------------*/
 
 	    anchor$: function() {
-	    	return this.sub$('ddn');
+	    	return this.getState('popup').anchor$();
 	    },
 	    
 		/*------------------------------ Events ------------------------------*/
 
-		handleBlur: function(event) {
-			this.open(false);
-		},
-		
-		handleClick: function(event) {
-			if (!this.input$().is(':disabled')) {
-				this.toggleOpen();
-			}
-		},
-		
 		handleInput: function(event) {
 			this._super(event);
 			this._updateSelection();
 		},
 		
 		handleSelect: function(item) {
-			this.open(false);
+			this.close();
 			this.updateState('value', item, true);
 			this._updateSelection();
 			this.fireChanged();
@@ -45,30 +35,18 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 			this.initState({showText: false});
 		},
 		
-		/*------------------------------ Other ------------------------------*/
-		
-	    input$: function() {
-	    	return this.sub$('inp');
-	    },
-	    
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
 			this._super();
-			this.sub$('btn').on('click', this.handleClick.bind(this));
-			this.input$().on('blur', this.handleBlur.bind(this));
-			this.input$().on('click', this.toggleOpen.bind(this));
-		},
-		
-		render$: function() {
-			var dom =
-				'<span>'
-			  + '  <input id="${id}-inp" type="text">'
-			  + '  <span id="${id}-btn" class="glyphicon glyphicon-triangle-bottom" />'
-			  + '  <div id="${id}-ddn" class="invisible cwf_picker-ddn" />'
-			  + '</span>';
+			var popup = this.getState('popup');
 			
-			return $(this.resolveEL(dom));
+			if (!popup) {
+				popup = cwf.widget.create(null, {wclass: 'Popup', cntr: true});
+				this.updateState('popup', popup, true);
+				this._ancillaries.popup$ = popup.widget$;
+				popup.real$.addClass('cwf_picker-ddn');
+			}
 		},
 		
 		_updateSelection: function() {
@@ -79,22 +57,10 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 		
 		/*------------------------------ State ------------------------------*/
 
-	    open: function(v) {
-			var ddn$ = this.sub$('ddn');
-			ddn$.toggleClass('invisible', !v);
-
-			if (v) {
-				ddn$.position({
-					my: 'left top',
-					at: 'left bottom',
-					of: this.widget$
-				});
-				this.input$().focus();
-			}
-	    },
-	    
 		showHints: function(v) {
-			this.rerender();
+			this.forEachChild(function(child) {
+				child.applyState('hint');
+			});
 		},
 		
 		showText: function(v) {
@@ -102,10 +68,6 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 			this._updateSelection();
 		},
 		
-	    toggleOpen: function() {
-	    	this.open(!this.getState('open'));
-	    },
-	    
 		value: function(v) {
 			this._super.apply(this, arguments);
 			this._updateSelection();
@@ -141,10 +103,9 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 		
 		/*------------------------------ State ------------------------------*/
 		
-		_hint: function(v) {
-			if (this._parent.getState('showHints')) {
-				this.attr('title', v);
-			}
+		hint: function(v) {
+			v = this._parent.getState('showHints') ? v : null;
+			this._super(v);
 		}
 	});
 	
@@ -193,12 +154,12 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 		
 		/*------------------------------ State ------------------------------*/
 		
-		open: function(v) {
-			if (v && !this.getChildCount()) {
+		open: function() {
+			if (!this.getChildCount()) {
 				this.useDefaults();
 			}
 			
-			return this._super(v);
+			this._super();
 		}
 		
 	});
@@ -220,7 +181,7 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 		value: function(v) {
 			this.widget$.css('background-color', v ? v : 'none');
 			this.toggleClass('glyphicon glyphicon-remove', !v);
-			this._hint(v);
+			this.updateState('hint', v, true);
 		}
 		
 	});
@@ -357,7 +318,7 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 		value: function(v) {
 			this.attr('src', v);
 			this.toggleClass('glyphicon glyphicon-remove', !v);
-			this._hint(v ? v.substring(v.lastIndexOf('/') + 1) : v);
+			this.updateState('hint', v ? v.substring(v.lastIndexOf('/') + 1) : v, true);
 		}
 		
 	});

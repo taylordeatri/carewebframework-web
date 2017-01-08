@@ -2207,6 +2207,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.Popupbox = cwf.widget.Textbox.extend({
 		
+		/*------------------------------ Events ------------------------------*/
+		
+		handleOpenClose: function(event) {
+			this.setState('_open', event.type === 'open');
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
@@ -2249,6 +2255,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
+		
+		afterRender() {
+			this._super();
+			this.widget$.on('open close', this.handleOpenClose.bind(this));
+		},
 		
 		render$: function() {
 			var dom =
