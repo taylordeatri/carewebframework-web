@@ -102,6 +102,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -262,6 +263,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -452,6 +454,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -558,6 +561,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -665,6 +669,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -1249,6 +1254,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -1350,6 +1356,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1405,6 +1412,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -1515,6 +1523,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="controller" type="xs:string"/>
@@ -1678,6 +1687,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -1757,6 +1767,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -1828,6 +1839,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -1973,6 +1985,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -2086,6 +2099,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -2318,6 +2332,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="alignment">
@@ -2429,6 +2444,37 @@
             <xs:attribute name="width" type="xs:string"/>
         </xs:complexType>
     </xs:element>
+    <xs:element name="upload">
+        <xs:complexType>
+            <xs:attribute name="accept" type="xs:string"/>
+            <xs:attribute name="balloon" type="xs:string"/>
+            <xs:attribute name="class" type="xs:string"/>
+            <xs:attribute name="context" type="xs:string"/>
+            <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="css" type="xs:string"/>
+            <xs:attribute name="data" type="xs:string"/>
+            <xs:attribute name="disabled" type="xs:boolean"/>
+            <xs:attribute name="dragid" type="xs:string"/>
+            <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
+            <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="hint" type="xs:string"/>
+            <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
+            <xs:attribute name="maxsize" type="xs:integer"/>
+            <xs:attribute name="multiple" type="xs:boolean"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="progress" type="xs:boolean"/>
+            <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="width" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="window">
         <xs:complexType mixed="true">
             <xs:all>
@@ -2472,6 +2518,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="balloon" type="xs:string"/>

@@ -2252,7 +2252,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
-		afterRender() {
+		afterRender: function() {
 			this._super();
 			this.widget$.on('open close', this.handleOpenClose.bind(this));
 		},
