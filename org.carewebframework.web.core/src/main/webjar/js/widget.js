@@ -1338,7 +1338,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._super(destroy);
 		},
 		
-		/*------------------------------ Operations ------------------------------*/
+		/*------------------------------ Other ------------------------------*/
 		
 		start: function() {
 			var self = this,
@@ -1747,8 +1747,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		render$: function() {
 			var dom =
 				'<div>'
-			  + '  <input id="${id}-real" type="checkbox">'
-			  + '  <label id="${id}-lbl" for="${id}-real"/>'
+			  +   '<input id="${id}-real" type="checkbox">'
+			  +   '<label id="${id}-lbl" for="${id}-real"/>'
 			  + '</div>';
 			
 			return $(this.resolveEL(dom));
@@ -1795,8 +1795,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		render$: function() {
 			var dom =
 				'<div>'
-			  + '  <input id="${id}-real" type="radio" name="${getGroup}">'
-			  + '  <label id="${id}-lbl" for="${id}-real"/>'
+			  +   '<input id="${id}-real" type="radio" name="${getGroup}">'
+			  +   '<label id="${id}-lbl" for="${id}-real"/>'
 			  + '</div>';
 			
 			return $(this.resolveEL(dom));
@@ -1913,15 +1913,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		render$: function() {
 			var dom = 
 				  '<span>'
-				+ '  <div class="dropdown" style="display: inline-block" role="presentation">'
-				+ '    <a id="${id}-btn" data-toggle="dropdown"'
-				+ '      role="button" aria-haspopup="true" aria-expanded="false">'
+				+   '<div class="dropdown" style="display: inline-block" role="presentation">'
+				+     '<a id="${id}-btn" data-toggle="dropdown"'
+				+       'role="button" aria-haspopup="true" aria-expanded="false">'
 				+ 		 this.getDOMTemplate(':image', 'label')
-				+ '      <span class="caret"></span>'
-				+ '    </a>'
-				+ '    <ul id="${id}-inner" class="dropdown-menu multi-level" '
-				+ '      role="menu" aria-labelledby="${id}-lbl"></ul>'
-				+ '  </div>'
+				+       '<span class="caret"></span>'
+				+     '</a>'
+				+     '<ul id="${id}-inner" class="dropdown-menu multi-level" '
+				+       'role="menu" aria-labelledby="${id}-lbl"></ul>'
+				+   '</div>'
 				+ '</span>';
 			return $(this.resolveEL(dom));
 		},
@@ -1996,9 +1996,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		render$: function() {
 			var submenu = this.getState('_submenu'),
 				dom = '<li>'
-					+ '  <a>'
+					+   '<a>'
 					+ this.getDOMTemplate(':image', ':checkable', 'label')
-					+ '  </a>'
+					+   '</a>'
 					+ (submenu ? '<ul id="${id}-inner" class="dropdown-menu">' : '')
 					+ '</li>';
 			
@@ -2260,8 +2260,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		render$: function() {
 			var dom =
 				'<span>'
-			  + '  <input id="${id}-inp" type="text">'
-			  + '  <span id="${id}-btn" class="glyphicon glyphicon-triangle-bottom" />'
+			  +   '<input id="${id}-inp" type="text">'
+			  +   '<span id="${id}-btn" class="glyphicon glyphicon-triangle-bottom" />'
 			  + '</span>';
 			
 			return $(this.resolveEL(dom));
@@ -2493,9 +2493,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		render$: function() {
 			var dom =
 				'<span>'
-			  + '  <input id="${id}-inp" type="text">'
-			  + '  <span id="${id}-btn" class="glyphicon glyphicon-triangle-bottom" />'
-			  + '  <select id="${id}-inner" class="hidden" />'
+			  +   '<input id="${id}-inp" type="text">'
+			  +   '<span id="${id}-btn" class="glyphicon glyphicon-triangle-bottom" />'
+			  +   '<select id="${id}-inner" class="hidden" />'
 			  + '</span>';
 			
 			return $(this.resolveEL(dom));
@@ -2891,14 +2891,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		render$: function() {
 			var dom =
 				  '<div>'
-				+ '  <div class="panel-heading">'
-				+ '    <div id="${id}-titlebar" class="panel-title">'
-				+ '      <img id="${id}-image"/>'
-				+ '      <span id="${id}-title"/>'
-				+ '      <span id="${id}-icons" class="cwf_titled-icons"/>'
-				+ '    </div>'
-				+ '  </div>'
-				+ '  <div id="${id}-inner" class="panel-body"/>'
+				+   '<div class="panel-heading">'
+				+     '<div id="${id}-titlebar" class="panel-title">'
+				+       '<img id="${id}-image"/>'
+				+       '<span id="${id}-title"/>'
+				+       '<span id="${id}-icons" class="cwf_titled-icons"/>'
+				+     '</div>'
+				+   '</div>'
+				+   '<div id="${id}-inner" class="panel-body"/>'
 				+ '</div>';
 			return $(this.resolveEL(dom));
 		},

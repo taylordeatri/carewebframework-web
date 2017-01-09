@@ -26,8 +26,8 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 		render$: function() {
 			var dom = 
 				  '<div>'
-				+ '  <ul id="${id}-tabs" class="cwf_tabview-tabs"/>'
-				+ '  <div id ="${id}-panes" class="cwf_tabview-panes"/>'
+				+   '<ul id="${id}-tabs" class="cwf_tabview-tabs"/>'
+				+   '<div id ="${id}-panes" class="cwf_tabview-panes"/>'
 				+ '</div>';
 			return $(this.resolveEL(dom));
 		},
@@ -77,9 +77,9 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css.css'], fun
 		render$: function() {
 			var dom = 
 				  '<li role="presentation">'
-				+ '  <a id="${id}-tab">'
+				+   '<a id="${id}-tab">'
 				+ this.getDOMTemplate(':image', 'badge', 'label', ':closable')
-				+ '  </a>'
+				+   '</a>'
 				+ '</li>',
 				self = this;
 				

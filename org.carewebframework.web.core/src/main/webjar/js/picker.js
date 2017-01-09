@@ -37,6 +37,12 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 			this.fireChanged();
 		},
 		
+		_updateSelection: function() {
+			if (this.updateSelection) {
+				this.updateSelection(this.input$()[0].value, this.getState('showText'))
+			}
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
@@ -48,12 +54,6 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 				this.updateState('popup', popup, true);
 				this._ancillaries.popup$ = popup.widget$;
 				popup.real$.addClass('cwf_picker-ddn');
-			}
-		},
-		
-		_updateSelection: function() {
-			if (this.updateSelection) {
-				this.updateSelection(this.input$()[0].value, this.getState('showText'))
 			}
 		},
 		
@@ -140,7 +140,7 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 			});
 		},
 		
-		/*------------------------------ Rendering ------------------------------*/
+		/*------------------------------ Other ------------------------------*/
 		
 		updateSelection: function(color, showText) {
 			this.input$().css('background', 'inherit');
@@ -295,7 +295,7 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 	
 	cwf.widget.Imagepicker = cwf.widget.PickerWidget.extend({
 		
-		/*------------------------------ Rendering ------------------------------*/
+		/*------------------------------ Other ------------------------------*/
 		
 		updateSelection: function(image, showText) {
 			this.input$().css('background-image', !image ? 'none' : 'url(' + image + ')');
@@ -315,7 +315,7 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 			return $('<img>');
 		},
 		
-		/*------------------------------ Rendering ------------------------------*/
+		/*------------------------------ State ------------------------------*/
 		
 		value: function(v) {
 			this.attr('src', v);
