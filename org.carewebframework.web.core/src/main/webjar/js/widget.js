@@ -139,6 +139,22 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/**
+		 * Returns the level of the widget relative to its owning page.  If
+		 * not attached to a page, returns -1.
+		 */
+		getLevel: function() {
+			var wgt = this,
+				level = 0;
+			
+			while (wgt && wgt !== cwf.widget._page) {
+				level++;
+				wgt = wgt._parent;
+			}
+			
+			return wgt ? level : -1;
+		},
+		
+		/**
 		 * Invokes a callback on each child widget.
 		 * 
 		 * @param {callback} callback A callback function following the forEach convention.
@@ -1515,10 +1531,16 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		open: function(options, notself) {
+			var related$ = $(options.of.currentTarget ? options.of.currentTarget : options.of);
+			
+			if (this._related$ && !this._related$.is(related$)) {
+				this.close();
+			}
+			
 			if (!this.isOpen()) {
 				cwf.widget._popup ? cwf.widget._popup.close() : null;
 				cwf.widget._popup = this;
-				this._related$ = $(options.of.currentTarget ? options.of.currentTarget : options.of);
+				this._related$ = related$;
 				this.real$.css('z-index', this._related$.cwf$zindex());
 				this.real$.cwf$track(this._related$);
 				options.collision = options.collision || 'none';
