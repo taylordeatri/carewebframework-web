@@ -484,6 +484,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			return _.isNil(id) ? null : this._registry[id];
 		},
 		
+		isWidget: function(object) {
+			return object && object.constructor && object.constructor.name === 'Widget';
+		},
+		
 		register: function(id, wgt) {
 			this._registry[id] = wgt;
 			return wgt;
@@ -491,10 +495,6 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		
 		unregister: function(id) {
 			delete this._registry[id];
-		},
-		
-		isWidget: function(object) {
-			return object && object.constructor && object.constructor.name === 'Widget';
 		}
 		
 	},

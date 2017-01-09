@@ -1498,13 +1498,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			event.relatedTarget ? event.relatedTarget.trigger(event) : null;
 		},
 		
-		/*------------------------------ Lifecycle ------------------------------*/
-		
-		init: function() {
-			this._super();
-			this._allowClickBubble = false;
-		},
-
 		/*------------------------------ Other ------------------------------*/
 		
 		close: function(notself) {
@@ -1540,7 +1533,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		afterRender: function() {
 			this._super();
 			this.real$.on('move', this.moveHandler.bind(this));
-			this._allowClickBubble ? null : this.real$.on('click', false);
+			this.real$.on('click', false);
 		},
 		
 		render$: function() {
@@ -1851,13 +1844,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	 ******************************************************************************************************************/ 
 	
 	cwf.widget.Menupopup = cwf.widget.Popup.extend({
-		
-		/*------------------------------ Lifecycle ------------------------------*/
-		
-		init: function() {
-			this._super();
-			this._allowClickBubble = true;
-		},		
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
