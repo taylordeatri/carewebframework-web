@@ -21,18 +21,20 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 			this._updateSelection();
 		},
 		
-		handleSelect: function(item) {
-			this.close();
-			this.updateState('value', item, true);
-			this._updateSelection();
-			this.fireChanged();
-		},
-		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
 			this._super();
 			this.initState({showText: false});
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		select: function(item) {
+			this.close();
+			this.updateState('value', item, true);
+			this._updateSelection();
+			this.fireChanged();
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -84,7 +86,7 @@ define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css.css'], funct
 		/*------------------------------ Events ------------------------------*/
 		
 		handleClick: function(event) {
-			this._parent.handleSelect(this.getState('value'));
+			this._parent.select(this.getState('value'));
 		},
 		
 		/*------------------------------ Lifecycle ------------------------------*/

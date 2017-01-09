@@ -2122,12 +2122,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._super();
 			this._max = 2147483647;
 			this._min = -2147483648;
-		},
-		
-		/*------------------------------ Other ------------------------------*/
-		
-		validate: function(value) {
-			return this._super(value);
 		}
 		
 	});
@@ -2172,15 +2166,17 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.Memobox = cwf.widget.InputboxWidget.extend({
 				
-		/*------------------------------ Rendering ------------------------------*/
-		
-		render$: function() {
-			return $(this.resolveEL('<span><textarea id="${id}-inp"/></span>'));
-		},
+		/*------------------------------ Other ------------------------------*/
 		
 		scrollToBottom: function() {
 			var input$ = this.input$();
 			input$.scrollTop(input$[0].scrollHeight);
+		},
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		render$: function() {
+			return $(this.resolveEL('<span><textarea id="${id}-inp"/></span>'));
 		},
 		
 		/*------------------------------ State ------------------------------*/
