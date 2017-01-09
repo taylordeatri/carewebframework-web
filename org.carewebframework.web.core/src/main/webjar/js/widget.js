@@ -139,12 +139,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/**
-		 * Returns the level of the widget relative to its owning page.  If
-		 * not attached to a page, returns -1.
+		 * Returns the level of a widget relative to its owning page.  If
+		 * the widget is not attached to a page, returns -1.
+		 * 
+		 * @param {Object} [wgt] If specified, the widget associated with
+		 * 		the parameter is considered.  Otherwise, this widget is used.
 		 */
-		getLevel: function() {
-			var wgt = this,
-				level = 0;
+		getLevel: function(wgt) {
+			var level = 0;
+			wgt = wgt ? cwf.wgt(wgt) : this;
 			
 			while (wgt && wgt !== cwf.widget._page) {
 				level++;
