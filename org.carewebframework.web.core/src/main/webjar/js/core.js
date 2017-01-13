@@ -427,13 +427,23 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		
 		_zmodal: 999,
 		
-		_popup: null,
+		_popup: {},
 		
 		_init: function() {
 		    $.widget.bridge('uitooltip', $.ui.tooltip);
 		    $.widget.bridge('uibutton', $.ui.button);
 			$('body').on('click', function() {
-				cwf.widget._popup ? cwf.widget._popup.close() : null;
+				cwf.widget.closePopups();
+			});
+		},
+		
+		closePopups: function(parent$) {
+			var parent = parent$ ? parent$.closest('*[data-cwf-popup]')[0] : null;
+			
+			_.forOwn(cwf.widget._popup, function(popup) {
+				if (!parent || $.contains(parent, popup._related$[0])) {
+					popup.close(false, true);
+				}
 			});
 		},
 		

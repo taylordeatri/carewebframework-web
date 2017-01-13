@@ -114,7 +114,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			var parent = this._parent;
 			wpkg = wpkg || this.wpkg;
 			
-			while (parent && parent.wclass !== wclass && parent.wpkg !== wpkg) {
+			while (parent && (parent.wclass !== wclass || parent.wpkg !== wpkg)) {
 				parent = parent._parent;
 			}
 			
@@ -1519,36 +1519,34 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ Other ------------------------------*/
 		
-		close: function(notself) {
+		close: function(notself, notothers) {
 			if (this.isOpen()) {
-				cwf.widget._popup = null;
+				delete cwf.widget._popup[this.id];
 				this.real$.hide().cwf$track(this._related$, true);
 				this._trigger('close', notself);
 				this._related$ = null;
 				this._options = null;
 			}
+			
+			notothers ? null : cwf.widget.closePopups(this.real$);
 		},
 		
 		isOpen: function() {
-			return cwf.widget._popup === this;
+			return cwf.widget._popup[this.id];
 		},
 		
 		open: function(options, notself) {
 			var related$ = $(options.of.currentTarget ? options.of.currentTarget : options.of);
 			
-			if (this._related$ && !this._related$.is(related$)) {
-				this.close();
-			}
-			
-			if (!this.isOpen()) {
-				cwf.widget._popup ? cwf.widget._popup.close() : null;
-				cwf.widget._popup = this;
+			if (!this.isOpen() || (related$ && !related$.is(this._related$))) {
+				cwf.widget.closePopups(related$);
 				this._related$ = related$;
 				this.real$.css('z-index', this._related$.cwf$zindex());
 				this.real$.cwf$track(this._related$);
 				options.collision = options.collision || 'none';
 				this._options = options;
 				this.real$.show().position(options);
+				cwf.widget._popup[this.id] = this;
 				this._trigger('open', notself);
 			}
 		},
@@ -1566,6 +1564,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				this.real$ = this.renderReal$()
 					.appendTo('#cwf_root')
 					.attr('id', this.subId('real'))
+					.attr('data-cwf-popup', true)
 					.hide()
 					.addClass(this.wclazz);
 				this._ancillaries.real$ = this.real$;
@@ -2235,8 +2234,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			if (popup) {
 				popup.open({
-					my: 'right top',
-					at: 'right bottom',
+					my: 'left top',
+					at: 'left bottom',
 					of: this.widget$
 				});
 				

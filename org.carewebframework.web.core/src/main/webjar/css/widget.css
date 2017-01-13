@@ -208,10 +208,6 @@ a:not([href]) {
 	margin-right: 5px
 }
 
-.cwf_menu > .dropdown > a > .caret {
-	margin-left: 0;	
-}
-
 /* Menuitem */
 
 .cwf_menuitem img,
