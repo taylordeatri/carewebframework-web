@@ -1536,7 +1536,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		open: function(options, notself) {
-			var related$ = $(options.of.currentTarget ? options.of.currentTarget : options.of);
+			var related$;
+			
+			if (options.of.currentTarget) {
+				related$ = cwf.$(options.of.currentTarget);
+			} else {
+				related$ = cwf.$(options.of);
+				options.of = related$;
+			}
 			
 			if (!this.isOpen() || (related$ && !related$.is(this._related$))) {
 				cwf.widget.closePopups(related$);

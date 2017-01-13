@@ -37,8 +37,14 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 public class Popup extends BaseComponent implements INamespace {
     
     public void open(BaseComponent reference) {
+        open(reference, null, null);
+    }
+    
+    public void open(BaseComponent reference, String my, String at) {
         Map<String, Object> map = new HashMap<>();
         map.put("of", reference);
+        map.put("at", at);
+        map.put("my", my);
         invoke("open", map, true);
     }
     
