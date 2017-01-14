@@ -1148,6 +1148,10 @@ public abstract class BaseComponent implements IElementIdentifier {
      */
     @PropertySetter(value = "controller", defer = true)
     public void wireController(Object controller) {
+        if (controller == null) {
+            throw new ComponentException("Controller is null or could not be resolved.");
+        }
+        
         if (controller instanceof String) {
             try {
                 controller = Class.forName((String) controller).newInstance();
