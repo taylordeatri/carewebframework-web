@@ -100,9 +100,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			child._parent ? child._parent.removeChild(child) : null;
 			index = _.isNil(index) || index >= this._children.length ? -1 : index;
-			index < 0 ? this._children.push(child) : this._children.splice(index, 0, child);
 			child._parent = this;
 			child._attach(index);
+			index < 0 ? this._children.push(child) : this._children.splice(index, 0, child);
 			this.onAddChild(child);
 		},
 		
@@ -192,6 +192,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				var anchor$ = child.widget$.parent();
 				this._children.splice(currentIndex, 1);
 				child._detach(destroy);
+				child._parent = null;
 				this.onRemoveChild(child, destroy, anchor$);
 				return true;
 			}
@@ -212,7 +213,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 * @param {number} [index] Position of the widget relative to its siblings.
 		 */
 		_attach: function(index) {
-			var ref = _.isNil(index) || index < 0 ? null : this._children[index];
+			var ref = _.isNil(index) || index < 0 ? null : this._parent._children[index];
 			this._attachWidgetAt(this.widget$, this._parent.anchor$(this.widget$), cwf.$(ref));
 			this._attachAncillaries();
 		},
