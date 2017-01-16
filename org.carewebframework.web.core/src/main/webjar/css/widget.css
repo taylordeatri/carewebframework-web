@@ -208,6 +208,14 @@ a:not([href]) {
 	margin-right: 5px
 }
 
+.cwf_menu.cwf_menu-nochildren .caret {
+    visibility: hidden;
+}
+
+.cwf_menu.cwf_menu-nochildren ul {
+    display: none;
+}
+
 /* Menuitem */
 
 .cwf_menuitem img,

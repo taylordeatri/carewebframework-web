@@ -1897,6 +1897,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			return this.sub$('inner');
 		},
 						
+		onAddChild: function() {
+			this._childrenUpdated();
+		},
+		
+		onRemoveChild: function() {
+			this._childrenUpdated();
+		},
+		
 		/*------------------------------ Events ------------------------------*/
 		
 		handleClose: function(event) {
@@ -1916,6 +1924,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ Other ------------------------------*/
 		
+		_childrenUpdated: function() {
+			this.toggleClass(this.subclazz('nochildren'), !this._children.length);
+		},
+		
 		_open: function(v) {
 			this.setState('open', v);
 			this.trigger(v ? 'open' : 'close');
@@ -1926,6 +1938,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		afterRender: function() {
 			this.widget$.on('show.bs.dropdown', this.handleOpen.bind(this));
 			this.widget$.on('hide.bs.dropdown', this.handleClose.bind(this));
+			this._childrenUpdated();
 		},
 		
 		render$: function() {
