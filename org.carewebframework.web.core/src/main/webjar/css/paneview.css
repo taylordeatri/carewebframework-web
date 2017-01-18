@@ -4,6 +4,7 @@
     overflow: hidden;
     display: inline-flex;
     background-color: white;
+    border-radius: 5px;
 }
 
 .cwf_paneview-horizontal {
@@ -15,6 +16,14 @@
     margin: 0 2px 0 2px;
 }
 
+.cwf_paneview-horizontal > .cwf_pane:first-child {
+    margin-left: 0;
+}
+
+.cwf_paneview-horizontal > .cwf_pane:last-child {
+    margin-right: 0;
+}
+
 .cwf_paneview-vertical {
     flex-direction: column;
 }
@@ -22,6 +31,14 @@
 .cwf_paneview-vertical > .cwf_pane {
     width: 100%;
     margin: 2px 0 2px 0;
+}
+
+.cwf_paneview-vertical > .cwf_pane:first-child {
+    margin-top: 0;
+}
+
+.cwf_paneview-vertical > .cwf_pane:last-child {
+    margin-bottom: 0;
 }
 
 /* Pane */

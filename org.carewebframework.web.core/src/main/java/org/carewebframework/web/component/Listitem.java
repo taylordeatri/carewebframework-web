@@ -33,7 +33,7 @@ import org.carewebframework.web.event.ChangeEvent;
 import org.carewebframework.web.event.EventUtil;
 
 @Component(value = "listitem", widgetClass = "Listitem", parentTag = "listbox")
-public class Listitem extends BaseLabeledComponent {
+public class Listitem extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     
     private boolean selected;
     

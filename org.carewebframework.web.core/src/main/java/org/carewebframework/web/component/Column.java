@@ -38,7 +38,7 @@ import org.carewebframework.web.model.Sorting.SortOrder;
 import org.carewebframework.web.model.Sorting.SortToggle;
 
 @Component(value = "column", widgetClass = "Column", widgetPackage = "cwf-table", parentTag = "columns", childTag = @ChildTag("*"))
-public class Column extends BaseLabeledComponent {
+public class Column extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     
     private Comparator<?> sortComparator;
     

@@ -32,7 +32,7 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
 @Component(value = "rowcell", widgetPackage = "cwf-table", widgetClass = "Rowcell", content = ContentHandling.AS_CHILD, parentTag = "row", childTag = @ChildTag("*"))
-public class Rowcell extends BaseLabeledComponent {
+public class Rowcell extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     
     private int colspan = 1;
     

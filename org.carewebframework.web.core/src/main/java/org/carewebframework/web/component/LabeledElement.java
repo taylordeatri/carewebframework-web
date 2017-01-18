@@ -31,32 +31,31 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 /**
  * Component to facilitate adding a label to another component or component group.
  */
-public class LabeledElement extends BaseLabeledComponent {
+public class LabeledElement extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionAll> {
     
     public enum LabelAlignment {
         START, CENTER, END
-    };
-    
-    public enum LabelPosition {
-        LEFT, RIGHT, TOP, BOTTOM
-    };
+    }
     
     private LabelAlignment alignment = LabelAlignment.START;
-    
-    private LabelPosition position = LabelPosition.LEFT;
     
     private String labelStyle;
     
     private String labelClass;
+    
+    public LabeledElement() {
+        setPosition(LabelPositionAll.LEFT);
+    }
     
     /**
      * Returns the position of the label relative to the contained elements. Defaults to 'left'.
      * 
      * @return May be one of: left, right, top, or bottom.
      */
+    @Override
     @PropertyGetter("position")
-    public LabelPosition getPosition() {
-        return position;
+    public LabelPositionAll getPosition() {
+        return super.getPosition();
     }
     
     /**
@@ -64,13 +63,10 @@ public class LabeledElement extends BaseLabeledComponent {
      * 
      * @param position May be one of: left, right, top, or bottom.
      */
+    @Override
     @PropertySetter("position")
-    public void setPosition(LabelPosition position) {
-        position = position == null ? LabelPosition.LEFT : position;
-        
-        if (position != this.position) {
-            sync("position", this.position = position);
-        }
+    public void setPosition(LabelPositionAll position) {
+        super.setPosition(position);
     }
     
     /**

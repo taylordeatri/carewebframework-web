@@ -32,15 +32,9 @@ import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
 
 @Component(value = "checkbox", widgetClass = "Checkbox", parentTag = "*")
-public class Checkbox extends BaseLabeledComponent {
-    
-    public enum LabelPosition {
-        RIGHT, LEFT
-    };
+public class Checkbox extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionHorz> {
     
     private boolean checked;
-    
-    private LabelPosition position;
     
     public Checkbox() {
         this(null);
@@ -48,7 +42,7 @@ public class Checkbox extends BaseLabeledComponent {
     
     public Checkbox(String label) {
         super(label);
-        setPosition(LabelPosition.RIGHT);
+        setPosition(LabelPositionHorz.RIGHT);
     }
     
     @PropertyGetter("checked")
@@ -63,18 +57,26 @@ public class Checkbox extends BaseLabeledComponent {
         }
     }
     
+    /**
+     * Returns the position of the label relative to the contained elements. Defaults to 'left'.
+     * 
+     * @return May be one of: left, right.
+     */
+    @Override
     @PropertyGetter("position")
-    public LabelPosition getPosition() {
-        return position;
+    public LabelPositionHorz getPosition() {
+        return super.getPosition();
     }
     
+    /**
+     * Sets the position of the label relative to the contained elements.
+     * 
+     * @param position May be one of: left, right.
+     */
+    @Override
     @PropertySetter("position")
-    public void setPosition(LabelPosition position) {
-        position = position == null ? LabelPosition.RIGHT : position;
-        
-        if (position != this.position) {
-            sync("position", this.position = position);
-        }
+    public void setPosition(LabelPositionHorz position) {
+        super.setPosition(position);
     }
     
     @EventHandler(value = "change", syncToClient = false)

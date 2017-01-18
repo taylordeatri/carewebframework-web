@@ -28,9 +28,23 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
-public abstract class BaseLabeledComponent extends BaseUIComponent {
+public abstract class BaseLabeledComponent<P extends BaseLabeledComponent.ILabelPosition> extends BaseUIComponent {
+    
+    public interface ILabelPosition {};
+    
+    public enum LabelPositionHorz implements ILabelPosition {
+        RIGHT, LEFT
+    }
+    
+    public enum LabelPositionAll implements ILabelPosition {
+        RIGHT, LEFT, TOP, BOTTOM
+    }
+    
+    public enum LabelPositionNone implements ILabelPosition {}
     
     private String label;
+    
+    private P position;
     
     public BaseLabeledComponent() {
     }
@@ -48,6 +62,16 @@ public abstract class BaseLabeledComponent extends BaseUIComponent {
     public void setLabel(String label) {
         if (!areEqual(label = nullify(label), this.label)) {
             sync("label", this.label = label);
+        }
+    }
+    
+    protected P getPosition() {
+        return position;
+    }
+    
+    protected void setPosition(P position) {
+        if (position != this.position) {
+            sync("position", this.position = position);
         }
     }
     

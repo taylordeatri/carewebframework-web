@@ -30,7 +30,7 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
 @Component(value = "a", widgetClass = "Hyperlink", parentTag = "*")
-public class Hyperlink extends BaseLabeledImageComponent {
+public class Hyperlink extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPositionHorz> {
     
     private String href;
     
@@ -38,6 +38,28 @@ public class Hyperlink extends BaseLabeledImageComponent {
     
     public Hyperlink() {
         addClass("flavor:btn-link size:btn-sm");
+    }
+    
+    /**
+     * Returns the position of the label relative to the contained elements. Defaults to 'left'.
+     * 
+     * @return May be one of: left, right.
+     */
+    @Override
+    @PropertyGetter("position")
+    public LabelPositionHorz getPosition() {
+        return super.getPosition();
+    }
+    
+    /**
+     * Sets the position of the label relative to the contained elements.
+     * 
+     * @param position May be one of: left, right.
+     */
+    @Override
+    @PropertySetter("position")
+    public void setPosition(LabelPositionHorz position) {
+        super.setPosition(position);
     }
     
     @PropertyGetter("href")

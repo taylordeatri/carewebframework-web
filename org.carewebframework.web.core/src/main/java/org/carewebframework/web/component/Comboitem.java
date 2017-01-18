@@ -33,7 +33,7 @@ import org.carewebframework.web.event.ChangeEvent;
 import org.carewebframework.web.event.EventUtil;
 
 @Component(value = "comboitem", widgetClass = "Comboitem", parentTag = "combobox")
-public class Comboitem extends BaseLabeledComponent {
+public class Comboitem extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     
     private boolean selected;
     

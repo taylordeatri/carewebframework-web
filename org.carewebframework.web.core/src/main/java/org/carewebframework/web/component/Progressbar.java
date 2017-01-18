@@ -32,7 +32,7 @@ import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
 
 @Component(value = "progressbar", widgetClass = "Progressbar", parentTag = "*")
-public class Progressbar extends BaseLabeledComponent {
+public class Progressbar extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     
     private int value;
     

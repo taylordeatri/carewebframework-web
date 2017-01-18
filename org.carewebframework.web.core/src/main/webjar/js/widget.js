@@ -1553,7 +1553,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				this._related$ = related$;
 				this.real$.css('z-index', this._related$.cwf$zindex());
 				this.real$.cwf$track(this._related$);
-				options.collision = options.collision || 'none';
 				this._options = options;
 				this.real$.show().position(options);
 				cwf.widget.Popup.registerPopup(this, true);
@@ -1566,7 +1565,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		afterRender: function() {
 			this._super();
 			this.real$.on('move', this.moveHandler.bind(this));
-			this.real$.on('click', false);
+			this._allowBubble ? null : this.real$.on('click', false);
 		},
 		
 		render$: function() {
@@ -1658,8 +1657,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		label: function(v) {
 			var lbl$ = this.sub$('lbl');
 			(lbl$.length ? lbl$ : this.widget$).text(v);
-		}
+		},
 	
+		position: function(v) {
+			this.toggleClass('cwf_labeled-left', v === 'LEFT');
+			this.toggleClass('cwf_labeled-right', v === 'RIGHT');
+			this.toggleClass('cwf_labeled-top', v === 'TOP');
+			this.toggleClass('cwf_labeled-bottom', v === 'BOTTOM');
+		}
+
 	});
 	
 	/******************************************************************************************************************
@@ -1811,11 +1817,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._syncChecked(v);
 		},
 		
-		position: function(v) {
-			this.toggleClass('cwf_labeled-left', v === 'LEFT');
-			this.toggleClass('cwf_labeled-right', v !== 'LEFT');
-		},
-
 		_syncChecked: function(checked) {
 			// NOP
 		}
@@ -1901,6 +1902,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	 ******************************************************************************************************************/ 
 	
 	cwf.widget.Menupopup = cwf.widget.Popup.extend({
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this._allowBubble = true;
+		},
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
@@ -2036,8 +2044,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Events ------------------------------*/
 		
 		handleCheck: function(event) {
-			cwf.event.stop(event);
 			this.trigger('click');
+			return false;
 		},
 		
 		/*------------------------------ Lifecycle ------------------------------*/
@@ -2906,12 +2914,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ Events ------------------------------*/
 		
-		_onmaximize: function(event) {
+		handleMaximize: function(event) {
 			var size = this._buttonState('maximize') ? 'NORMAL' : 'MAXIMIZED';
 			this.updateState('size', size);
 		}, 
 		
-		_onminimize: function(event) {
+		handleMinimize: function(event) {
 			var size = this._buttonState('minimize') ? 'NORMAL' : 'MINIMIZED';
 			this.updateState('size', size);
 		},
@@ -2949,8 +2957,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		afterRender: function() {
 			this._super();
-			this.widget$.on('minimize', this._onminimize.bind(this));
-			this.widget$.on('maximize', this._onmaximize.bind(this));
+			this.widget$.on('minimize', this.handleMinimize.bind(this));
+			this.widget$.on('maximize', this.handleMaximize.bind(this));
 		},
 		
 		getDragHelper: function() {
@@ -3059,8 +3067,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._updateSizable();
 			this.widget$.draggable('instance') ? this.widget$.draggable('destroy') : null;
 			this.applyState('dragid');
+			this.widget$.off('click.cwf');
 			
 			if (v === 'MODAL') {
+				this.widget$.on('click.cwf', false);
 				mask$ = mask$ || $('body').cwf$mask(++cwf.widget._zmodal);
 				mask$.cwf$show(this.getState('visible'));
 				this.widget$.css('z-index', mask$.css('z-index'));

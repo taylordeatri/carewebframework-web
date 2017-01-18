@@ -35,7 +35,7 @@ import org.carewebframework.web.event.OpenEvent;
 
 @Component(value = "menu", widgetClass = "Menu", parentTag = "*", childTag = { @ChildTag("menuitem"),
         @ChildTag("menuheader"), @ChildTag("menuseparator") })
-public class Menu extends BaseLabeledImageComponent {
+public class Menu extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPositionNone> {
     
     private boolean open;
     

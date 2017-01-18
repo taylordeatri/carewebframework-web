@@ -30,7 +30,7 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 
 @Component(value = "cell", widgetClass = "Cell", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
-public class Cell extends BaseLabeledComponent {
+public class Cell extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     
     public Cell() {
         super();

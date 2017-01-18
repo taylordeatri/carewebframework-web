@@ -28,7 +28,7 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
-public abstract class BaseLabeledImageComponent extends BaseLabeledComponent {
+public abstract class BaseLabeledImageComponent<P extends BaseLabeledComponent.ILabelPosition> extends BaseLabeledComponent<P> {
     
     private String image;
     

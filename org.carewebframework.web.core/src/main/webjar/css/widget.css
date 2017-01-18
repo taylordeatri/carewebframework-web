@@ -373,14 +373,16 @@ a:not([href]) {
 	margin: 2px;
 }
 
-/* Labeled input */
+/* Labeled elements */
 
-.cwf_labeled-right > label {
+.cwf_labeled-right > label,
+.cwf_labeled-right > span {
 	float: right;	
 	margin-left: 5px;	
 }
 
-.cwf_labeled-left > label {
+.cwf_labeled-left > label,
+.cwf_labeled-left > span {
 	float: left;
 	margin-right: 5px;	
 }

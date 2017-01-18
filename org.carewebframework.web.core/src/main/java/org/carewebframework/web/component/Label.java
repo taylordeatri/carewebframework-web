@@ -28,7 +28,7 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 
 @Component(value = "label", widgetClass = "Label", parentTag = "*")
-public class Label extends BaseLabeledComponent {
+public class Label extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     
     public Label() {
         this(null);

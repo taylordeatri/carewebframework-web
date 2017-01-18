@@ -37,7 +37,7 @@ import org.carewebframework.web.event.Event;
 
 @Component(value = "treenode", widgetPackage = "cwf-treeview", widgetClass = "Treenode", parentTag = { "treeview",
         "treenode" }, childTag = @ChildTag("treenode"))
-public class Treenode extends BaseLabeledImageComponent implements Iterable<Treenode> {
+public class Treenode extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPositionNone> implements Iterable<Treenode> {
     
     /**
      * Iterates over nodes in a tree in a depth first search. Is not susceptible to concurrent
