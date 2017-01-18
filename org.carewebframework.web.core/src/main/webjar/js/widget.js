@@ -1924,13 +1924,27 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ Other ------------------------------*/
 		
+		close: function() {
+			this.updateState('open', false, true);
+			this.trigger('close');
+		},
+		
 		_childrenUpdated: function() {
 			this.toggleClass(this.subclazz('nochildren'), !this._children.length);
 		},
 		
 		_open: function(v) {
 			this.setState('open', v);
+			this._registerAsPopup(v);
 			this.trigger(v ? 'open' : 'close');
+		},
+		
+		_registerAsPopup: function(v) {
+			if (v) {
+				cwf.widget._popup[this.id] = this;
+			} else {
+				delete cwf.widget._popup[this.id];
+			}
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -1970,6 +1984,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			if (!open !== !v) {
 				dd$.children().first().dropdown('toggle');
+				this._registerAsPopup(v);
 			}
 		}
 		
