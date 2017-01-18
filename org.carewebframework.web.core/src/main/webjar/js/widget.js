@@ -1553,6 +1553,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				this._related$ = related$;
 				this.real$.css('z-index', this._related$.cwf$zindex());
 				this.real$.cwf$track(this._related$);
+				options.collision = options.collision || 'flipfit';
 				this._options = options;
 				this.real$.show().position(options);
 				cwf.widget.Popup.registerPopup(this, true);
@@ -3067,10 +3068,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this._updateSizable();
 			this.widget$.draggable('instance') ? this.widget$.draggable('destroy') : null;
 			this.applyState('dragid');
-			this.widget$.off('click.cwf');
+			this.widget$.removeAttr('data-cwf-popup');
 			
 			if (v === 'MODAL') {
-				this.widget$.on('click.cwf', false);
+				this.widget$.attr('data-cwf-popup', true);
 				mask$ = mask$ || $('body').cwf$mask(++cwf.widget._zmodal);
 				mask$.cwf$show(this.getState('visible'));
 				this.widget$.css('z-index', mask$.css('z-index'));
