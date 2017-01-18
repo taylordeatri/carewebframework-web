@@ -19,6 +19,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget._radio = {};
 	
+	cwf.widget._popup = {};
+	
 	/******************************************************************************************************************
 	 * Base class providing simulated inheritance.
 	 ******************************************************************************************************************/ 
@@ -1522,14 +1524,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		close: function(notself, notothers) {
 			if (this.isOpen()) {
-				delete cwf.widget._popup[this.id];
+				cwf.widget.Popup.registerPopup(this, false);
 				this.real$.hide().cwf$track(this._related$, true);
 				this._trigger('close', notself);
 				this._related$ = null;
 				this._options = null;
 			}
 			
-			notothers ? null : cwf.widget.closePopups(this.real$);
+			notothers ? null : cwf.widget.Popup.closePopups(this.real$);
 		},
 		
 		isOpen: function() {
@@ -1547,14 +1549,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			}
 			
 			if (!this.isOpen() || (related$ && !related$.is(this._related$))) {
-				cwf.widget.closePopups(related$);
+				cwf.widget.Popup.closePopups(related$);
 				this._related$ = related$;
 				this.real$.css('z-index', this._related$.cwf$zindex());
 				this.real$.cwf$track(this._related$);
 				options.collision = options.collision || 'none';
 				this._options = options;
 				this.real$.show().position(options);
-				cwf.widget._popup[this.id] = this;
+				cwf.widget.Popup.registerPopup(this, true);
 				this._trigger('open', notself);
 			}
 		},
@@ -1586,6 +1588,29 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		}
 		
 	});
+	
+	cwf.widget.Popup.registerPopup = function(wgt, v) {
+		if (!wgt.close) {
+			throw new Error('Widget must implement close method.');
+		}
+		
+		if (v) {
+			cwf.widget._popup[wgt.id] = wgt;
+		} else {
+			delete cwf.widget._popup[wgt.id];
+		}
+	};
+	
+	cwf.widget.Popup.closePopups = function(parent$) {
+		var parent = parent$ ? parent$.closest('*[data-cwf-popup]')[0] : null;
+		
+		_.forOwn(cwf.widget._popup, function(popup) {
+			if (!parent || $.contains(parent, popup._related$[0])) {
+				popup.close(false, true);
+			}
+		});
+	};
+	
 	
 	/******************************************************************************************************************
 	 * A toolbar widget
@@ -1919,14 +1944,16 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		init: function() {
 			this._super();
+			this.initState({open: false});
 			this.forwardToServer('open close');
 		},
 		
 		/*------------------------------ Other ------------------------------*/
 		
 		close: function() {
-			this.updateState('open', false, true);
-			this.trigger('close');
+			if (this.updateState('open', false, true)) {
+				this.trigger('close');
+			}
 		},
 		
 		_childrenUpdated: function() {
@@ -1934,16 +1961,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		_open: function(v) {
-			this.setState('open', v);
-			this._registerAsPopup(v);
-			this.trigger(v ? 'open' : 'close');
-		},
-		
-		_registerAsPopup: function(v) {
-			if (v) {
-				cwf.widget._popup[this.id] = this;
-			} else {
-				delete cwf.widget._popup[this.id];
+			if (!this._toggling) {
+				this.setState('open', v);
+				cwf.widget.Popup.registerPopup(this, v);
+				this.trigger(v ? 'open' : 'close');
 			}
 		},
 		
@@ -1983,8 +2004,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				open = dd$.hasClass('open');
 			
 			if (!open !== !v) {
+				this._toggling = true;
 				dd$.children().first().dropdown('toggle');
-				this._registerAsPopup(v);
+				cwf.widget.Popup.registerPopup(this, v);
+				this._toggling = false;
 			}
 		}
 		
