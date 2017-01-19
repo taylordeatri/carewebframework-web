@@ -39,6 +39,14 @@ public class Menu extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPo
     
     private boolean open;
     
+    public void open() {
+        setOpen(true);
+    }
+    
+    public void close() {
+        setOpen(false);
+    }
+    
     @PropertyGetter("open")
     public boolean isOpen() {
         return open;
@@ -47,7 +55,7 @@ public class Menu extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPo
     @PropertySetter("open")
     public void setOpen(boolean open) {
         if (open != this.open) {
-            sync("open", this.open = open);
+            invoke((this.open = open) ? "open" : "close");
         }
     }
     
@@ -56,11 +64,13 @@ public class Menu extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPo
         open = event instanceof OpenEvent;
     }
     
-    public void open() {
-        setOpen(true);
+    @EventHandler("open")
+    private void _onOpen() {
+        this.open = true;
     }
     
-    public void close() {
-        setOpen(false);
+    @EventHandler("close")
+    private void _onClose() {
+        this.open = false;
     }
 }

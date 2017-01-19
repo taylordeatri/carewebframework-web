@@ -152,13 +152,13 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		 * Note this uses background polling, so should be used sparingly.
 		 */
 		cwf$track: function(src$, untrack) {
-			var lst = src$.data('cwf$track.ele') || [],
-				poll = src$.data('cwf$track.poll');
+			var data = src$._cwf$track || {},
+				lst = data.lst || [];
 			
 			this.each(function() {
 				var i = lst.indexOf(this);
 				
-				if (i == -1) {
+				if (i === -1) {
 					untrack ? null : lst.push(this);
 				} else {
 					untrack ? lst.splice(i, 1) : null;
@@ -166,34 +166,37 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			});
 			
 			if (!lst.length) {
-				if (poll) {
-					clearInterval(poll);
-					src$.data('cwf$track.poll', null);
-				}
-				
-				src$.data('cwf$track.ele', null);
-			} else if (!poll) {
-				src$.data('cwf$track.ele', lst);
-				src$.data('cwf$track.pos', src$.offset());
-				poll = setInterval(_poll, 500);
-				src$.data('cwf$track.poll', poll);
+				_untrack();
+			} else if (!data.poll) {
+				src$._cwf$track = data;
+				data.lst = lst;
+				data.pos = src$.offset();
+				data.poll = setInterval(_poll, 500);
 			}
 			
 			return this;
 			
+			function _untrack() {
+				data.poll ? clearInterval(data.poll) : null;
+				delete src$._cwf$track;
+			}
+			
 			function _poll() {
-				var lastpos = src$.data('cwf$track.pos'),
+				var lastpos = data.pos,
 					currpos = src$.offset();
 				
-				if (lastpos.left !== currpos.left || lastpos.top !== currpos.top) {
+				if (!currpos) {
+					_untrack();
+				} else if (lastpos.left !== currpos.left || lastpos.top !== currpos.top) {
 					lastpos.left = currpos.left;
 					lastpos.top = currpos.top;
+					
 					var event = $.Event('move', {
 						relatedTarget: src$, 
 						position: currpos,
 						pageX: currpos.left,
 						pageY: currpos.top});
-					$(src$.data('cwf$track.ele')).trigger(event);
+					$(data.lst).trigger(event);
 				}
 			}
 		},

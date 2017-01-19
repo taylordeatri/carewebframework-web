@@ -221,8 +221,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		_attachAncillaries: function() {
-			_.forOwn(this._ancillaries, function(ancillary$) {
-				var attach = ancillary$.data('attach') || _attach;
+			_.forOwn(this._ancillaries, function(ancillary) {
+				var ancillary$ = cwf.$(ancillary),
+					attach = ancillary$.data('attach') || _attach;
+				
 				attach(ancillary$);
 			});
 			
@@ -267,10 +269,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		_detachAncillaries: function(destroy) {
-			_.forOwn(this._ancillaries, function(ancillary$, key, map) {
+			_.forOwn(this._ancillaries, function(ancillary, key, map) {
+				var ancillary$ = cwf.$(ancillary),
+					wgt = cwf.widget.isWidget(ancillary) ? ancillary : null;
+				
 				if (destroy) {
-					ancillary$.remove();
 					delete map[key];
+					wgt ? wgt.destroy() : ancillary$.remove();
 				} else {
 					ancillary$.data('oldparent', ancillary$.parent());
 					ancillary$.detach();
@@ -1928,7 +1933,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Containment ------------------------------*/
 		
 		anchor$: function() {
-			return this.sub$('inner');
+			return this._ancillaries.popup ? this._ancillaries.popup.anchor$() : this._super();
 		},
 						
 		onAddChild: function() {
@@ -1940,62 +1945,79 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/*------------------------------ Events ------------------------------*/
-		
-		handleClose: function(event) {
-			this._open(false);
+			
+		handleClick: function(event) {
+			this._children.length ? this.toggle() : null;
+			return false;
 		},
 		
-		handleOpen: function(event) {
-			this._open(true);
+		handleOpenClose: function(event) {
+			this.setState('_open', event.type === 'open');
 		},
 		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
 			this._super();
-			this.initState({open: false});
+			this.initState({_open: false});
 			this.forwardToServer('open close');
 		},
 		
 		/*------------------------------ Other ------------------------------*/
 		
-		close: function() {
-			if (this.updateState('open', false, true)) {
-				this.trigger('close');
+		open: function() {
+			if (this._ancillaries.popup) {
+				this.close();
+
+				this._ancillaries.popup.open({
+					my: 'left top',
+					at: 'left bottom',
+					of: this.widget$
+				});
+				
+				this.setState('_open', true);
 			}
+		},
+		
+		close: function() {
+			if (this._ancillaries.popup) {
+				this._ancillaries.popup.close();
+				this.setState('_open', false);
+			}
+		},
+		
+		toggle: function() {
+			this.getState('_open') ? this.close() : this.open();
 		},
 		
 		_childrenUpdated: function() {
 			this.toggleClass(this.subclazz('nochildren'), !this._children.length);
 		},
 		
-		_open: function(v) {
-			if (!this._toggling) {
-				this.setState('open', v);
-				cwf.widget.Popup.registerPopup(this, v);
-				this.trigger(v ? 'open' : 'close');
-			}
-		},
-		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
-			this.widget$.on('show.bs.dropdown', this.handleOpen.bind(this));
-			this.widget$.on('hide.bs.dropdown', this.handleClose.bind(this));
+			this._super();
+			this.widget$.on('open close', this.handleOpenClose.bind(this));
+			this.widget$.on('click', this.handleClick.bind(this));
 			this._childrenUpdated();
+
+			if (!this._ancillaries.popup) {
+				this._ancillaries.popup = cwf.widget.create(null, {wclass: 'Menupopup'});
+				this.widget$.append(this._ancillaries.popup.widget$);
+			} else if (this.getState('_open')) {
+				this.open();
+			}
 		},
 		
 		render$: function() {
 			var dom = 
 				  '<span>'
 				+   '<div class="dropdown" style="display: inline-block" role="presentation">'
-				+     '<a id="${id}-btn" data-toggle="dropdown"'
-				+       'role="button" aria-haspopup="true" aria-expanded="false">'
+				+     '<a id="${id}-btn" role="button" aria-haspopup="true" aria-expanded="false">'
 				+ 		 this.getDOMTemplate(':image', 'label')
 				+       '<span class="caret"></span>'
 				+     '</a>'
-				+     '<ul id="${id}-inner" class="dropdown-menu multi-level" '
-				+       'role="menu" aria-labelledby="${id}-lbl"></ul>'
 				+   '</div>'
 				+ '</span>';
 			return $(this.resolveEL(dom));
@@ -2006,18 +2028,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		clazz: function(v) {
 			this._super();
 			this.attr('class', v, this.sub$('btn'));
-		},
-		
-		open: function(v) {
-			var dd$ = this.widget$.children().first(),
-				open = dd$.hasClass('open');
-			
-			if (!open !== !v) {
-				this._toggling = true;
-				dd$.children().first().dropdown('toggle');
-				cwf.widget.Popup.registerPopup(this, v);
-				this._toggling = false;
-			}
 		}
 		
 	});
