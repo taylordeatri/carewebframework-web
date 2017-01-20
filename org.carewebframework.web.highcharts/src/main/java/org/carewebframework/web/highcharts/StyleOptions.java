@@ -9,12 +9,15 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.OptionMap;
+import org.carewebframework.web.ancillary.OptionMap.IOptionMapConverter;
+
 /**
  * Used to hold style options.
  */
-public class StyleOptions implements IMapConverter {
+public class StyleOptions implements IOptionMapConverter {
     
-    private final OptionsMap styles = new OptionsMap();
+    private final OptionMap styles = new OptionMap();
     
     /**
      * Adds the requested style.
@@ -32,7 +35,7 @@ public class StyleOptions implements IMapConverter {
      * Returns the underlying map.
      */
     @Override
-    public OptionsMap toMap() {
+    public OptionMap toMap() {
         return styles;
     }
     

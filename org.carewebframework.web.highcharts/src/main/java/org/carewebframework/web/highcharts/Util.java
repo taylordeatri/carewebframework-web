@@ -9,10 +9,7 @@
  */
 package org.carewebframework.web.highcharts;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.carewebframework.web.annotation.ComponentScanner;
@@ -23,22 +20,6 @@ import org.carewebframework.web.annotation.ComponentScanner;
 public class Util {
     
     private static final Map<String, Class<? extends PlotOptions>> plotTypes = new HashMap<String, Class<? extends PlotOptions>>();
-    
-    /**
-     * Converts a collection of IMapConverter items to a list of maps.
-     *
-     * @param items IMapConverter items to convert.
-     * @return List of converted items.
-     */
-    public static List<OptionsMap> toMaps(Collection<? extends IMapConverter> items) {
-        List<OptionsMap> list = new ArrayList<>();
-        
-        for (IMapConverter mc : items) {
-            list.add(mc.toMap());
-        }
-        
-        return list;
-    }
     
     /**
      * Returns the plot type from its text identifier.
@@ -52,17 +33,6 @@ public class Util {
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid plot type: " + type);
         }
-    }
-    
-    /**
-     * Process a Javascript code snippet. If the snippet does not have a function wrapper, a
-     * no-argument wrapper will be added.
-     *
-     * @param snippet JS code snippet.
-     * @return A JavaScriptValue object or null if the input was null.
-     */
-    protected static String toJS(String snippet) {
-        return snippet == null ? null : snippet.startsWith("function") ? snippet : "function() {" + snippet + "}";
     }
     
     /**

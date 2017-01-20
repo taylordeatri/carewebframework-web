@@ -12,6 +12,7 @@ package org.carewebframework.web.highcharts;
 import java.lang.reflect.Field;
 
 import org.carewebframework.common.StrUtil;
+import org.carewebframework.web.ancillary.Options;
 
 /**
  * Global settings for Highcharts. These are set on a per desktop basis. Values are loaded from

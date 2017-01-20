@@ -12,6 +12,8 @@ package org.carewebframework.web.highcharts;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.carewebframework.web.ancillary.Options;
+
 public class Axis extends Options {
     
     protected Axis(List<Axis> axes) {

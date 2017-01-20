@@ -9,6 +9,8 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+
 /**
  * Options regarding the chart area and plot area as well as general chart options.
  */

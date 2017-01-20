@@ -9,6 +9,8 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+
 /**
  * A linear gradient that lets us create gradients in plot bands instead of just using solid colors.
  * I only put the properties I needed into this class. The highcharts' javascript class has more

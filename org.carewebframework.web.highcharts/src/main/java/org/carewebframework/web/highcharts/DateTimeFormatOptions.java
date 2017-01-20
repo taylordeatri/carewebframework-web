@@ -9,6 +9,8 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+
 /**
  * For a date/time axis, the scale will automatically adjust to the appropriate unit. This class
  * gives the default string representations used for each unit.

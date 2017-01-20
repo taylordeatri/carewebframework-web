@@ -9,6 +9,8 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+
 /**
  * A line stretching across the plot area, marking a specific value on one of the axes.
  */

@@ -1,25 +1,19 @@
-/**
- * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
- * If a copy of the MPL was not distributed with this file, You can obtain one at
- * http://mozilla.org/MPL/2.0/.
- * 
- * This Source Code Form is also subject to the terms of the Health-Related Additional
- * Disclaimer of Warranty and Limitation of Liability available at
- * http://www.carewebframework.org/licensing/disclaimer.
- */
-package org.carewebframework.web.highcharts;
+package org.carewebframework.web.ancillary;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import org.carewebframework.web.ancillary.OptionMap.IOptionMapConverter;
+import org.carewebframework.web.annotation.JavaScript;
+
 /**
  * Base class for options. Supports interconverting class-based properties to a map and vice-versa.
  */
-public abstract class Options implements IMapConverter {
+public abstract class Options implements IOptionMapConverter {
     
     @Override
-    public OptionsMap toMap() {
-        OptionsMap map = new OptionsMap();
+    public OptionMap toMap() {
+        OptionMap map = new OptionMap();
         toMap(getClass(), map);
         return map;
     }
@@ -31,7 +25,7 @@ public abstract class Options implements IMapConverter {
      * @param clazz Class to examine.
      * @param map Map to receive fields.
      */
-    private void toMap(Class<?> clazz, OptionsMap map) {
+    private void toMap(Class<?> clazz, OptionMap map) {
         if (clazz == Options.class) {
             return;
         }
@@ -39,6 +33,7 @@ public abstract class Options implements IMapConverter {
         toMap(clazz.getSuperclass(), map);
         
         for (Field field : clazz.getDeclaredFields()) {
+            field.setAccessible(true);
             int modifiers = field.getModifiers();
             
             if (!Modifier.isTransient(modifiers) && !Modifier.isPrivate(modifiers)) {
@@ -46,8 +41,8 @@ public abstract class Options implements IMapConverter {
                     String name = field.getName();
                     Object value = field.get(this);
                     
-                    if (field.isAnnotationPresent(JavaScript.class)) {
-                        value = Util.toJS(value.toString());
+                    if (value != null && field.isAnnotationPresent(JavaScript.class)) {
+                        value = ConvertUtil.convertToJS(value.toString());
                     }
                     
                     if (value != null) {
@@ -67,14 +62,14 @@ public abstract class Options implements IMapConverter {
      * @param value Value.
      * @param map Map to receive key/value pair.
      */
-    private void setValue(String name, Object value, OptionsMap map) {
+    private void setValue(String name, Object value, OptionMap map) {
         if (name.contains("_")) {
             String pcs[] = name.split("\\_", 2);
             name = pcs[0];
-            OptionsMap submap = (OptionsMap) map.get(name);
+            OptionMap submap = (OptionMap) map.get(name);
             
             if (submap == null) {
-                submap = new OptionsMap();
+                submap = new OptionMap();
             }
             
             setValue(pcs[1], value, submap);

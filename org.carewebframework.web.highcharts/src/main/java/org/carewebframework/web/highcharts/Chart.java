@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.carewebframework.web.ancillary.ConvertUtil;
+import org.carewebframework.web.ancillary.OptionMap;
+import org.carewebframework.web.ancillary.OptionMap.IOptionMapConverter;
+import org.carewebframework.web.ancillary.Options;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.component.BaseUIComponent;
 import org.carewebframework.web.component.Page;
@@ -22,7 +26,7 @@ import org.carewebframework.web.component.Page;
  * CWF wrapper for HighCharts component.
  */
 @Component(value = "hchart", widgetPackage = "cwf-hchart", widgetClass = "HChart", parentTag = "*")
-public class Chart extends BaseUIComponent implements IMapConverter {
+public class Chart extends BaseUIComponent implements IOptionMapConverter {
     
     private static final String GLOBAL_SETTINGS = Chart.class.getName() + ".global";
     
@@ -244,7 +248,7 @@ public class Chart extends BaseUIComponent implements IMapConverter {
      * Converts all options to map for sending to client.
      */
     @Override
-    public OptionsMap toMap() {
+    public OptionMap toMap() {
         options.chart.renderTo = getId();
         return options.toMap();
     }
@@ -310,7 +314,7 @@ public class Chart extends BaseUIComponent implements IMapConverter {
      * @param js JavaScript snippet.
      */
     private void invokeJS(String func, String js) {
-        invoke(func, Util.toJS(js));
+        invoke(func, ConvertUtil.convertToJS(js));
     }
     
     /**
@@ -318,7 +322,7 @@ public class Chart extends BaseUIComponent implements IMapConverter {
      */
     private void updateTitle() {
         if (running) {
-            OptionsMap map = new OptionsMap();
+            OptionMap map = new OptionMap();
             map.put("title", options.title);
             map.put("subtitle", options.subtitle);
             invoke("_title", map);

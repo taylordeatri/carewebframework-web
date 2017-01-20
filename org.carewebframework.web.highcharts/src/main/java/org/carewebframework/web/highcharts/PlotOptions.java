@@ -12,6 +12,9 @@ package org.carewebframework.web.highcharts;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.carewebframework.web.ancillary.Options;
+import org.carewebframework.web.ancillary.OptionMap;
+
 /**
  * Base class for all plot types.
  * <p>
@@ -262,11 +265,11 @@ public abstract class PlotOptions extends Options {
      * If type is not null, place options under a submap indexed by the type id.
      */
     @Override
-    public OptionsMap toMap() {
-        OptionsMap map = super.toMap();
+    public OptionMap toMap() {
+        OptionMap map = super.toMap();
         
         if (type != null) {
-            OptionsMap newMap = new OptionsMap();
+            OptionMap newMap = new OptionMap();
             newMap.put(type, map);
             map = newMap;
         }

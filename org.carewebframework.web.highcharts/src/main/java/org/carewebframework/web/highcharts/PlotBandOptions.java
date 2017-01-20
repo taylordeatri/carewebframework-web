@@ -9,6 +9,8 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+
 /**
  * A colored band stretching across the plot area marking an interval on the axis.
  */

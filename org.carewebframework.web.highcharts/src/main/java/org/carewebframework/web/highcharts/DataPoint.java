@@ -9,6 +9,8 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+
 public class DataPoint extends Options implements Comparable<DataPoint> {
 
     /**

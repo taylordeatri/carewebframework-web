@@ -12,6 +12,9 @@ package org.carewebframework.web.highcharts;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.carewebframework.web.ancillary.Options;
+import org.carewebframework.web.annotation.JavaScript;
+
 /**
  * Options for buttons (e.g., print or export buttons).
  */

@@ -9,6 +9,9 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+import org.carewebframework.web.annotation.JavaScript;
+
 /**
  * Options for axis labels.
  */

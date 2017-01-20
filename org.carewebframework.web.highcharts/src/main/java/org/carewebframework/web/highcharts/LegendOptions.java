@@ -9,6 +9,9 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+import org.carewebframework.web.annotation.JavaScript;
+
 /**
  * The legend is a box containing a symbol and name for each series item or point item in the chart.
  */

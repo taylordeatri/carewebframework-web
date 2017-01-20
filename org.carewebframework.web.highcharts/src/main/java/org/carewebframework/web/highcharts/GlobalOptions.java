@@ -9,6 +9,8 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+
 /**
  * Global options that don't apply to each chart. These options, like the language options, must be
  * set using the Highcharts.setOptions method.

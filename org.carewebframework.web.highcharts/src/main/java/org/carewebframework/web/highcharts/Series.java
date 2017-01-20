@@ -12,6 +12,9 @@ package org.carewebframework.web.highcharts;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.carewebframework.web.ancillary.Options;
+import org.carewebframework.web.ancillary.OptionMap;
+
 public class Series extends Options {
     
     /**
@@ -140,8 +143,8 @@ public class Series extends Options {
      * Override to merge plot options into series options.
      */
     @Override
-    public OptionsMap toMap() {
-        OptionsMap map = super.toMap();
+    public OptionMap toMap() {
+        OptionMap map = super.toMap();
         map.putAll(plotOptions.toMap());
         return map;
     }

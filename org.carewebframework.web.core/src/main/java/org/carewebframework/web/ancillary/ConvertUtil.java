@@ -25,8 +25,13 @@
  */
 package org.carewebframework.web.ancillary;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.commons.beanutils.ConvertUtils;
 import org.carewebframework.common.StrUtil;
+import org.carewebframework.web.ancillary.OptionMap.IOptionMapConverter;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Page;
 
@@ -125,6 +130,33 @@ public class ConvertUtil {
         }
         
         return target;
+    }
+    
+    /**
+     * Process a Javascript code snippet. If the snippet does not have a function wrapper, a
+     * no-argument wrapper will be added.
+     *
+     * @param snippet JS code snippet.
+     * @return A JavaScriptValue object or null if the input was null.
+     */
+    public static String convertToJS(String snippet) {
+        return snippet == null ? null : snippet.startsWith("function") ? snippet : "function() {" + snippet + "}";
+    }
+    
+    /**
+     * Converts a collection of IOptionMapConverter items to a list of maps.
+     *
+     * @param items IOptionMapConverter items to convert.
+     * @return List of converted items.
+     */
+    public static List<OptionMap> toOptionMaps(Collection<? extends IOptionMapConverter> items) {
+        List<OptionMap> list = new ArrayList<>();
+        
+        for (IOptionMapConverter mc : items) {
+            list.add(mc.toMap());
+        }
+        
+        return list;
     }
     
     private ConvertUtil() {

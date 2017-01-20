@@ -9,6 +9,8 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+
 /**
  * The loading options control the appearance of the loading screen that covers the plot area on
  * chart operations. This screen only appears after an explicit call to chart.showLoading(). It is a

@@ -1,13 +1,4 @@
-/**
- * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
- * If a copy of the MPL was not distributed with this file, You can obtain one at
- * http://mozilla.org/MPL/2.0/.
- * 
- * This Source Code Form is also subject to the terms of the Health-Related Additional
- * Disclaimer of Warranty and Limitation of Liability available at
- * http://www.carewebframework.org/licensing/disclaimer.
- */
-package org.carewebframework.web.highcharts;
+package org.carewebframework.web.ancillary;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +8,13 @@ import java.util.Map;
 /**
  * Overrides the hash map to prevent entry of null values or empty collections/maps.
  */
-public class OptionsMap extends HashMap<String, Object> {
+public class OptionMap extends HashMap<String, Object> {
+    
+    public interface IOptionMapConverter {
+        
+        OptionMap toMap();
+        
+    }
     
     private static final long serialVersionUID = 1L;
     
@@ -38,8 +35,8 @@ public class OptionsMap extends HashMap<String, Object> {
      */
     private Object convert(Object value) {
         if (value != null) {
-            if (value instanceof IMapConverter) {
-                value = ((IMapConverter) value).toMap();
+            if (value instanceof IOptionMapConverter) {
+                value = ((IOptionMapConverter) value).toMap();
             } else if (value instanceof Collection) {
                 value = convert((Collection<?>) value);
             } else if (value.getClass().isEnum()) {

@@ -9,6 +9,9 @@
  */
 package org.carewebframework.web.highcharts;
 
+import org.carewebframework.web.ancillary.Options;
+import org.carewebframework.web.ancillary.OptionMap;
+
 /**
  * Options for point markers.
  */
@@ -54,7 +57,7 @@ public class MarkerOptions extends Options {
     /**
      * Hover and select states.
      */
-    public final OptionsMap states = new OptionsMap();
+    public final OptionMap states = new OptionMap();
     
     /**
      * A predefined shape or symbol for the marker. When null, the symbol is pulled from
@@ -65,8 +68,8 @@ public class MarkerOptions extends Options {
     public String symbol;
     
     @Override
-    public OptionsMap toMap() {
-        OptionsMap map = super.toMap();
+    public OptionMap toMap() {
+        OptionMap map = super.toMap();
         states.clear();
         map.put("hover", hover_state.toMap());
         map.put("select", select_state.toMap());
