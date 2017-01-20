@@ -830,6 +830,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         props.put("wclass", componentDefinition.getWidgetClass());
         props.put("wpkg", componentDefinition.getWidgetPackage());
         props.put("cntr", isContainer());
+        props.put("nmsp", this instanceof INamespace ? true : null);
     }
     
     /**

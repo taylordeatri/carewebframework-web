@@ -401,12 +401,54 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/**
+		 * Locates the named widget within the namespace of this widget.
+		 * 
+		 * @param {string} name The name of the widget sought.
+		 * @return {Widget} The widget sought, or nil result if not found.
+		 */
+		findByName: function(name) {
+			return _find(this.getNamespace());
+			
+			function _find(wgt) {
+				if (wgt && wgt.getState('name') !== name) {
+					wgt.forEachChild(function (child) {
+						var wgt2 = _find(child);
+						
+						if (wgt2) {
+							wgt = wgt2;
+							return false;
+						}
+					});
+				}
+				
+				return wgt;
+			}
+		},
+		
+		/**
 		 * Returns the index position of this child widget within its parent widget.
 		 * 
 		 * @return {number} The index of this child widget, or -1 if it has no parent widget.
 		 */
 		getIndex: function() {
 			return this._parent ? this._parent.getChildIndex(this) : -1;
+		},
+		
+		/**
+		 * Returns the widget representing the enclosing namespace for this widget.
+		 * 
+		 * @return {Widget} The widget representing the enclosing namespace.
+		 */
+		getNamespace: function() {
+			var wgt = this.nmsp ? this._parent : this,
+				last = wgt;
+			
+			while (wgt && !wgt.nmsp) {
+				last = wgt;
+				wgt = wgt._parent;
+			}
+			
+			return last;
 		},
 		
 		/**
@@ -1332,7 +1374,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ State ------------------------------*/
 		
 		content: function(v) {
-			this.real$.text(v);
+			this.real$.text(this.resolveEL(v, '#'));
 		},
 		
 		src: function(v) {
