@@ -497,9 +497,18 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Rendering ------------------------------*/
 		
 		/**
+		 * Called after rendering is complete, including attachment to DOM.
 		 * Override to apply event handlers, etc.
 		 */
 		afterRender: function() {
+			// NOP
+		},
+		
+		/**
+		 * Called after the widget's DOM elements are constructed, but before
+		 * applying state values or attaching to DOM.
+		 */
+		beforeRender: function() {
 			// NOP
 		},
 		
@@ -523,6 +532,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 					.first()
 					.attr('id', this.id);
 				
+				this.beforeRender();
 				this.syncState();
 				
 				if (old$) {
