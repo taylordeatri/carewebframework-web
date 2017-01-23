@@ -453,25 +453,8 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			
 			props.id = props.id || cwf.uniqueId();
 			props.wpkg = props.wpkg || 'cwf-widget';
-			
-			try {
-				pkg = require(props.wpkg);
-			} catch (e) {
-				return new Promise(function(resolve, reject) {
-					require([props.wpkg], function(pkg) {
-						try {
-							resolve(_create(pkg));
-						} catch(e) {
-							reject(e);
-						}
-					}, function(e) {
-						reject(e);
-					});
-				});
-			};
-			
-			return _create(pkg);
-			
+			return cwf.load(props.wpkg, _create);
+
 			function _create(pkg) {
 				var clazz = pkg[props.wclass];
 				
@@ -892,6 +875,28 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		}
 		
 		return changed;
+	},
+	
+	load: function(pkgname, callback) {			
+		var pkg;
+		
+		try {
+			pkg = require(pkgname);
+		} catch (e) {
+			return new Promise(function(resolve, reject) {
+				require([pkgname], function(pkg) {
+					try {
+						resolve(callback(pkg));
+					} catch(e) {
+						reject(e);
+					}
+				}, function(e) {
+					reject(e);
+				});
+			});
+		};
+		
+		return callback(pkg);
 	},
 	
 	saveToFile: function(content, mimetype, filename) {
