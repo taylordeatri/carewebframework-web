@@ -145,7 +145,7 @@ public class WebJarLocator implements ApplicationContextAware {
             if (config != null) {
                 String rootPath = getRootPath(resource);
                 addVersionToPath(config, rootPath);
-                addVersionToPackage(config, rootPath);
+                addVersionToPackage(config, rootPath, parser);
                 merge(requireConfig, config);
                 return true;
             }
@@ -209,19 +209,33 @@ public class WebJarLocator implements ApplicationContextAware {
      * 
      * @param configNode Top level node of the parsed RequireJS config.
      * @param path The root path.
+     * @param parser The JSON parser.
      */
-    private void addVersionToPackage(JsonNode configNode, String path) {
+    private void addVersionToPackage(JsonNode configNode, String path, ObjectMapper parser) {
         ArrayNode packages = (ArrayNode) configNode.get("packages");
         
         if (packages != null) {
             for (int i = 0; i < packages.size(); i++) {
-                ObjectNode entry = (ObjectNode) packages.get(i);
-                JsonNode location = entry.get("location");
+                String nameValue, locationValue;
+                JsonNode entry = packages.get(i);
+                ObjectNode object;
                 
-                if (location != null) {
-                    String value = location.asText();
-                    entry.set("location", new TextNode(path + value));
+                if (entry.isTextual()) {
+                    nameValue = entry.asText();
+                    locationValue = nameValue;
+                    object = parser.createObjectNode();
+                    packages.set(i, object);
+                    object.set("main", new TextNode("main"));
+                    object.set("name", new TextNode(nameValue));
+                } else {
+                    object = (ObjectNode) entry;
+                    JsonNode location = object.get("location");
+                    JsonNode name = object.get("name");
+                    nameValue = name == null ? "" : name.asText();
+                    locationValue = location == null ? nameValue : "./";//location.asText();
                 }
+                
+                object.set("location", new TextNode(path + locationValue));
             }
         }
         

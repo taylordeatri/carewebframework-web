@@ -1,17 +1,5 @@
 'use strict';
 
-// CodeMirror web jar incorrectly configures requirejs, so we fix it below.
-
-var root = require.s.contexts._.config.paths.codemirror[0];
-
-if (root) {
-	var i = root.indexOf('/lib/'),
-		main = root.substring(i + 1);
-	root = root.substring(0, i);
-	require.undef('codemirror');
-	require.config({packages:[{name: 'codemirror', location: root, main: main}]});
-}
-
 define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codemirror-css.css', 'css!codemirror.css',
 	'codemirror/addon/display/placeholder',
 	'codemirror/addon/edit/closebrackets',
