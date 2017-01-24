@@ -9,7 +9,10 @@
 		
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:/META-INF/cwf-dispatcher-servlet.xml</param-value>
+			<param-value>
+				classpath:/META-INF/cwf-dispatcher-servlet.xml
+				classpath*:/META-INF/*-spring.xml
+			</param-value>
 		</init-param>
 	</servlet>
 

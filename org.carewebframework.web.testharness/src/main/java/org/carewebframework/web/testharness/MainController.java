@@ -47,6 +47,7 @@ public class MainController implements IAutoWired {
     public void afterInitialized(BaseComponent root) {
         Page page = root.getPage();
         int tabIndex = NumberUtils.toInt(page.getQueryParam("tab"));
+        tabIndex = tabIndex < 0 ? tabview.getChildCount() + tabIndex : tabIndex;
         tabview.setSelectedTab((Tab) tabview.getChildAt(tabIndex));
         page.setAttribute("mainController", this);
     }

@@ -88,6 +88,10 @@
 				<import src="pages/misc.cwf" />
 			</tab>
 			
+			<tab label="Sandbox">
+				<import src="web/org/carewebframework/web/sandbox/main.cwf" />
+			</tab>
+			
 		</tabview>
 		
 						

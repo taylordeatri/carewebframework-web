@@ -70,10 +70,7 @@ public class Combobox extends BaseInputboxComponent<String> {
         }
         
         selected = item;
-        
-        if (selected != null) {
-            setValue(selected.getLabel());
-        }
+        setValue(selected == null ? null : selected.getLabel());
     }
     
     @Override

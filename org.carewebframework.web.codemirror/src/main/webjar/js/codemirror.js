@@ -157,7 +157,7 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 		},
 		
 		value: function(v) {
-			this._cm.setValue(v);
+			this._cm.setValue(v || '');
 		}
 	});
 
