@@ -46,6 +46,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 
 /**
  * Locates all web jars on the class path, parses their configuration data (supports classic, NPM,
@@ -85,6 +86,7 @@ public class WebJarLocator implements ApplicationContextAware {
                     .configure(ALLOW_SINGLE_QUOTES, true);
             ObjectNode requireConfig = parser.createObjectNode();
             requireConfig.set("paths", parser.createObjectNode());
+            requireConfig.set("packages", parser.createArrayNode());
             
             for (Resource resource : resources) {
                 try {
@@ -141,7 +143,9 @@ public class WebJarLocator implements ApplicationContextAware {
             JsonNode config = poms.length == 0 ? null : extractConfig(poms[0], parser);
             
             if (config != null) {
-                addVersionToPath(config, getRootPath(resource));
+                String rootPath = getRootPath(resource);
+                addVersionToPath(config, rootPath);
+                addVersionToPackage(config, rootPath);
                 merge(requireConfig, config);
                 return true;
             }
@@ -194,11 +198,33 @@ public class WebJarLocator implements ApplicationContextAware {
                 if (child.isTextual()) {
                     ArrayNode newChild = paths.arrayNode();
                     newChild.add(path + child.asText());
-                    newChild.add(child.asText());
                     entry.setValue(newChild);
                 }
             }
         }
+    }
+    
+    /**
+     * Add root path to the package entries of the parsed RequireJS config.
+     * 
+     * @param configNode Top level node of the parsed RequireJS config.
+     * @param path The root path.
+     */
+    private void addVersionToPackage(JsonNode configNode, String path) {
+        ArrayNode packages = (ArrayNode) configNode.get("packages");
+        
+        if (packages != null) {
+            for (int i = 0; i < packages.size(); i++) {
+                ObjectNode entry = (ObjectNode) packages.get(i);
+                JsonNode location = entry.get("location");
+                
+                if (location != null) {
+                    String value = location.asText();
+                    entry.set("location", new TextNode(path + value));
+                }
+            }
+        }
+        
     }
     
     /**
@@ -324,7 +350,6 @@ public class WebJarLocator implements ApplicationContextAware {
                     int i = main.lastIndexOf(".");
                     main = main.substring(0, i);
                     entries.add(path + main);
-                    entries.add(main);
                     added = true;
                 }
             }

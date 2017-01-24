@@ -886,7 +886,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			return new Promise(function(resolve, reject) {
 				require([pkgname], function(pkg) {
 					try {
-						resolve(callback(pkg));
+						resolve(callback ? callback(pkg) : pkg);
 					} catch(e) {
 						reject(e);
 					}
@@ -896,7 +896,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			});
 		};
 		
-		return callback(pkg);
+		return callback ? callback(pkg) : pkg;
 	},
 	
 	saveToFile: function(content, mimetype, filename) {
