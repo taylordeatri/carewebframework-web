@@ -15,6 +15,10 @@ public class CodeMirror extends Memobox {
     
     private boolean lineNumbers;
     
+    public void format() {
+        invoke("format");
+    }
+    
     @PropertyGetter("mode")
     public String getMode() {
         return mode;

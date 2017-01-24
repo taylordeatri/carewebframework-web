@@ -104,7 +104,7 @@ public abstract class KeyEvent extends Event {
             sb.append('$');
         }
         
-        sb.append("#").append(getKeyCode().getCode());
+        sb.append("#").append(keyCode);
         return sb.toString();
     }
     
