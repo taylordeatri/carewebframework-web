@@ -12,7 +12,14 @@ if (root) {
 	require.config({packages:[{name: 'codemirror', location: root, main: main}]});
 }
 
-define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codemirror-css.css', 'css!codemirror.css'], function(cwf, Widget, CodeMirror) { 
+define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codemirror-css.css', 'css!codemirror.css',
+	'codemirror/addon/display/placeholder',
+	'codemirror/addon/edit/closebrackets',
+	'codemirror/addon/edit/closetag',
+	'codemirror/addon/edit/matchbrackets',
+	'codemirror/addon/edit/matchtags',
+	'codemirror/addon/fold/xml-fold',
+	'codemirror/addon/fold/brace-fold'], function(cwf, Widget, CodeMirror) { 
 	
 	/**
 	 * Wrapper for CodeMirror
@@ -64,14 +71,6 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 			return cwf.load('codemirror/' + path, callback);
 		},
 		
-		resync: function() {
-		 	this._cm.setValue(this._value());   
-		},
-		
-		focus: function() {
-			this._cm.focus();    
-		},
-		
 		clear: function() {
 		    this._cm.setValue('');
 		    this._cm.focus();
@@ -91,11 +90,22 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 		beforeRender: function() {
 			var self = this;
 			this._super();
-			this._cm = CodeMirror.fromTextArea(this.input$()[0]);
+			this._cm = CodeMirror.fromTextArea(this.input$()[0], {
+				autoCloseTags: true,
+				matchTags: {bothTags: true},
+				extraKeys: {
+					'Alt-F': self.format.bind(self),
+					'Alt-J': 'toMatchingTag'
+				}
+			});
 			
 			this._cm.on('changes', function() {
-			    self.updateState('value', self._cm.getValue(), true);
-			    self.fireChanged();
+				var v = self._cm.getValue();
+				self.input$().val(v);
+				
+				if (self.setState('value', v)) {
+				    self.fireChanged();
+				}
 			});
 			
 			this._cm.setSize('100%', '100%');
@@ -110,6 +120,15 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 		},
 		
 		/*------------------------------ State ------------------------------*/
+		
+		focus: function(v) {
+			v ? this._cm.focus() : null;    
+		},
+		
+		hint: function(v) {
+			this.attr('title', v);
+		},
+		
 		lineNumbers: function(v) {
 			this._cm.setOption('lineNumbers', v);
 		},
@@ -130,12 +149,15 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 		},
 		
 		placeholder: function(v) {
-			var self = this;
-			this.load('addon/display/placeholder', _placeholder);
-			
-			function _placeholder() {
-				self._cm.setOption('placeholder', v);
-			}
+			this._cm.setOption('placeholder', v);
+		},
+		
+		readonly: function(v) {
+			this._cm.setOption('readOnly', v);
+		},
+		
+		value: function(v) {
+			this._cm.setValue(v);
 		}
 	});
 

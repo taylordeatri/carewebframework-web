@@ -1,4 +1,10 @@
-.CodeMirror-placeholder {
+.cwf_codemirror .CodeMirror-placeholder,
+.cwf_codemirror .CodeMirror-empty {
   opacity: .5;
+}
+
+.cwf_codemirror .CodeMirror-matchingtag {
+  	background: rgba(255, 250, 0, .3); 
+  	text-decoration: underline;
 }
 
