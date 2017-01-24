@@ -129,7 +129,7 @@ public class EventHandlerScanner {
             
             for (String target : targets) {
                 if ("this".equals(target)) {
-                    component = isComponent(clazz) ? (BaseComponent) instance : null;
+                    component = isComponent(clazz) ? (BaseComponent) instance : root;
                 } else if (target.startsWith("@")) {
                     Field field = findField(clazz, target.substring(1));
                     

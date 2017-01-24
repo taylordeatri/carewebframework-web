@@ -140,6 +140,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
     /**
      * Refreshes the view based on the current contents.
      */
+    @EventHandler("refresh")
     public void refresh() {
         contentBase.destroyChildren();
         
@@ -153,6 +154,11 @@ public class MainController implements IAutoWired, ApplicationContextAware {
                 contentBase.addChild(label);
             }
         }
+    }
+    
+    @EventHandler("activate")
+    public void focus() {
+        editor.focus();
     }
     
     /**
@@ -190,7 +196,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
     private void onClick$btnRenderContent() {
         content = editor.getValue();
         refresh();
-        editor.focus();
+        focus();
     }
     
     /**
@@ -209,7 +215,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
     @EventHandler(value = "click", target = "btnClearView")
     private void onClick$btnClearView() {
         contentBase.destroyChildren();
-        editor.focus();
+        focus();
     }
     
     /**
@@ -241,7 +247,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
                 content = IOUtils.toString(is);
                 cboCwf.setHint(item.getHint());
                 editor.setValue(content);
-                editor.setFocus(true);
+                focus();
             }
         }
     }
