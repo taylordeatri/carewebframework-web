@@ -21,7 +21,7 @@ public class ELContext {
     }
     
     public Object getValue(String name) {
-        Object result = "this".equals(name) ? component : element.getTagLibrary(name);
+        Object result = "self".equals(name) ? component : element.getTagLibrary(name);
         result = result != null ? result : component.getAttribute(name);
         result = result != null ? result : parent == null ? null : parent.findByName(name);
         return result;

@@ -1155,7 +1155,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         
         if (controller instanceof String) {
             try {
-                controller = "this".equals(controller) ? this : Class.forName((String) controller).newInstance();
+                controller = "self".equals(controller) ? this : Class.forName((String) controller).newInstance();
             } catch (Exception e) {
                 throw MiscUtil.toUnchecked(e);
             }
