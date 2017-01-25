@@ -381,7 +381,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		 */
 		addMask: function(label, popup) {
 			this.removeMask();
-			this._mask$ = this.anchor$().cwf$mask().append('<span>').css('display', 'flex');
+			var zindex = this.widget$.cwf$zindex() + 1;
+			this._mask$ = this.widget$.cwf$mask(zindex).append('<span>').css('display', 'flex');
 			var span$ = this._mask$.children().first();
 			span$.text(label).css('display', label ? '' : 'none');
 			popup ? this.contextMenu(this._mask$, popup) : null;
@@ -1608,7 +1609,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			if (!this.isOpen() || (related$ && !related$.is(this._related$))) {
 				cwf.widget.Popup.closePopups(related$);
 				this._related$ = related$;
-				this.real$.css('z-index', this._related$.cwf$zindex());
+				this.real$.css('z-index', this._related$.cwf$zindex() + 1);
 				this.real$.cwf$track(this._related$);
 				options.collision = options.collision || 'flipfit';
 				this._options = options;

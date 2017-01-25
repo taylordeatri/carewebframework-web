@@ -241,7 +241,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				.prependTo(this);
 		},
 		
-		cwf$zindex: function() {
+		cwf$zindex: function(dflt) {
 			var ele = this[0],
 				zindex = null;
 			
@@ -250,7 +250,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				ele = ele.parentElement;
 			}
 			
-			return _.isFinite(zindex) ? zindex : 'auto';
+			return _.isFinite(zindex) ? zindex : dflt || 0;
 		}
 	},
 	
