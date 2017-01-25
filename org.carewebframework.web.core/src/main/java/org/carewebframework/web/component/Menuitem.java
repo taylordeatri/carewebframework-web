@@ -32,7 +32,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 
 @Component(value = "menuitem", widgetClass = "Menuitem", parentTag = { "menu", "menupopup", "menuitem" }, childTag = {
         @ChildTag("menuitem"), @ChildTag("menuheader"), @ChildTag("menuseparator") })
-public class Menuitem extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPositionNone> {
+public class Menuitem extends BaseMenuComponent {
     
     private boolean checkable;
     

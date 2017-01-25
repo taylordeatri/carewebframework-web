@@ -25,9 +25,8 @@
  */
 package org.carewebframework.web.component;
 
-import org.carewebframework.web.annotation.Component;
+import org.carewebframework.web.component.BaseLabeledComponent.LabelPositionNone;
 
-@Component(value = "menuheader", widgetClass = "Menuheader", parentTag = { "menu", "menupopup", "menuitem" })
-public class Menuheader extends BaseMenuComponent {
+public abstract class BaseMenuComponent extends BaseLabeledImageComponent<LabelPositionNone> {
     
 }
