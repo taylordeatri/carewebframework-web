@@ -229,7 +229,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     public BaseComponent() {
         componentDefinition = ComponentRegistry.getInstance().get(getClass());
-        EventHandlerScanner.wire(this, this);
+        wireController(this);
     }
     
     public ComponentDefinition getDefinition() {
@@ -1155,7 +1155,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         
         if (controller instanceof String) {
             try {
-                controller = "self".equals(controller) ? this : Class.forName((String) controller).newInstance();
+                controller = Class.forName((String) controller).newInstance();
             } catch (Exception e) {
                 throw MiscUtil.toUnchecked(e);
             }
