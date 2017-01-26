@@ -27,6 +27,7 @@ package org.carewebframework.web.event;
 
 import org.carewebframework.web.annotation.EventType;
 import org.carewebframework.web.annotation.EventType.EventParameter;
+import org.carewebframework.web.annotation.OnFailure;
 import org.carewebframework.web.component.BaseComponent;
 
 @EventType(LoadEvent.TYPE)
@@ -34,7 +35,7 @@ public class LoadEvent extends Event {
     
     public static final String TYPE = "load";
     
-    @EventParameter
+    @EventParameter(onFailure = OnFailure.IGNORE)
     private String src;
     
     public LoadEvent() {

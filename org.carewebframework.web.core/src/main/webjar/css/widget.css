@@ -113,6 +113,14 @@ a:not([href]) {
 	background-color: #d9534f;
 }
 
+.cwf-vertical-layout * {
+    display: block;    
+}
+
+.cwf-horizontal-layout * {
+    display: inline-block;    
+}
+
 /* Root */
 
 #cwf_root {
