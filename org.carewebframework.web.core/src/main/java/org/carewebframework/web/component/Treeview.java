@@ -33,10 +33,11 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.component.Treenode.TreenodeIterator;
 import org.carewebframework.web.model.IModelAndView;
+import org.carewebframework.web.model.ISupportsModel;
 import org.carewebframework.web.model.ModelAndView;
 
 @Component(value = "treeview", widgetPackage = "cwf-treeview", widgetClass = "Treeview", parentTag = "*", childTag = @ChildTag("treenode"))
-public class Treeview extends BaseUIComponent implements Iterable<Treenode> {
+public class Treeview extends BaseUIComponent implements Iterable<Treenode>, ISupportsModel<Treenode> {
     
     private boolean showRoot;
     
@@ -162,6 +163,7 @@ public class Treeview extends BaseUIComponent implements Iterable<Treenode> {
         modelAndView.destroy();
     }
     
+    @Override
     @SuppressWarnings("unchecked")
     public <M> IModelAndView<Treenode, M> getModelAndView(Class<M> clazz) {
         return (IModelAndView<Treenode, M>) modelAndView;

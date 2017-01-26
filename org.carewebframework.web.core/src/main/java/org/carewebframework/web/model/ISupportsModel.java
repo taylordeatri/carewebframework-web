@@ -23,14 +23,11 @@
  *
  * #L%
  */
-package org.carewebframework.web.ancillary;
+package org.carewebframework.web.model;
 
-/**
- * Callback interface used to return a simple response.
- *
- * @param <T> Type of response
- */
-public interface IResponseCallback<T> {
+import org.carewebframework.web.component.BaseComponent;
+
+public interface ISupportsModel<T extends BaseComponent> {
     
-    void onComplete(T confirm);
+    public <M> IModelAndView<T, M> getModelAndView(Class<M> clazz);
 }

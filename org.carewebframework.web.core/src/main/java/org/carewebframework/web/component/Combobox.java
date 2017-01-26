@@ -30,10 +30,11 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.model.IModelAndView;
+import org.carewebframework.web.model.ISupportsModel;
 import org.carewebframework.web.model.ModelAndView;
 
 @Component(value = "combobox", widgetClass = "Combobox", parentTag = "*", childTag = @ChildTag("comboitem"))
-public class Combobox extends BaseInputboxComponent<String> {
+public class Combobox extends BaseInputboxComponent<String> implements ISupportsModel<Comboitem> {
     
     private Comboitem selected;
     
@@ -117,6 +118,7 @@ public class Combobox extends BaseInputboxComponent<String> {
         modelAndView.destroy();
     }
     
+    @Override
     @SuppressWarnings("unchecked")
     public <M> IModelAndView<Comboitem, M> getModelAndView(Class<M> clazz) {
         return (IModelAndView<Comboitem, M>) modelAndView;
