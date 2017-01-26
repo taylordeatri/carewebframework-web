@@ -96,6 +96,10 @@ public class Session {
         return page;
     }
     
+    public void ping(String data) {
+        WebSocketHandler.send(socket, new ClientInvocation(null, "cwf.ping", data));
+    }
+    
     protected boolean init(String pageId) {
         if (page != null) {
             if (!page.getId().equals(pageId)) {

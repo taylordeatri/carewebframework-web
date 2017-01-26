@@ -299,7 +299,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			
 			var pkt = {type: type, pid: cwf.pid, data: data};
 			
-			if (data.blob) {
+			if (data && data.blob) {
 				var blob = data.blob;
 				delete data.blob;
 				this.socket.send(new Blob([JSON.stringify(pkt), '\n', blob]));
@@ -593,6 +593,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 
 		parent1.insertBefore(ele2, next1);
 		parent2.insertBefore(ele1, next2);
+	},
+	
+	ping: function(data) {
+		cwf.ws.sendData('ping', data);
 	},
 	
 	/**

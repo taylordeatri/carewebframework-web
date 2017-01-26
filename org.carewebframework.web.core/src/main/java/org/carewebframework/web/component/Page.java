@@ -38,6 +38,8 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.carewebframework.web.client.ClientRequest;
+import org.carewebframework.web.client.Session;
 import org.carewebframework.web.client.Synchronizer;
 import org.carewebframework.web.core.WebUtil;
 import org.carewebframework.web.event.EventQueue;
@@ -51,6 +53,8 @@ public final class Page extends BaseComponent implements INamespace {
     private static final AtomicInteger uniqueId = new AtomicInteger();
     
     private Synchronizer synchronizer;
+    
+    private Session session;
     
     private int nextId;
     
@@ -70,9 +74,11 @@ public final class Page extends BaseComponent implements INamespace {
         return new Page(src);
     }
     
-    public static void _init(Page page, Map<String, Object> browserInfo, Synchronizer synchronizer) {
+    @SuppressWarnings("unchecked")
+    public static void _init(Page page, ClientRequest request, Synchronizer synchronizer) {
         page.synchronizer = synchronizer;
-        page.browserInfo.putAll(browserInfo);
+        page.session = request.getSession();
+        page.browserInfo.putAll((Map<String, Object>) request.getData());
         page._attach(page);
     }
     
@@ -132,6 +138,10 @@ public final class Page extends BaseComponent implements INamespace {
         return Collections.unmodifiableMap(queryParams);
     }
     
+    public Session getSession() {
+        return session;
+    }
+    
     public String getSrc() {
         return src;
     }
@@ -146,6 +156,7 @@ public final class Page extends BaseComponent implements INamespace {
         PageRegistry.unregisterPage(this);
         synchronizer.clear();
         eventQueue.clearAll();
+        session = null;
     }
     
     /*package*/ void registerComponent(BaseComponent component, boolean register) {

@@ -75,14 +75,15 @@ public class MockEnvironment {
         // Create mock session
         MockWebSocketSession socket = new MockWebSocketSession();
         session = new MockSession(servletContext, socket);
-        // Initialize the page
-        initBrowserInfoMap(browserInfo);
-        Page page = session.getPage();
-        Page._init(page, browserInfo, session.getSynchronizer());
-        page = initPage(page);
         // Create the mock request
+        initBrowserInfoMap(browserInfo);
+        clientRequestMap.put("data", browserInfo);
         initClientRequestMap(clientRequestMap);
         clientRequest = new MockClientRequest(session, clientRequestMap);
+        // Initialize the page
+        Page page = session.getPage();
+        Page._init(page, clientRequest, session.getSynchronizer());
+        page = initPage(page);
         // Create the mock execution
         initExecutionContext();
     }

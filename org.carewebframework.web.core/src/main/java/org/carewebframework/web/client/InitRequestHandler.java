@@ -25,8 +25,6 @@
  */
 package org.carewebframework.web.client;
 
-import java.util.Map;
-
 import org.carewebframework.web.client.WebSocketHandler.IRequestHandler;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.page.PageDefinition;
@@ -34,14 +32,13 @@ import org.carewebframework.web.page.PageDefinitionCache;
 
 public class InitRequestHandler implements IRequestHandler {
     
-    @SuppressWarnings("unchecked")
     @Override
     public void handleRequest(ClientRequest request) throws Exception {
         Page page = request.getPage();
         PageDefinition pageDefinition = PageDefinitionCache.getInstance().get(page.getSrc());
         Synchronizer synchronizer = request.getSession().getSynchronizer();
         synchronizer.startQueueing();
-        Page._init(page, (Map<String, Object>) request.getData(), synchronizer);
+        Page._init(page, request, synchronizer);
         WebSocketHandler.notifySessionTrackers(request.getSession(), true);
         
         try {
