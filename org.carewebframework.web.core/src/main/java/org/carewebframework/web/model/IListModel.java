@@ -69,6 +69,15 @@ public interface IListModel<M> extends List<M> {
     boolean removeEventListener(IListModelListener listener);
     
     /**
+     * Removes a range of elements by index.
+     * 
+     * @param start Start of range (inclusive).
+     * @param end End of range (inclusive).
+     * @return True if the model changed as a result of the operation.
+     */
+    public boolean removeRange(int start, int end);
+    
+    /**
      * Swap two list entries by index.
      * 
      * @param index1 Index of first entry.

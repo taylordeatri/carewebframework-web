@@ -182,6 +182,7 @@ public class ListModel<M> implements IListModel<M> {
         return false;
     }
     
+    @Override
     public boolean removeRange(int start, int end) {
         validateIndex(start);
         validateIndex(end);
