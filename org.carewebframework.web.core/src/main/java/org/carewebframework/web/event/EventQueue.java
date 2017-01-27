@@ -27,26 +27,36 @@ package org.carewebframework.web.event;
 
 import java.util.LinkedList;
 
-import org.carewebframework.web.component.BaseComponent;
+import org.carewebframework.web.client.ExecutionContext;
+import org.carewebframework.web.client.Session;
+import org.carewebframework.web.component.Page;
 
 public class EventQueue {
     
     private final LinkedList<Event> queue = new LinkedList<>();
     
-    private final BaseComponent root;
+    private final Page page;
     
-    public EventQueue(BaseComponent root) {
-        this.root = root;
+    public EventQueue(Page page) {
+        this.page = page;
     }
     
     public synchronized void queue(Event event) {
         queue.add(event);
+        
+        if (queue.size() == 1 && ExecutionContext.getPage() != page) {
+            Session session = page.getSession();
+            
+            if (session != null) {
+                session.ping("flush");
+            }
+        }
     }
     
     public synchronized void processAll() {
         while (!queue.isEmpty()) {
             Event event = queue.removeFirst();
-            EventUtil.send(event, event.getTarget() == null ? root : event.getTarget());
+            EventUtil.send(event, event.getTarget() == null ? page : event.getTarget());
         }
     }
     

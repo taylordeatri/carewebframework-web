@@ -113,6 +113,10 @@ a:not([href]) {
 	background-color: #d9534f;
 }
 
+.glyphicon:disabled {
+    opacity: .4;
+}
+
 .cwf-vertical-layout * {
     display: block;    
 }
