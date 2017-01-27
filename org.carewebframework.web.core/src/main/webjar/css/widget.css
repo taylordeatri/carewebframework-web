@@ -310,6 +310,10 @@ a:not([href]) {
 
 /* Window */
 
+.cwf_window {
+    margin: 0;
+}
+
 .cwf_window-popup > .panel-heading,
 .cwf_window-modal > .panel-heading {
 	cursor: move;

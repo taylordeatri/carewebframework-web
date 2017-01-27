@@ -453,6 +453,19 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/**
+		 * Convenience method for setting a property value.
+		 * 
+		 * @param {string} prop The property name.
+		 * @param value The new property value.
+		 * @param {jquery} tgt$ The jquery object to receive the new property value.  If not
+		 * 	specified, this widget's widget$ object will be used.
+		 */
+		prop: function(prop, value, tgt$) {
+			tgt$ = tgt$ || this.widget$;
+			tgt$ ? tgt$.cwf$prop(prop, value) : null;
+		},
+		
+		/**
 		 * Removes any existing mask;
 		 */
 		removeMask: function() {
@@ -2512,6 +2525,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.Listitem = cwf.widget.LabeledWidget.extend({		
 		
+		/*------------------------------ Events ------------------------------*/
+		
+		handleChange: function(event) {
+			this.syncSelected(true);
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
@@ -2528,13 +2547,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ State ------------------------------*/
 		
 		selected: function(v) {
-			this.attr('selected', v);
+			this.prop('selected', v);
 		},
 		
-		syncSelected: function() {
+		syncSelected: function(noevent) {
 			var selected = this.widget$.is(':selected');
 			
-			if (this.setState('selected', selected)) {
+			if (this.setState('selected', selected) && !noevent) {
 				this.trigger('change', {value: selected});
 			}
 		},

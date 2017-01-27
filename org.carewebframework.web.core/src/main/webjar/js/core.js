@@ -205,6 +205,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			return _.isNil(value) || value === '' ? this.removeAttr(name): this.attr(name, value);
 		},
 		
+		cwf$prop: function(name, value) {
+			return _.isNil(value) || value === '' ? this.removeProp(name): this.prop(name, value);
+		},
+		
 		cwf$show: function(visible) {
 			return visible ? this.show() : this.hide();
 		},

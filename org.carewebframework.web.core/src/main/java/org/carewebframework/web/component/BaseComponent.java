@@ -377,7 +377,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         Object value = null;
         BaseComponent cmp = this;
         
-        while ((value = cmp.attributes.get(name)) == null && getParent() != null) {
+        while (cmp != null && (value = cmp.attributes.get(name)) == null) {
             cmp = cmp.getParent();
         }
         
