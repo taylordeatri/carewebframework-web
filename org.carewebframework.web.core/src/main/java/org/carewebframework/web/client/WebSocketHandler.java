@@ -349,12 +349,12 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     }
     
     private void processRequest(Session session, Map<String, Object> map) throws Exception {
-        session.init((String) map.get("pid"));
+        session._init((String) map.get("pid"));
         ClientRequest request = new ClientRequest(session, map);
         IRequestHandler handler = handlers.get(request.getType());
         
         if (handler == null) {
-            throw new Exception("No registered handler for request type: " + request.getType());
+            throw new IllegalArgumentException("No registered handler for request type: " + request.getType());
         }
         
         ExecutionContext.clear();
@@ -420,7 +420,9 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof IRequestHandler) {
             registerRequestHandler((IRequestHandler) bean);
-        } else if (bean instanceof ISessionTracker) {
+        }
+        
+        if (bean instanceof ISessionTracker) {
             registerSessionTracker((ISessionTracker) bean);
         }
         

@@ -30,7 +30,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Page;
-import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.EventUtil;
 import org.carewebframework.web.event.IEventListener;
 
@@ -54,29 +53,12 @@ public class InvocationRequestQueue {
     
     private boolean closed;
     
-    private final IEventListener invocationListener = new IEventListener() {
-        
-        /**
-         * Invokes the method on the target as specified by the event.
-         * 
-         * @param event The invocation request event.
-         */
-        @Override
-        public void onEvent(Event event) {
-            invokeRequest((InvocationRequest) event.getData());
-        }
-    };
-    
     /**
-     * Create an invocation request.
-     * 
-     * @param methodName Name of method to invoke on the target.
-     * @param args Arguments to pass to the invoked method.
-     * @return The newly created invocation request.
+     * Invokes the method on the target as specified by the event.
      */
-    public static InvocationRequest createRequest(String methodName, Object... args) {
-        return new InvocationRequest(methodName, args);
-    }
+    private final IEventListener invocationListener = (event) -> {
+        invokeRequest((InvocationRequest) event.getData());
+    };
     
     /**
      * Create an invocation request queue for the specified target.
@@ -90,11 +72,11 @@ public class InvocationRequestQueue {
     }
     
     /**
-     * Create a help message queue for the specified page and target.
+     * Create an invocation request queue for the specified page and target.
      * 
      * @param name Unique name for this queue.
      * @param page Page instance that owns the queue.
-     * @param target Target of requests sent to the queue.
+     * @param target Target upon which invocations will operate.
      * @param onClose Invocation request to send to the target upon queue closure (may be null).
      */
     public InvocationRequestQueue(String name, Page page, Object target, InvocationRequest onClose) {
@@ -108,10 +90,20 @@ public class InvocationRequestQueue {
         page.addEventListener(eventName, invocationListener);
     }
     
+    /**
+     * Returns the unique name for this queue.
+     * 
+     * @return The queue's unique name.
+     */
     public String getName() {
         return name;
     }
     
+    /**
+     * Invoke the request on the target.
+     * 
+     * @param request The request to invoke.
+     */
     private void invokeRequest(InvocationRequest request) {
         try {
             MethodUtils.invokeMethod(target, request.getMethodName(), request.getArgs());
@@ -142,13 +134,13 @@ public class InvocationRequestQueue {
      * @param args Arguments to pass to the invoked method.
      */
     public void sendRequest(String methodName, Object... args) {
-        sendRequest(createRequest(methodName, args));
+        sendRequest(new InvocationRequest(methodName, args));
     }
     
     /**
-     * Queue a request.
+     * Queue a request on the owning page's event queue..
      * 
-     * @param request The event packaging the request.
+     * @param request The request.
      */
     public void sendRequest(InvocationRequest request) {
         EventUtil.post(page, eventName, page, request);

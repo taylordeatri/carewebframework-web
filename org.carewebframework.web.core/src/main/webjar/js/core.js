@@ -292,6 +292,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			return this.socket && this.socket.readyState === WebSocket.OPEN;
 		},
 		
+		ping: function(data) {
+			cwf.ws.sendData('ping', data);
+		},
+		
 		sendData: function(type, data, nolog) {
 			if (!this.isConnected()) {
 				throw new Error('Communication with the server has been interrupted.');
@@ -593,10 +597,6 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 
 		parent1.insertBefore(ele2, next1);
 		parent2.insertBefore(ele1, next2);
-	},
-	
-	ping: function(data) {
-		cwf.ws.sendData('ping', data);
 	},
 	
 	/**

@@ -40,7 +40,7 @@ public class InvocationRequest {
      * @param methodName Name of the method to invoke on a target.
      * @param args Arguments to be passed to the method.
      */
-    protected InvocationRequest(String methodName, Object... args) {
+    public InvocationRequest(String methodName, Object... args) {
         this.methodName = methodName;
         this.args = args;
     }

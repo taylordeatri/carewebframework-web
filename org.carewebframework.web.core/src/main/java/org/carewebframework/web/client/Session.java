@@ -31,6 +31,9 @@ import org.carewebframework.web.component.Page;
 import org.carewebframework.web.page.PageRegistry;
 import org.springframework.web.socket.WebSocketSession;
 
+/**
+ * Container for core resources for a single client session (i.e., web socket connection).
+ */
 public class Session {
     
     private final ServletContext servletContext;
@@ -97,10 +100,10 @@ public class Session {
     }
     
     public void ping(String data) {
-        WebSocketHandler.send(socket, new ClientInvocation(null, "cwf.ping", data));
+        WebSocketHandler.send(socket, new ClientInvocation(null, "cwf.ws.ping", data));
     }
     
-    protected boolean init(String pageId) {
+    protected boolean _init(String pageId) {
         if (page != null) {
             if (!page.getId().equals(pageId)) {
                 throw new RuntimeException("Page ids do not match.");
