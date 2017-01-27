@@ -29,6 +29,7 @@ import java.io.ByteArrayInputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -229,11 +230,17 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     }
     
     protected static void notifySessionTrackers(Session session, boolean created) {
-        for (ISessionTracker tracker : sessionTrackers) {
-            if (created) {
-                tracker.onSessionCreate(session);
-            } else {
-                tracker.onSessionDestroy(session);
+        if (!sessionTrackers.isEmpty()) {
+            for (ISessionTracker tracker : new ArrayList<>(sessionTrackers)) {
+                try {
+                    if (created) {
+                        tracker.onSessionCreate(session);
+                    } else {
+                        tracker.onSessionDestroy(session);
+                    }
+                } catch (Exception e) {
+                    log.error("A session tracker threw an exception.", e);
+                }
             }
         }
     }
