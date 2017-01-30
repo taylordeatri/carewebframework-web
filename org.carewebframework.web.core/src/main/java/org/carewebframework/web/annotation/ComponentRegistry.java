@@ -32,6 +32,9 @@ import org.carewebframework.common.AbstractRegistry;
 import org.carewebframework.common.RegistryMap.DuplicateAction;
 import org.carewebframework.web.component.BaseComponent;
 
+/**
+ * Registry of component definitions indexed by their tag name and implementing class.
+ */
 public class ComponentRegistry extends AbstractRegistry<String, ComponentDefinition> {
     
     private static final ComponentRegistry instance = new ComponentRegistry();

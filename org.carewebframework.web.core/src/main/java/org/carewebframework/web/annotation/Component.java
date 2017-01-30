@@ -41,7 +41,7 @@ public @interface Component {
     
     public enum ContentHandling {
         ERROR, IGNORE, AS_ATTRIBUTE, AS_CHILD
-    };
+    }
     
     /**
      * Marks a property getter.

@@ -26,6 +26,6 @@
 package org.carewebframework.web.ancillary;
 
 /**
- * Marker interface for a component that serves as a namespace boundary for component ids.
+ * Marker interface for a component that serves as a namespace boundary for component names.
  */
 public interface INamespace {}
