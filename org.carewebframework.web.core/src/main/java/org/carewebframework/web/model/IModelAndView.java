@@ -28,7 +28,7 @@ package org.carewebframework.web.model;
 import org.carewebframework.web.component.BaseComponent;
 
 /**
- * This is a composite class consisting of a list model and its associated renderer.
+ * This is a composite interface consisting of a list model and its associated renderer.
  *
  * @param <T> The component type to be rendered.
  * @param <M> The model type.
