@@ -120,6 +120,10 @@ public class Listbox extends BaseUIComponent implements ISupportsModel<Listitem>
         }
     }
     
+    public void clearSelected() {
+        clearSelected(null);
+    }
+    
     private void clearSelected(Listitem skip) {
         for (Listitem item : selected) {
             if (item != skip) {
@@ -149,9 +153,8 @@ public class Listbox extends BaseUIComponent implements ISupportsModel<Listitem>
     }
     
     @Override
-    @SuppressWarnings("unchecked")
-    public <M> IModelAndView<Listitem, M> getModelAndView(Class<M> clazz) {
-        return (IModelAndView<Listitem, M>) modelAndView;
+    public IModelAndView<Listitem, ?> getModelAndView() {
+        return modelAndView;
     }
     
 }

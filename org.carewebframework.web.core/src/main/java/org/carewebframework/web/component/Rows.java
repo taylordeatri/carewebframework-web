@@ -58,9 +58,8 @@ public class Rows extends BaseUIComponent implements ISupportsModel<Row> {
     }
     
     @Override
-    @SuppressWarnings("unchecked")
-    public <M> IModelAndView<Row, M> getModelAndView(Class<M> clazz) {
-        return (IModelAndView<Row, M>) modelAndView;
+    public IModelAndView<Row, ?> getModelAndView() {
+        return modelAndView;
     }
     
     @PropertyGetter("selectable")

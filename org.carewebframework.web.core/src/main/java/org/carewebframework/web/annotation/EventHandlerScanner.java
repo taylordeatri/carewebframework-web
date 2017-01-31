@@ -100,56 +100,55 @@ public class EventHandlerScanner {
     private static void wire(Object instance, BaseComponent root, Class<?> clazz) {
         for (Method method : clazz.getDeclaredMethods()) {
             method.setAccessible(true);
-            EventHandler annot = method.getAnnotation(EventHandler.class);
+            EventHandler[] annotations = method.getAnnotationsByType(EventHandler.class);
             
-            if (annot == null) {
-                continue;
-            }
-            
-            OnFailure onFailure = annot.onFailure();
-            Class<?>[] params = method.getParameterTypes();
-            
-            if (params.length > 1 || (params.length == 1 && !Event.class.isAssignableFrom(params[0]))) {
-                onFailure
-                        .doAction("Method " + method.getName() + " signature does not conform to that of an event handler.");
-                return;
-            }
-            
-            Set<String> targets = asSet(annot.target());
-            Set<String> types = asSet(annot.value());
-            BaseComponent component = null;
-            
-            if (types.isEmpty()) {
-                onFailure.doAction("At least one event type must be specified");
-            }
-            
-            if (targets.isEmpty()) {
-                targets.add("self");
-            }
-            
-            for (String target : targets) {
-                if ("self".equals(target)) {
-                    component = isComponent(clazz) ? (BaseComponent) instance : root;
-                } else if (target.startsWith("@")) {
-                    Field field = findField(clazz, target.substring(1));
-                    
-                    if (field != null) {
-                        try {
-                            field.setAccessible(true);
-                            component = (BaseComponent) field.get(instance);
-                        } catch (Exception e) {
-                            // what to do here
-                        }
-                    }
-                } else {
-                    component = root == null ? null : root.findByName(target);
+            for (EventHandler annot : annotations) {
+                
+                OnFailure onFailure = annot.onFailure();
+                Class<?>[] params = method.getParameterTypes();
+                
+                if (params.length > 1 || (params.length == 1 && !Event.class.isAssignableFrom(params[0]))) {
+                    onFailure.doAction(
+                        "Method " + method.getName() + " signature does not conform to that of an event handler.");
+                    return;
                 }
                 
-                if (component == null) {
-                    onFailure.doAction("No suitable event handler target found for \"" + target + "\"");
-                } else {
-                    for (String type : types) {
-                        component.addEventListener(type, new EventListener(instance, method), annot.syncToClient());
+                Set<String> targets = asSet(annot.target());
+                Set<String> types = asSet(annot.value());
+                BaseComponent component = null;
+                
+                if (types.isEmpty()) {
+                    onFailure.doAction("At least one event type must be specified");
+                }
+                
+                if (targets.isEmpty()) {
+                    targets.add("self");
+                }
+                
+                for (String target : targets) {
+                    if ("self".equals(target)) {
+                        component = isComponent(clazz) ? (BaseComponent) instance : root;
+                    } else if (target.startsWith("@")) {
+                        Field field = findField(clazz, target.substring(1));
+                        
+                        if (field != null) {
+                            try {
+                                field.setAccessible(true);
+                                component = (BaseComponent) field.get(instance);
+                            } catch (Exception e) {
+                                // what to do here
+                            }
+                        }
+                    } else {
+                        component = root == null ? null : root.findByName(target);
+                    }
+                    
+                    if (component == null) {
+                        onFailure.doAction("No suitable event handler target found for \"" + target + "\"");
+                    } else {
+                        for (String type : types) {
+                            component.addEventListener(type, new EventListener(instance, method), annot.syncToClient());
+                        }
                     }
                 }
             }

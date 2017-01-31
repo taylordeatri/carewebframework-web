@@ -119,9 +119,8 @@ public class Combobox extends BaseInputboxComponent<String> implements ISupports
     }
     
     @Override
-    @SuppressWarnings("unchecked")
-    public <M> IModelAndView<Comboitem, M> getModelAndView(Class<M> clazz) {
-        return (IModelAndView<Comboitem, M>) modelAndView;
+    public IModelAndView<Comboitem, ?> getModelAndView() {
+        return modelAndView;
     }
     
 }

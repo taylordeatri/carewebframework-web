@@ -32,5 +32,5 @@ package org.carewebframework.web.ancillary;
  */
 public interface IResponseCallback<T> {
     
-    void onComplete(T confirm);
+    void onComplete(T response);
 }

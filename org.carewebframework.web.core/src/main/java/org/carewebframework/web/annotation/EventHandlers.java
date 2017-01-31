@@ -23,16 +23,21 @@
  *
  * #L%
  */
-package org.carewebframework.web.model;
+package org.carewebframework.web.annotation;
 
-import org.carewebframework.web.component.BaseComponent;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public interface ISupportsModel<T extends BaseComponent> {
+/**
+ * Container for EventHandler annotations.
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface EventHandlers {
     
-    IModelAndView<T, ?> getModelAndView();
-    
-    @SuppressWarnings("unchecked")
-    default <M> IModelAndView<T, M> getModelAndView(Class<M> clazz) {
-        return (IModelAndView<T, M>) getModelAndView();
-    }
+    EventHandler[] value();
 }

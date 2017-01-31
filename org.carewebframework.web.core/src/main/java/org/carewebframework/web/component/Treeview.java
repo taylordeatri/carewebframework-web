@@ -164,9 +164,8 @@ public class Treeview extends BaseUIComponent implements Iterable<Treenode>, ISu
     }
     
     @Override
-    @SuppressWarnings("unchecked")
-    public <M> IModelAndView<Treenode, M> getModelAndView(Class<M> clazz) {
-        return (IModelAndView<Treenode, M>) modelAndView;
+    public IModelAndView<Treenode, ?> getModelAndView() {
+        return modelAndView;
     }
     
 }
