@@ -28,6 +28,7 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.springframework.util.Base64Utils;
 
 @Component(value = "image", widgetClass = "Image", parentTag = "*")
 public class Image extends BaseUIComponent {
@@ -37,17 +38,20 @@ public class Image extends BaseUIComponent {
     private String alt;
     
     public Image() {
-        this(null, null);
     }
     
     public Image(String src) {
-        this(src, null);
+        src = nullify(src);
     }
     
     public Image(String src, String alt) {
-        super();
         this.src = nullify(src);
-        this.setAlt(nullify(alt));
+        this.alt = nullify(alt);
+    }
+    
+    public Image(String type, byte[] data) {
+        type = type.contains("/") ? type : "image/" + type;
+        src = "data:" + type + ";base64," + Base64Utils.encodeToString(data);
     }
     
     @PropertyGetter("src")
