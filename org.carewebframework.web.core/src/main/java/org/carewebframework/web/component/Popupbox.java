@@ -38,8 +38,6 @@ import org.carewebframework.web.annotation.EventHandler;
 @Component(value = "popupbox", widgetClass = "Popupbox", parentTag = "*", childTag = @ChildTag(value = "popup", maximum = 1))
 public class Popupbox extends Textbox {
     
-    private Popup popup;
-    
     private boolean open;
     
     public void open() {
@@ -60,15 +58,6 @@ public class Popupbox extends Textbox {
     }
     
     @Override
-    protected void afterRemoveChild(BaseComponent child) {
-        super.afterRemoveChild(child);
-        
-        if (child == popup) {
-            setPopup(null);
-        }
-    }
-    
-    @Override
     protected void onAttach(Page page) {
         super.onAttach(page);
         
@@ -77,17 +66,7 @@ public class Popupbox extends Textbox {
         }
     }
     
-    @PropertyGetter("popup")
-    public Popup getPopup() {
-        if (popup != null && popup.isDead()) {
-            popup = null;
-            sync("popup", popup);
-        }
-        
-        return popup;
-    }
-    
-    @PropertySetter(value = "popup", defer = true)
+    @Override
     public void setPopup(Popup popup) {
         BaseComponent child = this.getFirstChild();
         
@@ -96,10 +75,10 @@ public class Popupbox extends Textbox {
         }
         
         if (popup != getPopup()) {
-            validate(popup);
-            sync("popup", this.popup = popup);
             open = false;
         }
+        
+        super.setPopup(popup);
     }
     
     @PropertyGetter("open")

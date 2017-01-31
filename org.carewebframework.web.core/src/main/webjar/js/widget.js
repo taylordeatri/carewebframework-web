@@ -830,6 +830,36 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			}
 		},
 		
+		hoverPopup: function(ele$, popup) {
+			ele$.off('mouseenter.cwf');
+			ele$.off('mouseleave.cwf');
+			popup ? ele$.on('mouseenter.cwf', _showHoverPopup) : null;
+			popup ? ele$.on('mouseleave.cwf', _hideHoverPopup) : null;
+			
+			function _showHoverPopup(event) {
+				var wgt = cwf.wgt(popup);
+				
+				if (!wgt) {
+					ele$.off('mouseenter.cwf');
+					ele$.off('mouseleave.cwf');
+				} else {
+					wgt.open({
+						my: 'left top',
+						at: 'right bottom',
+						of: event
+					});
+				}
+				
+				return false;
+			}
+			
+			function _hideHoverPopup() {
+				var wgt = cwf.wgt(popup);
+				wgt ? wgt.close() : null;
+				return false;
+			}
+		},
+		
 		input$: function() {
 			var input$ = this.sub$('inp');
 			return input$.length ? input$ : this.widget$;
@@ -1051,6 +1081,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 					cwf.event.sendToServer(event);
 				}
 			}
+		},
+		
+		popup: function(v) {
+			this.hoverPopup(this.widget$, v);
 		},
 		
 		style: function(v) {

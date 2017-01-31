@@ -63,6 +63,8 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
     
     private Popup context;
     
+    private Popup popup;
+    
     private String keycapture;
     
     public void addMask() {
@@ -347,6 +349,33 @@ public abstract class BaseUIComponent extends BaseComponent implements IDisable 
         if (context != getContext()) {
             validate(context);
             sync("context", this.context = context);
+        }
+    }
+    
+    @PropertyGetter("popup")
+    public Popup getPopup() {
+        if (popup != null && popup.isDead()) {
+            popup = null;
+            sync("popup", popup);
+        }
+        
+        return popup;
+    }
+    
+    @PropertySetter(value = "popup", defer = true)
+    public void setPopup(Popup popup) {
+        if (popup != getPopup()) {
+            validate(popup);
+            sync("popup", this.popup = popup);
+        }
+    }
+    
+    @Override
+    protected void afterRemoveChild(BaseComponent child) {
+        super.afterRemoveChild(child);
+        
+        if (child == popup) {
+            setPopup(null);
         }
     }
     

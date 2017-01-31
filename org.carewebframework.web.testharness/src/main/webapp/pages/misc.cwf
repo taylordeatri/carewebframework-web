@@ -1,4 +1,7 @@
 <span controller="org.carewebframework.web.testharness.MiscController">
+	<popup name="hoverPopup">
+		<label label="This is a test of a hover popup." />
+	</popup>
 	<table>
 		<columns style="visibility:hidden">
 			<column width="30%" />
@@ -35,6 +38,10 @@
 			<row>
 				<button label="Has Context Menu" context="contextMenu" />
 				This button has a context menu associated with it.
+			</row>
+			<row>
+				<button label="Has Hover Popup" popup="hoverPopup" />
+				This button has a hover popup associated with it.
 			</row>
 			<row>
 				<button name="btnSaveAsFile" label="Save to File" />
