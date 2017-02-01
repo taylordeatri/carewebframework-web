@@ -26,27 +26,11 @@
 package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
-import org.carewebframework.web.annotation.Component.PropertyGetter;
-import org.carewebframework.web.annotation.Component.PropertySetter;
 
 /**
  * This is a simple container for text content.
  */
 @Component(value = "#text", widgetClass = "Content", parentTag = "*")
 public class Content extends BaseComponent {
-    
-    private String content;
-    
-    @PropertyGetter("#text")
-    public String getContent() {
-        return content;
-    }
-    
-    @PropertySetter("#text")
-    public void setContent(String content) {
-        if (!areEqual(content = nullify(content), this.content)) {
-            sync("content", this.content = content);
-        }
-    }
     
 }

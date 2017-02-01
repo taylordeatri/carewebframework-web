@@ -12,12 +12,12 @@
 		<div>
 		You should see the message "External script was executed." in the status log.
 		</div>
+		<script src="js/scripts.js" />
 		<div>
 		You should see the message "Groovy script was executed." in the status log.
 		</div>
-		<script src="js/scripts.js" />
 		<groovyscript name="groovyscript">
-			return "This is groovy!"
+			return self.getName() + " is groovy!";
 		</groovyscript>
 	</div>
 </page>

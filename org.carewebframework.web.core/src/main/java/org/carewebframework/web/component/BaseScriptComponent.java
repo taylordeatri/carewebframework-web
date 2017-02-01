@@ -31,7 +31,7 @@ import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.EventUtil;
 
-public abstract class BaseScriptComponent extends Content {
+public abstract class BaseScriptComponent extends BaseComponent {
     
     private static final String EVENT_DEFERRED = "deferredExecution";
     
@@ -40,8 +40,8 @@ public abstract class BaseScriptComponent extends Content {
     private boolean deferred;
     
     @Override
-    protected void afterAttached() {
-        super.afterAttached();
+    protected void onAttach(Page page) {
+        super.onAttach(page);
         
         if (deferred) {
             EventUtil.post(EVENT_DEFERRED, this, null);
@@ -51,6 +51,11 @@ public abstract class BaseScriptComponent extends Content {
     }
     
     protected abstract Object execute();
+    
+    @Override
+    protected void setContent(String content) {
+        setContent(content, false);
+    }
     
     @PropertyGetter("deferred")
     public boolean isDeferred() {
@@ -69,9 +74,6 @@ public abstract class BaseScriptComponent extends Content {
     
     private void doExecute() {
         Object result = execute();
-        
-        if (hasEventListener(EVENT_EXECUTED)) {
-            fireEvent(new Event(EVENT_EXECUTED, this, result));
-        }
+        EventUtil.post(new Event(EVENT_EXECUTED, this, result));
     }
 }

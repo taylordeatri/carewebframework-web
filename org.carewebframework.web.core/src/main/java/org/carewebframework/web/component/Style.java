@@ -29,6 +29,6 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 
 @Component(value = "style", widgetClass = "Style", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
-public class Style extends Content {
+public class Style extends BaseComponent {
     
 }

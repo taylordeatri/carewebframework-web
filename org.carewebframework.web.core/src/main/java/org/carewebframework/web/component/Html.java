@@ -29,12 +29,22 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 
 @Component(value = "html", widgetClass = "Html", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
-public class Html extends Content {
+public class Html extends BaseUIComponent {
     
     public Html() {
     }
     
     public Html(String html) {
         this.setContent(html);
+    }
+    
+    @Override
+    public String getContent() {
+        return super.getContent();
+    }
+    
+    @Override
+    public void setContent(String content) {
+        super.setContent(content);
     }
 }

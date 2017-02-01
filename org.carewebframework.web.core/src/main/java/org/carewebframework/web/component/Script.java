@@ -33,7 +33,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.springframework.util.StringUtils;
 
 @Component(value = "script", widgetClass = "Script", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
-public class Script extends Content {
+public class Script extends BaseComponent {
     
     private String type;
     
