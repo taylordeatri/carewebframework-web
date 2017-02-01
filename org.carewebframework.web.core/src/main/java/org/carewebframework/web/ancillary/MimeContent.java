@@ -23,30 +23,43 @@
  *
  * #L%
  */
-package org.carewebframework.web.component;
+package org.carewebframework.web.ancillary;
 
-import org.carewebframework.web.annotation.Component;
-import org.carewebframework.web.annotation.Component.PropertyGetter;
-import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.springframework.util.Base64Utils;
 
 /**
- * This is a simple container for text content.
+ * Helper class for packaging embedded binary or textual data.
  */
-@Component(value = "#text", widgetClass = "Content", parentTag = "*")
-public class Content extends BaseComponent {
+public class MimeContent {
     
-    private String content;
+    private byte[] data;
     
-    @PropertyGetter("#text")
-    public String getContent() {
-        return content;
+    private String mimeType;
+    
+    public MimeContent(String mimeType, byte[] data) {
+        this.mimeType = mimeType;
+        this.data = data;
     }
     
-    @PropertySetter("#text")
-    public void setContent(String content) {
-        if (!areEqual(content = nullify(content), this.content)) {
-            sync("content", this.content = content);
-        }
+    public String getSrc() {
+        return (mimeType == null || data == null) ? null
+                : "data:" + mimeType + ";base64," + Base64Utils.encodeToString(data);
+    }
+    
+    public byte[] getData() {
+        return data;
+    }
+    
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+    
+    public String getMimeType() {
+        return mimeType;
+    }
+    
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
     }
     
 }

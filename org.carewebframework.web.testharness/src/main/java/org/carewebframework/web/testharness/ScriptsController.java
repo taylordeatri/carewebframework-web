@@ -23,30 +23,21 @@
  *
  * #L%
  */
-package org.carewebframework.web.component;
+package org.carewebframework.web.testharness;
 
-import org.carewebframework.web.annotation.Component;
-import org.carewebframework.web.annotation.Component.PropertyGetter;
-import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.carewebframework.web.annotation.EventHandler;
+import org.carewebframework.web.annotation.WiredComponent;
+import org.carewebframework.web.component.GroovyScript;
+import org.carewebframework.web.event.Event;
 
-/**
- * This is a simple container for text content.
- */
-@Component(value = "#text", widgetClass = "Content", parentTag = "*")
-public class Content extends BaseComponent {
+public class ScriptsController extends BaseController {
     
-    private String content;
+    @WiredComponent
+    private GroovyScript groovyscript;
     
-    @PropertyGetter("#text")
-    public String getContent() {
-        return content;
-    }
-    
-    @PropertySetter("#text")
-    public void setContent(String content) {
-        if (!areEqual(content = nullify(content), this.content)) {
-            sync("content", this.content = content);
-        }
+    @EventHandler(value = "scriptExecution", target = "@groovyscript")
+    private void scriptExecutionHandler(Event event) {
+        log("Groovy script was executed: " + event.getData());
     }
     
 }

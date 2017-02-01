@@ -442,10 +442,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         }
         
         child.parent = this;
-        
-        if (page != null) {
-            child._attach(page);
-        }
+        boolean attached = page != null && child._attach(page);
         
         nameIndex.add(child);
         
@@ -455,6 +452,10 @@ public abstract class BaseComponent implements IElementIdentifier {
         
         afterAddChild(child);
         child.afterSetParent(this);
+        
+        if (attached) {
+            afterAttached();
+        }
     }
     
     public void addChild(BaseComponent child, BaseComponent before) {
@@ -524,6 +525,9 @@ public abstract class BaseComponent implements IElementIdentifier {
     }
     
     protected void afterRemoveChild(BaseComponent child) {
+    }
+    
+    protected void afterAttached() {
     }
     
     public List<BaseComponent> getChildren() {
@@ -795,12 +799,16 @@ public abstract class BaseComponent implements IElementIdentifier {
      * Attach this component and its children to their owning page.
      * 
      * @param page Page to receive this component.
+     * @return True if this component was newly attached.
      */
-    protected void _attach(Page page) {
+    protected boolean _attach(Page page) {
         if (page != null && this.page != page) {
             _setPage(page);
             _flushQueue();
+            return true;
         }
+        
+        return false;
     }
     
     /**

@@ -25,28 +25,17 @@
  */
 package org.carewebframework.web.component;
 
-import org.carewebframework.web.annotation.Component;
-import org.carewebframework.web.annotation.Component.PropertyGetter;
-import org.carewebframework.web.annotation.Component.PropertySetter;
+import java.util.Collections;
 
-/**
- * This is a simple container for text content.
- */
-@Component(value = "#text", widgetClass = "Content", parentTag = "*")
-public class Content extends BaseComponent {
+import org.carewebframework.web.annotation.Component;
+import org.carewebframework.web.annotation.Component.ContentHandling;
+import org.carewebframework.web.script.GroovyUtil;
+
+@Component(value = "groovyscript", widgetClass = "MetaWidget", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
+public class GroovyScript extends BaseScriptComponent {
     
-    private String content;
-    
-    @PropertyGetter("#text")
-    public String getContent() {
-        return content;
+    @Override
+    protected Object execute() {
+        return GroovyUtil.execute(getContent(), Collections.singletonMap("self", this));
     }
-    
-    @PropertySetter("#text")
-    public void setContent(String content) {
-        if (!areEqual(content = nullify(content), this.content)) {
-            sync("content", this.content = content);
-        }
-    }
-    
 }

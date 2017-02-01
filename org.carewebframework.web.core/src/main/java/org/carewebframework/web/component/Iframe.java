@@ -25,6 +25,7 @@
  */
 package org.carewebframework.web.component;
 
+import org.carewebframework.web.ancillary.MimeContent;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
@@ -48,6 +49,10 @@ public class Iframe extends BaseUIComponent {
         if (!areEqual(src = nullify(src), this.src)) {
             sync("src", this.src = src);
         }
+    }
+    
+    public void setContent(MimeContent content) {
+        setSrc(content == null ? null : content.getSrc());
     }
     
     @PropertyGetter("sandbox")

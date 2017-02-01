@@ -25,59 +25,53 @@
  */
 package org.carewebframework.web.component;
 
-import org.carewebframework.web.ancillary.MimeContent;
-import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
+import org.carewebframework.web.annotation.EventHandler;
+import org.carewebframework.web.event.Event;
+import org.carewebframework.web.event.EventUtil;
 
-@Component(value = "image", widgetClass = "Image", parentTag = "*")
-public class Image extends BaseUIComponent {
+public abstract class BaseScriptComponent extends Content {
     
-    private String src;
+    private static final String EVENT_DEFERRED = "deferredExecution";
     
-    private String alt;
+    public static final String EVENT_EXECUTED = "scriptExecution";
     
-    public Image() {
-    }
+    private boolean deferred;
     
-    public Image(String src) {
-        setSrc(src);
-    }
-    
-    public Image(String src, String alt) {
-        setSrc(src);
-        setAlt(alt);
-    }
-    
-    public Image(MimeContent content) {
-        setContent(content);
-    }
-    
-    @PropertyGetter("src")
-    public String getSrc() {
-        return src;
-    }
-    
-    @PropertySetter("src")
-    public void setSrc(String src) {
-        if (!areEqual(src = nullify(src), this.src)) {
-            sync("src", this.src = src);
+    @Override
+    protected void afterAttached() {
+        super.afterAttached();
+        
+        if (deferred) {
+            EventUtil.post(EVENT_DEFERRED, this, null);
+        } else {
+            doExecute();
         }
     }
     
-    public void setContent(MimeContent content) {
-        setSrc(content == null ? null : content.getSrc());
+    protected abstract Object execute();
+    
+    @PropertyGetter("deferred")
+    public boolean isDeferred() {
+        return deferred;
     }
     
-    @PropertyGetter("alt")
-    public String getAlt() {
-        return alt;
+    @PropertySetter("deferred")
+    public void setDeferred(boolean deferred) {
+        this.deferred = deferred;
     }
     
-    @PropertySetter("alt")
-    public void setAlt(String alt) {
-        if (!areEqual(alt = nullify(alt), this.alt)) {
-            sync("alt", this.alt = alt);
+    @EventHandler(value = EVENT_DEFERRED, syncToClient = false)
+    private void onDeferredExecution() {
+        doExecute();
+    }
+    
+    private void doExecute() {
+        Object result = execute();
+        
+        if (hasEventListener(EVENT_EXECUTED)) {
+            fireEvent(new Event(EVENT_EXECUTED, this, result));
         }
     }
 }
