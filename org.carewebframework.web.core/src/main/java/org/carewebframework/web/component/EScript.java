@@ -25,17 +25,26 @@
  */
 package org.carewebframework.web.component;
 
+import java.util.Collections;
+
+import org.carewebframework.web.annotation.Component;
+import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.EventUtil;
+import org.carewebframework.web.script.IScript;
+import org.carewebframework.web.script.ScriptRegistry;
 
-public abstract class BaseScriptComponent extends BaseComponent {
+@Component(value = "escript", widgetClass = "MetaWidget", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
+public class EScript extends BaseComponent {
     
     private static final String EVENT_DEFERRED = "deferredExecution";
     
     public static final String EVENT_EXECUTED = "scriptExecution";
+    
+    private IScript script = ScriptRegistry.getInstance().get("groovy");
     
     private boolean deferred;
     
@@ -50,7 +59,9 @@ public abstract class BaseScriptComponent extends BaseComponent {
         }
     }
     
-    protected abstract Object execute();
+    private Object execute() {
+        return script.execute(getContent(), Collections.singletonMap("self", this));
+    }
     
     @Override
     protected void setContent(String content) {
@@ -67,13 +78,28 @@ public abstract class BaseScriptComponent extends BaseComponent {
         this.deferred = deferred;
     }
     
+    @PropertyGetter("type")
+    public String getType() {
+        return script.getType();
+    }
+    
+    @PropertySetter("type")
+    public void setType(String type) {
+        IScript value = ScriptRegistry.getInstance().get(type);
+        
+        if (value == null) {
+            throw new IllegalArgumentException("Unknown script type: " + type);
+        }
+        
+        script = value;
+    }
+    
     @EventHandler(value = EVENT_DEFERRED, syncToClient = false)
     private void onDeferredExecution() {
         doExecute();
     }
     
     private void doExecute() {
-        Object result = execute();
-        EventUtil.post(new Event(EVENT_EXECUTED, this, result));
+        EventUtil.post(new Event(EVENT_EXECUTED, this, execute()));
     }
 }

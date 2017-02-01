@@ -16,8 +16,8 @@
 		<div>
 		You should see the message "Groovy script was executed." in the status log.
 		</div>
-		<groovyscript name="groovyscript">
+		<escript name="groovyscript" type="groovy">
 			return self.getName() + " is groovy!";
-		</groovyscript>
+		</escript>
 	</div>
 </page>

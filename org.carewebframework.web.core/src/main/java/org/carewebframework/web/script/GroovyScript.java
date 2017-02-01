@@ -34,7 +34,7 @@ import groovy.lang.Script;
 /**
  * Utility methods for compiling and executing groovy scripts.
  */
-public class GroovyUtil {
+public class GroovyScript implements IScript {
     
     private static GroovyShell shell;
     
@@ -46,11 +46,13 @@ public class GroovyUtil {
         return shell;
     }
     
-    public static Object execute(String source) {
-        return execute(source, null);
+    @Override
+    public String getType() {
+        return "groovy";
     }
     
-    public static Object execute(String source, Map<String, Object> variables) {
+    @Override
+    public Object execute(String source, Map<String, Object> variables) {
         if (source != null && !source.isEmpty()) {
             Script script = getGroovyShell().parse(source);
             
@@ -62,8 +64,5 @@ public class GroovyUtil {
         } else {
             return null;
         }
-    }
-    
-    private GroovyUtil() {
     }
 }
