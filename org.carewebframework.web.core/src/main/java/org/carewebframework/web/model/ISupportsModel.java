@@ -35,4 +35,30 @@ public interface ISupportsModel<T extends BaseComponent> {
     default <M> IModelAndView<T, M> getModelAndView(Class<M> clazz) {
         return (IModelAndView<T, M>) getModelAndView();
     }
+    
+    default IListModel<?> getModel() {
+        return getModelAndView().getModel();
+    }
+    
+    default <M> IListModel<M> getModel(Class<M> clazz) {
+        return getModelAndView(clazz).getModel();
+    }
+    
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    default <M> void setModel(IListModel<M> model) {
+        getModelAndView().setModel((ListModel) model);
+    }
+    
+    default IComponentRenderer<T, ?> getRenderer() {
+        return getModelAndView().getRenderer();
+    }
+    
+    default <M> IComponentRenderer<T, M> getRenderer(Class<M> clazz) {
+        return getModelAndView(clazz).getRenderer();
+    }
+    
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    default <M> void setRenderer(IComponentRenderer<T, M> renderer) {
+        getModelAndView().setRenderer((IComponentRenderer) renderer);
+    }
 }

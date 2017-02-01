@@ -57,7 +57,7 @@ public class Listbox extends BaseUIComponent implements ISupportsModel<Listitem>
     public void setMultiple(boolean multiple) {
         if (multiple != this.multiple) {
             if (!multiple && selected.size() > 1) {
-                clearSelected(null);
+                unselect(null);
             }
             
             sync("multiple", this.multiple = multiple);
@@ -90,7 +90,7 @@ public class Listbox extends BaseUIComponent implements ISupportsModel<Listitem>
     
     public void setSelectedItem(Listitem item) {
         validateIsChild(item);
-        clearSelected(item);
+        unselect(item);
         
         if (item != null) {
             item.setSelected(true);
@@ -109,7 +109,7 @@ public class Listbox extends BaseUIComponent implements ISupportsModel<Listitem>
     protected void _updateSelected(Listitem item) {
         if (item.isSelected() != selected.contains(item)) {
             if (!multiple) {
-                clearSelected(null);
+                unselect(null);
             }
             
             if (item.isSelected()) {
@@ -121,10 +121,10 @@ public class Listbox extends BaseUIComponent implements ISupportsModel<Listitem>
     }
     
     public void clearSelected() {
-        clearSelected(null);
+        unselect(null);
     }
     
-    private void clearSelected(Listitem skip) {
+    private void unselect(Listitem skip) {
         for (Listitem item : selected) {
             if (item != skip) {
                 item._setSelected(false, true, false);

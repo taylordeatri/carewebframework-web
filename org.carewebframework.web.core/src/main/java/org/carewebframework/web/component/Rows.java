@@ -25,10 +25,10 @@
  */
 package org.carewebframework.web.component;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
@@ -47,7 +47,7 @@ public class Rows extends BaseUIComponent implements ISupportsModel<Row> {
     
     private Selectable selectable = Selectable.NO;
     
-    private final List<Row> selected = new ArrayList<>();
+    private final Set<Row> selected = new LinkedHashSet<>();
     
     private final ModelAndView<Row, Object> modelAndView = new ModelAndView<>(this);
     
@@ -73,13 +73,21 @@ public class Rows extends BaseUIComponent implements ISupportsModel<Row> {
             sync("selectable", this.selectable = selectable);
             
             if (selectable != Selectable.MULTIPLE && !selected.isEmpty()) {
-                unselect(selectable == Selectable.NO ? null : selected.get(0));
+                unselect(selectable == Selectable.NO ? null : getSelectedRow());
             }
         }
     }
     
-    public List<Row> getSelected() {
-        return Collections.unmodifiableList(selected);
+    public Row getSelectedRow() {
+        return selected.isEmpty() ? null : selected.iterator().next();
+    }
+    
+    public Set<Row> getSelected() {
+        return Collections.unmodifiableSet(selected);
+    }
+    
+    public void clearSelected() {
+        unselect(null);
     }
     
     private void unselect(Row excluded) {
