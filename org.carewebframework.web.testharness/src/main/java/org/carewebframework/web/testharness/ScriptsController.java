@@ -27,13 +27,13 @@ package org.carewebframework.web.testharness;
 
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.annotation.WiredComponent;
-import org.carewebframework.web.component.EScript;
+import org.carewebframework.web.component.ServerScript;
 import org.carewebframework.web.event.Event;
 
 public class ScriptsController extends BaseController {
     
     @WiredComponent
-    private EScript groovyscript;
+    private ServerScript groovyscript;
     
     @EventHandler(value = "scriptExecution", target = "@groovyscript")
     private void scriptExecutionHandler(Event event) {

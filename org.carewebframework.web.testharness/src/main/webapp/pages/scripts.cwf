@@ -3,21 +3,21 @@
 		<div>
 		You should see the message "Embedded script was executed." in the status log.
 		</div>
-		<script>
+		<cscript>
 			require(['cwf-core'], function(cwf) {
 			cwf.event.sendToServer({type: 'log', data: 'Embedded script was executed.'});
 			console.log('Embedded script was executed.');
 			});
-		</script>
+		</cscript>
 		<div>
 		You should see the message "External script was executed." in the status log.
 		</div>
-		<script src="js/scripts.js" />
+		<cscript src="js/scripts.js" />
 		<div>
 		You should see the message "Groovy script was executed." in the status log.
 		</div>
-		<escript name="groovyscript" type="groovy">
+		<sscript name="groovyscript" type="groovy">
 			return self.getName() + " is groovy!";
-		</escript>
+		</sscript>
 	</div>
 </page>

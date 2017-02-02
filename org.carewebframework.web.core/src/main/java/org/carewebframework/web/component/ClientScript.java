@@ -32,14 +32,17 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.springframework.util.StringUtils;
 
-@Component(value = "script", widgetClass = "Script", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
-public class Script extends BaseComponent {
+/**
+ * Component wrapping script source code for client-side invocation.
+ */
+@Component(value = "cscript", widgetClass = "Script", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
+public class ClientScript extends BaseComponent {
     
     private String type;
     
     private String src;
     
-    public Script() {
+    public ClientScript() {
         super();
     }
     

@@ -37,8 +37,11 @@ import org.carewebframework.web.event.EventUtil;
 import org.carewebframework.web.script.IScriptLanguage;
 import org.carewebframework.web.script.ScriptRegistry;
 
-@Component(value = "escript", widgetClass = "MetaWidget", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
-public class EScript extends BaseComponent {
+/**
+ * Component wrapping script source code for server-side invocation.
+ */
+@Component(value = "sscript", widgetClass = "MetaWidget", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
+public class ServerScript extends BaseComponent {
     
     private static final String EVENT_DEFERRED = "deferredExecution";
     
