@@ -273,8 +273,7 @@ public class ComponentDefinition {
                 String name = entry.getKey();
                 
                 if (attributes.containsKey(name)) {
-                    Object value = ELEvaluator.getInstance().evaluate(attributes.get(name));
-                    attributes.remove(name);
+                    Object value = ELEvaluator.getInstance().evaluate(attributes.remove(name));
                     processValue(null, entry.getValue(), value, context);
                     
                     if (context.isTerminated()) {
