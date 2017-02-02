@@ -32,17 +32,17 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 @Component(value = "stylesheet", widgetClass = "Stylesheet", parentTag = "*")
 public class Stylesheet extends BaseComponent {
     
-    private String href;
+    private String src;
     
-    @PropertyGetter("href")
-    public String getHref() {
-        return href;
+    @PropertyGetter("src")
+    public String getSrc() {
+        return src;
     }
     
-    @PropertySetter("href")
-    public void setHref(String href) {
-        if (!areEqual(href = nullify(href), this.href)) {
-            sync("href", this.href = href);
+    @PropertySetter("src")
+    public void setSrc(String src) {
+        if (!areEqual(src = nullify(src), this.src)) {
+            sync("src", this.src = src);
         }
     }
     

@@ -1409,7 +1409,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ State ------------------------------*/
 		
-		href: function(v) {
+		src: function(v) {
 			this.attr('href', v, this.real$);
 		}
 		
