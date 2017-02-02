@@ -34,7 +34,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.EventUtil;
-import org.carewebframework.web.script.IScript;
+import org.carewebframework.web.script.IScriptLanguage;
 import org.carewebframework.web.script.ScriptRegistry;
 
 @Component(value = "escript", widgetClass = "MetaWidget", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
@@ -44,7 +44,7 @@ public class EScript extends BaseComponent {
     
     public static final String EVENT_EXECUTED = "scriptExecution";
     
-    private IScript script = ScriptRegistry.getInstance().get("groovy");
+    private IScriptLanguage script = ScriptRegistry.getInstance().get("groovy");
     
     private boolean deferred;
     
@@ -85,7 +85,7 @@ public class EScript extends BaseComponent {
     
     @PropertySetter("type")
     public void setType(String type) {
-        IScript value = ScriptRegistry.getInstance().get(type);
+        IScriptLanguage value = ScriptRegistry.getInstance().get(type);
         
         if (value == null) {
             throw new IllegalArgumentException("Unknown script type: " + type);

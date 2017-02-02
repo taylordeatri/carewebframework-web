@@ -33,7 +33,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 /**
  * Tracks script extensions.
  */
-public class ScriptRegistry extends AbstractRegistry<String, IScript> implements BeanPostProcessor {
+public class ScriptRegistry extends AbstractRegistry<String, IScriptLanguage> implements BeanPostProcessor {
     
     private static final ScriptRegistry instance = new ScriptRegistry();
     
@@ -46,7 +46,7 @@ public class ScriptRegistry extends AbstractRegistry<String, IScript> implements
     }
     
     @Override
-    protected String getKey(IScript script) {
+    protected String getKey(IScriptLanguage script) {
         return script.getType();
     }
     
@@ -57,8 +57,8 @@ public class ScriptRegistry extends AbstractRegistry<String, IScript> implements
     
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof IScript) {
-            register((IScript) bean);
+        if (bean instanceof IScriptLanguage) {
+            register((IScriptLanguage) bean);
         }
         
         return bean;

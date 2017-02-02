@@ -34,7 +34,7 @@ import groovy.lang.Script;
 /**
  * Utility methods for compiling and executing groovy scripts.
  */
-public class GroovyScript implements IScript {
+public class GroovyScript implements IScriptLanguage {
     
     private static GroovyShell shell;
     
