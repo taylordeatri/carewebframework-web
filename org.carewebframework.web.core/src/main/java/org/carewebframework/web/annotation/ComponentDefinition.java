@@ -137,7 +137,7 @@ public class ComponentDefinition {
         @SuppressWarnings("unchecked")
         public void setComponentClass(Class<?> clazz) {
             if (clazz != null && !originalClazz.isAssignableFrom(clazz)) {
-                throw new RuntimeException("Implementation class must extend class " + originalClazz.getName() + ".");
+                throw new RuntimeException("Implementation class must extend class " + originalClazz.getName());
             }
             
             this.clazz = (Class<? extends BaseComponent>) clazz;
@@ -403,18 +403,18 @@ public class ComponentDefinition {
     
     public void validateChild(ComponentDefinition childDefinition, IntSupplier childCount) {
         if (!childrenAllowed()) {
-            throw new ComponentException(componentClass, "Children are not allowed.");
+            throw new ComponentException(componentClass, "Children are not allowed");
         }
         
         childDefinition.validateParent(this);
         Cardinality cardinality = getCardinality(childDefinition.tag);
         
         if (cardinality == null) {
-            throw new ComponentException(componentClass, "%s is not a valid child.", childDefinition.componentClass);
+            throw new ComponentException(componentClass, "%s is not a valid child", childDefinition.componentClass);
         }
         
         if (cardinality.hasMaximum() && childCount.getAsInt() >= cardinality.getMaximum()) {
-            throw new ComponentException(componentClass, "A maximum of %d children of type %s are allowed.",
+            throw new ComponentException(componentClass, "A maximum of %d children of type %s are allowed",
                     cardinality.getMaximum(), childDefinition.componentClass);
         }
         
@@ -422,7 +422,7 @@ public class ComponentDefinition {
     
     public void validateParent(ComponentDefinition parentDefinition) {
         if (!isParentTag(parentDefinition.tag)) {
-            throw new ComponentException(componentClass, "%s is not a valid parent.", parentDefinition.componentClass);
+            throw new ComponentException(componentClass, "%s is not a valid parent", parentDefinition.componentClass);
         }
     }
     

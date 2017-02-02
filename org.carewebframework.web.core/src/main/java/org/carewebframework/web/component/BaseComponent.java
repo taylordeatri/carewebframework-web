@@ -405,10 +405,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     }
     
     protected void validateChild(BaseComponent child) {
-        if (child.getParent() != this) {
-            componentDefinition.validateChild(child.componentDefinition, () -> getChildCount(child.getClass()));
-            nameIndex.validate(child);
-        }
+        componentDefinition.validateChild(child.componentDefinition, () -> getChildCount(child.getClass()));
     }
     
     public void addChild(BaseComponent child) {
@@ -418,7 +415,12 @@ public abstract class BaseComponent implements IElementIdentifier {
     public void addChild(BaseComponent child, int index) {
         boolean noSync = child.getPage() == null && index < 0;
         child.validate();
-        validateChild(child);
+        
+        if (child.getParent() != this) {
+            validateChild(child);
+            nameIndex.validate(child);
+        }
+        
         BaseComponent before = index < 0 || index == children.size() ? null : children.get(index);
         
         if (child == before) {

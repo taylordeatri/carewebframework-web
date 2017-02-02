@@ -1,0 +1,5 @@
+<template src="pages/template_src.cwf">
+	<snippet src="pages/template_snippet1.cwf" anchor="anchor1" />
+	<snippet src="pages/template_snippet2.cwf" anchor="anchor2" />
+	<snippet src="pages/template_snippet3.cwf" anchor="anchor3" position="before" />
+</template>

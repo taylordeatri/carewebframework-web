@@ -84,6 +84,10 @@
 				<import src="pages/trees.cwf" />
 			</tab>
 			
+			<tab label="Template">
+				<import src="pages/templates.cwf" />
+			</tab>
+			
 			<tab label="Miscellaneous">
 				<import src="pages/misc.cwf" />
 			</tab>

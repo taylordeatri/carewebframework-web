@@ -1,0 +1,9 @@
+<page>
+	<tabview name="anchor1" height="200px">
+
+	</tabview>
+
+	<tabview name="anchor2" height="200px">
+
+	</tabview>
+</page>
