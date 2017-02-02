@@ -25,7 +25,6 @@
  */
 package org.carewebframework.web.component;
 
-import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
@@ -63,11 +62,7 @@ public class Import extends BaseUIComponent {
             this.destroyChildren();
             
             if (src != null) {
-                try {
-                    PageParser.getInstance().parse(src).materialize(this);
-                } catch (Exception e) {
-                    throw MiscUtil.toUnchecked(e);
-                }
+                PageParser.getInstance().parse(src).materialize(this);
             }
         }
     }
