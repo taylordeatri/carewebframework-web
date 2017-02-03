@@ -36,6 +36,7 @@ import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.EventUtil;
 import org.carewebframework.web.script.IScriptLanguage;
 import org.carewebframework.web.script.ScriptRegistry;
+import org.springframework.util.Assert;
 
 /**
  * Component wrapping script source code for server-side invocation.
@@ -47,7 +48,7 @@ public class ServerScript extends BaseComponent {
     
     public static final String EVENT_EXECUTED = "scriptExecution";
     
-    private IScriptLanguage script = ScriptRegistry.getInstance().get("groovy");
+    private IScriptLanguage script;
     
     private boolean deferred;
     
@@ -63,7 +64,8 @@ public class ServerScript extends BaseComponent {
     }
     
     private Object execute() {
-        return script.execute(getContent(), Collections.singletonMap("self", this));
+        Assert.notNull(script, "A script type must be specified");
+        return script.parse(getContent()).run(Collections.singletonMap("self", this));
     }
     
     @Override
@@ -88,13 +90,11 @@ public class ServerScript extends BaseComponent {
     
     @PropertySetter("type")
     public void setType(String type) {
-        IScriptLanguage value = ScriptRegistry.getInstance().get(type);
+        script = ScriptRegistry.getInstance().get(type);
         
-        if (value == null) {
+        if (script == null && type != null) {
             throw new IllegalArgumentException("Unknown script type: " + type);
         }
-        
-        script = value;
     }
     
     @EventHandler(value = EVENT_DEFERRED, syncToClient = false)

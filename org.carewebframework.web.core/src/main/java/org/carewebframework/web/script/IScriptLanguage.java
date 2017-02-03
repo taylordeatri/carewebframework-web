@@ -7,6 +7,28 @@ import java.util.Map;
  */
 public interface IScriptLanguage {
     
+    public interface IParsedScript {
+        
+        /**
+         * Executes the compiled script with optional variables.
+         * 
+         * @param script The compiled script.
+         * @param variables Optional variable assignments (may be null).
+         * @return The result of the script evaluation, if any.
+         */
+        Object run(Map<String, Object> variables);
+        
+        /**
+         * Executes the compiled script.
+         * 
+         * @param script The compiled script.
+         * @return The result of the script evaluation, if any.
+         */
+        default Object run() {
+            return run(null);
+        }
+    }
+    
     /**
      * The language type of the script (e.g., "groovy"). Must be unique.
      * 
@@ -15,21 +37,11 @@ public interface IScriptLanguage {
     String getType();
     
     /**
-     * Executes the script source with optional variables.
+     * Compiles the script source.
      * 
      * @param source The script source.
-     * @param variables Optional variable assignments (may be null).
-     * @return The result of the script evaluation, if any.
+     * @return The compiled script.
      */
-    Object execute(String source, Map<String, Object> variables);
+    IParsedScript parse(String source);
     
-    /**
-     * Executes the script source.
-     * 
-     * @param source The script source.
-     * @return The result of the script evaluation, if any.
-     */
-    default Object execute(String source) {
-        return execute(source, null);
-    }
 }

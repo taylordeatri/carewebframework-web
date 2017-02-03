@@ -76,8 +76,6 @@
 	<bean factory-method="getInstance"
 		class="org.carewebframework.web.script.ScriptRegistry" />
 	
-	<bean class="org.carewebframework.web.script.GroovyScript" />
-	
 	<bean class="org.springframework.beans.factory.config.MethodInvokingBean">
 		<property name="staticMethod" value="org.carewebframework.web.core.InitLocalizer.init" />
 		<property name="arguments" ref="messageSource" />

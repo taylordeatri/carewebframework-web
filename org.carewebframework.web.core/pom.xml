@@ -140,12 +140,6 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
-		<!-- Groovy -->
-		<dependency>
-		    <groupId>org.codehaus.groovy</groupId>
-		    <artifactId>groovy</artifactId>
-		    <version>2.4.7</version>
-		</dependency>
 		<!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>

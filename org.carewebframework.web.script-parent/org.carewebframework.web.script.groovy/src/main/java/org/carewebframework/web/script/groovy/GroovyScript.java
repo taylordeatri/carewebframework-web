@@ -23,9 +23,11 @@
  *
  * #L%
  */
-package org.carewebframework.web.script;
+package org.carewebframework.web.script.groovy;
 
 import java.util.Map;
+
+import org.carewebframework.web.script.IScriptLanguage;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
@@ -46,23 +48,30 @@ public class GroovyScript implements IScriptLanguage {
         return shell;
     }
     
+    public static class ParsedScript implements IParsedScript {
+        
+        private final Script script;
+        
+        public ParsedScript(String source) {
+            script = getGroovyShell().parse(source);
+        }
+        
+        @Override
+        public Object run(Map<String, Object> variables) {
+            script.setBinding(variables == null ? null : new Binding(variables));
+            return script.run();
+        }
+        
+    }
+    
     @Override
     public String getType() {
         return "groovy";
     }
     
     @Override
-    public Object execute(String source, Map<String, Object> variables) {
-        if (source != null && !source.isEmpty()) {
-            Script script = getGroovyShell().parse(source);
-            
-            if (variables != null) {
-                script.setBinding(new Binding(variables));
-            }
-            
-            return script.run();
-        } else {
-            return null;
-        }
+    public IParsedScript parse(String source) {
+        return new ParsedScript(source);
     }
+    
 }
