@@ -95,6 +95,8 @@ public class ELEvaluator extends StandardEvaluationContext implements BeanPostPr
             addPropertyAccessor((PropertyAccessor) bean);
         } else if (bean instanceof Converter) {
             conversionService.addConverter((Converter<?, ?>) bean);
+        } else if (bean instanceof BeanResolver) {
+            setBeanResolver((BeanResolver) bean);
         }
         
         return bean;
