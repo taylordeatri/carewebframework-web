@@ -35,9 +35,17 @@ public class ScriptsController extends BaseController {
     @WiredComponent
     private ServerScript groovyscript;
     
+    @WiredComponent
+    private ServerScript jrubyscript;
+    
     @EventHandler(value = "scriptExecution", target = "@groovyscript")
-    private void scriptExecutionHandler(Event event) {
+    private void groovyExecutionHandler(Event event) {
         log("Groovy script was executed: " + event.getData());
+    }
+    
+    @EventHandler(value = "scriptExecution", target = "@jrubyscript")
+    private void jrubyExecutionHandler(Event event) {
+        log("JRuby script was executed: " + event.getData());
     }
     
 }

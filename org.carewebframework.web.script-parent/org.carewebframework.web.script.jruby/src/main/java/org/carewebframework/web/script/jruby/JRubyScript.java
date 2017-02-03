@@ -68,6 +68,11 @@ public class JRubyScript implements IScriptLanguage {
     }
     
     @Override
+    public String getSelf() {
+        return "$self";
+    }
+    
+    @Override
     public IParsedScript parse(String source) {
         return new ParsedScript(source);
     }

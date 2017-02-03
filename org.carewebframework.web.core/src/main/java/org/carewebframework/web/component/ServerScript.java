@@ -65,7 +65,7 @@ public class ServerScript extends BaseComponent {
     
     private Object execute() {
         Assert.notNull(script, "A script type must be specified");
-        return script.parse(getContent()).run(Collections.singletonMap("self", this));
+        return script.parse(getContent()).run(Collections.singletonMap(script.getSelf(), this));
     }
     
     @Override

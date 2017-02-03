@@ -19,5 +19,12 @@
 		<sscript name="groovyscript" type="groovy">
 			return self.getName() + " is groovy!";
 		</sscript>
+		<div>
+		You should see the message "JRuby script was executed." in the status log.
+		</div>
+		<sscript name="jrubyscript" type="jruby">
+			require "java"
+			"#{$self.getName} rocks!"
+		</sscript>
 	</div>
 </page>
