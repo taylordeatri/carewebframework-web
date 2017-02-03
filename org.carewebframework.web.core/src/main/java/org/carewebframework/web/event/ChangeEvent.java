@@ -46,7 +46,7 @@ public class ChangeEvent extends Event {
         super(TYPE, target, data);
     }
     
-    public ChangeEvent(BaseComponent target, Object data, String value) {
+    public ChangeEvent(BaseComponent target, Object data, Object value) {
         super(TYPE, target, data);
         this.value = value;
     }

@@ -323,7 +323,7 @@ a:not([href]) {
 
 .cwf_window-modal,
 .cwf_window-popup {
-    position: absolute;
+    position: absolute!important;
     max-height: 100%;
     max-width: 100%;
 }

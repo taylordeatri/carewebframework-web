@@ -665,7 +665,7 @@ public abstract class BaseComponent implements IElementIdentifier {
      * @return The ancestor component of the requested type, or null if none found.
      */
     @SuppressWarnings("unchecked")
-    protected <T> T getAncestor(Class<T> type, boolean includeSelf) {
+    public <T> T getAncestor(Class<T> type, boolean includeSelf) {
         BaseComponent cmp = includeSelf ? this : this.getParent();
         
         while (cmp != null) {

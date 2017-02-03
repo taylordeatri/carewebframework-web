@@ -1136,7 +1136,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	});
 	
 	cwf.widget.Connector.create = function(dom, child) {
-		var wgt = cwf.widget.create(null, {wclass: 'Connector', cntr: true, _dom: dom});
+		var wgt = cwf.widget.create(null, {wclass: 'Connector', id: child.subId('cnc'), cntr: true, _dom: dom});
 		wgt.addChild(child);
 		return wgt;
 	};
