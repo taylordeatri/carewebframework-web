@@ -1,5 +1,5 @@
 <page>
-	<table controller="org.carewebframework.web.testharness.BoxesController">
+	<grid controller="org.carewebframework.web.testharness.BoxesController">
 		<columns style="visibility:hidden">
 			<column width="40%" />
 			<column width="80%" />
@@ -114,5 +114,5 @@
 				imagepicker
 			</row>
 		</rows>
-	</table>
+	</grid>
 </page>

@@ -38,12 +38,12 @@ import org.carewebframework.web.component.Radiobutton;
 import org.carewebframework.web.component.Radiogroup;
 import org.carewebframework.web.component.Row;
 import org.carewebframework.web.component.Rows.Selectable;
-import org.carewebframework.web.component.Table;
+import org.carewebframework.web.component.Grid;
 import org.carewebframework.web.model.IComponentRenderer;
 import org.carewebframework.web.model.IModelAndView;
 import org.carewebframework.web.model.ListModel;
 
-public class TablesController extends BaseController {
+public class GridsController extends BaseController {
     
     private class RowModelObject implements Comparable<RowModelObject> {
         
@@ -97,7 +97,7 @@ public class TablesController extends BaseController {
     };
     
     @WiredComponent
-    private Table table;
+    private Grid grid;
     
     @WiredComponent
     private Column col1;
@@ -106,14 +106,14 @@ public class TablesController extends BaseController {
     private Column col2;
     
     @WiredComponent
-    private Radiogroup rgTables;
+    private Radiogroup rgGrids;
     
     @Override
     public void afterInitialized(BaseComponent root) {
         super.afterInitialized(root);
         col1.setSortComparator(comp1);
         col2.setSortComparator(comp2);
-        IModelAndView<Row, RowModelObject> mv = table.getRows().getModelAndView(RowModelObject.class);
+        IModelAndView<Row, RowModelObject> mv = grid.getRows().getModelAndView(RowModelObject.class);
         ListModel<RowModelObject> model = new ListModel<>();
         
         for (int i = 1; i < 11; i++) {
@@ -125,12 +125,12 @@ public class TablesController extends BaseController {
         col1.sort();
     }
     
-    @EventHandler(value = "change", target = "@rgTables")
-    private void rgTablesSelectHandler() {
-        Radiobutton rb = rgTables.getSelected();
+    @EventHandler(value = "change", target = "@rgGrids")
+    private void rgGridsSelectHandler() {
+        Radiobutton rb = rgGrids.getSelected();
         
         if (rb != null) {
-            table.getRows().setSelectable(Selectable.valueOf(rb.getLabel()));
+            grid.getRows().setSelectable(Selectable.valueOf(rb.getLabel()));
         }
     }
 }

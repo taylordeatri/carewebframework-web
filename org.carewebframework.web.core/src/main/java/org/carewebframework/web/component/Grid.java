@@ -28,15 +28,15 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 
-@Component(value = "table", widgetPackage = "cwf-table", widgetClass = "Table", parentTag = "*", childTag = {
+@Component(value = "grid", widgetPackage = "cwf-grid", widgetClass = "Grid", parentTag = "*", childTag = {
         @ChildTag(value = "rows", maximum = 1), @ChildTag(value = "columns", maximum = 1) })
-public class Table extends BaseUIComponent {
+public class Grid extends BaseUIComponent {
     
     private Columns columns;
     
     private Rows rows;
     
-    public Table() {
+    public Grid() {
         addClass("table table-bordered");
     }
     

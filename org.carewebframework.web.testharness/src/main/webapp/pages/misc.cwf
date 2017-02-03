@@ -2,7 +2,7 @@
 	<popup name="hoverPopup">
 		<label label="This is a test of a hover popup." />
 	</popup>
-	<table>
+	<grid>
 		<columns style="visibility:hidden">
 			<column width="30%" />
 			<column width="70%" />
@@ -68,6 +68,6 @@
 				Test of custom attribute: ${custom.test}
 			</row>
 		</rows>
-	</table>
+	</grid>
 	
 </span>

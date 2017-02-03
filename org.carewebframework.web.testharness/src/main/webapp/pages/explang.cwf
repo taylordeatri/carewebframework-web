@@ -1,4 +1,4 @@
-<table>
+<grid>
 	<columns style="visibility:hidden">
 		<column width="60%" />
 		<column width="40%" />
@@ -26,4 +26,4 @@
 			<div>${test.getLabel('test.message')}</div>
 		</row>
 	</rows>
-</table>
+</grid>

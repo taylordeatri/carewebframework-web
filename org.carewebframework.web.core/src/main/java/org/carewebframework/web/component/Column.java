@@ -37,7 +37,7 @@ import org.carewebframework.web.model.SmartComparator;
 import org.carewebframework.web.model.Sorting.SortOrder;
 import org.carewebframework.web.model.Sorting.SortToggle;
 
-@Component(value = "column", widgetClass = "Column", widgetPackage = "cwf-table", parentTag = "columns", childTag = @ChildTag("*"))
+@Component(value = "column", widgetClass = "Column", widgetPackage = "cwf-grid", parentTag = "columns", childTag = @ChildTag("*"))
 public class Column extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     
     private Comparator<?> sortComparator;
@@ -117,8 +117,8 @@ public class Column extends BaseLabeledComponent<BaseLabeledComponent.LabelPosit
     }
     
     private IListModel<Object> getModel() {
-        Table table = getAncestor(Table.class);
-        Rows rows = table == null ? null : table.getRows();
+        Grid grid = getAncestor(Grid.class);
+        Rows rows = grid == null ? null : grid.getRows();
         return rows == null ? null : rows.getModelAndView(Object.class).getModel();
     }
     

@@ -23,14 +23,7 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="left"/>
-                        <xs:enumeration value="right"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
+            <xs:attribute name="position" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="target" type="xs:string"/>
@@ -91,6 +84,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -114,7 +108,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -250,6 +243,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -273,7 +267,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -447,6 +440,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -470,7 +464,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -575,6 +568,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -598,7 +592,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -673,6 +666,38 @@
             <xs:attribute name="width" type="xs:string"/>
         </xs:complexType>
     </xs:element>
+    <xs:element name="grid">
+        <xs:complexType>
+            <xs:all>
+                <xs:element maxOccurs="1" minOccurs="0" ref="columns"/>
+                <xs:element maxOccurs="1" minOccurs="0" ref="rows"/>
+            </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
+            <xs:attribute name="class" type="xs:string"/>
+            <xs:attribute name="context" type="xs:string"/>
+            <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="css" type="xs:string"/>
+            <xs:attribute name="data" type="xs:string"/>
+            <xs:attribute name="disabled" type="xs:boolean"/>
+            <xs:attribute name="dragid" type="xs:string"/>
+            <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
+            <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="hint" type="xs:string"/>
+            <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="popup" type="xs:string"/>
+            <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="width" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="groupbox">
         <xs:complexType mixed="true">
             <xs:all>
@@ -687,6 +712,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -710,7 +736,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -1290,6 +1315,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -1313,7 +1339,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -1395,6 +1420,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -1419,7 +1445,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -1454,6 +1479,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -1477,7 +1503,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -1569,6 +1594,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -1592,7 +1618,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -1730,6 +1755,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -1753,7 +1779,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -1812,6 +1837,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -1836,7 +1862,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -1888,6 +1913,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -1911,7 +1937,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -2027,6 +2052,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -2050,7 +2076,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -2145,6 +2170,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -2168,7 +2194,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -2202,38 +2227,6 @@
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
             <xs:attribute name="selected" type="xs:boolean"/>
-            <xs:attribute name="style" type="xs:string"/>
-            <xs:attribute name="tabindex" type="xs:integer"/>
-            <xs:attribute name="unless" type="xs:boolean"/>
-            <xs:attribute name="visible" type="xs:boolean"/>
-            <xs:attribute name="width" type="xs:string"/>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="table">
-        <xs:complexType>
-            <xs:all>
-                <xs:element maxOccurs="1" minOccurs="0" ref="columns"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="rows"/>
-            </xs:all>
-            <xs:attribute name="balloon" type="xs:string"/>
-            <xs:attribute name="class" type="xs:string"/>
-            <xs:attribute name="context" type="xs:string"/>
-            <xs:attribute name="controller" type="xs:string"/>
-            <xs:attribute name="css" type="xs:string"/>
-            <xs:attribute name="data" type="xs:string"/>
-            <xs:attribute name="disabled" type="xs:boolean"/>
-            <xs:attribute name="dragid" type="xs:string"/>
-            <xs:attribute name="dropid" type="xs:string"/>
-            <xs:attribute name="flex" type="xs:string"/>
-            <xs:attribute name="focus" type="xs:boolean"/>
-            <xs:attribute name="forward" type="xs:string"/>
-            <xs:attribute name="height" type="xs:string"/>
-            <xs:attribute name="hint" type="xs:string"/>
-            <xs:attribute name="if" type="xs:boolean"/>
-            <xs:attribute name="impl" type="xs:string"/>
-            <xs:attribute name="keycapture" type="xs:string"/>
-            <xs:attribute name="name" type="xs:string"/>
-            <xs:attribute name="popup" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -2400,6 +2393,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -2423,7 +2417,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
@@ -2592,6 +2585,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
@@ -2615,7 +2609,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="table"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>

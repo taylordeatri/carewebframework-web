@@ -12,7 +12,6 @@ public interface IScriptLanguage {
         /**
          * Executes the compiled script with optional variables.
          * 
-         * @param script The compiled script.
          * @param variables Optional variable assignments (may be null).
          * @return The result of the script evaluation, if any.
          */
@@ -21,7 +20,6 @@ public interface IScriptLanguage {
         /**
          * Executes the compiled script.
          * 
-         * @param script The compiled script.
          * @return The result of the script evaluation, if any.
          */
         default Object run() {

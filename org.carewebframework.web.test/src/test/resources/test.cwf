@@ -35,7 +35,7 @@
 			
 			
 			<tab label="Buttons">
-				<table>
+				<grid>
 					<columns>
 						<column width="40%" />
 						<column width="80%" />
@@ -113,12 +113,12 @@
 							Horizontally-oriented toolbars with start, center, and end alignments.
 						</row>
 					</rows>
-				</table>
+				</grid>
 			</tab>
 			
 			
 			<tab name="tabInputBoxes" label="Input Boxes">
-				<table>
+				<grid>
 					<columns>
 						<column width="40%" />
 						<column width="80%" />
@@ -205,7 +205,7 @@
 							imagepicker
 						</row>
 					</rows>
-				</table>
+				</grid>
 			</tab>
 
 			
@@ -289,7 +289,7 @@
 			</tab>
 			
 			<tab label="EL Expressions">
-				<table>
+				<grid>
 					<columns>
 						<column width="60%" />
 						<column width="40%" />
@@ -308,7 +308,7 @@
 							<div>${(1+4)*4}</div>
 						</row>
 					</rows>
-				</table>
+				</grid>
 			</tab>
 			
 			
@@ -341,7 +341,7 @@
 						display: block;
 					}
 				</style>
-				<table>
+				<grid>
 					<rows>
 						<row>
 							<div name="dropTargetOriginal" dropid="*" class="my-draggables">
@@ -359,12 +359,12 @@
 							</div>
 						</row>
 					</rows>
-				</table>
+				</grid>
 			
 			</tab>
 
 			<tab label="Tree">
-				<table>
+				<grid>
 					<columns>
 						<column width="30%" />
 						<column width="70%" />
@@ -396,11 +396,11 @@
 							</toolbar>
 						</row>
 					</rows>
-				</table>
+				</grid>
 			</tab>
 			
 			<tab label="Miscellaneous">
-				<table>
+				<grid>
 					<columns>
 						<column width="30%" />
 						<column width="70%" />
@@ -439,7 +439,7 @@
 							This button saves some text to a file.
 						</row>
 					</rows>
-				</table>
+				</grid>
 				
 			</tab>
 		</tabview>

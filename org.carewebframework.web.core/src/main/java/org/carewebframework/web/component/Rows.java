@@ -38,7 +38,7 @@ import org.carewebframework.web.model.IModelAndView;
 import org.carewebframework.web.model.ISupportsModel;
 import org.carewebframework.web.model.ModelAndView;
 
-@Component(value = "rows", widgetPackage = "cwf-table", widgetClass = "Rows", parentTag = "table", childTag = @ChildTag("row"))
+@Component(value = "rows", widgetPackage = "cwf-grid", widgetClass = "Rows", parentTag = "grid", childTag = @ChildTag("row"))
 public class Rows extends BaseUIComponent implements ISupportsModel<Row> {
     
     public enum Selectable {

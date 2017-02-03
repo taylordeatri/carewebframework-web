@@ -1,11 +1,11 @@
 'use strict';
 
-define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], function(cwf) { 
+define('cwf-grid', ['cwf-core', 'cwf-widget', 'css!cwf-grid-css.css'], function(cwf) { 
 	/******************************************************************************************************************
-	 * Table widget
+	 * Grid widget
 	 ******************************************************************************************************************/
 	
-	cwf.widget.Table = cwf.widget.UIWidget.extend({
+	cwf.widget.Grid = cwf.widget.UIWidget.extend({
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
@@ -16,7 +16,7 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 	});
 	
 	/******************************************************************************************************************
-	 * Table columns widget
+	 * Grid columns widget
 	 ******************************************************************************************************************/
 	
 	cwf.widget.Columns = cwf.widget.UIWidget.extend({
@@ -36,7 +36,7 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 	});
 	
 	/******************************************************************************************************************
-	 * Table column widget
+	 * Grid column widget
 	 ******************************************************************************************************************/ 
 	
 	cwf.widget.Column = cwf.widget.LabeledWidget.extend({		
@@ -84,7 +84,7 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 	});
 	
 	/******************************************************************************************************************
-	 * Table rows widget
+	 * Grid rows widget
 	 ******************************************************************************************************************/ 
 	
 	cwf.widget.Rows = cwf.widget.UIWidget.extend({
@@ -143,7 +143,7 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 	});
 	
 	/******************************************************************************************************************
-	 * Table row widget
+	 * Grid row widget
 	 ******************************************************************************************************************/
 	
 	cwf.widget.Row = cwf.widget.UIWidget.extend({
@@ -181,7 +181,7 @@ define('cwf-table', ['cwf-core', 'cwf-widget', 'css!cwf-table-css.css'], functio
 	});
 
 	/******************************************************************************************************************
-	 * Table row cell widget
+	 * Grid row cell widget
 	 ******************************************************************************************************************/
 	
 	cwf.widget.Rowcell = cwf.widget.LabeledWidget.extend({
