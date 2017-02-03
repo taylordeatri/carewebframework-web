@@ -117,11 +117,11 @@ a:not([href]) {
     opacity: .4;
 }
 
-.cwf-layout-vertical * {
+.cwf-layout-vertical > * {
     display: block!important;    
 }
 
-.cwf-layout-horizontal * {
+.cwf-layout-horizontal > * {
     display: inline-block!important;    
 }
 
