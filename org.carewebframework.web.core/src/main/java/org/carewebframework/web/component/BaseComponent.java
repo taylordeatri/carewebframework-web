@@ -1108,7 +1108,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         return eventType;
     }
     
-    protected void fireEvent(String eventType) {
+    public void fireEvent(String eventType) {
         fireEvent(eventType, null);
     }
     

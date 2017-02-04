@@ -44,6 +44,7 @@ public class InitRequestHandler implements IRequestHandler {
         try {
             pageDefinition.materialize(page);
             page.invoke("afterInitialize");
+            page.fireEvent("afterInitialize");
         } catch (Exception e) {
             synchronizer.clear();
             throw e;

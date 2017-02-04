@@ -373,6 +373,7 @@ a:not([href]) {
 
 .cwf_toolbar-vertical {
 	flex-direction: column;
+    flex: 0;
 }
 
 .cwf_toolbar-start {

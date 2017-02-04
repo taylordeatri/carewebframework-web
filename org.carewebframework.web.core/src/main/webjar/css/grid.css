@@ -1,5 +1,13 @@
 /* Row */
 
+.cwf_row {
+    cursor:default
+}
+
+.cwf_row.ui-selectee:hover:not(.ui-selected) {
+	background-color: lightgray;
+}
+
 .cwf_row > td {
 	vertical-align: middle!important;
 }
