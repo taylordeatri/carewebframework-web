@@ -37,7 +37,7 @@ public class Grid extends BaseUIComponent {
     private Rows rows;
     
     public Grid() {
-        addClass("table table-bordered");
+        addClass("table");
     }
     
     @Override

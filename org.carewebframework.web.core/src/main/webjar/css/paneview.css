@@ -69,7 +69,7 @@
 .cwf_pane > .ui-resizable-e {
     cursor: col-resize;
     opacity: .5;   
-    right: -9px;
+    right: -14px;
 }
 
 .cwf_pane > .ui-resizable-e:hover {
@@ -79,7 +79,7 @@
 .cwf_pane > .ui-resizable-s {
     cursor: row-resize;
     opacity: .5;  
-    bottom: -9px;
+    bottom: -14px;
 }
 
 .cwf_pane > .ui-resizable-s:hover {

@@ -1,3 +1,13 @@
+/* Grid */
+
+.cwf_grid {
+    background-color: white;
+}
+
+.cwf_grid * {
+	line-height: normal;
+}
+
 /* Row */
 
 .cwf_row {

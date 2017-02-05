@@ -95,10 +95,13 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
     
     @Override
     public void rerender() {
-        if (model != null && parent != null) {
-            removeLinkedViews();
+        removeLinkedViews();
+        
+        if (parent != null) {
             parent.destroyChildren();
-            
+        }
+        
+        if (model != null && parent != null && renderer != null) {
             for (int i = 0; i < model.size(); i++) {
                 renderChild(i);
             }

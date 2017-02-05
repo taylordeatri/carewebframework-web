@@ -45,12 +45,6 @@ define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css.css'], f
 	
 	cwf.widget.Pane = cwf.widget.UIWidget.extend({
 		
-		/*------------------------------ Containment ------------------------------*/
-		
-		anchor$: function() {
-			return this.sub$('inner');
-		},
-		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
@@ -69,7 +63,6 @@ define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css.css'], f
 		render$: function() {
 			var dom = '<div>'
 					+    '<div id="${id}-title"/>'
-					+    '<div id="${id}-inner"/>'
 					+ '</div>';
 			return $(this.resolveEL(dom));
 		},

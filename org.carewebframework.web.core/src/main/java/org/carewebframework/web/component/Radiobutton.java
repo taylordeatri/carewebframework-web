@@ -39,10 +39,13 @@ public class Radiobutton extends Checkbox {
     @Override
     protected void _onChange(ChangeEvent event) {
         super._onChange(event);
-        Radiogroup group = getGroup();
         
-        if (group != null) {
-            EventUtil.send(event, group);
+        if (this.isChecked()) {
+            Radiogroup group = getGroup();
+            
+            if (group != null) {
+                EventUtil.send(event, group);
+            }
         }
     }
 }
