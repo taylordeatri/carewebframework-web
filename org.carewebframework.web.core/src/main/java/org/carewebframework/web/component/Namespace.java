@@ -33,7 +33,7 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 /**
  * This is an extension of a Span component that implements its own namespace.
  */
-@Component(value = "container", widgetClass = "Span", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
-public class Container extends Span implements INamespace {
+@Component(value = "namespace", widgetClass = "Span", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
+public class Namespace extends Span implements INamespace {
     
 }
