@@ -77,6 +77,7 @@ define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css.css'], f
 					spl$.resizable('destroy');
 				} else {
 					spl$.resizable({
+						containment: 'parent',
 						handles: this._isHorizontal() ? 'e' : 's'
 					});
 				}

@@ -3,7 +3,7 @@
 		<pane splittable="true">
 			Should have a vertical splitter to the right
 		</pane>
-		<pane title="Pane title">
+		<pane title="Pane title" flex="1">
 			Should not have a splitter to the right
 		</pane>
 	</paneview>
@@ -11,7 +11,7 @@
 		<pane splittable="true">
 			Should have a horizontal splitter below
 		</pane>
-		<pane title="Pane title">
+		<pane title="Pane title" flex="1">
 			Should not have a splitter below
 		</pane>
 	</paneview>
