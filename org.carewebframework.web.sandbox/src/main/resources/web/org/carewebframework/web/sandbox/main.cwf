@@ -32,7 +32,7 @@
 				<label label="${@msg.cwf.sandbox.title.right}" />
 			</toolbar>
 			<span name="contentParent">
-				<container flex="1" width="100%" style="overflow:auto" />
+				<namespace flex="1" width="100%" style="overflow:auto" />
 			</span>
 		</pane>
 	</paneview>

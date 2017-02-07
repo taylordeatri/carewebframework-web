@@ -27,6 +27,7 @@ package org.carewebframework.web.event;
 
 import org.carewebframework.web.annotation.EventType;
 import org.carewebframework.web.annotation.EventType.EventParameter;
+import org.carewebframework.web.annotation.OnFailure;
 
 @EventType(StatechangeEvent.TYPE)
 public class StatechangeEvent extends Event {
@@ -36,7 +37,7 @@ public class StatechangeEvent extends Event {
     @EventParameter
     private String state;
     
-    @EventParameter
+    @EventParameter(onFailure = OnFailure.IGNORE)
     private Object value;
     
     public StatechangeEvent() {

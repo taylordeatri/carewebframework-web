@@ -62,7 +62,7 @@ define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css.css'], f
 		
 		render$: function() {
 			var dom = '<div>'
-					+    '<div id="${id}-title"/>'
+					+    '<span id="${id}-title"/>'
 					+ '</div>';
 			return $(this.resolveEL(dom));
 		},

@@ -45,23 +45,25 @@
 /* Pane */
 
 .cwf_pane {
+    display: flex;
+    flex-direction: column;
     overflow: visible;
     position: relative;
     border-radius: 5px;
     border: 1px solid lightgray;
 }
 
-.cwf_pane > :first-child {
+.cwf_pane > span:first-child {
     border-bottom: 1px solid lightgray;
     background: lightblue;
     text-align: center;
 }
 
-.cwf_pane > :first-child:empty {
+.cwf_pane > span:first-child:empty {
     display: none;
 }
 
-.cwf_pane > :nth-child(2) {
+.cwf_pane > :not(:first-child) {
     overflow: auto;
     padding: 5px;
 }

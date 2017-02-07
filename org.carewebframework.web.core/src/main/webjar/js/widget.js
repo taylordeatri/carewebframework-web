@@ -879,8 +879,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			return result;
 		},
 		
-		scrollIntoView: function(alignToTop) {
-			this.widget$[0].scrollIntoView(alignToTop);
+		scrollIntoView: function() {
+			var input$ = this.input$();
+			input$.scrollTop(input$[0].scrollHeight);
 		},
 		
 		subclazz: function(sub, wclazz) {
@@ -2155,7 +2156,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		/*------------------------------ Events ------------------------------*/
 		
 		handleCheck: function(event) {
-			this.trigger('click');
+			this.trigger(event);
 			return false;
 		},
 		
@@ -3195,7 +3196,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			} else if (mask$) {
 				mask$.remove();
 				delete this._ancillaries.mask$;
-				this.widget$.css('z-index', '');
+			}
+			
+			if (v !== 'MODAL') {
+				this.widget$.css('z-index', v === 'POPUP' ? ++cwf.widget._zmodal : null);
 			}
 			
 			if (v !== 'INLINE') {

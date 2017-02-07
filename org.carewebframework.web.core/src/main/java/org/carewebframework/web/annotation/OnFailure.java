@@ -66,7 +66,7 @@ public enum OnFailure {
                 
             case LOG:
                 message = StrUtil.formatMessage(message, args);
-                log.error(message);
+                log.warn(message);
                 return;
         }
     }

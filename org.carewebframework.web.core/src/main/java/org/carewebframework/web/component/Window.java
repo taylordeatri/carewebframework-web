@@ -249,6 +249,7 @@ public class Window extends BaseUIComponent implements INamespace {
         this.closeListener = closeListener;
         setMode(mode);
         setVisible(true);
+        fireEvent("open");
     }
     
     @EventHandler(value = "close", syncToClient = false)
