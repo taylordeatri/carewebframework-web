@@ -2,7 +2,7 @@
 	<paneview height="100%" width="100%" class="cwf-sandbox"
 		controller="${@cwfSandboxController}">
 		<pane width="50%" splittable="true">
-			<toolbar width="100%">
+			<toolbar width="100%" style="overflow:visible">
 				<label label="${@msg.cwf.sandbox.title.left}" />
 				<div flex="10" />
 				<combobox name="cboCwf" readonly="true" width="200px"
