@@ -464,6 +464,11 @@ a:not([href]) {
 
 /* Combobox */
 
+.cwf_combobox > ul {
+	max-height: 200px;
+	overflow: auto;
+}
+
 .cwf_combobox-matched {
 	color: blue;
 }

@@ -27,13 +27,13 @@ package org.carewebframework.web.sandbox;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Comparator;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.ancillary.IAutoWired;
-import org.carewebframework.web.ancillary.INamespace;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.annotation.WiredComponent;
 import org.carewebframework.web.codemirror.CodeMirror;
@@ -41,11 +41,11 @@ import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Combobox;
 import org.carewebframework.web.component.Comboitem;
 import org.carewebframework.web.component.Label;
+import org.carewebframework.web.component.Namespace;
 import org.carewebframework.web.component.Window;
 import org.carewebframework.web.component.Window.Mode;
 import org.carewebframework.web.event.EventUtil;
 import org.carewebframework.web.model.IComponentRenderer;
-import org.carewebframework.web.model.IModelAndView;
 import org.carewebframework.web.model.ListModel;
 import org.carewebframework.web.page.PageUtil;
 import org.springframework.context.ApplicationContext;
@@ -59,7 +59,11 @@ public class MainController implements IAutoWired, ApplicationContextAware {
     
     private static final Mode[] REPLACE_MODES = { Mode.MODAL, Mode.POPUP };
     
-    private static IComponentRenderer<Comboitem, Resource> cwfRenderer = new IComponentRenderer<Comboitem, Resource>() {
+    private static final Comparator<Resource> resourceComparator = (r1, r2) -> {
+        return r1.getFilename().compareToIgnoreCase(r2.getFilename());
+    };
+    
+    private static final IComponentRenderer<Comboitem, Resource> cwfRenderer = new IComponentRenderer<Comboitem, Resource>() {
         
         @Override
         public Comboitem render(Resource resource) {
@@ -100,7 +104,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
     
     // End of auto-wired section
     
-    private BaseComponent contentBase;
+    private Namespace contentBase;
     
     private BaseComponent root;
     
@@ -114,27 +118,10 @@ public class MainController implements IAutoWired, ApplicationContextAware {
     @Override
     public void afterInitialized(BaseComponent comp) {
         this.root = comp;
-        IModelAndView<Comboitem, Resource> mv = cboCwf.getModelAndView(Resource.class);
-        mv.setRenderer(cwfRenderer);
-        mv.setModel(model);
+        cboCwf.setRenderer(cwfRenderer);
+        cboCwf.setModel(model);
         cboCwf.setVisible(model.size() > 0);
-        contentBase = findNamespace(contentParent);
-    }
-    
-    private BaseComponent findNamespace(BaseComponent comp) {
-        for (BaseComponent child : comp.getChildren()) {
-            if (child instanceof INamespace) {
-                return child;
-            }
-            
-            child = findNamespace(child);
-            
-            if (child != null) {
-                return child;
-            }
-        }
-        
-        return null;
+        contentBase = contentParent.getChild(Namespace.class);
     }
     
     /**
@@ -257,8 +244,14 @@ public class MainController implements IAutoWired, ApplicationContextAware {
      */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
+        findResources(applicationContext, "classpath*:**/*.cwf");
+        findResources(applicationContext, "**/*.cwf");
+        model.sort(resourceComparator, true);
+    }
+    
+    private void findResources(ApplicationContext applicationContext, String pattern) {
         try {
-            for (Resource resource : applicationContext.getResources("classpath*:**/*.cwf")) {
+            for (Resource resource : applicationContext.getResources(pattern)) {
                 model.add(resource);
             }
         } catch (Exception e) {

@@ -22,7 +22,7 @@
 					placeholder="${@msg.cwf.sandbox.textbox.placeholder}" />
 			</div>
 		</pane>
-		<pane width="50%">
+		<pane name="contentParent" flex="1">
 			<toolbar width="100%">
 				<button name="btnClearView" class="size:btn-xs flavor:btn-danger"
 					label="${@msg.cwf.sandbox.btn.clear.label}" />
@@ -32,9 +32,7 @@
 				<div flex="10" />
 				<label label="${@msg.cwf.sandbox.title.right}" />
 			</toolbar>
-			<span name="contentParent">
-				<namespace flex="1" width="100%" style="overflow:auto" />
-			</span>
+			<namespace flex="1" width="100%" style="overflow:auto" />
 		</pane>
 	</paneview>
 </page>
