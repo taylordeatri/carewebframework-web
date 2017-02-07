@@ -18,7 +18,8 @@
 					class="size:btn-xs flavor:btn-success" label="${@msg.cwf.sandbox.btn.view.label}" />
 			</toolbar>
 			<div flex="1">
-				<codemirror name="editor" mode="xml" height="100%" width="100%"/>
+				<codemirror name="editor" mode="xml" height="100%" width="100%"
+					placeholder="${@msg.cwf.sandbox.textbox.placeholder}" />
 			</div>
 		</pane>
 		<pane width="50%">

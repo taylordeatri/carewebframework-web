@@ -12,13 +12,12 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 	/**
 	 * Wrapper for CodeMirror
 	 */
-	Widget.CodeMirror = Widget.Memobox.extend({
+	Widget.CodeMirror = Widget.UIWidget.extend({
 	
 		/*------------------------------ Containment ------------------------------*/
 
 		_detach: function(destroy) {
-			if (destroy && this._cm) {
-				this._cm.toTextArea();
+			if (destroy) {
 				this._cm = null;
 			}
 			
@@ -29,6 +28,7 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 
 		init: function() {
 			this._super();
+			this.forwardToServer('change');
 			this._cm = null;
 		},
 		
@@ -78,7 +78,7 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 		beforeRender: function() {
 			var self = this;
 			this._super();
-			this._cm = CodeMirror.fromTextArea(this.input$()[0], {
+			this._cm = CodeMirror(this.widget$[0], {
 				autoCloseTags: true,
 				matchTags: {bothTags: true},
 				extraKeys: {
@@ -89,32 +89,24 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 			
 			this._cm.on('changes', function() {
 				var v = self._cm.getValue();
-				self.input$().val(v);
 				
 				if (self.setState('value', v)) {
-				    self.fireChanged();
+					self.trigger('change', {value: v});
 				}
 			});
 			
+			this.widget$.find('.CodeMirror textarea').on('change', false);
 			this._cm.setSize('100%', '100%');
 		},
 		
 		render$: function() {
-			var dom =
-				'<div>'
-			  + 	'<textarea id="${id}-inp" />'
-			  + '</div';
-			return $(this.resolveEL(dom));
+			return $('<span/>');
 		},
 		
 		/*------------------------------ State ------------------------------*/
 		
 		focus: function(v) {
 			v ? this._cm.focus() : null;    
-		},
-		
-		hint: function(v) {
-			this.attr('title', v);
 		},
 		
 		lineNumbers: function(v) {
