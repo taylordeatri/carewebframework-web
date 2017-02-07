@@ -6,96 +6,86 @@
 		controller="org.carewebframework.web.testharness.MainController">
 		<tabview name="tabview" height="500px" tabPosition="left">
 			
-			<tab label="Styles" selected="true">
-				<import src="pages/styles.cwf" />
-			</tab>
-			
-			<tab label="Scripts">
-				<import src="pages/scripts.cwf" />
-			</tab>
-			
-			
 			<tab label="Buttons">
 				<import src="pages/buttons.cwf" />
 			</tab>
 			
-			
-			<tab name="tabInputBoxes" label="Input Boxes">
-				<import src="pages/boxes.cwf" />
-			</tab>
-
-			
-			<tab label="Tabview">
-				<import src="pages/tabs.cwf" />
-			</tab>
-			
-			
-			<tab label="Paneview">
-				<import src="pages/panes.cwf" />
-			</tab>
-
-			
-			<tab label="IFrame">
-				<import src="pages/iframe.cwf" />
-			</tab>
-			
-			
-			<tab label="Embedded HTML">
-				<import src="pages/html.cwf" />
-			</tab>
-			
-			
-			<tab label="Window">
-				<import src="pages/windows.cwf" />
-			</tab>
-			
-			
-			<tab label="Menus">
-				<import src="pages/menus.cwf" />
-			</tab>
-			
-			
 			<tab label="Conditionals">
 				<import src="pages/conditionals.cwf" />
-			</tab>
-			
-			<tab label="Subclassing">
-				<import src="pages/subclass.cwf" />
-			</tab>
-			
-			<tab label="EL Expressions">
-				<import src="pages/explang.cwf" />
-			</tab>
-			
-			
-			<tab label="Timer">
-				<import src="pages/timer.cwf" />
 			</tab>
 			
 			<tab label="Drag &amp; Drop">
 				<import src="pages/dnd.cwf" />
 			</tab>
 
+			<tab label="EL Expressions">
+				<import src="pages/explang.cwf" />
+			</tab>
+			
 			<tab label="Grid">
 				<import src="pages/grids.cwf" />
 			</tab>
 			
-			<tab label="Tree">
-				<import src="pages/trees.cwf" />
+			<tab label="HTML">
+				<import src="pages/html.cwf" />
 			</tab>
 			
-			<tab label="Template">
-				<import src="pages/templates.cwf" />
+			<tab label="IFrame">
+				<import src="pages/iframe.cwf" />
+			</tab>
+			
+			<tab name="tabInputBoxes" label="Input Boxes">
+				<import src="pages/boxes.cwf" />
+			</tab>
+
+			<tab label="Menus">
+				<import src="pages/menus.cwf" />
 			</tab>
 			
 			<tab label="Miscellaneous">
 				<import src="pages/misc.cwf" />
 			</tab>
 			
+			<tab label="Paneview">
+				<import src="pages/panes.cwf" />
+			</tab>
+
 			<tab label="Sandbox">
 				<import src="web/org/carewebframework/web/sandbox/main.cwf" />
 			</tab>
 			
+			<tab label="Scripts">
+				<import src="pages/scripts.cwf" />
+			</tab>
+			
+			<tab label="Styles" selected="true">
+				<import src="pages/styles.cwf" />
+			</tab>
+			
+			<tab label="Subclassing">
+				<import src="pages/subclass.cwf" />
+			</tab>
+			
+			<tab label="Tabview">
+				<import src="pages/tabs.cwf" />
+			</tab>			
+												
+			<tab label="Template">
+				<import src="pages/templates.cwf" />
+			</tab>
+			
+			<tab label="Timer">
+				<import src="pages/timer.cwf" />
+			</tab>
+			
+			<tab label="Tree">
+				<import src="pages/trees.cwf" />
+			</tab>
+			
+			<tab label="Window">
+				<import src="pages/windows.cwf" />
+			</tab>
+									
 		</tabview>
 		
 						

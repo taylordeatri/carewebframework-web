@@ -4,10 +4,6 @@
     background-color: white;
 }
 
-.cwf_grid * {
-	line-height: normal;
-}
-
 /* Row */
 
 .cwf_row {
@@ -20,6 +16,10 @@
 
 .cwf_row > td {
 	vertical-align: middle!important;
+}
+
+.cwf_row > td > * {
+	line-height: normal;
 }
 
 /* Column */
