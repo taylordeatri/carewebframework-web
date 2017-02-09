@@ -19,7 +19,7 @@ a:not([href]) {
 /* jquery-ui mods */
 
 .ui-dialog-content {
-	font-size: 75%
+	font-size: 75%;
 }
 
 .ui-dialog-titlebar > .ui-button span.ui-button-text {
@@ -27,7 +27,7 @@ a:not([href]) {
 }
 
 .ui-selected {
-    background: orange;
+    background: orange!important;
 }
 
 /* bootstrap mods */
@@ -142,6 +142,7 @@ a:not([href]) {
     outline: 2px dotted gray;
     opacity: .5;
     cursor: move;
+    z-index: 999999;
 }
 
 .cwf_droppable {

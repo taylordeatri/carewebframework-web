@@ -983,6 +983,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 						cancel: null,
 						helper: _helper,
 						start: _start,
+						stop: _stop,
 						appendTo: 'body',
 						iframeFix: true
 					});
@@ -996,10 +997,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			}
 			
 			function _start(event, ui) {
+				self._dragging = true;
 				self.widget$.draggable('option', 'cursorAt', {
 				    left: Math.floor(ui.helper.width() / 2),
 				    top: Math.floor(ui.helper.height() / 2)
 				});
+			}
+			
+			function _stop() {
+				self._dragging = false;
 			}
 		},
 		
@@ -2566,11 +2572,29 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			this.syncSelected(true);
 		},
 		
+		handleClick: function(event) {
+			if (!this._dragging) {
+				this.selected(true);
+				this._parent.handleSelect();
+				this._parent.focus();
+			}
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
 			this._super();
 			this.forwardToServer('change');
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		syncSelected: function(noevent) {
+			var selected = this.widget$.is(':selected');
+			
+			if (this.setState('selected', selected) && !noevent) {
+				this.trigger('change', {value: selected});
+			}
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -2581,16 +2605,17 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		/*------------------------------ State ------------------------------*/
 		
-		selected: function(v) {
-			this.prop('selected', v);
+		dragid: function(v, old) {
+			this._super.apply(this, arguments);
+			this.widget$.off('mouseup.cwf');
+			
+			if (v) {
+				this.widget$.on('mouseup.cwf', this.handleClick.bind(this));
+			}
 		},
 		
-		syncSelected: function(noevent) {
-			var selected = this.widget$.is(':selected');
-			
-			if (this.setState('selected', selected) && !noevent) {
-				this.trigger('change', {value: selected});
-			}
+		selected: function(v) {
+			this.prop('selected', v);
 		},
 		
 		value: function(v) {
