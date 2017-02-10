@@ -6,4 +6,7 @@
 	<tabview name="anchor2" height="200px">
 
 	</tabview>
+	
+	<label name="anchor4" label="Should get replaced by snippet 4"/>
+		
 </page>

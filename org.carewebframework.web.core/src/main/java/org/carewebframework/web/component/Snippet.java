@@ -25,6 +25,8 @@
  */
 package org.carewebframework.web.component;
 
+import java.util.List;
+
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.page.PageDefinition;
@@ -38,8 +40,12 @@ import org.springframework.util.Assert;
 public class Snippet extends BaseComponent {
     
     private enum AnchorPosition {
-        BEFORE, AFTER, CHILD
-    };
+        BEFORE, // Add snippet as sibling before anchor
+        AFTER, // Add snippet as sibling after anchor
+        CHILD, // Add snippet as child of anchor
+        PARENT, // Add snippet as new parent of anchor
+        REPLACE // Replace anchor with snippet.
+    }
     
     private String src;
     
@@ -55,17 +61,45 @@ public class Snippet extends BaseComponent {
         BaseComponent ref = template.findByName(anchor);
         Assert.notNull(ref, "Could not locate anchor for snippet at " + anchor);
         PageDefinition def = PageParser.getInstance().parse(src);
+        BaseComponent parent = ref.getParent();
+        int index = ref.getIndex();
         
-        if (position == AnchorPosition.CHILD) {
-            def.materialize(ref);
-        } else {
-            ref = ref.getParent();
-            Assert.notNull(ref, "Anchor must have a parent for position value of " + position);
+        switch (position) {
+            case CHILD:
+                addToParent(ref, -1, def);
+                break;
             
-            for (BaseComponent child : def.materialize(null)) {
-                ref.addChild(child, position == AnchorPosition.BEFORE ? 0 : -1);
-            }
+            case PARENT:
+                ref.detach();
+                BaseComponent newParent = addToParent(parent, index, def).get(0);
+                ref.setParent(newParent);
+                break;
+            
+            case REPLACE:
+                ref.destroy();
+                addToParent(parent, index, def);
+                break;
+            
+            case BEFORE:
+                addToParent(parent, index, def);
+                break;
+            
+            case AFTER:
+                addToParent(parent, index + 1, def);
+                break;
         }
+    }
+    
+    private List<BaseComponent> addToParent(BaseComponent parent, int index, PageDefinition def) {
+        Assert.notNull(parent, "Anchor must have a parent for position value of " + position);
+        List<BaseComponent> children = def.materialize(null);
+        
+        for (BaseComponent child : children) {
+            parent.addChild(child, index);
+            index = index < 0 ? index : index + 1;
+        }
+        
+        return children;
     }
     
     @PropertySetter(value = "src")
