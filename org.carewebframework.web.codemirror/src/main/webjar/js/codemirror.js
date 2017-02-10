@@ -100,7 +100,7 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 		},
 		
 		render$: function() {
-			return $('<span/>');
+			return $('<div/>');
 		},
 		
 		/*------------------------------ State ------------------------------*/
