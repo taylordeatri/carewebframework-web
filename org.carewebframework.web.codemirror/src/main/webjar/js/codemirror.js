@@ -96,7 +96,6 @@ define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codem
 			});
 			
 			this.widget$.find('.CodeMirror textarea').on('change', false);
-			this._cm.setSize('100%', '100%');
 		},
 		
 		render$: function() {

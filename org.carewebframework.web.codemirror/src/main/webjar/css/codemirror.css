@@ -1,3 +1,13 @@
+.cwf_codemirror {
+  display: flex;
+  flex-direction: column;
+}
+
+.cwf_codemirror > .CodeMirror {
+  flex: 1;
+  width: 100%;
+}
+
 .cwf_codemirror .CodeMirror-placeholder,
 .cwf_codemirror .CodeMirror-empty {
   opacity: .5;
