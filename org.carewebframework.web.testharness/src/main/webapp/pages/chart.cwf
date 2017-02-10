@@ -1,0 +1,4 @@
+ 
+<div controller="org.carewebframework.web.testharness.ChartController"> 
+	<hchart name="hchart" />
+</div>

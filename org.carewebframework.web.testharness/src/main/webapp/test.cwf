@@ -10,6 +10,10 @@
 				<import src="pages/buttons.cwf" />
 			</tab>
 			
+			<tab label="Chart">
+				<import src="pages/chart.cwf" />
+			</tab>
+			
 			<tab label="Conditionals">
 				<import src="pages/conditionals.cwf" />
 			</tab>
