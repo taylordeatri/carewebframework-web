@@ -992,7 +992,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			
 			function _helper() {
 				var ele = self.getDragHelper();
-				ele.className += ' cwf_dragging';
+				ele.className += ' cwf-dragging';
 				return ele;
 			}
 			
@@ -1025,7 +1025,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 						accept: _canDrop,
 						tolerance: 'pointer',
 						classes: {
-							'ui-droppable-hover': 'cwf_droppable'
+							'ui-droppable-hover': 'cwf-droppable'
 						}
 					});
 					

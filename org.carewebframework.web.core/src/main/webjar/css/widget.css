@@ -117,6 +117,8 @@ a:not([href]) {
     opacity: .4;
 }
 
+/* Layouts */
+
 .cwf-layout-vertical {
     display: flex;
     flex-direction: column;   
@@ -138,26 +140,26 @@ a:not([href]) {
 
 /* Drag and Drop */
 
-.cwf_dragging {
+.cwf-dragging {
     outline: 2px dotted gray;
     opacity: .5;
     cursor: move;
     z-index: 999999;
 }
 
-.cwf_droppable {
+.cwf-droppable {
     outline: 2px dotted gray;
 }
 
 /* Text Content */
 
-.cwf_textcontent {
+.cwf-textcontent {
 	white-space: pre-wrap;
 }
 
 /* Modal mask */
 
-.cwf_mask {
+.cwf-mask {
     cursor: not-allowed;
     position: absolute;
     right: 0;
@@ -169,9 +171,8 @@ a:not([href]) {
     justify-content: center;
     color: blue;
     font-size: 12px;
-	opacity: .5;
+	opacity: .4;
 	display: none;
-	background-color: lightgray;
 	background: repeating-linear-gradient(
 		45deg,
 		#222,
@@ -181,7 +182,7 @@ a:not([href]) {
 	);
 }
 
-.cwf_mask > span {
+.cwf-mask > span {
 	border: 1px solid;
 	background: white;
 	padding: 2px;
@@ -189,7 +190,7 @@ a:not([href]) {
 
 /* Modal parent */
 
-.cwf_modal {
+.cwf-modal {
 	position: absolute;
 	left: 0;
 	right: 0;
