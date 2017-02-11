@@ -62,14 +62,15 @@ public class MockEnvironment {
     /**
      * Initializes the mock environment.
      * 
+     * @param profiles Active profiles.
      * @param configLocations Additional config file locations.
      * @throws Exception Unspecified exception.
      */
-    public void init(String... configLocations) throws Exception {
+    public void init(String[] profiles, String[] configLocations) throws Exception {
         // Set up web app
         servletContext = initServletContext(new MockServletContext());
         // Create root Spring context
-        rootContext = initAppContext(new XmlWebApplicationContext(), configLocations);
+        rootContext = initAppContext(profiles, configLocations);
         servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, rootContext);
         rootContext.refresh();
         // Create mock session
@@ -96,6 +97,10 @@ public class MockEnvironment {
         rootContext.close();
     }
     
+    protected XmlWebApplicationContext createApplicationContext() {
+        return new XmlWebApplicationContext();
+    }
+    
     /**
      * Initialize the mock servlet context.
      * 
@@ -118,13 +123,24 @@ public class MockEnvironment {
     /**
      * Initialize the app context.
      * 
-     * @param appContext The app context.
+     * @param profiles Active profiles.
      * @param configLocations Optional configuration locations.
      * @return The initialized app context.
+     * @throws Exception
      */
-    protected XmlWebApplicationContext initAppContext(XmlWebApplicationContext appContext, String... configLocations) {
+    protected XmlWebApplicationContext initAppContext(String[] profiles, String[] configLocations) throws Exception {
+        
+        XmlWebApplicationContext appContext = createApplicationContext();
         appContext.setServletContext(servletContext);
-        appContext.setConfigLocations(configLocations);
+        
+        if (configLocations != null) {
+            appContext.setConfigLocations(configLocations);
+        }
+        
+        if (profiles != null) {
+            appContext.getEnvironment().setActiveProfiles(profiles);
+        }
+        
         return appContext;
     }
     

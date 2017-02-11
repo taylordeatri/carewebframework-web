@@ -415,25 +415,31 @@ public abstract class BaseComponent implements IElementIdentifier {
     public void addChild(BaseComponent child, int index) {
         boolean noSync = child.getPage() == null && index < 0;
         child.validate();
+        BaseComponent oldParent = child.getParent();
         
-        if (child.getParent() != this) {
+        if (oldParent != this) {
             validateChild(child);
             nameIndex.validate(child);
-        }
-        
-        BaseComponent before = index < 0 || index == children.size() ? null : children.get(index);
-        
-        if (child == before) {
-            return;
         }
         
         if (!child.validatePage(page)) {
             throw new ComponentException(this, "Child is already associated with a different page.");
         }
         
-        child.beforeSetParent(this);
-        beforeAddChild(child);
-        BaseComponent oldParent = child.getParent();
+        if (oldParent == this) {
+            int i = child.getIndex();
+            
+            if (i == index) {
+                return;
+            }
+            
+            if (index > i) {
+                index--;
+            }
+        } else {
+            child.beforeSetParent(this);
+            beforeAddChild(child);
+        }
         
         if (oldParent != null) {
             oldParent._removeChild(child, true, false);
@@ -457,8 +463,10 @@ public abstract class BaseComponent implements IElementIdentifier {
             invokeIfAttached("addChild", child, index);
         }
         
-        afterAddChild(child);
-        child.afterSetParent(this);
+        if (oldParent != this) {
+            afterAddChild(child);
+            child.afterSetParent(this);
+        }
     }
     
     public void addChild(BaseComponent child, BaseComponent before) {

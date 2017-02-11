@@ -47,6 +47,8 @@ public class MockTest {
     
     public static String[] configLocations = { "classpath:/META-INF/cwf-dispatcher-servlet.xml" };
     
+    public static String[] profiles;
+    
     public static MockEnvironment mockEnvironment;
     
     @BeforeClass
@@ -54,7 +56,7 @@ public class MockTest {
         if (mockEnvironment == null) {
             System.out.println("Initializing mock environment...");
             mockEnvironment = mockEnvironmentClass.newInstance();
-            mockEnvironment.init(configLocations);
+            mockEnvironment.init(profiles, configLocations);
         }
     }
     
