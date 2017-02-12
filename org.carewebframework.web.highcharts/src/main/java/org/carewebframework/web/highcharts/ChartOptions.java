@@ -163,7 +163,7 @@ public class ChartOptions extends Options {
     
     /**
      * Whether to reflow the chart to fit the width of the container div on resizing the window.
-     * Under ZK, the container handles resizing, so this option is forced to false.
+     * Under CWF, the container handles resizing, so this option is forced to false.
      */
     protected final Boolean reflow = false;
     

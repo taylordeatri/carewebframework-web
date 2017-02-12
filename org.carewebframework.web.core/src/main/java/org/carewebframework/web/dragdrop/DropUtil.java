@@ -70,5 +70,5 @@ public class DropUtil {
      * Enforces static class.
      */
     private DropUtil() {
-    };
+    }
 }

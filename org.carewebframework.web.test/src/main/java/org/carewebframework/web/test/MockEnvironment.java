@@ -35,7 +35,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 /**
- * This class creates a mock ZK environment suitable for certain kinds of unit tests. It creates a
+ * This class creates a mock CWF environment suitable for certain kinds of unit tests. It creates a
  * web app instance with a single page and desktop and a mock session and execution. It also creates
  * a root Spring application context with a child desktop context.
  */
