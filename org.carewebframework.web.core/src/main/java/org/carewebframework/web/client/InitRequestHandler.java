@@ -30,6 +30,10 @@ import org.carewebframework.web.component.Page;
 import org.carewebframework.web.page.PageDefinition;
 import org.carewebframework.web.page.PageDefinitionCache;
 
+/**
+ * Handler for an initialization request. The client sends this request when the bootstrap page is
+ * first loaded in order to complete the initialization of the page.
+ */
 public class InitRequestHandler implements IRequestHandler {
     
     @Override

@@ -30,6 +30,9 @@ import java.util.List;
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.BaseUIComponent;
 
+/**
+ * Static convenience methods for client-side operations.
+ */
 public class ClientUtil {
     
     /**

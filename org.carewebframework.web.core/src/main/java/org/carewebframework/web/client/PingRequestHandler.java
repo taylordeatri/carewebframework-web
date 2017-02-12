@@ -27,6 +27,10 @@ package org.carewebframework.web.client;
 
 import org.carewebframework.web.client.WebSocketHandler.IRequestHandler;
 
+/**
+ * Handler for servicing ping requests from the client. These requests have no associated execution
+ * logic and serve only to verify client-server connectivity and reset inactivity timeouts.
+ */
 public class PingRequestHandler implements IRequestHandler {
     
     @Override

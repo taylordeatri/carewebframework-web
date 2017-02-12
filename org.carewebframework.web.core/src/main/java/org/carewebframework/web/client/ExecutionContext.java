@@ -30,6 +30,11 @@ import java.util.Map;
 
 import org.carewebframework.web.component.Page;
 
+/**
+ * Static helper class for threads to determine the current execution context. An execution context
+ * is created each time a thread services a client request. It contains information about the target
+ * page and the session servicing the request, as well as the request itself.
+ */
 public class ExecutionContext {
     
     public static final String ATTR_REQUEST = "cwf_request";
@@ -74,5 +79,8 @@ public class ExecutionContext {
     public static Page getPage() {
         ClientRequest request = getRequest();
         return request == null ? null : request.getPage();
+    }
+    
+    private ExecutionContext() {
     }
 }

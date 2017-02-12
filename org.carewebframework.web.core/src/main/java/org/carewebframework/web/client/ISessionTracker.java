@@ -26,7 +26,7 @@
 package org.carewebframework.web.client;
 
 /**
- * Receive notification of session creation and destruction.
+ * Allows the implementer to receive notification of session creation and destruction.
  */
 public interface ISessionTracker {
     
