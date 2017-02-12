@@ -31,6 +31,9 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
 
+/**
+ * A progress bar component.
+ */
 @Component(value = "progressbar", widgetClass = "Progressbar", parentTag = "*")
 public class Progressbar extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     

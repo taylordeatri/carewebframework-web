@@ -27,6 +27,9 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 
+/**
+ * An input box for entering long integers.
+ */
 @Component(value = "longbox", widgetClass = "Longbox", parentTag = "*")
 public class Longbox extends BaseNumberboxComponent<Long> {
     

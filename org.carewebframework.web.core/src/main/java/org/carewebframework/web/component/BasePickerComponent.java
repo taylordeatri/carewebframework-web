@@ -29,6 +29,11 @@ import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A base class for components that allow the selection of an item from a collection of items.
+ * 
+ * @param <T> The type of item within the collection of choices.
+ */
 public abstract class BasePickerComponent<T> extends BaseInputboxComponent<T> {
     
     private boolean showText;

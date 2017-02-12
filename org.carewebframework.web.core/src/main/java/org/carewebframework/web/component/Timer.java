@@ -30,8 +30,8 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
 /**
- * A timer component. Once started, fires a timer event at the specified interval and for the
- * specified number of repetitions.
+ * A timer component. Once started, fires a timer event at the specified interval and repeating for
+ * the specified number of repetitions.
  */
 @Component(value = "timer", widgetClass = "Timer", parentTag = "*")
 public class Timer extends BaseComponent {

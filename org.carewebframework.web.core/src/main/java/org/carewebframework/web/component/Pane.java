@@ -31,6 +31,9 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/*
+ * A single pane within a pane view.
+ */
 @Component(value = "pane", widgetPackage = "cwf-paneview", widgetClass = "Pane", content = ContentHandling.AS_CHILD, parentTag = "paneview", childTag = @ChildTag("*"))
 public class Pane extends BaseUIComponent {
     

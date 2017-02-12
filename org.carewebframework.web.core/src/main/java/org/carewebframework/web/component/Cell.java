@@ -29,6 +29,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 
+/**
+ * A simple cell component with an optional label.
+ */
 @Component(value = "cell", widgetClass = "Cell", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Cell extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     

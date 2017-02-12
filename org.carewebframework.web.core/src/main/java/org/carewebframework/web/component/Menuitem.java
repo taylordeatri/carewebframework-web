@@ -30,6 +30,9 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A component representing a single menu item.
+ */
 @Component(value = "menuitem", widgetClass = "Menuitem", parentTag = { "menu", "menupopup", "menuitem" }, childTag = {
         @ChildTag("menuitem"), @ChildTag("menuheader"), @ChildTag("menuseparator") })
 public class Menuitem extends BaseMenuComponent {

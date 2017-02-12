@@ -33,6 +33,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * An input box for entering dates.
+ */
 @Component(value = "datebox", widgetClass = "Datebox", parentTag = "*")
 public class Datebox extends BaseInputboxComponent<Date> {
     

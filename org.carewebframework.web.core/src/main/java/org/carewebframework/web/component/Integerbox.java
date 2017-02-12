@@ -27,6 +27,9 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 
+/**
+ * An input box for entering integers.
+ */
 @Component(value = "integerbox", widgetClass = "Integerbox", parentTag = "*")
 public class Integerbox extends BaseNumberboxComponent<Integer> {
     

@@ -45,6 +45,9 @@ import org.carewebframework.web.core.WebUtil;
 import org.carewebframework.web.event.EventQueue;
 import org.carewebframework.web.page.PageRegistry;
 
+/**
+ * This is the root component of the component hierarchy.
+ */
 @Component(value = "page", widgetClass = "Page", content = ContentHandling.AS_CHILD, childTag = @ChildTag("*"))
 public final class Page extends BaseComponent implements INamespace {
     

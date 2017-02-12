@@ -30,12 +30,15 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A component containing visually separate panes with optional splitter controls.
+ */
 @Component(value = "paneview", widgetPackage = "cwf-paneview", widgetClass = "Paneview", parentTag = "*", childTag = @ChildTag("pane"))
 public class Paneview extends BaseUIComponent {
     
     public enum Orientation {
         HORIZONTAL, VERTICAL
-    };
+    }
     
     private Orientation orientation = Orientation.HORIZONTAL;
     

@@ -31,6 +31,9 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A component representing a single cell within a grid row.
+ */
 @Component(value = "rowcell", widgetPackage = "cwf-grid", widgetClass = "Rowcell", content = ContentHandling.AS_CHILD, parentTag = "row", childTag = @ChildTag("*"))
 public class Rowcell extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     

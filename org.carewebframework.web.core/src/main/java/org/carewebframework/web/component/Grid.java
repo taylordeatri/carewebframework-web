@@ -28,6 +28,9 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 
+/**
+ * A grid component.
+ */
 @Component(value = "grid", widgetPackage = "cwf-grid", widgetClass = "Grid", parentTag = "*", childTag = {
         @ChildTag(value = "rows", maximum = 1), @ChildTag(value = "columns", maximum = 1) })
 public class Grid extends BaseUIComponent {

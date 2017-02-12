@@ -27,6 +27,9 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 
+/**
+ * A component that presents a visual header within a menu.
+ */
 @Component(value = "menuheader", widgetClass = "Menuheader", parentTag = { "menu", "menupopup", "menuitem" })
 public class Menuheader extends BaseMenuComponent {
     

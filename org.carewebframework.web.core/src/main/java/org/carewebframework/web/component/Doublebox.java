@@ -27,6 +27,9 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 
+/**
+ * An input box for entering floating point values.
+ */
 @Component(value = "doublebox", widgetClass = "Doublebox", parentTag = "*")
 public class Doublebox extends BaseNumberboxComponent<Double> {
     

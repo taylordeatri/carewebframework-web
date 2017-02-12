@@ -34,6 +34,9 @@ import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
 import org.carewebframework.web.event.EventUtil;
 
+/**
+ * A component representing a single row within a grid.
+ */
 @Component(value = "row", widgetPackage = "cwf-grid", widgetClass = "Row", content = ContentHandling.AS_CHILD, parentTag = "rows", childTag = @ChildTag("*"))
 public class Row extends BaseUIComponent {
     

@@ -29,6 +29,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * Component for entering multiple lines of text.
+ */
 @Component(value = "memobox", widgetClass = "Memobox", parentTag = "*")
 public class Memobox extends BaseInputboxComponent<String> {
     

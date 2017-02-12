@@ -31,6 +31,9 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
 
+/**
+ * A component representing a simple check box with associated label.
+ */
 @Component(value = "checkbox", widgetClass = "Checkbox", parentTag = "*")
 public class Checkbox extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionHorz> {
     

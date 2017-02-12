@@ -34,7 +34,7 @@ import org.carewebframework.web.page.PageParser;
 import org.springframework.util.Assert;
 
 /**
- * Represents a reference to cwf resource that can be inserted into a template.
+ * A component representing a cwf resource that can be inserted into a template.
  */
 @Component(value = "snippet", widgetClass = "MetaWidget", parentTag = "template")
 public class Snippet extends BaseComponent {

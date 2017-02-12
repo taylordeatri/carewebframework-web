@@ -33,6 +33,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 
+/**
+ * A container component that be displayed at a selected location.
+ */
 @Component(value = "popup", widgetClass = "Popup", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Popup extends BaseComponent implements INamespace {
     

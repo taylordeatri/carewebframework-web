@@ -28,6 +28,9 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 
+/**
+ * Component serving as a container for a grid's columns.
+ */
 @Component(value = "columns", widgetPackage = "cwf-grid", widgetClass = "Columns", parentTag = "grid", childTag = @ChildTag("column"))
 public class Columns extends BaseUIComponent {
     

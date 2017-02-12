@@ -33,6 +33,9 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.event.KeyCode;
 
+/**
+ * The base class from which all UI components derive.
+ */
 public abstract class BaseUIComponent extends BaseComponent implements IDisable {
     
     private final CssStyles styles = new CssStyles();

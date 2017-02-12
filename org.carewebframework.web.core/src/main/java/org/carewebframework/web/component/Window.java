@@ -38,6 +38,10 @@ import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.IEventListener;
 
+/**
+ * A window component with a title bar and maximize/minimize/close buttons. May be used in modal,
+ * popup, or inline modes.
+ */
 @Component(value = "window", widgetClass = "Window", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Window extends BaseUIComponent implements INamespace {
     

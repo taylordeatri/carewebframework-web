@@ -29,6 +29,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A component for entering a single line of text.
+ */
 @Component(value = "textbox", widgetClass = "Textbox", parentTag = "*")
 public class Textbox extends BaseInputboxComponent<String> {
     

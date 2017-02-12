@@ -30,6 +30,11 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.springframework.util.NumberUtils;
 import org.springframework.util.StringUtils;
 
+/**
+ * The base class for input box components that support the entry of numeric values.
+ *
+ * @param <T> The type of numeric value supported.
+ */
 public abstract class BaseNumberboxComponent<T extends Number> extends BaseInputboxComponent<T> {
     
     private T minValue;

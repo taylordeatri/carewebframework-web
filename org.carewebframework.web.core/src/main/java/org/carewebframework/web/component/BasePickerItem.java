@@ -27,6 +27,11 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * The base class for components that represent a single choice for a picker component.
+ *
+ * @param <T> The item type.
+ */
 public abstract class BasePickerItem<T> extends BaseComponent {
     
     private T value;

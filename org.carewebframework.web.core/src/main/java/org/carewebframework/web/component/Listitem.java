@@ -32,6 +32,9 @@ import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
 import org.carewebframework.web.event.EventUtil;
 
+/**
+ * A single item within a list box.
+ */
 @Component(value = "listitem", widgetClass = "Listitem", parentTag = "listbox")
 public class Listitem extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     

@@ -33,6 +33,9 @@ import org.carewebframework.web.model.IModelAndView;
 import org.carewebframework.web.model.ISupportsModel;
 import org.carewebframework.web.model.ModelAndView;
 
+/**
+ * A component representing a combo box control.
+ */
 @Component(value = "combobox", widgetClass = "Combobox", parentTag = "*", childTag = @ChildTag("comboitem"))
 public class Combobox extends BaseInputboxComponent<String> implements ISupportsModel<Comboitem> {
     

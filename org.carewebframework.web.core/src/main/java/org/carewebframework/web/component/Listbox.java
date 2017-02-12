@@ -37,6 +37,9 @@ import org.carewebframework.web.model.IModelAndView;
 import org.carewebframework.web.model.ISupportsModel;
 import org.carewebframework.web.model.ModelAndView;
 
+/**
+ * A component representing a simple list box control.
+ */
 @Component(value = "listbox", widgetClass = "Listbox", parentTag = "*", childTag = @ChildTag("listitem"))
 public class Listbox extends BaseUIComponent implements ISupportsModel<Listitem> {
     

@@ -28,6 +28,9 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 
+/**
+ * A component that allows embedding native HTML within a page.
+ */
 @Component(value = "html", widgetClass = "Html", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
 public class Html extends BaseUIComponent {
     

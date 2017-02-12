@@ -62,7 +62,7 @@ import org.carewebframework.web.event.StatechangeEvent;
 import org.springframework.util.Assert;
 
 /**
- * Abstract base class for all components.
+ * The abstract base class for all components.
  */
 public abstract class BaseComponent implements IElementIdentifier {
     

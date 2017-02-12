@@ -29,6 +29,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A simple hyperlink (anchor) component.
+ */
 @Component(value = "a", widgetClass = "Hyperlink", parentTag = "*")
 public class Hyperlink extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPositionHorz> {
     

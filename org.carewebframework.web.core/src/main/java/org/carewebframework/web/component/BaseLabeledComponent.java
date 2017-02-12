@@ -28,6 +28,11 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * The base class for components that have an associated label.
+ *
+ * @param <P> The type of label positioning that is supported.
+ */
 public abstract class BaseLabeledComponent<P extends BaseLabeledComponent.ILabelPosition> extends BaseUIComponent {
     
     public interface ILabelPosition {};

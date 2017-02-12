@@ -31,6 +31,9 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A container component with a frame and title for visual grouping of related elements.
+ */
 @Component(value = "groupbox", widgetClass = "Groupbox", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Groupbox extends BaseUIComponent {
     

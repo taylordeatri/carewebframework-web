@@ -32,6 +32,9 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.LoadEvent;
 
+/**
+ * An iframe component.
+ */
 @Component(value = "iframe", widgetClass = "Iframe", parentTag = "*")
 public class Iframe extends BaseUIComponent {
     

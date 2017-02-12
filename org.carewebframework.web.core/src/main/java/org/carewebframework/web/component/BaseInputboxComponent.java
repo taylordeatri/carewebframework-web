@@ -29,6 +29,11 @@ import org.carewebframework.common.NumUtil;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * The base class for all input box components.
+ *
+ * @param <T> The value type for the input box.
+ */
 public abstract class BaseInputboxComponent<T> extends BaseInputComponent<T> {
     
     private T minvalue;

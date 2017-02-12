@@ -28,6 +28,9 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 
+/**
+ * A component for inserting an embedded style sheet.
+ */
 @Component(value = "style", widgetClass = "Style", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
 public class Style extends BaseComponent {
     

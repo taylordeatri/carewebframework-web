@@ -28,7 +28,8 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 
 /**
- * This is a simple container for text content.
+ * A simple container for holding text content. It is created implicitly during parsing of
+ * components that support text content.
  */
 @Component(value = "#text", widgetClass = "Content", parentTag = "*")
 public class Content extends BaseComponent {

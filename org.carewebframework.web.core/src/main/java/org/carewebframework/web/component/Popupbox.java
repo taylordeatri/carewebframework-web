@@ -32,8 +32,8 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 
 /**
- * Popup box component is a text box with a drop down button that triggers the appearance of a popup
- * component. Popup component may be specified as a property or inline as a child.
+ * A popup box component is a text box with a drop down button that triggers the appearance of a
+ * popup component. A popup component may be specified as a property or inline as a child.
  */
 @Component(value = "popupbox", widgetClass = "Popupbox", parentTag = "*", childTag = @ChildTag(value = "popup", maximum = 1))
 public class Popupbox extends Textbox {

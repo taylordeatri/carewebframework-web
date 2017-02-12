@@ -33,6 +33,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * An input box for entering a time value.
+ */
 @Component(value = "timebox", widgetClass = "Timebox", parentTag = "*")
 public class Timebox extends BaseInputboxComponent<Date> {
     

@@ -31,7 +31,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.page.PageParser;
 
 /**
- * Import component permits importing another page into the referencing page. Note that while it
+ * A component that permits importing another page into the referencing page. Note that while it
  * prohibits child tags, it does allow the addition of child components either programmatically or
  * via the specified source page.
  */

@@ -28,6 +28,9 @@ package org.carewebframework.web.component;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 
+/**
+ * A component for selecting an image from a collection of images.
+ */
 @Component(value = "imagepicker", widgetPackage = "cwf-picker", widgetClass = "Imagepicker", parentTag = "*", childTag = @ChildTag("imagepickeritem"))
 public class ImagePicker extends BasePickerComponent<String> {
     

@@ -32,6 +32,9 @@ import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
 import org.carewebframework.web.event.EventUtil;
 
+/**
+ * A single item within a combo box.
+ */
 @Component(value = "comboitem", widgetClass = "Comboitem", parentTag = "combobox")
 public class Comboitem extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     

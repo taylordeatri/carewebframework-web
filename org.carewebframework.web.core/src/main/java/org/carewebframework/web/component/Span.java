@@ -29,6 +29,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 
+/**
+ * A simple span component.
+ */
 @Component(value = "span", widgetClass = "Span", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Span extends BaseUIComponent {
     

@@ -29,6 +29,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A component for importing an external style sheet.
+ */
 @Component(value = "stylesheet", widgetClass = "Stylesheet", parentTag = "*")
 public class Stylesheet extends BaseComponent {
     

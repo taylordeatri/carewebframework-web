@@ -31,12 +31,17 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A component that logically groups together multiple radio buttons. Selection of radio buttons
+ * under the same radio group is mutually exclusive. Note that radio buttons do not have to be a
+ * direct child of their group.
+ */
 @Component(value = "radiogroup", widgetClass = "Radiogroup", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Radiogroup extends BaseUIComponent {
     
     public enum Orientation {
         HORIZONTAL, VERTICAL
-    };
+    }
     
     private Orientation orientation = Orientation.HORIZONTAL;
     

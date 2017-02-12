@@ -27,6 +27,9 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 
+/**
+ * A component that visually separates items within a menu.
+ */
 @Component(value = "menuseparator", widgetClass = "Menuseparator", parentTag = { "menu", "menupopup", "menuitem" })
 public class Menuseparator extends BaseUIComponent {
     

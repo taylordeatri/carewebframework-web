@@ -6,6 +6,10 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.event.IEventListener;
 
+/**
+ * A component supporting a window that slides down from the top center of the viewport and can
+ * display multiple messages.
+ */
 @Component(value = "messagewindow", widgetClass = "Messagewindow", parentTag = "page", childTag = @ChildTag("messagepane"))
 public class MessageWindow extends BaseUIComponent {
     

@@ -31,6 +31,11 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.ChangeEvent;
 
+/**
+ * The base class for all components that support some mode of user input.
+ *
+ * @param <T> The type of the input value.
+ */
 public abstract class BaseInputComponent<T> extends BaseUIComponent {
     
     private T value;

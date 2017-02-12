@@ -27,6 +27,10 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.component.BaseLabeledComponent.LabelPositionNone;
 
+/**
+ * The base class for menus and menu items. This is essentially a convenience class for grouping
+ * menu-related components together.
+ */
 public abstract class BaseMenuComponent extends BaseLabeledImageComponent<LabelPositionNone> {
     
 }

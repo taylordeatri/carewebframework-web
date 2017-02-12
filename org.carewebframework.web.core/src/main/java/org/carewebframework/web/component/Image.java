@@ -30,6 +30,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A component representing an embedded image.
+ */
 @Component(value = "image", widgetClass = "Image", parentTag = "*")
 public class Image extends BaseUIComponent {
     

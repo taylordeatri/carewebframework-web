@@ -29,6 +29,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A simple button component.
+ */
 @Component(value = "button", widgetClass = "Button", parentTag = "*")
 public class Button extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPositionHorz> {
     

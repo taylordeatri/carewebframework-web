@@ -31,15 +31,18 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
+/**
+ * A toolbar component.
+ */
 @Component(value = "toolbar", widgetClass = "Toolbar", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Toolbar extends BaseUIComponent {
     
     public enum Alignment {
         START, CENTER, END
-    };
+    }
     
     public enum Orientation {
-        HORIZONTAL, VERTICAL;
+        HORIZONTAL, VERTICAL
     }
     
     private Alignment alignment = Alignment.START;

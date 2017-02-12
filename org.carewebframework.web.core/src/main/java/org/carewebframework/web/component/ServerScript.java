@@ -39,7 +39,7 @@ import org.carewebframework.web.script.ScriptRegistry;
 import org.springframework.util.Assert;
 
 /**
- * Component wrapping script source code for server-side invocation.
+ * A component wrapping script source code for server-side invocation.
  */
 @Component(value = "sscript", widgetClass = "MetaWidget", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
 public class ServerScript extends BaseComponent {

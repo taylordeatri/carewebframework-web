@@ -31,6 +31,9 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.page.PageParser;
 
+/**
+ * A component that merges a source page with zero or more snippets.
+ */
 @Component(value = "template", widgetClass = "Span", parentTag = "*", childTag = @ChildTag("snippet"))
 public class Template extends BaseComponent implements INamespace {
     

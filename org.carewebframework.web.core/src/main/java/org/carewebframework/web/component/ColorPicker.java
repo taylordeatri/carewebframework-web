@@ -31,6 +31,9 @@ import org.carewebframework.common.ColorUtil;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ChildTag;
 
+/**
+ * A component for selecting a color from a palette of colors.
+ */
 @Component(value = "colorpicker", widgetPackage = "cwf-picker", widgetClass = "Colorpicker", parentTag = "*", childTag = @ChildTag("colorpickeritem"))
 public class ColorPicker extends BasePickerComponent<Color> {
     

@@ -33,6 +33,9 @@ import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.OpenEvent;
 
+/**
+ * A component representing a drop down menu.
+ */
 @Component(value = "menu", widgetClass = "Menu", parentTag = "*", childTag = { @ChildTag("menuitem"),
         @ChildTag("menuheader"), @ChildTag("menuseparator") })
 public class Menu extends BaseMenuComponent {

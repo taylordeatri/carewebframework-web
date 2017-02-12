@@ -29,6 +29,9 @@ import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.event.ChangeEvent;
 import org.carewebframework.web.event.EventUtil;
 
+/**
+ * A component representing a single radio button.
+ */
 @Component(value = "radiobutton", widgetClass = "Radiobutton", parentTag = "*")
 public class Radiobutton extends Checkbox {
     

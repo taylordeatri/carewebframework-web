@@ -5,6 +5,9 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.EventHandler;
 
+/**
+ * A pane holding a single message in a message window.
+ */
 @Component(value = "messagepane", widgetClass = "Messagepane", content = ContentHandling.AS_CHILD, parentTag = "messagewindow", childTag = @ChildTag("*"))
 public class MessagePane extends BaseUIComponent {
     

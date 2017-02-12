@@ -29,7 +29,8 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
 /**
- * Component to facilitate adding a label to another component or component group.
+ * A component to facilitate adding a label to another component or component group. TODO: to be
+ * completed...
  */
 public class LabeledElement extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionAll> {
     
