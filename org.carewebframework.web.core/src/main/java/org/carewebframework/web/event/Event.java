@@ -42,6 +42,9 @@ public class Event {
     @EventParameter(onFailure = OnFailure.IGNORE)
     private BaseComponent target;
     
+    @EventParameter(value = "target", onFailure = OnFailure.IGNORE)
+    private String targetId;
+    
     @EventParameter(onFailure = OnFailure.IGNORE)
     private BaseComponent currentTarget;
     
@@ -112,6 +115,10 @@ public class Event {
     
     public BaseComponent getRelatedTarget() {
         return relatedTarget;
+    }
+    
+    public String getTargetId() {
+        return targetId;
     }
     
     public Object getData() {
