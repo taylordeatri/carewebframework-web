@@ -31,14 +31,29 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Manages event listeners for a single component.
+ */
 public class EventListeners {
     
     private final Map<String, Set<IEventListener>> allListeners = new HashMap<>();
     
+    /**
+     * Add a listener for the given event type.
+     * 
+     * @param eventType The event type.
+     * @param eventListener The event listener.
+     */
     public void add(String eventType, IEventListener eventListener) {
         getListeners(eventType, true).add(eventListener);
     }
     
+    /**
+     * Remove a listener for the given event type.
+     * 
+     * @param eventType The event type.
+     * @param eventListener The event listener.
+     */
     public void remove(String eventType, IEventListener eventListener) {
         Set<IEventListener> listeners = getListeners(eventType, false);
         
@@ -51,14 +66,27 @@ public class EventListeners {
         }
     }
     
+    /**
+     * Remove all listeners for all event types.
+     */
     public void removeAll() {
         allListeners.clear();
     }
     
+    /**
+     * Remove all listeners for the specified event type only.
+     * 
+     * @param eventType The event type.
+     */
     public void removeAll(String eventType) {
         allListeners.remove(eventType);
     }
     
+    /**
+     * Invoke all listeners for this type of event.
+     * 
+     * @param event An event.
+     */
     public void invoke(Event event) {
         Set<IEventListener> listeners = getListeners(event.getType(), false);
         
@@ -73,6 +101,12 @@ public class EventListeners {
         }
     }
     
+    /**
+     * Returns true if this event type has any listeners.
+     * 
+     * @param eventType The event type.
+     * @return True if there is at least one listener for the event type.
+     */
     public boolean hasListeners(String eventType) {
         Set<IEventListener> listeners = getListeners(eventType, false);
         return listeners != null && !listeners.isEmpty();
@@ -88,13 +122,4 @@ public class EventListeners {
         return listeners;
     }
     
-    public String getClientEvents() {
-        StringBuilder sb = new StringBuilder();
-        
-        for (String eventType : allListeners.keySet()) {
-            sb.append(sb.length() == 0 ? "" : " ").append(eventType);
-        }
-        
-        return sb.toString();
-    }
 }

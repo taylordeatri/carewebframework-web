@@ -33,6 +33,9 @@ import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Page;
 import org.springframework.core.io.ByteArrayResource;
 
+/**
+ * Static convenience methods for creating pages.
+ */
 public class PageUtil {
     
     public static PageDefinition getPageDefinition(String url) {

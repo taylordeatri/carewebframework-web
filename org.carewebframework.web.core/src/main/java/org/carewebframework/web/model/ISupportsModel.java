@@ -29,36 +29,88 @@ import org.carewebframework.web.component.BaseComponent;
 
 public interface ISupportsModel<T extends BaseComponent> {
     
+    /**
+     * Returns the model and view for this component.
+     * 
+     * @return The model and view for this component.
+     */
     IModelAndView<T, ?> getModelAndView();
     
+    /**
+     * Returns the model and view for this component. The model is cast to the specified type.
+     * 
+     * @param type The type of model object.
+     * @return The model and view for this component.
+     */
     @SuppressWarnings("unchecked")
-    default <M> IModelAndView<T, M> getModelAndView(Class<M> clazz) {
+    default <M> IModelAndView<T, M> getModelAndView(Class<M> type) {
         return (IModelAndView<T, M>) getModelAndView();
     }
     
+    /**
+     * @see IModelAndView#getModel()
+     */
+    @SuppressWarnings("javadoc")
     default IListModel<?> getModel() {
         return getModelAndView().getModel();
     }
     
-    default <M> IListModel<M> getModel(Class<M> clazz) {
-        return getModelAndView(clazz).getModel();
+    /**
+     * Returns the model for this component. The model is cast to the specified type.
+     * 
+     * @param type The type of model object.
+     * @return The model this component.
+     */
+    default <M> IListModel<M> getModel(Class<M> type) {
+        return getModelAndView(type).getModel();
     }
     
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    /**
+     * @see IModelAndView#setModel(IListModel)
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked", "javadoc" })
     default <M> void setModel(IListModel<M> model) {
         getModelAndView().setModel((ListModel) model);
     }
     
+    /**
+     * @see IModelAndView#getRenderer()
+     */
+    @SuppressWarnings("javadoc")
     default IComponentRenderer<T, ?> getRenderer() {
         return getModelAndView().getRenderer();
     }
     
-    default <M> IComponentRenderer<T, M> getRenderer(Class<M> clazz) {
-        return getModelAndView(clazz).getRenderer();
+    /**
+     * @see IModelAndView#getRenderer(Class)
+     */
+    @SuppressWarnings("javadoc")
+    default <M> IComponentRenderer<T, M> getRenderer(Class<M> type) {
+        return getModelAndView(type).getRenderer();
     }
     
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    /**
+     * @see IModelAndView#setRenderer(IComponentRenderer)
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked", "javadoc" })
     default <M> void setRenderer(IComponentRenderer<T, M> renderer) {
         getModelAndView().setRenderer((IComponentRenderer) renderer);
     }
+    
+    /**
+     * @see IModelAndView#getDeferredRendering
+     */
+    @SuppressWarnings("javadoc")
+    default boolean getDeferredRendering() {
+        return getModelAndView().getDeferredRendering();
+    }
+    
+    /**
+     * @see IModelAndView#setDeferredRendering(boolean)
+     */
+    @SuppressWarnings("javadoc")
+    default void setDeferredRendering(boolean value) {
+        getModelAndView().setDeferredRendering(value);
+    }
+    
 }

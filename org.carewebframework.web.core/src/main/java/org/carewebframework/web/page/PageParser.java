@@ -45,6 +45,9 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
 import org.w3c.dom.Text;
 
+/**
+ * Parses a cwf page into a page definition.
+ */
 public class PageParser {
     
     private static final PageParser instance = new PageParser();

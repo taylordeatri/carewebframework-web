@@ -38,24 +38,47 @@ import org.carewebframework.web.component.Page;
 import org.carewebframework.web.expression.ELContext;
 import org.carewebframework.web.expression.ELEvaluator;
 
+/**
+ * This represents the compiled form of a single cwf page. It is a simple wrapper of a tree of page
+ * elements, rooted at the root element.
+ */
 public class PageDefinition {
     
     private final PageElement root = new PageElement(null, null);
     
+    /**
+     * The root of all page elements in this definition.
+     * 
+     * @return The root page element.
+     */
     public PageElement getRootElement() {
         return root;
     }
     
+    /**
+     * Materializes this page definition under the given parent component.
+     * 
+     * @param parent The parent component for all top level components produced. This may be null.
+     * @return A list of all top level components produced.
+     */
     public List<BaseComponent> materialize(BaseComponent parent) {
         return materialize(parent, null);
     }
     
+    /**
+     * Materializes this page definition under the given parent component.
+     * 
+     * @param parent The parent component for all top level components produced. This may be null.
+     * @param args A map of arguments that will be copied into the attribute maps of all top level
+     *            components. This may be null.
+     * @return A list of all top level components produced.
+     */
     public List<BaseComponent> materialize(BaseComponent parent, Map<String, Object> args) {
         List<DeferredSetter> deferrals = new ArrayList<>();
         List<BaseComponent> created = new ArrayList<>();
         materialize(root.getChildren(), parent, deferrals, created);
         
-        if (args != null) {
+        if (args != null && !args.isEmpty()) {
             for (BaseComponent component : created) {
                 component.getAttributes().putAll(args);
             }

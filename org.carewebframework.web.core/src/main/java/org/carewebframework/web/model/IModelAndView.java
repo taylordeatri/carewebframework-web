@@ -86,4 +86,22 @@ public interface IModelAndView<T extends BaseComponent, M> {
      * @return The rendered model object.
      */
     T rerender(int index);
+    
+    /**
+     * Returns deferred rendering setting. If true, rendering to the client is deferred until all
+     * model objects are rendered, then client updates are sent in bulk. This can be more efficient
+     * when rendering a large number of items.
+     * 
+     * @return The deferred rendering setting.
+     */
+    boolean getDeferredRendering();
+    
+    /**
+     * Sets the deferred rendering setting. If true, rendering to the client is deferred until all
+     * model objects are rendered, then client updates are sent in bulk. This can be more efficient
+     * when rendering a large number of items.
+     * 
+     * @param value The deferred rendering setting.
+     */
+    void setDeferredRendering(boolean value);
 }

@@ -31,6 +31,9 @@ import org.carewebframework.common.AbstractRegistry;
 import org.carewebframework.web.component.Page;
 import org.springframework.util.Assert;
 
+/**
+ * A registry of all active pages, indexed by their page id.
+ */
 public class PageRegistry extends AbstractRegistry<String, Page> {
     
     private static final PageRegistry instance = new PageRegistry();

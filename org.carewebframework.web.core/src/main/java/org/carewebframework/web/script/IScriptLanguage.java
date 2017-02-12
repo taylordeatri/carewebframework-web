@@ -43,7 +43,7 @@ public interface IScriptLanguage {
     IParsedScript parse(String source);
     
     /**
-     * Returns script variable the will represent the calling context.
+     * Returns script variable that will represent the calling context.
      * 
      * @return Name of script variable for calling context.
      */

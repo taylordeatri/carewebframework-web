@@ -34,6 +34,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 
+/**
+ * Registry of all tag libraries, indexed by their uri, discovered on the class path.
+ */
 public class TagLibraryRegistry extends AbstractRegistry<String, TagLibrary> implements ApplicationContextAware {
     
     private static Log log = LogFactory.getLog(TagLibraryRegistry.class);
@@ -52,6 +55,10 @@ public class TagLibraryRegistry extends AbstractRegistry<String, TagLibrary> imp
         return item.getUri();
     }
     
+    /**
+     * Locates, parses, and registers all type libraries (files with the <code>tld</code> extension)
+     * discovered on the class path.
+     */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         try {
@@ -63,7 +70,7 @@ public class TagLibraryRegistry extends AbstractRegistry<String, TagLibrary> imp
                 try {
                     register(TagLibraryParser.getInstance().parse(resource));
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error("Error parsing tag library", e);
                 }
             }
         } catch (Exception e) {

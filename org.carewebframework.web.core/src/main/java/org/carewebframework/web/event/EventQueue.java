@@ -31,6 +31,13 @@ import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.client.Session;
 import org.carewebframework.web.component.Page;
 
+/**
+ * A page's queue for posted events. Queued (posted) events are delivered at the end of an execution
+ * cycle. If an event is queued outside of the target page's execution context, it will be delivered
+ * at the end of the next execution cycle for that page. To ensure timely delivery in such an
+ * instance, a ping request is sent to the client in order to trigger an execution cycle for the
+ * target page.
+ */
 public class EventQueue {
     
     private final LinkedList<Event> queue = new LinkedList<>();
@@ -42,6 +49,10 @@ public class EventQueue {
     }
     
     public synchronized void queue(Event event) {
+        if (event.getPage() != page) {
+            throw new RuntimeException("Event does not belong to this queue's page");
+        }
+        
         queue.add(event);
         
         if (queue.size() == 1 && ExecutionContext.getPage() != page) {

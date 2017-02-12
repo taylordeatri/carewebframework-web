@@ -35,6 +35,9 @@ import org.carewebframework.web.annotation.ComponentDefinition;
 import org.carewebframework.web.annotation.ComponentDefinition.Cardinality;
 import org.carewebframework.web.taglib.TagLibrary;
 
+/**
+ * A single page element, roughly equivalent to a single tag in a cwf page.
+ */
 public class PageElement {
     
     private final PageElement parent;

@@ -32,10 +32,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.expression.EnvironmentAccessor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.support.DefaultConversionService;
-import org.springframework.expression.AccessException;
 import org.springframework.expression.BeanResolver;
 import org.springframework.expression.ConstructorResolver;
-import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.MethodResolver;
 import org.springframework.expression.ParserContext;
@@ -45,6 +43,9 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.expression.spel.support.StandardTypeConverter;
 
+/**
+ * An extension of Spring's EL evaluator that supports plugin accessors, resolvers, and converters..
+ */
 public class ELEvaluator extends StandardEvaluationContext implements BeanPostProcessor, ApplicationContextAware {
     
     private static final ELEvaluator instance = new ELEvaluator();
@@ -85,6 +86,9 @@ public class ELEvaluator extends StandardEvaluationContext implements BeanPostPr
         return bean;
     }
     
+    /**
+     * Discover and register plugin resolvers, accessors, and converters.
+     */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof ConstructorResolver) {
@@ -106,15 +110,9 @@ public class ELEvaluator extends StandardEvaluationContext implements BeanPostPr
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         setRootObject(applicationContext.getEnvironment());
         
-        setBeanResolver(new BeanResolver() {
-            
-            @Override
-            public Object resolve(EvaluationContext context, String beanName) throws AccessException {
-                return applicationContext.getBean(beanName);
-            }
-            
+        setBeanResolver((context, beanName) -> {
+            return applicationContext.getBean(beanName);
         });
-        
     }
     
 }

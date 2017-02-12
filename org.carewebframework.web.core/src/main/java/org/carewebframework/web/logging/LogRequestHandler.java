@@ -32,6 +32,10 @@ import org.apache.commons.logging.LogFactory;
 import org.carewebframework.web.client.ClientRequest;
 import org.carewebframework.web.client.WebSocketHandler.IRequestHandler;
 
+/**
+ * Handles a logging request from the client. This is effectively a bridge between the client's
+ * logging framework and that of the server.
+ */
 public class LogRequestHandler implements IRequestHandler {
     
     private static final Log log = LogFactory.getLog(LogRequestHandler.class);

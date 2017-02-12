@@ -31,6 +31,10 @@ import org.carewebframework.common.AbstractCache;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.core.WebUtil;
 
+/**
+ * A cache of all compiled page definitions. If a requested page is not in the cache, it will be
+ * automatically compiled and added to the cache.
+ */
 public class PageDefinitionCache extends AbstractCache<String, PageDefinition> {
     
     private static PageDefinitionCache instance = new PageDefinitionCache();

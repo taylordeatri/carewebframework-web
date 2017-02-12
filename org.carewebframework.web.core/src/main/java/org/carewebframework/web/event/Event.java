@@ -81,6 +81,7 @@ public class Event {
     public Event(String type, BaseComponent target, BaseComponent relatedTarget, Object data) {
         this.type = type;
         this.target = target;
+        this.targetId = target == null ? null : target.getId();
         this.data = data;
         this.currentTarget = target;
         this.relatedTarget = relatedTarget;
@@ -95,10 +96,15 @@ public class Event {
     public Event(String type, Event source) {
         this.type = type;
         this.target = source.target;
+        this.targetId = source.targetId;
         this.data = source.data;
         this.currentTarget = source.currentTarget;
         this.relatedTarget = source.relatedTarget;
         this.page = source.page;
+    }
+    
+    public Page getPage() {
+        return page;
     }
     
     public String getType() {

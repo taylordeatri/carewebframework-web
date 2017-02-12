@@ -28,7 +28,9 @@ package org.carewebframework.web.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.carewebframework.web.client.Synchronizer;
 import org.carewebframework.web.component.BaseComponent;
+import org.carewebframework.web.component.Page;
 import org.carewebframework.web.model.IListModel.IListModelListener;
 import org.carewebframework.web.model.IListModel.ListEventType;
 
@@ -41,6 +43,8 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
     private IListModel<M> model;
     
     private Map<BaseComponent, ModelAndView<T, M>> linkedViews;
+    
+    private boolean deferredRendering;
     
     public ModelAndView(BaseComponent parent) {
         this.parent = parent;
@@ -102,8 +106,39 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         }
         
         if (model != null && parent != null && renderer != null) {
-            for (int i = 0; i < model.size(); i++) {
-                renderChild(i);
+            try {
+                onRenderStart();
+                
+                for (int i = 0; i < model.size(); i++) {
+                    renderChild(i);
+                }
+            } finally {
+                onRenderStop();
+            }
+        }
+    }
+    
+    protected void onRenderStart() {
+        if (deferredRendering) {
+            synchronizer(true);
+        }
+    }
+    
+    protected void onRenderStop() {
+        if (deferredRendering) {
+            synchronizer(false);
+        }
+    }
+    
+    private void synchronizer(boolean pause) {
+        Page page = parent == null ? null : parent.getPage();
+        Synchronizer synchronizer = page == null ? null : page.getSynchronizer();
+        
+        if (synchronizer != null) {
+            if (pause) {
+                synchronizer.startQueueing();
+            } else {
+                synchronizer.stopQueueing();
             }
         }
     }
@@ -195,6 +230,16 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
     public T rerender(int index) {
         destroyChild(index);
         return renderChild(index);
+    }
+    
+    @Override
+    public boolean getDeferredRendering() {
+        return deferredRendering;
+    }
+    
+    @Override
+    public void setDeferredRendering(boolean value) {
+        deferredRendering = value;
     }
     
 }

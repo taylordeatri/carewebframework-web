@@ -31,7 +31,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 /**
- * Tracks script extensions.
+ * A registry of all script extensions.
  */
 public class ScriptRegistry extends AbstractRegistry<String, IScriptLanguage> implements BeanPostProcessor {
     
