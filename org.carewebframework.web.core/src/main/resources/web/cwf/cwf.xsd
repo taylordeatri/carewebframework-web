@@ -79,7 +79,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -98,6 +97,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -168,14 +168,7 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="left"/>
-                        <xs:enumeration value="right"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
+            <xs:attribute name="position" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -245,7 +238,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -264,6 +256,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -433,80 +426,6 @@
             <xs:attribute name="width" type="xs:string"/>
         </xs:complexType>
     </xs:element>
-    <xs:element name="container">
-        <xs:complexType mixed="true">
-            <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
-            </xs:all>
-            <xs:attribute name="balloon" type="xs:string"/>
-            <xs:attribute name="class" type="xs:string"/>
-            <xs:attribute name="context" type="xs:string"/>
-            <xs:attribute name="controller" type="xs:string"/>
-            <xs:attribute name="css" type="xs:string"/>
-            <xs:attribute name="data" type="xs:string"/>
-            <xs:attribute name="disabled" type="xs:boolean"/>
-            <xs:attribute name="dragid" type="xs:string"/>
-            <xs:attribute name="dropid" type="xs:string"/>
-            <xs:attribute name="flex" type="xs:string"/>
-            <xs:attribute name="focus" type="xs:boolean"/>
-            <xs:attribute name="forward" type="xs:string"/>
-            <xs:attribute name="height" type="xs:string"/>
-            <xs:attribute name="hint" type="xs:string"/>
-            <xs:attribute name="if" type="xs:boolean"/>
-            <xs:attribute name="impl" type="xs:string"/>
-            <xs:attribute name="keycapture" type="xs:string"/>
-            <xs:attribute name="name" type="xs:string"/>
-            <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="style" type="xs:string"/>
-            <xs:attribute name="tabindex" type="xs:integer"/>
-            <xs:attribute name="unless" type="xs:boolean"/>
-            <xs:attribute name="visible" type="xs:boolean"/>
-            <xs:attribute name="width" type="xs:string"/>
-        </xs:complexType>
-    </xs:element>
     <xs:element name="cscript">
         <xs:complexType>
             <xs:simpleContent>
@@ -570,7 +489,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -589,6 +507,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -714,7 +633,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -733,6 +651,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1317,7 +1236,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -1336,6 +1254,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1413,6 +1332,80 @@
             <xs:attribute name="width" type="xs:string"/>
         </xs:complexType>
     </xs:element>
+    <xs:element name="namespace">
+        <xs:complexType mixed="true">
+            <xs:all>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
+            </xs:all>
+            <xs:attribute name="balloon" type="xs:string"/>
+            <xs:attribute name="class" type="xs:string"/>
+            <xs:attribute name="context" type="xs:string"/>
+            <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="css" type="xs:string"/>
+            <xs:attribute name="data" type="xs:string"/>
+            <xs:attribute name="disabled" type="xs:boolean"/>
+            <xs:attribute name="dragid" type="xs:string"/>
+            <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
+            <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="hint" type="xs:string"/>
+            <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="popup" type="xs:string"/>
+            <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="width" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="page">
         <xs:complexType mixed="true">
             <xs:all>
@@ -1422,7 +1415,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -1442,6 +1434,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="messagewindow"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1481,7 +1474,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -1500,6 +1492,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1596,7 +1589,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -1615,6 +1607,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1740,14 +1733,7 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="left"/>
-                        <xs:enumeration value="right"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
+            <xs:attribute name="position" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -1764,7 +1750,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -1783,6 +1768,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1846,7 +1832,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -1865,6 +1850,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1922,7 +1908,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -1941,6 +1926,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -2045,6 +2031,8 @@
                         <xs:enumeration value="after"/>
                         <xs:enumeration value="before"/>
                         <xs:enumeration value="child"/>
+                        <xs:enumeration value="parent"/>
+                        <xs:enumeration value="replace"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
@@ -2061,7 +2049,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -2080,6 +2067,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -2179,7 +2167,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -2198,6 +2185,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -2402,7 +2390,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -2421,6 +2408,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -2594,7 +2582,6 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="container"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
@@ -2613,6 +2600,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
