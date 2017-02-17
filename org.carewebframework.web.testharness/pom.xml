@@ -8,6 +8,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
+	<name>CWF Test Harness</name>
 	<artifactId>org.carewebframework.web.testharness</artifactId>
 	<packaging>war</packaging>
 	<description>CWF Web Framework Test Harness</description>
