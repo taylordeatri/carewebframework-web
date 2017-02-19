@@ -10,7 +10,10 @@
 
 	<name>CWF Test Framework</name>
 	<artifactId>org.carewebframework.web.test</artifactId>
-
+	<description>
+		Testing framework that includes mock classes for core components.
+	</description>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.carewebframework</groupId>

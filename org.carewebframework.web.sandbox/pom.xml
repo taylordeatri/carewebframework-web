@@ -9,6 +9,9 @@
 	
 	<name>CWF Developer Sandbox</name>
 	<artifactId>org.carewebframework.web.sandbox</artifactId>
+	<description>
+		Sandbox that supports testing cwf pages dynamically.
+	</description>
 	
 	<dependencies>
 		<dependency>

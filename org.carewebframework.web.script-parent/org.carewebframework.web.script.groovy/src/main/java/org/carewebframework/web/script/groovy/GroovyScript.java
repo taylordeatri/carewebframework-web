@@ -7,15 +7,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * This Source Code Form is also subject to the terms of the Health-Related
  * Additional Disclaimer of Warranty and Limitation of Liability available at
  *
@@ -34,12 +34,17 @@ import groovy.lang.GroovyShell;
 import groovy.lang.Script;
 
 /**
- * Utility methods for compiling and executing groovy scripts.
+ * Support for embedding Groovy scripts.
  */
 public class GroovyScript implements IScriptLanguage {
     
     private static GroovyShell shell;
     
+    /**
+     * Utility method for accessing the Groovy shell, instantiating it on first invocation.
+     *
+     * @return The Groovy shell,
+     */
     public static synchronized GroovyShell getGroovyShell() {
         if (shell == null) {
             shell = new GroovyShell();
@@ -48,6 +53,9 @@ public class GroovyScript implements IScriptLanguage {
         return shell;
     }
     
+    /**
+     * Wrapper for a parsed Groovy script.
+     */
     public static class ParsedScript implements IParsedScript {
         
         private final Script script;
@@ -64,11 +72,17 @@ public class GroovyScript implements IScriptLanguage {
         
     }
     
+    /**
+     * @see org.carewebframework.web.script.IScriptLanguage#getType()
+     */
     @Override
     public String getType() {
         return "groovy";
     }
     
+    /**
+     * @see org.carewebframework.web.script.IScriptLanguage#parse(java.lang.String)
+     */
     @Override
     public IParsedScript parse(String source) {
         return new ParsedScript(source);
