@@ -32,6 +32,18 @@
 				<rowcell colspan="2" label="Row cell spanning both columns" />
 			</row>
 			<row>
+				<label label="label" />
+				Simple label.
+			</row>
+			<row>
+				<label label="label+image" image="images/ri.png" />
+				Simple label with image, default position.
+			</row>
+			<row>
+				<label label="label+image" image="images/ri.png" position="left"/>
+				Simple label with image, left label position.
+			</row>
+			<row>
 				<span name="dynamicContent" />
 				This is dynamically-generated content.
 			</row>
