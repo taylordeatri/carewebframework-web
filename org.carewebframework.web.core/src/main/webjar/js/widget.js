@@ -1852,16 +1852,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	 * A label widget
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.Label = cwf.widget.LabeledImageWidget.extend({
+	cwf.widget.Label = cwf.widget.LabeledWidget.extend({
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			var dom = '<label>'
-			    + this.getDOMTemplate(':image', 'label')
-				+ '</label>';
-		
-			return $(this.resolveEL(dom));
+			return $('<label class="label-default">');
 		}
 	
 	});
