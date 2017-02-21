@@ -46,6 +46,23 @@
 				maxValue="100000"
 			</row>
 			<row>
+				<div class="cwf-layout-vertical">
+					<caption label="start,left" alignment="start" position="left">
+						<textbox height="30px" width="100%"/>
+					</caption>
+					<caption label="start,right" alignment="start" position="right">
+						<textbox height="30px" width="100%"/>
+					</caption>
+					<caption label="start,top" alignment="start" position="top">
+						<textbox height="30px" width="100%"/>
+					</caption>
+					<caption label="start,bottom" alignment="start" position="bottom">
+						<textbox height="30px" width="100%"/>
+					</caption>
+				</div>
+				Captioned text box
+			</row>
+			<row>
 				<popupbox name="popupbox" placeholder="popupbox">
 					<popup name="popupboxpopup">
 						<label class="flavor:label-success" label="Simple popup" />

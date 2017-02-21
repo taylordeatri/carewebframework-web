@@ -408,6 +408,61 @@ a:not([href]) {
 	margin-right: 5px;	
 }
 
+/* Caption */
+
+.cwf_caption {
+	display: inline-flex;
+	padding: 4px;
+}
+
+.cwf_caption > *:nth-child(2) {
+	width:100%;
+}
+
+.cwf_caption-left {
+	flex-direction: row;
+}
+
+.cwf_caption-left > *:first-child {
+	margin-right: 3px;
+}
+
+.cwf_caption-right {
+	flex-direction: row-reverse;	
+}
+
+.cwf_caption-right > *:first-child {
+	margin-left: 3px;
+}
+
+.cwf_caption-top {
+	flex-direction: column;	
+}
+
+.cwf_caption-top > *:first-child {
+	margin-bottom: 3px;
+}
+
+.cwf_caption-bottom {
+	flex-direction: column-reverse;	
+}
+
+.cwf_caption-bottom > *:first-child {
+	
+}
+
+.cwf_caption-start {
+	align-items: flex-start;
+}
+
+.cwf_caption-center {
+	align-items: center;
+}
+
+.cwf_caption-end {
+	align-items: flex-end;
+}
+
 /* Cell */
 
 .cwf_cell {

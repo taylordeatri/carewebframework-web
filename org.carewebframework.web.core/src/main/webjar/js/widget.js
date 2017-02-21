@@ -1863,6 +1863,63 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	});
 	
 	/******************************************************************************************************************
+	 * A caption widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Caption = cwf.widget.LabeledWidget.extend({
+		
+		/*------------------------------ Containment ------------------------------*/
+		
+		anchor$: function() {
+			return this.sub$('inner');
+		},
+				
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.initState({position: 'left', alignment: 'start', labelClass: 'label-default'})
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		_updateClass: function(oldc, newc) {
+			oldc = this.subclazz(oldc.toLowerCase());
+			newc = this.subclazz(newc.toLowerCase());
+			this.replaceClass(oldc, newc);
+		},
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		render$: function() {
+			 var dom = '<span>'
+				    + 	this.getDOMTemplate('label')
+				    + 	'<span id="${id}-inner"/>'
+					+ '</span>';
+ 
+			return $(this.resolveEL(dom));
+		},
+	
+		/*------------------------------ State ------------------------------*/
+		
+		alignment: function(v, old) {
+			this._updateClass(old || '', v || 'start');
+		},
+		
+		labelClass: function(v) {
+			this.attr('class', v, this.sub$('lbl'));
+		},
+		
+		labelStyle: function(v) {
+			this.attr('style', v, this.sub$('lbl'));
+		},
+		
+		position: function(v, old) {
+			this._updateClass(old || '', v || 'left');
+		}
+	});
+	
+	/******************************************************************************************************************
 	 * A cell widget
 	 ******************************************************************************************************************/ 
 	
