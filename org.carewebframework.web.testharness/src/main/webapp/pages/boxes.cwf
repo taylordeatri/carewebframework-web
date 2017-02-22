@@ -46,21 +46,22 @@
 				maxValue="100000"
 			</row>
 			<row>
+				<caption name="caption" label="caption" alignment="start" position="left">
+					<textbox height="40px" width="100%"/>
+				</caption>
 				<div class="cwf-layout-vertical">
-					<caption label="start,left" alignment="start" position="left">
-						<textbox height="30px" width="100%"/>
-					</caption>
-					<caption label="start,right" alignment="start" position="right">
-						<textbox height="30px" width="100%"/>
-					</caption>
-					<caption label="start,top" alignment="start" position="top">
-						<textbox height="30px" width="100%"/>
-					</caption>
-					<caption label="start,bottom" alignment="start" position="bottom">
-						<textbox height="30px" width="100%"/>
-					</caption>
-				</div>
-				Captioned text box
+					<radiogroup name="rgPosition">
+						<radiobutton label="top" />
+						<radiobutton label="bottom" />
+						<radiobutton label="left" checked="true" />
+						<radiobutton label="right" />
+					</radiogroup>
+					<radiogroup name="rgAlignment">
+						<radiobutton label="start" checked="true" />
+						<radiobutton label="center" />
+						<radiobutton label="end" />
+					</radiogroup>
+				</div>	
 			</row>
 			<row>
 				<popupbox name="popupbox" placeholder="popupbox">
