@@ -36,7 +36,7 @@ public class MockServletContext extends org.springframework.mock.web.MockServlet
     
     @Override
     protected String getResourceLocation(String path) {
-        if (path.startsWith("/~./")) {
+        if (path.startsWith("/web/")) {
             path = "/web" + path.substring(3);
         }
         

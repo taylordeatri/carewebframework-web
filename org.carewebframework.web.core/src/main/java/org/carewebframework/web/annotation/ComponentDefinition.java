@@ -7,15 +7,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * This Source Code Form is also subject to the terms of the Health-Related
  * Additional Disclaimer of Warranty and Limitation of Liability available at
  *
@@ -131,7 +131,7 @@ public class ComponentDefinition {
         /**
          * A special processor may modify the component's implementation class, as long as the
          * substituted class is a subclass of the original.
-         * 
+         *
          * @param clazz Component implementation class to substitute.
          */
         @SuppressWarnings("unchecked")
@@ -146,7 +146,7 @@ public class ComponentDefinition {
         /**
          * Returns a copy of the attribute map from the page element. This map may be modified by a
          * special processor without affecting the original.
-         * 
+         *
          * @return A copy of the page element's attribute map.
          */
         public Map<String, String> getAttributes() {
@@ -163,7 +163,7 @@ public class ComponentDefinition {
         
         /**
          * Returns true if component creation has been terminated.
-         * 
+         *
          * @return True prevents component creation.
          */
         public boolean isTerminated() {
@@ -195,7 +195,7 @@ public class ComponentDefinition {
     
     /**
      * Invokes a setter with the provided value(s), performing type conversion as necessary.
-     * 
+     *
      * @param instance Instance to receive the value (may be null for static methods).
      * @param setter The method to receive the value.
      * @param args Arguments to be passed to method. Argument values will be coerced to the expected
@@ -225,7 +225,7 @@ public class ComponentDefinition {
     /**
      * Creates a component definition derived from annotation information within the specified
      * class.
-     * 
+     *
      * @param componentClass A component class.
      */
     public ComponentDefinition(Class<? extends BaseComponent> componentClass) {
@@ -248,7 +248,7 @@ public class ComponentDefinition {
     
     /**
      * Creates a component instance from the definition.
-     * 
+     *
      * @return A component instance.
      */
     public BaseComponent create() {
@@ -261,7 +261,7 @@ public class ComponentDefinition {
     
     /**
      * Creates a component instance from the definition using a factory context.
-     * 
+     *
      * @param context The factory context.
      * @return A component instance. May be null if creation is suppressed.
      */
@@ -292,7 +292,7 @@ public class ComponentDefinition {
     
     /**
      * Returns The value of the named property.
-     * 
+     *
      * @param instance Instance to retrieve property from.
      * @param name Name of property.
      * @return The property value.
@@ -310,9 +310,10 @@ public class ComponentDefinition {
     
     /**
      * Sets a property value or defers that operation if the property is marked as such.
-     * 
-     * @param instance Instance containing the property.
-     * @param name Name of property.
+     *
+     * @param instance Instance containing the property or attribute map.
+     * @param name Name of property or attribute. If prefixed with "@", is interpreted as an
+     *            attribute name; otherwise as a property name.
      * @param value The value to set.
      * @return Null if the operation occurred, or a DeferredSetter object if deferred.
      */
@@ -330,7 +331,7 @@ public class ComponentDefinition {
             }
             
             String message = getters.containsKey(name) ? "Property is read-only" : "Property is not recognized";
-            throw new RuntimeException(message + ": " + name);
+            throw new ComponentException(message + ": " + name);
         }
         
         if (deferred.contains(name)) {
@@ -343,7 +344,7 @@ public class ComponentDefinition {
     
     /**
      * Returns the XML tag for this component type.
-     * 
+     *
      * @return An XML tag.
      */
     public String getTag() {
@@ -352,7 +353,7 @@ public class ComponentDefinition {
     
     /**
      * Returns the implementation class for this component type.
-     * 
+     *
      * @return Implementation class.
      */
     public Class<? extends BaseComponent> getComponentClass() {
@@ -361,7 +362,7 @@ public class ComponentDefinition {
     
     /**
      * Returns the javascript package containing the widget class.
-     * 
+     *
      * @return Widget package.
      */
     public String getWidgetPackage() {
@@ -370,7 +371,7 @@ public class ComponentDefinition {
     
     /**
      * Returns the javascript class for the widget.
-     * 
+     *
      * @return Widget class.
      */
     public String getWidgetClass() {
@@ -379,7 +380,7 @@ public class ComponentDefinition {
     
     /**
      * Returns the cardinality of a child tag.
-     * 
+     *
      * @param childTag A child tag.
      * @return Cardinality of the child tag, or null if the tag is not a valid child.
      */
@@ -390,7 +391,7 @@ public class ComponentDefinition {
     
     /**
      * Returns an immutable map of all child tags.
-     * 
+     *
      * @return Map of child tags.
      */
     public Map<String, Cardinality> getChildTags() {
@@ -428,7 +429,7 @@ public class ComponentDefinition {
     
     /**
      * Returns true if the tag is a valid parent tag.
-     * 
+     *
      * @param tag Tag to be tested.
      * @return True if the tag is a valid parent tag.
      */
@@ -438,7 +439,7 @@ public class ComponentDefinition {
     
     /**
      * Returns an immutable set of parent tags.
-     * 
+     *
      * @return Set of valid parent tags.
      */
     public Set<String> getParentTags() {
@@ -447,7 +448,7 @@ public class ComponentDefinition {
     
     /**
      * Returns how to handle content for this component type.
-     * 
+     *
      * @return How to handle content.
      */
     public ContentHandling contentHandling() {
@@ -458,7 +459,7 @@ public class ComponentDefinition {
     
     /**
      * Registers a parent tag.
-     * 
+     *
      * @param tag The tag, or "*" to indicate any parent tag is valid.
      */
     private void addParentTag(String tag) {
@@ -467,7 +468,7 @@ public class ComponentDefinition {
     
     /**
      * Registers a child tag.
-     * 
+     *
      * @param tag A child tag.
      */
     private void addChildTag(ChildTag tag) {
@@ -476,7 +477,7 @@ public class ComponentDefinition {
     
     /**
      * Returns true if the method is static.
-     * 
+     *
      * @param method Method to test.
      * @return True if the method is static.
      */
@@ -486,7 +487,7 @@ public class ComponentDefinition {
     
     /**
      * Registers a property getter.
-     * 
+     *
      * @param getter {@literal @PropertyGetter} annotation
      * @param method The getter method.
      */
@@ -504,7 +505,7 @@ public class ComponentDefinition {
     
     /**
      * Returns an immutable map of getter methods.
-     * 
+     *
      * @return Map of getter methods.
      */
     public Map<String, Method> getGetters() {
@@ -513,7 +514,7 @@ public class ComponentDefinition {
     
     /**
      * Registers a property setter.
-     * 
+     *
      * @param setter {@literal @PropertySetter} annotation
      * @param method The setter method.
      */
@@ -535,7 +536,7 @@ public class ComponentDefinition {
     
     /**
      * Returns an immutable map of setter methods.
-     * 
+     *
      * @return Map of setter methods.
      */
     public Map<String, Method> getSetters() {
@@ -544,7 +545,7 @@ public class ComponentDefinition {
     
     /**
      * Registers an attribute processor.
-     * 
+     *
      * @param processor {@literal @AttributeProcessor} annotation
      * @param method The static processor method.
      */
@@ -563,7 +564,7 @@ public class ComponentDefinition {
     
     /**
      * Returns an immutable map of attribute processors.
-     * 
+     *
      * @return Map of attribute processors.
      */
     public Map<String, Method> getProcessors() {
