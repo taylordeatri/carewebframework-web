@@ -39,7 +39,7 @@ define('cwf-grid', ['cwf-core', 'cwf-widget', 'css!cwf-grid-css.css'], function(
 	 * Grid column widget
 	 ******************************************************************************************************************/ 
 	
-	cwf.widget.Column = cwf.widget.LabeledWidget.extend({		
+	cwf.widget.Column = cwf.widget.LabeledImageWidget.extend({		
 
 		/*------------------------------ Lifecycle ------------------------------*/
 		
@@ -56,7 +56,9 @@ define('cwf-grid', ['cwf-core', 'cwf-widget', 'css!cwf-grid-css.css'], function(
 		},
 		
 		render$: function() {
-			var dom = '<th>' + this.getDOMTemplate('label', ':sortOrder') + '</th>';
+			var dom = '<th>' 
+				+ this.getDOMTemplate(':image', 'label', ':sortOrder') 
+				+ '</th>';
 			return $(this.resolveEL(dom));
 		},
 		
