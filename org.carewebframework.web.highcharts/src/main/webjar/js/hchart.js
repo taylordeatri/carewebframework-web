@@ -26,10 +26,6 @@ define('cwf-hchart', ['cwf-core', 'cwf-widget', 'highcharts'], function(cwf) {
 		
 		/*------------------------------ Other ------------------------------*/
 
-		_clear : function() {
-			this._run();
-		},
-	
 		_export : function(func) {
 			if (this._chart) {
 				func ? func.call(this._chart) : this._chart.exportChart();
