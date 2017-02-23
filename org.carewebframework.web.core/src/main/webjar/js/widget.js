@@ -2593,6 +2593,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 				child.syncSelected();
 			});
 			
+			event.cwf_nosend = true;
 			return false;
 		},
 		

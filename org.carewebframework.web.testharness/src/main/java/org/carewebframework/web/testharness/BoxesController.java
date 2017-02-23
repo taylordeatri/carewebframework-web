@@ -38,7 +38,6 @@ import org.carewebframework.web.component.Listitem;
 import org.carewebframework.web.component.Popupbox;
 import org.carewebframework.web.component.Radiogroup;
 import org.carewebframework.web.component.Textbox;
-import org.carewebframework.web.event.ChangeEvent;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.KeycaptureEvent;
 import org.carewebframework.web.model.IComponentRenderer;
@@ -48,93 +47,93 @@ import org.carewebframework.web.model.ListModel;
  * Input boxes demonstration
  */
 public class BoxesController extends BaseController {
-
+    
     @WiredComponent
     private Textbox txtSelect;
-
+    
     @WiredComponent
     private Textbox txtInput;
-
+    
     @WiredComponent
     private Listbox lboxRender;
-
+    
     @WiredComponent
     private Combobox cboxRender;
-
+    
     @WiredComponent
     Popupbox popupbox;
-
+    
     @WiredComponent
     Caption caption;
-
+    
     @WiredComponent
     Radiogroup rgPosition;
-
+    
     @WiredComponent
     Radiogroup rgAlignment;
-
+    
     @Override
     public void afterInitialized(BaseComponent root) {
         super.afterInitialized(root);
         ListModel<String> model = new ListModel<>();
-
+        
         for (int i = 1; i < 6; i++) {
             model.add("Rendered item #" + i);
         }
-
+        
         lboxRender.getModelAndView(String.class).setModel(model);
         cboxRender.getModelAndView(String.class).setModel(model);
-
+        
         lboxRender.getModelAndView(String.class).setRenderer(new IComponentRenderer<Listitem, String>() {
-
+            
             @Override
             public Listitem render(String model) {
                 return new Listitem(model);
             }
-
+            
         });
-
+        
         cboxRender.getModelAndView(String.class).setRenderer(new IComponentRenderer<Comboitem, String>() {
-
+            
             @Override
             public Comboitem render(String model) {
                 return new Comboitem(model);
             }
-
+            
         });
     }
-
+    
     @EventHandler(value = "change", target = "tabInputBoxes")
     private void InputBoxTabChangeHandler() {
         txtInput.setValue("Value set programmatically");
         txtSelect.selectRange(2, 5);
         txtSelect.focus();
     }
-
+    
     @EventHandler(value = "close", target = "popupboxpopup")
     private void popupboxCloseHandler(Event event) {
         popupbox.setValue("Drop down closed!");
     }
-
+    
     @EventHandler(value = "open", target = "popupboxpopup")
     private void popupboxOpenHandler(Event event) {
         popupbox.setValue("Drop down opened!");
     }
-
+    
     @EventHandler(value = "keycapture", target = "memobox")
     private void memoboxKeyPressHandler(KeycaptureEvent event) {
         log("Captured keypress: " + event.getKeycapture());
     }
-
+    
     @EventHandler(value = "change", target = "@rgPosition")
-    private void positionChangeHandler(ChangeEvent event) {
+    private void positionChangeHandler() {
         String value = rgPosition.getSelected().getLabel();
         LabelPositionAll position = LabelPositionAll.valueOf(value.toUpperCase());
         caption.setPosition(position);
     }
-
+    
     @EventHandler(value = "change", target = "@rgAlignment")
-    private void alignmentChangeHandler(ChangeEvent event) {
+    private void alignmentChangeHandler() {
         String value = rgAlignment.getSelected().getLabel();
         LabelAlignment alignment = LabelAlignment.valueOf(value.toUpperCase());
         caption.setAlignment(alignment);

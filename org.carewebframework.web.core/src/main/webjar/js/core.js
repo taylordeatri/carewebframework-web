@@ -408,13 +408,9 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		},
 		
 		sendToServer: function(event, params) {
-			if (event.isPropagationStopped && event.isPropagationStopped()) {
-				return;
-			}
-			
 			var orig = event.originalEvent || event;
 			
-			if (orig.cwf_sent) {
+			if (orig.cwf_nosend || event.cwf_nosend) {
 				return;
 			}
 			
@@ -429,7 +425,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				}
 			});
 			
-			orig.cwf_sent = true;
+			orig.cwf_nosend = true;
 			cwf.event._postprocess(event, pkt);
 			cwf.ws.sendData('event', pkt);
 		}
