@@ -71,9 +71,11 @@ public class PageParser {
 
     public PageDefinition parse(Resource resource) {
         try {
-            return parse(resource.getInputStream());
+            PageDefinition def = parse(resource.getInputStream());
+            def.setSource(resource.getFilename());
+            return def;
         } catch (Exception e) {
-            throw new ComponentException("Exception parsing resource '" + resource.getFilename() + "'", e);
+            throw new ComponentException(e, "Exception parsing resource '" + resource.getFilename() + "'");
         }
     }
 

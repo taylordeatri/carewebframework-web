@@ -36,26 +36,41 @@ public class ComponentException extends NestedRuntimeException {
 
     private final Class<? extends BaseComponent> componentClass;
 
-    private static String formatMessage(Object object, String message, Object... args) {
+    private static String formatMessage(Class<?> componentClass, BaseComponent component, String message, Object... args) {
+        Object object = component != null ? component : componentClass;
         return (object == null ? "" : object + ": ") + String.format(message, args);
     }
 
+    private ComponentException(Throwable cause, Class<? extends BaseComponent> componentClass, BaseComponent component,
+        String message, Object... args) {
+        super(formatMessage(componentClass, component, message, args), cause);
+        this.component = component;
+        this.componentClass = component != null ? component.getClass() : componentClass;
+    }
+    
+    public ComponentException(Throwable cause, String message, Object... args) {
+        this(cause, null, null, message, args);
+    }
+    
+    public ComponentException(Throwable cause, Class<? extends BaseComponent> componentClass, String message,
+        Object... args) {
+        this(cause, componentClass, null, message, args);
+    }
+    
+    public ComponentException(Throwable cause, BaseComponent component, String message, Object... args) {
+        this(cause, null, component, message, args);
+    }
+    
     public ComponentException(String message, Object... args) {
-        super(formatMessage(null, message, args));
-        this.component = null;
-        this.componentClass = null;
+        this(null, null, null, message, args);
     }
 
     public ComponentException(Class<? extends BaseComponent> componentClass, String message, Object... args) {
-        super(formatMessage(componentClass, message, args));
-        this.componentClass = componentClass;
-        this.component = null;
+        this(null, componentClass, null, message, args);
     }
 
     public ComponentException(BaseComponent component, String message, Object... args) {
-        super(formatMessage(component, message, args));
-        this.component = component;
-        this.componentClass = component == null ? null : component.getClass();
+        this(null, null, component, message, args);
     }
 
     public BaseComponent getComponent() {
