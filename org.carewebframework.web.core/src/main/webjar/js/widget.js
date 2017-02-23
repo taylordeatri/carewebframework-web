@@ -2588,17 +2588,19 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 
 		/*------------------------------ Events ------------------------------*/
 
-		handleSelect: function(event) {
+		handleChange: function(event) {
 			this.forEachChild(function(child) {
 				child.syncSelected();
 			});
+			
+			return false;
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
 			this._super();
-			this.widget$.on('change', this.handleSelect.bind(this));
+			this.widget$.on('change', this.handleChange.bind(this));
 		},
 		
 		render$: function() {
@@ -2632,7 +2634,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		handleClick: function(event) {
 			if (!this._dragging) {
 				this.selected(true);
-				this._parent.handleSelect();
+				this._parent.handleChange();
 				this._parent.focus();
 			}
 		},
@@ -2641,6 +2643,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		init: function() {
 			this._super();
+			this.initState({selected: false});
 			this.forwardToServer('change');
 		},
 		
@@ -2655,6 +2658,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
+		
+		afterRender: function() {
+			this._super();
+			this.widget$.on('change', this.handleChange.bind(this));
+		},
 		
 		render$: function() {
 			return $('<option role="presentation">');

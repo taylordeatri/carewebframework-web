@@ -408,6 +408,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		},
 		
 		sendToServer: function(event, params) {
+			if (event.isPropagationStopped && event.isPropagationStopped()) {
+				return;
+			}
+			
 			var orig = event.originalEvent || event;
 			
 			if (orig.cwf_sent) {
