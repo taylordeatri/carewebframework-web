@@ -78,9 +78,14 @@ define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css.css'], f
 				} else {
 					spl$.resizable({
 						containment: 'parent',
-						handles: this._isHorizontal() ? 'e' : 's'
+						handles: this._isHorizontal() ? 'e' : 's',
+					    start: _start
 					});
 				}
+			}
+			
+			function _start(event, ui) {
+				ui.element.css('flex', '');
 			}
 		},
 		
