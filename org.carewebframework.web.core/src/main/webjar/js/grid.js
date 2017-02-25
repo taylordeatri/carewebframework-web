@@ -10,9 +10,15 @@ define('cwf-grid', ['cwf-core', 'cwf-widget', 'css!cwf-grid-css.css'], function(
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
-			return $('<table>');
-		}
+			return $('<table><caption/></table>');
+		},
 		
+		/*------------------------------ State ------------------------------*/
+		
+		title: function(v) {
+			this.widget$.children('caption').text(v);
+		}
+	
 	});
 	
 	/******************************************************************************************************************
