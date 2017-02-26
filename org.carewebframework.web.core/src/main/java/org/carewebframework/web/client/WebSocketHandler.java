@@ -7,15 +7,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * This Source Code Form is also subject to the terms of the Health-Related
  * Additional Disclaimer of Warranty and Limitation of Liability available at
  *
@@ -29,15 +29,10 @@ import java.io.ByteArrayInputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
@@ -72,7 +67,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
         
         /**
          * Handle a client request.
-         * 
+         *
          * @param request The client request.
          * @throws Exception Unspecified exception.
          */
@@ -88,10 +83,6 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     
     private static final String ATTR_BUFFER = "message_buffer";
     
-    private static final Map<String, Session> sessions = new ConcurrentHashMap<>();
-    
-    private static final Set<ISessionTracker> sessionTrackers = new HashSet<>();
-    
     private static final Map<String, IRequestHandler> handlers = new HashMap<>();
     
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -101,14 +92,12 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     private static final ObjectWriter writer = mapper.writerFor(Map.class);
     
     private ServletContext servletContext;
-    
-    public static Collection<Session> getActiveSessions() {
-        return Collections.unmodifiableCollection(sessions.values());
-    }
+
+    private final Sessions sessions = Sessions.getInstance();
     
     /**
      * Register a request handler.
-     * 
+     *
      * @param handler The request handler.
      */
     public static void registerRequestHandler(IRequestHandler handler) {
@@ -121,17 +110,9 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
         handlers.put(type, handler);
     }
     
-    public static void registerSessionTracker(ISessionTracker tracker) {
-        sessionTrackers.add(tracker);
-    }
-    
-    public static void unregisterSessionTracker(ISessionTracker tracker) {
-        sessionTrackers.remove(tracker);
-    }
-    
     /**
      * Sends a json payload to the client via the web socket session.
-     * 
+     *
      * @param socket The web socket session. If null, the session is derived from the current
      *            execution context.
      * @param json The json payload.
@@ -148,7 +129,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     /**
      * Sends a client invocation request to the client via the web socket session derived from the
      * current execution context.
-     * 
+     *
      * @param invocation The client invocation request.
      */
     public static void send(ClientInvocation invocation) {
@@ -157,7 +138,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     
     /**
      * Sends a client invocation request to the client via the web socket session.
-     * 
+     *
      * @param socket The web socket session. If null, the session is derived from the current
      *            execution context.
      * @param invocation The client invocation request.
@@ -175,7 +156,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     /**
      * Sends multiple client invocation requests to the client via the web socket session derived
      * from the current execution context.
-     * 
+     *
      * @param invocations The client invocation requests.
      */
     public static void send(Collection<ClientInvocation> invocations) {
@@ -184,7 +165,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     
     /**
      * Sends multiple client invocation requests to the client via the web socket session.
-     * 
+     *
      * @param socket The web socket session. If null, the session is derived from the current
      *            execution context.
      * @param invocations The client invocation requests.
@@ -210,7 +191,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     
     /**
      * Sends an exception to the client for display via the web socket session.
-     * 
+     *
      * @param socket The web socket session. If null, the session is derived from the current
      *            execution context.
      * @param exception The exception.
@@ -229,34 +210,18 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
         }
     }
     
-    protected static void notifySessionTrackers(Session session, boolean created) {
-        if (!sessionTrackers.isEmpty()) {
-            for (ISessionTracker tracker : new ArrayList<>(sessionTrackers)) {
-                try {
-                    if (created) {
-                        tracker.onSessionCreate(session);
-                    } else {
-                        tracker.onSessionDestroy(session);
-                    }
-                } catch (Exception e) {
-                    log.error("A session tracker threw an exception.", e);
-                }
-            }
-        }
-    }
-    
     /**
      * Processes a client request sent via the web socket session. Extracts the client request from
      * the message, creates a new execution context, and invokes registered request handlers. If no
      * registered request handler is capable of processing the request, an exception will be sent to
      * the client.
-     * 
+     *
      * @param socket The web socket session transmitting the request.
      * @param message The message containing the client request.
      */
     @Override
     protected void handleTextMessage(WebSocketSession socket, TextMessage message) {
-        Session session = getSession(socket.getId());
+        Session session = resolveSession(socket.getId());
         Map<String, Object> attribs = socket.getAttributes();
         
         try {
@@ -295,7 +260,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     
     @Override
     protected void handleBinaryMessage(WebSocketSession socket, BinaryMessage message) throws Exception {
-        Session session = getSession(socket.getId());
+        Session session = resolveSession(socket.getId());
         Map<String, Object> attribs = socket.getAttributes();
         
         try {
@@ -344,17 +309,6 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
         }
     }
     
-    private Session getSession(String id) {
-        Session session = sessions.get(id);
-        
-        if (session == null) {
-            throw new RuntimeException("Request received on unknown socket.");
-        }
-        
-        session.updateLastActivity();
-        return session;
-    }
-    
     private void processRequest(Session session, Map<String, Object> map) throws Exception {
         session._init((String) map.get("pid"));
         ClientRequest request = new ClientRequest(session, map);
@@ -379,32 +333,24 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
         }
     }
     
+    private Session resolveSession(String id) {
+        Session session = sessions.getSession(id);
+        
+        if (session == null) {
+            throw new RuntimeException("Request received on unknown socket.");
+        }
+        
+        return session;
+    }
+    
     @Override
     public void afterConnectionEstablished(WebSocketSession socket) throws Exception {
-        Session session = new Session(servletContext, socket);
-        sessions.put(session.getId(), session);
-        
-        if (log.isDebugEnabled()) {
-            logSessionEvent(session, "established");
-        }
+        sessions.createSession(servletContext, socket);
     }
     
     @Override
     public void afterConnectionClosed(WebSocketSession socket, CloseStatus status) throws Exception {
-        Session session = sessions.remove(socket.getId());
-        
-        if (session != null) {
-            if (log.isDebugEnabled()) {
-                logSessionEvent(session, "closed, " + status);
-            }
-            
-            notifySessionTrackers(session, false);
-            session.destroy();
-        }
-    }
-    
-    private void logSessionEvent(Session session, String event) {
-        log.debug("Session #" + session.getId() + " " + event + ".");
+        sessions.destroySession(socket, status);
     }
     
     @Override
@@ -427,10 +373,6 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof IRequestHandler) {
             registerRequestHandler((IRequestHandler) bean);
-        }
-        
-        if (bean instanceof ISessionTracker) {
-            registerSessionTracker((ISessionTracker) bean);
         }
         
         return bean;

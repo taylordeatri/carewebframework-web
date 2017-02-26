@@ -45,6 +45,9 @@
 
 	<bean id="cwf_WebSocketHandler" class="org.carewebframework.web.client.WebSocketHandler" />
 
+	<bean id="cwf_Sessions" class="org.carewebframework.web.client.Sessions"
+		factory-method="getInstance" />
+	
 	<bean id="cwf_WebJarLocator" class="org.carewebframework.web.client.WebJarLocator"
 		factory-method="getInstance" />
 	
