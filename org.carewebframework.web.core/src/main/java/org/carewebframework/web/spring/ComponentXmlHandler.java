@@ -31,10 +31,10 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
  * This class registers the XML namespace parser for the component scanner.
  */
 public class ComponentXmlHandler extends NamespaceHandlerSupport {
-
+    
     @Override
     public void init() {
-        registerBeanDefinitionParser("component", new ComponentXmlParser());
+        registerBeanDefinitionParser("component-scan", new ComponentXmlParser());
     }
-
+    
 }

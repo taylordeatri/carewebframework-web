@@ -99,7 +99,7 @@ public class SchemaGenerator {
         ComponentRegistry registry = ComponentRegistry.getInstance();
         
         for (String pkg : packages) {
-            ComponentScanner.getInstance().scan(pkg);
+            ComponentScanner.getInstance().scanPackage(pkg);
         }
         
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

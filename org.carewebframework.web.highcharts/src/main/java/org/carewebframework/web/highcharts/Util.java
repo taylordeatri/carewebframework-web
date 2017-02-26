@@ -39,7 +39,7 @@ public class Util {
      * Load time initializations.
      */
     public static void init() {
-        ComponentScanner.getInstance().scan(Util.class.getPackage());
+        ComponentScanner.getInstance().scanPackage(Util.class.getPackage());
         plotTypes.put("area", PlotArea.class);
         plotTypes.put("arearange", PlotAreaRange.class);
         plotTypes.put("areaspline", PlotAreaSpline.class);

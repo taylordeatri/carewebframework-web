@@ -55,7 +55,7 @@ public class ComponentScanner extends AbstractClassScanner<BaseComponent, Compon
      * @param clazz Class to scan.
      */
     @Override
-    protected void scanClass(Class<BaseComponent> clazz) {
+    protected void doScanClass(Class<BaseComponent> clazz) {
         ComponentDefinition def = new ComponentDefinition(clazz);
         Class<?> nextClass = clazz;
         

@@ -47,9 +47,9 @@ import org.w3c.dom.Element;
  *        http://www.carewebframework.org/schema/component/component-extensions.xsd">
  *
  *    <!-- Scan by package -->
- *    <cwc:component package="org.carewebframework.shell" />
+ *    <cwc:component-scan package="org.carewebframework.shell" />
  *    <!-- Scan by class -->
- *    <cwc:component class="org.carewebframework.shell.CareWebShell" />
+ *    <cwc:component-scan class="org.carewebframework.shell.CareWebShell" />
  * </beans>
  * }
  * </pre>
@@ -65,40 +65,32 @@ public class ComponentXmlParser extends AbstractSingleBeanDefinitionParser {
 
     @Override
     protected void doParse(Element element, BeanDefinitionBuilder builder) {
-        builder.addPropertyReference("targetObject", "cwf_ComponentScanner");
-        builder.addPropertyValue("targetMethod", "scan");
-        
         if (element.getAttributes().getLength() > 1) {
             error("Invalid attributes specified");
         }
         
         Attr attr = (Attr) element.getAttributes().item(0);
         int i = attr == null ? -2 : ArrayUtils.indexOf(ATTRIBUTES, attr.getName());
-        Object arg = null;
         
         switch (i) {
-            case -2:
+            case -2: // Missing attribute
                 error("Missing attribute");
                 
-            case -1:
+            case -1: // Unknown attribute
                 error("Unrecognized attribute: " + attr.getName());
                 
             case 0: // class
-                try {
-                    arg = Class.forName(attr.getValue());
-                } catch (ClassNotFoundException e) {
-                    throw new ParseException(0, "Error resolving class attribute", e);
-                }
-                
+                builder.addPropertyValue("targetMethod", "scanClass");
                 break;
 
             case 1: // package
-                arg = attr.getValue();
+                builder.addPropertyValue("targetMethod", "scanPackage");
                 break;
 
         }
 
-        builder.addPropertyValue("arguments", new Object[] { arg });
+        builder.addPropertyReference("targetObject", "cwf_ComponentScanner");
+        builder.addPropertyValue("arguments", new Object[] { attr.getValue() });
     }
     
     @Override

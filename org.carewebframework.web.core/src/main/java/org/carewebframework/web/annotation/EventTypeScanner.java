@@ -54,7 +54,7 @@ public class EventTypeScanner extends AbstractClassScanner<Event, EventType> {
      * @param eventClass Class containing EventType annotation.
      */
     @Override
-    protected void scanClass(Class<Event> eventClass) {
+    protected void doScanClass(Class<Event> eventClass) {
         typeToClass.put(getEventType(eventClass), eventClass);
     }
     

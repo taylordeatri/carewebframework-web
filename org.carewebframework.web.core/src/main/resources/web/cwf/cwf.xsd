@@ -55,14 +55,7 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="left"/>
-                        <xs:enumeration value="right"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
+            <xs:attribute name="position" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -73,52 +66,52 @@
     <xs:element name="caption">
         <xs:complexType>
             <xs:all>
-                <xs:element maxOccurs="1" minOccurs="0" ref="a"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="button"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="caption"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="cell"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="checkbox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="colorpicker"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="combobox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="cscript"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="datebox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="decimalbox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="div"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="doublebox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="grid"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="groupbox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="html"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="iframe"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="image"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="imagepicker"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="import"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="integerbox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="label"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="listbox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="longbox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="memobox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="menu"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="menupopup"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="namespace"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="paneview"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="popup"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="popupbox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="progressbar"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="radiobutton"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="radiogroup"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="span"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="sscript"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="style"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="stylesheet"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="tabview"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="template"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="textbox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="timebox"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="timer"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="toolbar"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="treeview"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="upload"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="window"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="checkbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="colorpicker"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="combobox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="cscript"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="datebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="decimalbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="div"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="doublebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="grid"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="groupbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="html"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="iframe"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="image"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="imagepicker"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="stylesheet"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="tabview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="template"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="textbox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timebox"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="timer"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="toolbar"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="treeview"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="upload"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="window"/>
             </xs:all>
             <xs:attribute name="alignment">
                 <xs:simpleType>
@@ -149,7 +142,16 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position" type="xs:string"/>
+            <xs:attribute name="position">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="bottom"/>
+                        <xs:enumeration value="left"/>
+                        <xs:enumeration value="right"/>
+                        <xs:enumeration value="top"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -383,6 +385,7 @@
             <xs:attribute name="height" type="xs:string"/>
             <xs:attribute name="hint" type="xs:string"/>
             <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="image" type="xs:string"/>
             <xs:attribute name="impl" type="xs:string"/>
             <xs:attribute name="keycapture" type="xs:string"/>
             <xs:attribute name="label" type="xs:string"/>
@@ -750,6 +753,7 @@
             <xs:attribute name="popup" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="title" type="xs:string"/>
             <xs:attribute name="unless" type="xs:boolean"/>
             <xs:attribute name="visible" type="xs:boolean"/>
             <xs:attribute name="width" type="xs:string"/>

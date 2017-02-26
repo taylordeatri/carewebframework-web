@@ -55,8 +55,8 @@ public class ServletConfiguration extends WebMvcConfigurerAdapter {
     private final MinifiedResourceResolver minifiedResourceResolver = new MinifiedResourceResolver("js", "css");
 
     public ServletConfiguration() {
-        ComponentScanner.getInstance().scan(BaseComponent.class.getPackage());
-        EventTypeScanner.getInstance().scan(Event.class.getPackage());
+        ComponentScanner.getInstance().scanPackage(BaseComponent.class.getPackage());
+        EventTypeScanner.getInstance().scanPackage(Event.class.getPackage());
     }
 
     @Override
