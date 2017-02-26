@@ -1,1 +1,2 @@
 http\://www.carewebframework.org/schema/component=org.carewebframework.web.spring.ComponentXmlHandler
+http\://www.carewebframework.org/schema/eventtype=org.carewebframework.web.spring.EventTypeXmlHandler

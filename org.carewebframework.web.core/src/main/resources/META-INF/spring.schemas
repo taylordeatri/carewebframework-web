@@ -1,1 +1,2 @@
 http\://www.carewebframework.org/schema/component/component-extensions.xsd=org/carewebframework/web/component-extensions.xsd
+http\://www.carewebframework.org/schema/eventtype/eventtype-extensions.xsd=org/carewebframework/web/eventtype-extensions.xsd

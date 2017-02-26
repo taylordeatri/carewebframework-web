@@ -28,31 +28,31 @@ package org.carewebframework.web.spring;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 
 /**
- * Provides namespace support for scanning for CWF component annotations. For example,
+ * Provides namespace support for scanning for CWF event type annotations. For example,
  *
  * <pre>
  * {@code
  * <beans xmlns="http://www.springframework.org/schema/beans"
  *    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- *    xmlns:cwc="http://www.carewebframework.org/schema/component"
+ *    xmlns:cwe="http://www.carewebframework.org/schema/eventtype"
  *    xsi:schemaLocation="
  *        http://www.springframework.org/schema/beans
  *        http://www.springframework.org/schema/beans/spring-beans.xsd
- *        http://www.carewebframework.org/schema/component
- *        http://www.carewebframework.org/schema/component/component-extensions.xsd">
+ *        http://www.carewebframework.org/schema/eventtype
+ *        http://www.carewebframework.org/schema/eventtype/eventtype-extensions.xsd">
  *
  *    <!-- Scan by package -->
- *    <cwc:component-scan package="org.carewebframework.shell" />
+ *    <cwe:eventtype-scan package="org.carewebframework.web.event" />
  *    <!-- Scan by class -->
- *    <cwc:component-scan class="org.carewebframework.shell.CareWebShell" />
+ *    <cwe:eventtype-scan class="org.carewebframework.web.event.ChangeEvent" />
  * </beans>
  * }
  * </pre>
  */
-public class ComponentXmlParser extends AbstractXmlParser {
+public class EventTypeXmlParser extends AbstractXmlParser {
     
     @Override
     protected void setTargetObject(BeanDefinitionBuilder builder) {
-        builder.addPropertyReference("targetObject", "cwf_ComponentScanner");
+        builder.addPropertyReference("targetObject", "cwf_EventTypeScanner");
     }
 }
