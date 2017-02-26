@@ -23,7 +23,7 @@
  *
  * #L%
  */
-package org.carewebframework.web.client;
+package org.carewebframework.web.websocket;
 
 /**
  * Allows the implementer to receive notification of session creation and destruction.

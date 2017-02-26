@@ -28,8 +28,8 @@ package org.carewebframework.web.event;
 import java.util.LinkedList;
 
 import org.carewebframework.web.client.ExecutionContext;
-import org.carewebframework.web.client.Session;
 import org.carewebframework.web.component.Page;
+import org.carewebframework.web.websocket.Session;
 
 /**
  * A page's queue for posted events. Queued (posted) events are delivered at the end of an execution

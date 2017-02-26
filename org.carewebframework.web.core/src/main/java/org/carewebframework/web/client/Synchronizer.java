@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.carewebframework.web.ancillary.IElementIdentifier;
 import org.carewebframework.web.component.BaseComponent;
+import org.carewebframework.web.websocket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 
 /**

@@ -39,11 +39,11 @@ import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.client.ClientRequest;
-import org.carewebframework.web.client.Session;
 import org.carewebframework.web.client.Synchronizer;
 import org.carewebframework.web.core.WebUtil;
 import org.carewebframework.web.event.EventQueue;
 import org.carewebframework.web.page.PageRegistry;
+import org.carewebframework.web.websocket.Session;
 
 /**
  * This is the root component of the component hierarchy.

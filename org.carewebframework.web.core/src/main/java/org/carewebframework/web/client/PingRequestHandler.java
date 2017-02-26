@@ -25,7 +25,7 @@
  */
 package org.carewebframework.web.client;
 
-import org.carewebframework.web.client.WebSocketHandler.IRequestHandler;
+import org.carewebframework.web.websocket.WebSocketHandler.IRequestHandler;
 
 /**
  * Handler for servicing ping requests from the client. These requests have no associated execution

@@ -23,19 +23,21 @@
  *
  * #L%
  */
-package org.carewebframework.web.client;
+package org.carewebframework.web.websocket;
 
-import org.carewebframework.web.client.WebSocketHandler.IRequestHandler;
+import org.carewebframework.web.client.ClientRequest;
+import org.carewebframework.web.client.Synchronizer;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.page.PageDefinition;
 import org.carewebframework.web.page.PageDefinitionCache;
+import org.carewebframework.web.websocket.WebSocketHandler.IRequestHandler;
 
 /**
  * Handler for an initialization request. The client sends this request when the bootstrap page is
  * first loaded in order to complete the initialization of the page.
  */
 public class InitRequestHandler implements IRequestHandler {
-
+    
     @Override
     public void handleRequest(ClientRequest request) throws Exception {
         Page page = request.getPage();
@@ -44,7 +46,7 @@ public class InitRequestHandler implements IRequestHandler {
         synchronizer.startQueueing();
         Page._init(page, request, synchronizer);
         Sessions.getInstance().notifySessionTrackers(request.getSession(), true);
-
+        
         try {
             pageDefinition.materialize(page);
             page.invoke("afterInitialize");
@@ -56,10 +58,10 @@ public class InitRequestHandler implements IRequestHandler {
             synchronizer.stopQueueing();
         }
     }
-
+    
     @Override
     public String getRequestType() {
         return "init";
     }
-
+    
 }

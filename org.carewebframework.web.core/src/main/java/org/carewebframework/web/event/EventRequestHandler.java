@@ -26,7 +26,7 @@
 package org.carewebframework.web.event;
 
 import org.carewebframework.web.client.ClientRequest;
-import org.carewebframework.web.client.WebSocketHandler.IRequestHandler;
+import org.carewebframework.web.websocket.WebSocketHandler.IRequestHandler;
 
 /**
  * This is the handler for client requests that contain an event. It simply dispatches the event to

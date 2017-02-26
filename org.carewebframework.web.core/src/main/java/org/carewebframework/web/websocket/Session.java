@@ -23,10 +23,12 @@
  *
  * #L%
  */
-package org.carewebframework.web.client;
+package org.carewebframework.web.websocket;
 
 import javax.servlet.ServletContext;
 
+import org.carewebframework.web.client.ClientInvocation;
+import org.carewebframework.web.client.Synchronizer;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.page.PageRegistry;
 import org.springframework.web.socket.WebSocketSession;

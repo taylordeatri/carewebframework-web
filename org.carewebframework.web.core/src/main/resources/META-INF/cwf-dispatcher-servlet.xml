@@ -39,13 +39,9 @@
 
 	</mvc:interceptors>
 
-	<websocket:handlers>
-		<websocket:mapping path="/ws/**" handler="cwf_WebSocketHandler" />
-	</websocket:handlers>
+	<bean id="cwf_WebSocketHandler" class="org.carewebframework.web.websocket.WebSocketHandler" />
 
-	<bean id="cwf_WebSocketHandler" class="org.carewebframework.web.client.WebSocketHandler" />
-
-	<bean id="cwf_Sessions" class="org.carewebframework.web.client.Sessions"
+	<bean id="cwf_Sessions" class="org.carewebframework.web.websocket.Sessions"
 		factory-method="getInstance" />
 	
 	<bean id="cwf_WebJarLocator" class="org.carewebframework.web.client.WebJarLocator"
@@ -53,7 +49,7 @@
 	
 	<bean class="org.carewebframework.web.event.EventRequestHandler" />
 
-	<bean class="org.carewebframework.web.client.InitRequestHandler" />
+	<bean class="org.carewebframework.web.websocket.InitRequestHandler" />
 	
 	<bean class="org.carewebframework.web.client.PingRequestHandler" />
 

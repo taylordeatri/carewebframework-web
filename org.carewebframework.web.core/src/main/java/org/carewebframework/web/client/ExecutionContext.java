@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.carewebframework.web.component.Page;
+import org.carewebframework.web.websocket.Session;
 
 /**
  * Static helper class for threads to determine the current execution context. An execution context

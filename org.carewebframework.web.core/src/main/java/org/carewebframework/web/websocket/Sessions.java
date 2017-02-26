@@ -23,7 +23,7 @@
  *
  * #L%
  */
-package org.carewebframework.web.client;
+package org.carewebframework.web.websocket;
 
 import java.util.ArrayList;
 import java.util.Collection;

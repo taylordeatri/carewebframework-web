@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.BaseUIComponent;
+import org.carewebframework.web.websocket.WebSocketHandler;
 
 /**
  * Static convenience methods for client-side operations.

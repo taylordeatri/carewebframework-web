@@ -30,7 +30,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.carewebframework.web.client.ClientRequest;
-import org.carewebframework.web.client.WebSocketHandler.IRequestHandler;
+import org.carewebframework.web.websocket.WebSocketHandler.IRequestHandler;
 
 /**
  * Handles a logging request from the client. This is effectively a bridge between the client's
