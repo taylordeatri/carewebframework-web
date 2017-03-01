@@ -361,9 +361,9 @@ public abstract class BaseComponent implements IElementIdentifier {
     @SuppressWarnings("unchecked")
     public <T> T getAttribute(String name, T dflt) {
         try {
-            T value = (T) attributes.get(name);
-            return value == null ? dflt : value;
-        } catch (ClassCastException e) {
+            Object value = attributes.get(name);
+            return value == null ? dflt : dflt == null ? (T) value : (T) dflt.getClass().cast(value);
+        } catch (Exception e) {
             return dflt;
         }
     }

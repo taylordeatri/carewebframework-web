@@ -7,15 +7,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * This Source Code Form is also subject to the terms of the Health-Related
  * Additional Disclaimer of Warranty and Limitation of Liability available at
  *
@@ -39,7 +39,7 @@ public class ConvertUtil {
     
     /**
      * Converts an input value to a target type.
-     * 
+     *
      * @param <T> The target type.
      * @param value The value to convert.
      * @param targetType The type to which to convert.
@@ -51,7 +51,7 @@ public class ConvertUtil {
     
     /**
      * Converts an input value to a target type.
-     * 
+     *
      * @param <T> The target type.
      * @param value The value to convert.
      * @param targetType The type to which to convert.
@@ -61,7 +61,7 @@ public class ConvertUtil {
      */
     @SuppressWarnings("unchecked")
     public static <T> T convert(Object value, Class<T> targetType, Object instance) {
-        if (value == null || targetType.isInstance(value)) {
+        if (targetType == null || targetType.isInstance(value)) {
             return (T) value;
         }
         
@@ -79,7 +79,7 @@ public class ConvertUtil {
     /**
      * Converts the input value to an enumeration member. The input value must resolve to a string
      * which is then matched to an enumeration member by using a case-insensitive lookup.
-     * 
+     *
      * @param value The value to convert.
      * @param enumType The enumeration type.
      * @return The enumeration member corresponding to the input value.
@@ -101,7 +101,7 @@ public class ConvertUtil {
      * Converts the input value to component. The input value must resolve to a string which
      * represents the name or id of the component sought. This name is resolved to a component
      * instance by looking it up in the namespace of the provided component instance.
-     * 
+     *
      * @param value The value to convert.
      * @param componentType The component type.
      * @param instance The component whose namespace will be used for lookup.
