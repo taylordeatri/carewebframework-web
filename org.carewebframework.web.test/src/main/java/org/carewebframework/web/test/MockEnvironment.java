@@ -7,15 +7,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * This Source Code Form is also subject to the terms of the Health-Related
  * Additional Disclaimer of Warranty and Limitation of Liability available at
  *
@@ -28,8 +28,11 @@ package org.carewebframework.web.test;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.carewebframework.common.Localizer;
 import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.component.Page;
+import org.carewebframework.web.event.EventQueue;
+import org.carewebframework.web.spring.ClasspathMessageSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
@@ -61,12 +64,14 @@ public class MockEnvironment {
     
     /**
      * Initializes the mock environment.
-     * 
+     *
      * @param profiles Active profiles.
      * @param configLocations Additional config file locations.
      * @throws Exception Unspecified exception.
      */
     public void init(String[] profiles, String[] configLocations) throws Exception {
+        // Initialize message sources
+        initMessageSources();
         // Set up web app
         servletContext = initServletContext(new MockServletContext());
         // Create root Spring context
@@ -101,9 +106,15 @@ public class MockEnvironment {
         return new XmlWebApplicationContext();
     }
     
+    protected void initMessageSources() {
+        Localizer.registerMessageSource((id, locale, args) -> {
+            return ClasspathMessageSource.getInstance().getMessage(id, args, locale);
+        });
+    }
+
     /**
      * Initialize the mock servlet context.
-     * 
+     *
      * @param servletContext The mock servlet context.
      * @return The initialized mock servlet context.
      */
@@ -122,7 +133,7 @@ public class MockEnvironment {
     
     /**
      * Initialize the app context.
-     * 
+     *
      * @param profiles Active profiles.
      * @param configLocations Optional configuration locations.
      * @return The initialized app context.
@@ -137,8 +148,9 @@ public class MockEnvironment {
             appContext.setConfigLocations(configLocations);
         }
         
-        if (profiles != null) {
+        if (profiles != null && profiles.length > 0) {
             appContext.getEnvironment().setActiveProfiles(profiles);
+            appContext.getEnvironment().setDefaultProfiles(new String[] { profiles[0] });
         }
         
         return appContext;
@@ -146,7 +158,7 @@ public class MockEnvironment {
     
     /**
      * Initialize browserInfo map.
-     * 
+     *
      * @param browserInfo The browser info map.
      */
     protected void initBrowserInfoMap(Map<String, Object> browserInfo) {
@@ -154,7 +166,7 @@ public class MockEnvironment {
     
     /**
      * Initialize the page.
-     * 
+     *
      * @param page The page.
      * @return The initialized page.
      */
@@ -171,14 +183,15 @@ public class MockEnvironment {
     }
     
     /**
-     * First, posts any pending echo requests to the event queue. Then empties the event queue,
-     * sending each queued event to its target. Finally, processes any events on the server push
-     * event queue.
-     * 
+     * Flushes and processes any event on the event queue.
+     *
      * @return True if events were flushed.
      */
     public boolean flushEvents() {
-        return false;
+        EventQueue queue = session.getPage().getEventQueue();
+        boolean flushed = !queue.isEmpty();
+        queue.processAll();
+        return flushed;
     }
     
 }
