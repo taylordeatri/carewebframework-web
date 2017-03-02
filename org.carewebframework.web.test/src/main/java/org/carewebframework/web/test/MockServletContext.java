@@ -25,13 +25,53 @@
  */
 package org.carewebframework.web.test;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+
 /**
  * Mock servlet context for unit testing.
  */
 public class MockServletContext extends org.springframework.mock.web.MockServletContext {
+    
+    public static class ResourceLoader extends DefaultResourceLoader {
+        
+        @Override
+        public Resource getResource(String location) {
+            if (location != null && location.startsWith("/web") || location.startsWith("web")) {
+                location = "classpath:" + location;
+            }
+
+            return super.getResource(location);
+        }
+
+    }
 
     public MockServletContext() {
-        super();
+        super(new ResourceLoader());
+    }
+    
+    @Override
+    public String getRealPath(String path) {
+        try {
+            URL url = getResource(path);
+            
+            if (url == null) {
+                return null;
+            }
+
+            String protocol = url.getProtocol();
+
+            if ("jar".equals(protocol)) {
+                return url.toString();
+            }
+        } catch (MalformedURLException e) {
+            // NOP
+        }
+        
+        return super.getRealPath(path);
     }
 
 }
