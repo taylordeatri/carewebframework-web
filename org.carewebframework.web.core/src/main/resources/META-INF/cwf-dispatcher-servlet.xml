@@ -39,13 +39,16 @@
 
 	</mvc:interceptors>
 
-	<bean id="cwf_WebSocketHandler" class="org.carewebframework.web.websocket.WebSocketHandler" />
+	<bean id="cwf_WebSocketHandler" 
+		class="org.carewebframework.web.websocket.WebSocketHandler" />
 
-	<bean id="cwf_Sessions" class="org.carewebframework.web.websocket.Sessions"
-		factory-method="getInstance" />
+	<bean id="cwf_Sessions" 
+		factory-method="getInstance"
+		class="org.carewebframework.web.websocket.Sessions" />
 	
-	<bean id="cwf_WebJarLocator" class="org.carewebframework.web.client.WebJarLocator"
-		factory-method="getInstance" />
+	<bean id="cwf_WebJarLocator" 
+		factory-method="getInstance"
+		class="org.carewebframework.web.client.WebJarLocator" />
 	
 	<bean class="org.carewebframework.web.event.EventRequestHandler" />
 
@@ -55,16 +58,20 @@
 
 	<bean class="org.carewebframework.web.logging.LogRequestHandler" />
 
-	<bean id="cwf_ComponentScanner" class="org.carewebframework.web.annotation.ComponentScanner"
-		factory-method="getInstance" />
+	<bean id="cwf_ComponentScanner" 
+		factory-method="getInstance"
+		class="org.carewebframework.web.annotation.ComponentScanner" />
 	
-	<bean id="cwf_EventTypeScanner" class="org.carewebframework.web.annotation.EventTypeScanner"
-		factory-method="getInstance" />
+	<bean id="cwf_EventTypeScanner" 
+		factory-method="getInstance"
+		class="org.carewebframework.web.annotation.EventTypeScanner" />
 	
-	<bean id="cwf_ELEvaluator" class="org.carewebframework.web.expression.ELEvaluator"
-		factory-method="getInstance" />
+	<bean id="cwf_ELEvaluator" 
+		factory-method="getInstance"
+		class="org.carewebframework.web.expression.ELEvaluator" />
 
-	<bean id="messageSource" name="msg,message" factory-method="getInstance"
+	<bean id="messageSource" name="msg,message"
+		factory-method="getInstance"
 		class="org.carewebframework.web.spring.ClasspathMessageSource" />
 
 	<bean id="localeResolver"
