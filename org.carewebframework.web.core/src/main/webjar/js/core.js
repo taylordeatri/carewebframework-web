@@ -652,6 +652,18 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	},
 	
 	/**
+	 * Redirects to target url or creates new window if name is specified.
+	 */
+	redirect: function(target, name) {
+		if (name) {
+			window.open(target, name);
+		} else {
+			cwf._canClose = true;
+			$(location).attr('href', target);
+		}
+	},
+	
+	/**
 	 * Return a unique identifier.
 	 */
 	uniqueId: function() {

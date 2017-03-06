@@ -7,15 +7,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * This Source Code Form is also subject to the terms of the Health-Related
  * Additional Disclaimer of Warranty and Limitation of Liability available at
  *
@@ -57,31 +57,31 @@ import org.springframework.core.io.UrlResource;
  * Class to manage instantiation of framework containers.
  */
 public class WebUtil {
-    
+
     private static Boolean debugEnabled;
-    
+
     /**
      * Initialize the debug state. This is determined by the <code>cwf.debug</code> property value
      * taken from the system properties or, absent that, from the the context parameter settings in
      * the web.xml file. This method is called during server startup and cannot be called more than
      * one.
-     * 
+     *
      * @param servletContext The servlet context.
      */
     public static void initDebug(ServletContext servletContext) {
         if (debugEnabled != null) {
             throw new IllegalStateException("Debug status has already been initialized.");
         }
-        
+
         String debug = System.getProperty("cwf.debug");
         debug = debug != null ? debug : servletContext.getInitParameter("cwf.debug");
         debugEnabled = debug != null && (debug.isEmpty() || BooleanUtils.toBoolean(debug));
     }
-    
+
     /**
      * Returns the debug state of the servlet. When enabled (see {@link #initDebug}), the debug
      * state can affect various application behaviors such as disabling javascript minification.
-     * 
+     *
      * @return The debug state.
      * @exception IllegalStateException Thrown if debug status has not been initialized.
      */
@@ -89,13 +89,13 @@ public class WebUtil {
         if (debugEnabled == null) {
             throw new IllegalStateException("Debug status has not been initialized.");
         }
-        
+
         return debugEnabled;
     }
-    
+
     /**
      * Converts the queryString to a map.
-     * 
+     *
      * @param queryString The query string (leading "?" is optional)
      * @return A map containing the parameters from the query string. This may return null if the
      *         queryString is empty. Multiple values for a parameter are separated by commas.
@@ -103,10 +103,10 @@ public class WebUtil {
     public static Map<String, String> queryStringToMap(String queryString) {
         return queryStringToMap(queryString, ",");
     }
-    
+
     /**
      * Converts the queryString to a map.
-     * 
+     *
      * @param queryString The query string (leading "?" is optional)
      * @param valueDelimiter String to use to delimit multiple values for a parameter. May be null.
      * @return A map containing the arguments from the query string. This may return null if the
@@ -116,28 +116,28 @@ public class WebUtil {
         if (queryString == null || queryString.isEmpty()) {
             return null;
         }
-        
+
         try {
             valueDelimiter = valueDelimiter == null ? "" : valueDelimiter;
             URI uri = new URI(queryString.startsWith("?") ? queryString : ("?" + queryString));
             List<NameValuePair> params = URLEncodedUtils.parse(uri, StrUtil.CHARSET);
-            
+
             Map<String, String> result = new HashMap<>();
-            
+
             for (NameValuePair nvp : params) {
                 String value = result.get(nvp.getName());
                 result.put(nvp.getName(), (value == null ? "" : value + valueDelimiter) + nvp.getValue());
             }
-            
+
             return result;
         } catch (URISyntaxException e) {
             return null;
         }
     }
-    
+
     /**
      * Adds the specified query string to the url.
-     * 
+     *
      * @param url url to receive the query string.
      * @param queryString Query string to add.
      * @return The updated url.
@@ -145,7 +145,7 @@ public class WebUtil {
      */
     public static String addQueryString(String url, String queryString) {
         Validate.notNull(url, "The url must not be null");
-        
+
         if (!StringUtils.isEmpty(queryString)) {
             if (url.endsWith("?")) {
                 url += queryString;
@@ -155,13 +155,13 @@ public class WebUtil {
                 url += "?" + queryString;
             }
         }
-        
+
         return url;
     }
-    
+
     /**
      * Returns the query parameter string from the request url.
-     * 
+     *
      * @return The query parameter string or empty string if none.
      */
     public static String getQueryParams() {
@@ -169,31 +169,31 @@ public class WebUtil {
         int i = requestUrl == null ? -1 : requestUrl.indexOf("?");
         return i == -1 ? "" : requestUrl.substring(i + 1);
     }
-    
+
     /**
      * Returns the original request url from the current request.
-     * 
+     *
      * @return The request url of the browser document.
      */
     public static String getRequestUrl() {
         return ExecutionContext.getPage().getBrowserInfo("requestURL");
     }
-    
+
     /**
      * Returns the named cookie from the current request.
-     * 
+     *
      * @param cookieName Name of cookie.
      * @see #getCookie(String, HttpServletRequest)
      * @return A cookie, or null if not found.
      */
     public static Cookie getCookie(String cookieName) {
-        return null; //TODO: getCookie(cookieName, getHttpServletRequest());
+        return getCookie(cookieName, RequestUtil.getRequest());
     }
-    
+
     /**
      * Returns the named cookie from the specified request. When values are retrieved, they should
      * be decoded.
-     * 
+     *
      * @see #decodeCookieValue(String)
      * @param cookieName Name of cookie
      * @param httpRequest Request containing cookie.
@@ -204,7 +204,7 @@ public class WebUtil {
         Validate.notNull(cookieName, "The cookieName must not be null");
         Validate.notNull(httpRequest, "The httpRequest must not be null");
         Cookie[] cookies = httpRequest.getCookies();
-        
+
         if (cookies != null) {
             for (Cookie cookie : httpRequest.getCookies()) {
                 if (cookieName.equals(cookie.getName())) {
@@ -212,14 +212,14 @@ public class WebUtil {
                 }
             }
         }
-        
+
         return null;
     }
-    
+
     /**
      * Returns the value from the named cookie from the specified request. The value is decoded with
      * for security and consistency (Version 0+ of Cookies and web containers)
-     * 
+     *
      * @see #getCookie(String, HttpServletRequest)
      * @see #decodeCookieValue(String)
      * @param cookieName Name of cookie
@@ -231,14 +231,14 @@ public class WebUtil {
         Cookie cookie = getCookie(cookieName, httpRequest);
         return cookie == null ? null : decodeCookieValue(cookie.getValue());
     }
-    
+
     /**
      * <p>
      * Encodes a plain text cookie value.
      * </p>
      * <i>Note: The direction to use a two-phase encode/decode process (i.e. instead of the Base64
      * class URL_SAFE option) was intentional</i>
-     * 
+     *
      * @see URLEncoder#encode(String, String)
      * @see Base64#encodeBase64String(byte[])
      * @param cookieValuePlainText The plain text to encode
@@ -247,20 +247,21 @@ public class WebUtil {
      */
     public static String encodeCookieValue(String cookieValuePlainText) {
         Validate.notNull(cookieValuePlainText, "The cookieValuePlainText must not be null");
+
         try {
             return URLEncoder.encode(Base64.encodeBase64String(cookieValuePlainText.getBytes()), StrUtil.CHARSET);
         } catch (Exception e) {
             throw new RuntimeException("Unexpected exception occurred encoding cookie value", e);
         }
     }
-    
+
     /**
      * <p>
      * Decodes an encoded cookie value
      * </p>
      * <i>Note: The direction to use a two-phase encode/decode process (i.e. instead of the Base64
      * class URL_SAFE option) was intentional</i>
-     * 
+     *
      * @see URLDecoder#decode(String, String)
      * @see Base64#decode(String)
      * @param encodedCookieValue The encoded cookie value
@@ -269,16 +270,17 @@ public class WebUtil {
      */
     public static String decodeCookieValue(String encodedCookieValue) {
         Validate.notNull(encodedCookieValue, "The encodedCookieValue must not be null");
+
         try {
             return new String(Base64.decodeBase64(URLDecoder.decode(encodedCookieValue, StrUtil.CHARSET)));
         } catch (Exception e) {
             throw new RuntimeException("Unexpected exception occurred decoding cookie value", e);
         }
     }
-    
+
     /**
      * Returns the value from the named cookie from the specified request. The value is decoded.
-     * 
+     *
      * @see #getCookieValue(String, HttpServletRequest)
      * @param cookieName Name of cookie
      * @return A cookie value, or null if not found.
@@ -286,25 +288,13 @@ public class WebUtil {
      *             null
      */
     public static String getCookieValue(String cookieName) {
-        return null; //TODO: getCookieValue(cookieName, getHttpServletRequest());
+        return getCookieValue(cookieName, RequestUtil.getRequest());
     }
-    
-    /**
-     * Sets a cookie into the current response.
-     * 
-     * @see #setCookie(String, String, HttpServletResponse, HttpServletRequest)
-     * @param cookieName Name of cookie.
-     * @param value Value of cookie.
-     * @return Newly created cookie.
-     */
-    public static Cookie setCookie(String cookieName, String value) {
-        return null; //TODO: setCookie(cookieName, value, getHttpServletResponse(), getHttpServletRequest());
-    }
-    
+
     /**
      * Sets a cookie into the response. Cookies are URLEncoded for consistency (Version 0+ of
      * Cookies)
-     * 
+     *
      * @param cookieName Name of cookie.
      * @param value Value of cookie. If null, the cookie is removed from the client if it exists.
      * @param httpResponse Response object.
@@ -317,10 +307,11 @@ public class WebUtil {
                                    HttpServletRequest httpRequest) {
         Validate.notNull(httpResponse, "The httpResponse must not be null");
         Cookie cookie = getCookie(cookieName, httpRequest);
+
         if (value != null) {
             value = encodeCookieValue(value);
         }
-        
+
         if (cookie == null) {
             if (value == null) {
                 return null;
@@ -331,19 +322,19 @@ public class WebUtil {
         } else {
             cookie.setValue(value);
         }
-        
+
         if (httpRequest.isSecure()) {
             cookie.setSecure(true);
         }
-        
+
         httpResponse.addCookie(cookie);
         return cookie;
     }
-    
+
     public static Resource getResource(String src) {
         try {
             Resource resource;
-            
+
             if (src.startsWith("web/") || src.startsWith("/web/")) {
                 resource = new ClassPathResource(src);
             } else if (src.matches("^.*\\:\\/.*")) {
@@ -353,18 +344,18 @@ public class WebUtil {
                 URL url = ctx.getResource(src);
                 resource = url == null ? null : new UrlResource(url);
             }
-            
+
             if (resource == null || !resource.exists()) {
                 throw new FileNotFoundException(src);
             }
-            
+
             return resource;
-            
+
         } catch (Exception e) {
             throw MiscUtil.toUnchecked(e);
         }
     }
-    
+
     /**
      * Enforce static class.
      */
