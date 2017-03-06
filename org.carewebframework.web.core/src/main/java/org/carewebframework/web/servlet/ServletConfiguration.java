@@ -28,7 +28,6 @@ package org.carewebframework.web.servlet;
 import org.carewebframework.web.annotation.ComponentScanner;
 import org.carewebframework.web.annotation.EventTypeScanner;
 import org.carewebframework.web.component.BaseComponent;
-import org.carewebframework.web.core.WebUtil;
 import org.carewebframework.web.event.Event;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -45,43 +44,43 @@ import org.springframework.web.servlet.resource.VersionResourceResolver;
 @EnableWebMvc
 @Configuration
 public class ServletConfiguration extends WebMvcConfigurerAdapter {
-    
+
     private final GzipResourceResolver gzipResourceResolver = new GzipResourceResolver();
-    
+
     private final ResourceResolver contentVersionResolver = new VersionResourceResolver().addContentVersionStrategy("/**");
-    
+
     private final ResourceResolver webjarResourceResolver = new WebJarResourceResolver();
-    
+
     private final CwfResourceTransformer cwfResourceTransformer = new CwfResourceTransformer();
-    
+
     private final AppCacheManifestTransformer appCacheManifestTransformer = new AppCacheManifestTransformer();
-    
+
     private final MinifiedResourceResolver minifiedResourceResolver = new MinifiedResourceResolver("js", "css");
-    
+
     public ServletConfiguration() {
         ComponentScanner.getInstance().scanPackage(BaseComponent.class.getPackage());
         EventTypeScanner.getInstance().scanPackage(Event.class.getPackage());
     }
-    
+
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer.mediaType("cwf", MediaType.TEXT_HTML);
     }
-    
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         addResourceHandlers(registry, "/webjars/**", "classpath:/META-INF/resources/webjars/", webjarResourceResolver);
         addResourceHandlers(registry, "/web/**", "classpath:/web/", null);
         addResourceHandlers(registry, "/**", "/", contentVersionResolver);
     }
-    
+
     private void addResourceHandlers(ResourceHandlerRegistry registry, String pattern, String locations,
                                      ResourceResolver customResourceResolver) {
         //@formatter:off
         ResourceChainRegistration chain = registry
             .addResourceHandler(pattern)
             .addResourceLocations(locations)
-            .resourceChain(!WebUtil.isDebugEnabled());
+            .resourceChain(false);
 
         if (customResourceResolver != null) {
             chain.addResolver(customResourceResolver);
@@ -94,5 +93,5 @@ public class ServletConfiguration extends WebMvcConfigurerAdapter {
             .addTransformer(appCacheManifestTransformer);
         //@formatter:on
     }
-    
+
 }

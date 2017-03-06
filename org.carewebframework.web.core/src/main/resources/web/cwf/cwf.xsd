@@ -55,14 +55,7 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="left"/>
-                        <xs:enumeration value="right"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
+            <xs:attribute name="position" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -149,16 +142,7 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="bottom"/>
-                        <xs:enumeration value="left"/>
-                        <xs:enumeration value="right"/>
-                        <xs:enumeration value="top"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
+            <xs:attribute name="position" type="xs:string"/>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -266,7 +250,14 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position" type="xs:string"/>
+            <xs:attribute name="position">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="left"/>
+                        <xs:enumeration value="right"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -1887,7 +1878,14 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position" type="xs:string"/>
+            <xs:attribute name="position">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="left"/>
+                        <xs:enumeration value="right"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
