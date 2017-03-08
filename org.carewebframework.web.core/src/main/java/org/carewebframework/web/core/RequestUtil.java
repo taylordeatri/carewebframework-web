@@ -147,6 +147,7 @@ public class RequestUtil {
         if (request != null) {
             ipAddress = request.getHeader("x-forwarded-for");
             boolean ipFromHeader = true;
+
             if (isEmpty(ipAddress)) {
                 ipAddress = request.getHeader("X_FORWARDED_FOR");
                 if (isEmpty(ipAddress)) {
@@ -165,6 +166,17 @@ public class RequestUtil {
         return ipAddress;
     }
 
+    /**
+     * Returns the full base URL for the servlet.
+     *
+     * @param request The servlet request.
+     * @return The full base URL.
+     */
+    public static String getBaseURL(HttpServletRequest request) {
+        return "http" + (request.isSecure() ? "s" : "") + "://" + request.getServerName() + ":" + request.getServerPort()
+                + request.getContextPath() + "/";
+    }
+    
     public static URL getResourceURL(HttpServletRequest request) {
         return getResourceURL(request.getPathInfo());
     }
