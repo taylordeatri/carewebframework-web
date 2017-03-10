@@ -31,6 +31,7 @@ import java.util.Map;
 import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.event.EventQueue;
+import org.carewebframework.web.spring.ClasspathMessageSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
@@ -133,6 +134,7 @@ public class MockEnvironment {
 
         XmlWebApplicationContext appContext = createApplicationContext();
         appContext.setServletContext(servletContext);
+        ClasspathMessageSource.getInstance().setResourceLoader(appContext);
 
         if (configLocations != null) {
             appContext.setConfigLocations(configLocations);
