@@ -31,16 +31,19 @@ import org.carewebframework.common.MiscUtil;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
+/**
+ * Information describing a single web jar resource.
+ */
 public class WebJar {
-
+    
     private final Resource resource;
-
+    
     private final String module;
-    
-    private final String version;
-    
-    private final String absolutePath;
 
+    private final String version;
+
+    private final String absolutePath;
+    
     public WebJar(Resource resource) {
         try {
             this.resource = resource;
@@ -54,23 +57,23 @@ public class WebJar {
             throw MiscUtil.toUnchecked(e);
         }
     }
-    
+
     public String getAbsolutePath() {
         return absolutePath;
     }
-
+    
     public String getRootPath() {
         return "webjars/" + module + "/";
     }
-    
+
     public String getModule() {
         return module;
     }
-    
+
     public String getVersion() {
         return version;
     }
-
+    
     public Resource createRelative(String relativePath) {
         try {
             return resource.createRelative(relativePath);
@@ -78,7 +81,7 @@ public class WebJar {
             throw MiscUtil.toUnchecked(e);
         }
     }
-    
+
     /**
      * Finds the first web jar resource that matches one of the specified file extensions.
      *
@@ -89,19 +92,19 @@ public class WebJar {
     public Resource findResource(ResourcePatternResolver resourceLoader, String... extensions) {
         try {
             String path = getRootPath();
-            
+
             for (String extension : extensions) {
                 Resource[] resources = resourceLoader.getResources(path + "**/*." + extension);
-                
+
                 if (resources.length > 0) {
                     return resources[0];
                 }
             }
         } catch (Exception e) {}
-        
+
         return null;
     }
-
+    
     @Override
     public String toString() {
         return "webjar:" + module + ":" + version;

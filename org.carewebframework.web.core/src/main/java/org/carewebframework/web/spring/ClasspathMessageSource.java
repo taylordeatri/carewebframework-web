@@ -34,7 +34,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 /**
- * Add support for "classpath*:" syntax.
+ * Add support for "classpath*:" syntax to Spring's resource bundle message source. Note that
+ * although the IOC container will replace the default resource loader with that of the application
+ * context, this does not occur early enough during container initialization to allow it to search
+ * the WEB-INF folder, which requires an awareness of the servlet context. Therefore, we need to
+ * manually replace the default resource loader with the application context during startup. This is
+ * typically done in the web context initializer code.
  */
 public class ClasspathMessageSource extends ReloadableResourceBundleMessageSource {
 
@@ -48,6 +53,13 @@ public class ClasspathMessageSource extends ReloadableResourceBundleMessageSourc
         return instance;
     }
     
+    /**
+     * The message source will search for "messages*.properties" files first in the WEB-INF folder,
+     * then anywhere within the classpath. This means that entries in the former will take
+     * precedence over similar entries found in the classpath. Thus, entries placed in any
+     * "message*.properties" files under the WEB-INF folder will override entries declared
+     * elsewhere.
+     */
     private ClasspathMessageSource() {
         super();
         setBasenames("WEB-INF/messages", "classpath*:/**/messages");
@@ -57,6 +69,12 @@ public class ClasspathMessageSource extends ReloadableResourceBundleMessageSourc
         });
     }
     
+    /**
+     * Intercept the refreshProperties call to handle "classpath*:" syntax.
+     *
+     * @see org.springframework.context.support.ReloadableResourceBundleMessageSource#refreshProperties(java.lang.String,
+     *      org.springframework.context.support.ReloadableResourceBundleMessageSource.PropertiesHolder)
+     */
     @Override
     protected PropertiesHolder refreshProperties(String filename, PropertiesHolder propHolder) {
         if (filename.startsWith(PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX)) {
@@ -66,12 +84,20 @@ public class ClasspathMessageSource extends ReloadableResourceBundleMessageSourc
         }
     }
 
+    /**
+     * Handle classpath syntax.
+     *
+     * @param filename "classpath*:"-prefixed filename.
+     * @param propHolder The properties holder.
+     * @return The new properties holder.
+     */
     private PropertiesHolder refreshClassPathProperties(String filename, PropertiesHolder propHolder) {
         Properties properties = new Properties();
         long lastModified = -1;
 
         try {
             Resource[] resources = resolver.getResources(filename + PROPERTIES_SUFFIX);
+
             for (Resource resource : resources) {
                 String sourcePath = resource.getURI().toString().replace(PROPERTIES_SUFFIX, "");
                 PropertiesHolder holder = super.refreshProperties(sourcePath, propHolder);
