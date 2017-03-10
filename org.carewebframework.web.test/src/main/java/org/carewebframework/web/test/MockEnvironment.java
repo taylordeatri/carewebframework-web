@@ -28,11 +28,9 @@ package org.carewebframework.web.test;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.carewebframework.common.Localizer;
 import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.event.EventQueue;
-import org.carewebframework.web.spring.ClasspathMessageSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
@@ -43,25 +41,25 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
  * a root Spring application context with a child desktop context.
  */
 public class MockEnvironment {
-    
+
     private MockSession session;
-    
+
     private MockClientRequest clientRequest;
-    
+
     private MockServletContext servletContext;
-    
+
     private XmlWebApplicationContext rootContext;
-    
+
     private final Map<String, Object> browserInfo = new HashMap<>();
-    
+
     private final Map<String, Object> clientRequestMap = new HashMap<>();
-    
+
     /**
      * Creates a mock environment for unit testing.
      */
     public MockEnvironment() {
     }
-    
+
     /**
      * Initializes the mock environment.
      *
@@ -70,8 +68,6 @@ public class MockEnvironment {
      * @throws Exception Unspecified exception.
      */
     public void init(String[] profiles, String[] configLocations) throws Exception {
-        // Initialize message sources
-        initMessageSources();
         // Set up web app
         servletContext = initServletContext(new MockServletContext());
         // Create root Spring context
@@ -93,7 +89,7 @@ public class MockEnvironment {
         // Create the mock execution
         initExecutionContext();
     }
-    
+
     /**
      * Cleans up all application contexts and invalidates the session.
      */
@@ -101,15 +97,9 @@ public class MockEnvironment {
         session.destroy();
         rootContext.close();
     }
-    
+
     protected XmlWebApplicationContext createApplicationContext() {
         return new XmlWebApplicationContext();
-    }
-    
-    protected void initMessageSources() {
-        Localizer.registerMessageSource((id, locale, args) -> {
-            return ClasspathMessageSource.getInstance().getMessage(id, args, locale);
-        });
     }
 
     /**
@@ -121,16 +111,16 @@ public class MockEnvironment {
     protected MockServletContext initServletContext(MockServletContext servletContext) {
         return servletContext;
     }
-    
+
     protected void initExecutionContext() {
         ExecutionContext.put(ExecutionContext.ATTR_REQUEST, clientRequest);
     }
-    
+
     protected void initClientRequestMap(Map<String, Object> map) {
         map.put("pid", session.getPage().getId());
         map.put("type", "mock");
     }
-    
+
     /**
      * Initialize the app context.
      *
@@ -140,22 +130,22 @@ public class MockEnvironment {
      * @throws Exception
      */
     protected XmlWebApplicationContext initAppContext(String[] profiles, String[] configLocations) throws Exception {
-        
+
         XmlWebApplicationContext appContext = createApplicationContext();
         appContext.setServletContext(servletContext);
-        
+
         if (configLocations != null) {
             appContext.setConfigLocations(configLocations);
         }
-        
+
         if (profiles != null && profiles.length > 0) {
             appContext.getEnvironment().setActiveProfiles(profiles);
             appContext.getEnvironment().setDefaultProfiles(new String[] { profiles[0] });
         }
-        
+
         return appContext;
     }
-    
+
     /**
      * Initialize browserInfo map.
      *
@@ -163,7 +153,7 @@ public class MockEnvironment {
      */
     protected void initBrowserInfoMap(Map<String, Object> browserInfo) {
     }
-    
+
     /**
      * Initialize the page.
      *
@@ -173,15 +163,15 @@ public class MockEnvironment {
     protected Page initPage(Page page) {
         return page;
     }
-    
+
     public ApplicationContext getRootContext() {
         return rootContext;
     }
-    
+
     public MockSession getSession() {
         return session;
     }
-    
+
     /**
      * Flushes and processes any event on the event queue.
      *
@@ -193,5 +183,5 @@ public class MockEnvironment {
         queue.processAll();
         return flushed;
     }
-    
+
 }
