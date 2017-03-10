@@ -87,7 +87,6 @@
 	
 	<bean class="org.springframework.beans.factory.config.MethodInvokingBean">
 		<property name="staticMethod" value="org.carewebframework.web.core.InitLocalizer.init" />
-		<property name="arguments" ref="messageSource" />
 	</bean>
 	
 	<bean class="org.springframework.beans.factory.config.MethodInvokingBean">
