@@ -64,7 +64,6 @@
 }
 
 .cwf_pane > :not(:first-child) {
-    overflow: auto;
     padding: 5px;
 }
 
