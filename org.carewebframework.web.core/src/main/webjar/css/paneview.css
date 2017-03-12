@@ -72,6 +72,7 @@
     cursor: col-resize;
     opacity: .5;   
     right: -14px;
+    z-index: auto!important;
 }
 
 .cwf_pane > .ui-resizable-e:hover {
@@ -82,6 +83,7 @@
     cursor: row-resize;
     opacity: .5;  
     bottom: -14px;
+    z-index: auto!important;
 }
 
 .cwf_pane > .ui-resizable-s:hover {
