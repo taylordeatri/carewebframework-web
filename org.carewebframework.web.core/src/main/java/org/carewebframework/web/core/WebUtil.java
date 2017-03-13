@@ -171,7 +171,7 @@ public class WebUtil {
     }
 
     /**
-     * Returns the original request url from the current request.
+     * Returns the original request url from the execution context.
      *
      * @return The request url of the browser document.
      */
@@ -179,6 +179,18 @@ public class WebUtil {
         return ExecutionContext.getPage().getBrowserInfo("requestURL");
     }
 
+    /**
+     * Returns the base url from the execution context.
+     *
+     * @return The base url.
+     */
+    public static String getBaseUrl() {
+        String url = getRequestUrl();
+        String path = ExecutionContext.getServletContext().getContextPath();
+        int i = url.indexOf(path);
+        return url.substring(0, i + path.length()) + "/";
+    }
+    
     /**
      * Returns the named cookie from the current request.
      *
