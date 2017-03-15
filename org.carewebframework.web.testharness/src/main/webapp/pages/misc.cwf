@@ -71,6 +71,10 @@
 				</span>
 				Test of custom attribute: ${custom.test}
 			</row>
+			<row>
+				<slider synchronized="true"/>
+				Slider control.
+			</row>
 		</rows>
 	</grid>
 	

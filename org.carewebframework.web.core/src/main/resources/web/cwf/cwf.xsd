@@ -99,6 +99,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -186,6 +187,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -354,6 +356,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -646,6 +649,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -793,6 +797,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1398,6 +1403,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1505,6 +1511,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1582,6 +1589,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1642,6 +1650,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1759,6 +1768,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -1929,6 +1939,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -2014,6 +2025,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="rowcell"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -2091,6 +2103,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -2174,6 +2187,47 @@
             <xs:attribute name="width" type="xs:string"/>
         </xs:complexType>
     </xs:element>
+    <xs:element name="slider">
+        <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
+            <xs:attribute name="class" type="xs:string"/>
+            <xs:attribute name="context" type="xs:string"/>
+            <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="css" type="xs:string"/>
+            <xs:attribute name="data" type="xs:string"/>
+            <xs:attribute name="disabled" type="xs:boolean"/>
+            <xs:attribute name="dragid" type="xs:string"/>
+            <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
+            <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="hint" type="xs:string"/>
+            <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
+            <xs:attribute name="maxValue" type="xs:integer"/>
+            <xs:attribute name="minValue" type="xs:integer"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="orientation">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="horizontal"/>
+                        <xs:enumeration value="vertical"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="popup" type="xs:string"/>
+            <xs:attribute name="step" type="xs:integer"/>
+            <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="synchronized" type="xs:boolean"/>
+            <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="value" type="xs:integer"/>
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="width" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="snippet">
         <xs:complexType>
             <xs:attribute name="anchor" type="xs:string"/>
@@ -2234,6 +2288,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -2354,6 +2409,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -2579,6 +2635,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>
@@ -2773,6 +2830,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="progressbar"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiobutton"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="radiogroup"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="slider"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="span"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="sscript"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="style"/>

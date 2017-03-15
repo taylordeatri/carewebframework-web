@@ -2932,16 +2932,16 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		init: function() {
 			this._super();
-			this._value = 0;
-			this._max = 100;
+			this.initState({maxValue: 100, value: 0})
 		},
 		
 		/*------------------------------ Other ------------------------------*/
 		
 		_pct: function() {
-			var value = this._value || 0;
-			var max = this._max || 100;
-			var pct = max <= 0 ? 0 : value / max * 100;
+			var value = this.getState('value'),
+				max = this.getState('maxValue'),
+				pct = max <= 0 ? 0 : value / max * 100;
+			
 			return pct > 100 ? 100 : pct;
 		},
 		
@@ -2968,19 +2968,85 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		maxValue: function(v) {
-			this._max = v;
 			this._adjust();
 		},
 		
 		value: function(v) {
-			this._value = v;
 			this._adjust();
 		}		
 		
 	});
+		
+	/******************************************************************************************************************
+	 * A slider widget
+	 ******************************************************************************************************************/ 
 	
+	cwf.widget.Slider = cwf.widget.UIWidget.extend({
+		
+		/*------------------------------ Events ------------------------------*/
+		
+		handleChange: function(event, ui) {
+			var value = ui.value;
+			
+			if (this.setState('value', value)) {
+				this.trigger('change', {value: value});
+			}
+		},
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.initState({value: 0, maxValue: 100, minValue: 0, step: 1, orientation: 'HORIZONTAL', synced: false});
+			this.forwardToServer('change');
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		_slider: function(opt, value) {
+			if (!this.widget$.slider('instance')) {
+				this.widget$.slider({});
+			}
+			
+			this.widget$.slider('option', opt, value);
+		},
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		render$: function() {
+			return $('<div/>');
+		},
+		
+		/*------------------------------ State ------------------------------*/
+		
+		maxValue: function(v) {
+			this._slider('max', v);
+		},
+		
+		minValue: function(v) {
+			this._slider('min', v);
+		},
+		
+		orientation: function(v) {
+			this._slider('orientation', v.toUpperCase());
+		},
+		
+		step: function(v) {
+			this._slider('step', v);
+		},
+		
+		synced: function(v) {
+			this.widget$.off('slidechange slide');
+			this.widget$.on(v ? 'slide' : 'slidechange', this.handleChange.bind(this));
+		},
+		
+		value: function(v) {
+			this._slider('value', v);
+		}
+		
+	});
 	
-	
+		
 	/******************************************************************************************************************
 	 * A slide-down message window.
 	 ******************************************************************************************************************/ 
