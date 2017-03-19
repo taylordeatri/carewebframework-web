@@ -38,9 +38,9 @@ import org.carewebframework.web.component.Grid;
 import org.carewebframework.web.component.Radiobutton;
 import org.carewebframework.web.component.Radiogroup;
 import org.carewebframework.web.component.Row;
+import org.carewebframework.web.component.Rows;
 import org.carewebframework.web.component.Rows.Selectable;
 import org.carewebframework.web.model.IComponentRenderer;
-import org.carewebframework.web.model.IModelAndView;
 import org.carewebframework.web.model.ListModel;
 
 public class GridsController extends BaseController {
@@ -100,6 +100,9 @@ public class GridsController extends BaseController {
     private Grid grid;
 
     @WiredComponent
+    private Rows rows;
+
+    @WiredComponent
     private Column col1;
 
     @WiredComponent
@@ -113,15 +116,14 @@ public class GridsController extends BaseController {
         super.afterInitialized(root);
         col1.setSortComparator(comp1);
         col2.setSortComparator(comp2);
-        IModelAndView<Row, RowModelObject> mv = grid.getRows().getModelAndView(RowModelObject.class);
         ListModel<RowModelObject> model = new ListModel<>();
 
-        for (int i = 1; i < 11; i++) {
+        for (int i = 1; i < 101; i++) {
             model.add(new RowModelObject(i));
         }
 
-        mv.setModel(model);
-        mv.setRenderer(renderer);
+        rows.setModel(model);
+        rows.setRenderer(renderer);
         col1.sort();
     }
 

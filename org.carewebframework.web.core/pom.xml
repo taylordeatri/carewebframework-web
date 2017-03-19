@@ -29,6 +29,8 @@
 				'cwf-paneview-css': 'css/paneview',
 				'cwf-picker': 'js/picker',
 				'cwf-picker-css': 'css/picker',
+				'cwf-paging': 'js/paging',
+				'cwf-paging-css': 'css/paging',
 				'cwf-upload': 'js/upload'
 			},
 			'map': {

@@ -7,15 +7,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * This Source Code Form is also subject to the terms of the Health-Related
  * Additional Disclaimer of Warranty and Limitation of Liability available at
  *
@@ -33,8 +33,10 @@ import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.model.IListModel.IListModelListener;
 import org.carewebframework.web.model.IListModel.ListEventType;
+import org.carewebframework.web.model.IPaginator.IPagingListener;
+import org.carewebframework.web.model.IPaginator.PagingEventType;
 
-public class ModelAndView<T extends BaseComponent, M> implements IListModelListener, IModelAndView<T, M> {
+public class ModelAndView<T extends BaseComponent, M> implements IListModelListener, IPagingListener, IModelAndView<T, M> {
     
     private BaseComponent parent;
     
@@ -45,13 +47,17 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
     private Map<BaseComponent, ModelAndView<T, M>> linkedViews;
     
     private boolean deferredRendering;
+
+    private final Paginator paginator;
     
     public ModelAndView(BaseComponent parent) {
         this.parent = parent;
+        paginator = new Paginator();
+        paginator.addEventListener(this);
     }
     
     public ModelAndView(BaseComponent parent, IListModel<M> model, IComponentRenderer<T, M> renderer) {
-        this.parent = parent;
+        this(parent);
         setModel(model);
         setRenderer(renderer);
     }
@@ -86,6 +92,7 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
             this.model.addEventListener(this);
         }
         
+        paginator.setModelSize(model == null ? 0 : model.size());
         rerender();
     }
     
@@ -95,6 +102,14 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         }
         
         return linkedViews;
+    }
+    
+    private int getChildIndex(int modelIndex) {
+        if (paginator.isDisabled()) {
+            return modelIndex;
+        } else {
+            return modelIndex - paginator.getModelOffset(paginator.getCurrentPage());
+        }
     }
     
     @Override
@@ -108,8 +123,10 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         if (model != null && parent != null && renderer != null) {
             try {
                 onRenderStart();
-                
-                for (int i = 0; i < model.size(); i++) {
+                int start = adjustIndex(0);
+                int end = adjustIndex(model.size() - 1);
+
+                for (int i = start; i <= end; i++) {
                     renderChild(i);
                 }
             } finally {
@@ -143,11 +160,11 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         }
     }
     
-    protected T renderChild(int index) {
-        if (renderer != null) {
-            M mdl = model.get(index);
+    protected T renderChild(int modelIndex) {
+        if (renderer != null && paginator.inRange(modelIndex)) {
+            M mdl = model.get(modelIndex);
             T child = renderer.render(mdl);
-            parent.addChild(child, index);
+            parent.addChild(child, getChildIndex(modelIndex));
             
             if (model instanceof INestedModel) {
                 getLinkedViews().put(child, new ModelAndView<>(child, ((INestedModel<M>) model).getChildren(mdl), renderer));
@@ -159,15 +176,17 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
         return null;
     }
     
-    protected void destroyChild(int index) {
-        BaseComponent child = parent.getChildAt(index);
-        ModelAndView<T, M> linkedView = linkedViews == null ? null : linkedViews.get(child);
-        
-        if (linkedView != null) {
-            linkedViews.remove(child);
-            linkedView.destroy();
+    protected void destroyChild(int modelIndex) {
+        if (paginator.inRange(modelIndex)) {
+            BaseComponent child = parent.getChildAt(getChildIndex(modelIndex));
+            ModelAndView<T, M> linkedView = linkedViews == null ? null : linkedViews.get(child);
+
+            if (linkedView != null) {
+                linkedViews.remove(child);
+                linkedView.destroy();
+            }
+            child.destroy();
         }
-        child.destroy();
     }
     
     private void removeLinkedViews() {
@@ -181,6 +200,11 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
     }
     
     public void destroy() {
+        if (model != null) {
+            model.removeEventListener(this);
+        }
+
+        paginator.removeAllListeners();
         removeLinkedViews();
         linkedViews = null;
         model = null;
@@ -190,35 +214,69 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
     
     @Override
     public void onListChange(ListEventType type, int startIndex, int endIndex) {
+        paginator.setModelSize(model.size());
+        
         switch (type) {
             case ADD:
+                startIndex = adjustIndex(startIndex);
+                endIndex = adjustIndex(endIndex);
+
                 for (int i = startIndex; i <= endIndex; i++) {
                     renderChild(i);
                 }
-                
+
                 break;
-            
+
             case DELETE:
+                startIndex = adjustIndex(startIndex);
+                endIndex = adjustIndex(endIndex);
+
                 for (int i = endIndex; i >= startIndex; i--) {
                     destroyChild(i);
                 }
-                
+
                 break;
-            
+
             case CHANGE:
                 rerender();
                 break;
-            
+
             case REPLACE:
                 onListChange(ListEventType.DELETE, startIndex, endIndex);
                 onListChange(ListEventType.ADD, startIndex, endIndex);
                 break;
-            
+
             case SWAP:
-                parent.swapChildren(startIndex, endIndex);
+                if (paginator.isDisabled()) {
+                    parent.swapChildren(startIndex, endIndex);
+                }
+
+                break;
+            
+            case SORT:
+                if (!paginator.isDisabled()) {
+                    rerender();
+                }
+
                 break;
         }
+    }
+    
+    /**
+     * Force model index to be within current page range.
+     *
+     * @param modelIndex Model index.
+     * @return Adjusted index.
+     */
+    private int adjustIndex(int modelIndex) {
+        if (modelIndex < 0 || paginator.isDisabled()) {
+            return modelIndex;
+        }
         
+        int page = paginator.getCurrentPage();
+        int min = paginator.getModelOffset(page);
+        int max = paginator.getModelOffset(page + 1) - 1;
+        return modelIndex < min ? min : modelIndex > max ? max : modelIndex;
     }
     
     @Override
@@ -227,9 +285,13 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
     }
     
     @Override
-    public T rerender(int index) {
-        destroyChild(index);
-        return renderChild(index);
+    public T rerender(int modelIndex) {
+        if (paginator.inRange(modelIndex)) {
+            destroyChild(modelIndex);
+            return renderChild(modelIndex);
+        } else {
+            return null;
+        }
     }
     
     @Override
@@ -240,6 +302,18 @@ public class ModelAndView<T extends BaseComponent, M> implements IListModelListe
     @Override
     public void setDeferredRendering(boolean value) {
         deferredRendering = value;
+    }
+    
+    @Override
+    public IPaginator getPaginator() {
+        return paginator;
+    }
+
+    @Override
+    public void onPagingChange(PagingEventType type, int oldValue, int newValue) {
+        if (type != PagingEventType.MAX_PAGE) {
+            rerender();
+        }
     }
     
 }

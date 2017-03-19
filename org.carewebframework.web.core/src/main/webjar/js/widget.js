@@ -1920,6 +1920,110 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	});
 	
 	/******************************************************************************************************************
+	 * A page control widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Paging = cwf.widget.LabeledWidget.extend({
+		
+		/*------------------------------ Events ------------------------------*/
+		
+		handleClick: function(event) {
+			var page = this.getState('currentPage'),
+				max = this.getState('maxPage');
+			
+			switch ($(event.target).data('cwf-pg')) {
+				case -2: // Start
+					page = 0;
+					break;
+					
+				case -1: // Previous
+					page = page - 1;
+					break;
+					
+				case 1: // Next
+					page = page + 1;
+					break;
+					
+				case 2: // End
+					page = max;
+					break;
+			}
+			
+			if (page >= 0 && page <= max) {
+				this.setState('currentPage', page);
+				this._update();
+				this.trigger('change', {value: page});
+			}
+			
+			return false;
+		},
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.initState({currentPage: 0, maxPage: 0, pageSize: 0});
+			this.forwardToServer('change');
+			this.toggleClass('btn-toolbar', true);
+		},
+		
+		/*------------------------------ Other ------------------------------*/
+		
+		_update: function() {
+			var label = this.getState('label') || '%c / %m',
+				page = this.getState('currentPage'),
+				max = this.getState('maxPage');
+			
+			label = label.replace('%c', page + 1).replace('%m', max + 1);
+			this.sub$('lbl').text(label);
+			this.widget$.find('a').each(function() {
+				var a$ = $(this),
+					i = a$.data('cwf-pg'),
+					disabled = (i < 0 && page < 1) || (i > 0 && page >= max);
+				
+				a$.attr('disabled', disabled);
+			});
+		},
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		afterRender: function() {
+			this.widget$.find('a').on('click.cwf', this.handleClick.bind(this));
+		},
+		
+		render$: function() {
+			var dom = 
+				  '<span>'
+				+   '<a data-cwf-pg="-2" class="glyphicon glyphicon-chevron-left-double"></a>'
+				+   '<a data-cwf-pg="-1" class="glyphicon glyphicon-chevron-left"></a>'
+				+ 	this.getDOMTemplate('label')
+				+   '<a data-cwf-pg="1" class="glyphicon glyphicon-chevron-right"></a>'
+				+   '<a data-cwf-pg="2" class="glyphicon glyphicon-chevron-right-double"></a>'
+				+ '</span>'
+			return $(this.resolveEL(dom));
+		},
+	
+		/*------------------------------ State ------------------------------*/
+		
+		currentPage: function(v) {
+			this._update();
+		},
+		
+		label: function(v) {
+			this._update();
+		},
+		
+		maxPage: function(v) {
+			this._update();
+		},
+		
+		pageSize: function(v) {
+			this._update();
+		}
+	
+	});
+	
+	/******************************************************************************************************************
 	 * A cell widget
 	 ******************************************************************************************************************/ 
 	

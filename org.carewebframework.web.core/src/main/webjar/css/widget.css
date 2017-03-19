@@ -488,6 +488,16 @@ a:not([href]) {
 	align-items: flex-end;
 }
 
+/* Paging */
+
+.cwf_paging > span {
+    padding: 4px;
+}
+
+.cwf_paging a {
+    text-decoration: none;
+}
+
 /* Cell */
 
 .cwf_cell {

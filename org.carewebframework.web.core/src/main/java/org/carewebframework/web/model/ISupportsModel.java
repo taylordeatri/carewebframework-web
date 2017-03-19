@@ -35,14 +35,14 @@ import org.carewebframework.web.component.BaseComponent;
  * @param <T> The type of component rendered from the model.
  */
 public interface ISupportsModel<T extends BaseComponent> {
-
+    
     /**
      * Returns the model and view for this component.
      *
      * @return The model and view for this component.
      */
     IModelAndView<T, ?> getModelAndView();
-
+    
     /**
      * Returns the model and view for this component. The model is cast to the specified type.
      *
@@ -53,7 +53,7 @@ public interface ISupportsModel<T extends BaseComponent> {
     default <M> IModelAndView<T, M> getModelAndView(Class<M> type) {
         return (IModelAndView<T, M>) getModelAndView();
     }
-
+    
     /**
      * @see IModelAndView#getModel()
      */
@@ -61,7 +61,7 @@ public interface ISupportsModel<T extends BaseComponent> {
     default IListModel<?> getModel() {
         return getModelAndView().getModel();
     }
-
+    
     /**
      * Returns the model for this component. The model is cast to the specified type.
      *
@@ -71,7 +71,7 @@ public interface ISupportsModel<T extends BaseComponent> {
     default <M> IListModel<M> getModel(Class<M> type) {
         return getModelAndView(type).getModel();
     }
-
+    
     /**
      * @see IModelAndView#setModel(IListModel)
      */
@@ -79,7 +79,7 @@ public interface ISupportsModel<T extends BaseComponent> {
     default <M> void setModel(IListModel<M> model) {
         getModelAndView().setModel((ListModel) model);
     }
-
+    
     /**
      * @see IModelAndView#getRenderer()
      */
@@ -87,7 +87,7 @@ public interface ISupportsModel<T extends BaseComponent> {
     default IComponentRenderer<T, ?> getRenderer() {
         return getModelAndView().getRenderer();
     }
-
+    
     /**
      * @see IModelAndView#getRenderer(Class)
      */
@@ -95,7 +95,7 @@ public interface ISupportsModel<T extends BaseComponent> {
     default <M> IComponentRenderer<T, M> getRenderer(Class<M> type) {
         return getModelAndView(type).getRenderer();
     }
-
+    
     /**
      * @see IModelAndView#setRenderer(IComponentRenderer)
      */
@@ -103,7 +103,7 @@ public interface ISupportsModel<T extends BaseComponent> {
     default <M> void setRenderer(IComponentRenderer<T, M> renderer) {
         getModelAndView().setRenderer((IComponentRenderer) renderer);
     }
-
+    
     /**
      * @see IModelAndView#getDeferredRendering
      */
@@ -111,7 +111,7 @@ public interface ISupportsModel<T extends BaseComponent> {
     default boolean getDeferredRendering() {
         return getModelAndView().getDeferredRendering();
     }
-
+    
     /**
      * @see IModelAndView#setDeferredRendering(boolean)
      */
@@ -119,5 +119,8 @@ public interface ISupportsModel<T extends BaseComponent> {
     default void setDeferredRendering(boolean value) {
         getModelAndView().setDeferredRendering(value);
     }
-
+    
+    default IPaginator getPaginator() {
+        return getModelAndView().getPaginator();
+    }
 }

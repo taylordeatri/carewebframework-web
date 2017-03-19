@@ -252,12 +252,18 @@ public class ListModel<M> implements IListModel<M> {
     public void sort(Comparator<? super M> comparator, boolean ascending) {
         comparator = comparator != null ? comparator : ComparatorUtils.NATURAL_COMPARATOR;
         comparator = ascending ? comparator : ComparatorUtils.reversedComparator(comparator);
+        boolean changed = false;
         M[] a = (M[]) list.toArray();
         Arrays.sort(a, comparator);
         
         for (int newIndex = 0; newIndex < a.length; newIndex++) {
             int oldIndex = list.indexOf(a[newIndex]);
+            changed |= oldIndex != newIndex;
             swap(newIndex, oldIndex);
+        }
+        
+        if (changed) {
+            fireEvent(ListEventType.SORT, -1, -1);
         }
     }
     

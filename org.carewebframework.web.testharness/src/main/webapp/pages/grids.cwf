@@ -1,15 +1,16 @@
 <page>
-	<grid name="grid" controller="org.carewebframework.web.testharness.GridsController">
-		<columns>
-			<column name="col1" label="column 1" width="30%" sortOrder="ascending" sortColumn="true" />
-			<column name="col2" label="column 2" width="70%" sortOrder="unsorted" sortToggle="tristate" />
-		</columns>
-		<rows />
-	</grid>
 	Selectable:
 	<radiogroup name="rgGrids">
 		<radiobutton label="NO" checked="true" />
 		<radiobutton label="SINGLE" />
 		<radiobutton label="MULTIPLE" />
 	</radiogroup>
+	<paging target="rows" pageSize="10" />
+	<grid name="grid" controller="org.carewebframework.web.testharness.GridsController">
+		<columns>
+			<column name="col1" label="column 1" width="30%" sortOrder="ascending" sortColumn="true" />
+			<column name="col2" label="column 2" width="70%" sortOrder="unsorted" sortToggle="tristate" />
+		</columns>
+		<rows name="rows" />
+	</grid>
 </page>
