@@ -113,18 +113,25 @@ a:not([href]) {
 	background-color: #d9534f;
 }
 
-.glyphicon:disabled {
+.glyphicon[disabled] {
     opacity: .4;
+    text-decoration: none;
 }
 
 .glyphicon-chevron-left-double:before {
  	content: "\e079\e079";
- 	letter-spacing: -4px;
+}
+
+.glyphicon-chevron-left-double:first-letter {
+ 	letter-spacing: -8px;
 }
 
 .glyphicon-chevron-right-double:before {
 	content: "\e080\e080";
- 	letter-spacing: -4px;
+}
+
+.glyphicon-chevron-right-double:first-letter {
+ 	letter-spacing: -8px;
 }
 
 /* Layouts */
