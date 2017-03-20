@@ -86,10 +86,6 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			var tgt = action.tgt;
 		
 			if (tgt) {
-				if (tgt === 'dead') {
-					return;
-				}
-			
 				var i = tgt.indexOf('-'),
 					sub = i == -1 ? null : tgt.substring(i + 1);
 				
