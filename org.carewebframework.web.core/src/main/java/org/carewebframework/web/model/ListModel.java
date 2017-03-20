@@ -37,6 +37,11 @@ import java.util.ListIterator;
 import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.collections.IteratorUtils;
 
+/**
+ * Implementation of a list model.
+ *
+ * @param <M>
+ */
 public class ListModel<M> implements IListModel<M> {
     
     private final List<M> list = new LinkedList<>();
@@ -110,6 +115,13 @@ public class ListModel<M> implements IListModel<M> {
         return list.containsAll(c);
     }
     
+    /**
+     * Fires a list event to all listeners.
+     *
+     * @param type The type of event.
+     * @param startIndex Index of the first affected element.
+     * @param endIndex Index of last affected element.
+     */
     private void fireEvent(ListEventType type, int startIndex, int endIndex) {
         for (IListModelListener listener : listeners) {
             listener.onListChange(type, startIndex, endIndex);
@@ -200,6 +212,12 @@ public class ListModel<M> implements IListModel<M> {
         return result;
     }
     
+    /**
+     * Throws an exception if the index is outside the bounds of the underlying list.
+     *
+     * @param index Index to validate
+     * @exception IndexOutOfBoundsException
+     */
     private void validateIndex(int index) {
         if (index < 0 || index >= list.size()) {
             throw new IndexOutOfBoundsException(Integer.toString(index));
@@ -242,11 +260,6 @@ public class ListModel<M> implements IListModel<M> {
         return list.size();
     }
     
-    @Override
-    public void sort(Comparator<? super M> comparator) {
-        sort(comparator, true);
-    }
-
     @SuppressWarnings({ "unchecked" })
     @Override
     public void sort(Comparator<? super M> comparator, boolean ascending) {

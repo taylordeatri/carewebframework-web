@@ -100,6 +100,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -197,6 +198,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -359,6 +361,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -652,6 +655,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -800,6 +804,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1406,6 +1411,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1514,6 +1520,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1592,6 +1599,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="messagewindow"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1621,6 +1629,38 @@
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="title" type="xs:string"/>
             <xs:attribute name="unless" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="paging">
+        <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
+            <xs:attribute name="class" type="xs:string"/>
+            <xs:attribute name="context" type="xs:string"/>
+            <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="css" type="xs:string"/>
+            <xs:attribute name="currentPage" type="xs:integer"/>
+            <xs:attribute name="data" type="xs:string"/>
+            <xs:attribute name="disabled" type="xs:boolean"/>
+            <xs:attribute name="dragid" type="xs:string"/>
+            <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
+            <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="hint" type="xs:string"/>
+            <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
+            <xs:attribute name="label" type="xs:string"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="pageSize" type="xs:integer"/>
+            <xs:attribute name="popup" type="xs:string"/>
+            <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="target" type="xs:string"/>
+            <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="width" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="pane">
@@ -1653,6 +1693,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1771,6 +1812,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -1935,6 +1977,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -2020,6 +2063,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -2099,6 +2143,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -2284,6 +2329,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -2405,6 +2451,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -2631,6 +2678,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
@@ -2826,6 +2874,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menu"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="menupopup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="namespace"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="paging"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="paneview"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popup"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="popupbox"/>
