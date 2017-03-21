@@ -57,15 +57,15 @@ import org.springframework.core.io.Resource;
  * Plugin to facilitate testing of cwf layouts.
  */
 public class MainController implements IAutoWired, ApplicationContextAware {
-
+    
     private static final Mode[] REPLACE_MODES = { Mode.MODAL, Mode.POPUP };
-
+    
     private static final Comparator<Resource> resourceComparator = (r1, r2) -> {
         return r1.getFilename().compareToIgnoreCase(r2.getFilename());
     };
-
+    
     private static final IComponentRenderer<Comboitem, Resource> cwfRenderer = new IComponentRenderer<Comboitem, Resource>() {
-
+        
         @Override
         public Comboitem render(Resource resource) {
             Comboitem item = new Comboitem();
@@ -74,45 +74,45 @@ public class MainController implements IAutoWired, ApplicationContextAware {
             item.setHint(getPath(resource));
             return item;
         }
-
+        
         private String getPath(Resource resource) {
             try {
                 String[] pcs = resource.getURL().toString().split("!", 2);
-
+                
                 if (pcs.length == 1) {
                     return pcs[0];
                 }
-
+                
                 int i = pcs[0].lastIndexOf('/') + 1;
                 return pcs[0].substring(i) + ":\n\n" + pcs[1];
             } catch (Exception e) {
                 throw MiscUtil.toUnchecked(e);
             }
         }
-
+        
     };
-
+    
     // Start of auto-wired section
-
+    
     @WiredComponent
     private CodeMirror editor;
-
+    
     @WiredComponent
     private Combobox cboCwf;
-
+    
     @WiredComponent
     private BaseComponent contentParent;
-
+    
     // End of auto-wired section
-
+    
     private Namespace contentBase;
-
+    
     private BaseComponent root;
-
+    
     private String content;
-
+    
     private final ListModel<Resource> model = new ListModel<>();
-
+    
     /**
      * Find the content base component. We can't assign it an id because of potential id collisions.
      */
@@ -124,14 +124,14 @@ public class MainController implements IAutoWired, ApplicationContextAware {
         cboCwf.setVisible(model.size() > 0);
         contentBase = contentParent.getChild(Namespace.class);
     }
-
+    
     /**
      * Refreshes the view based on the current contents.
      */
     @EventHandler("refresh")
     public void refresh() {
         contentBase.destroyChildren();
-
+        
         if (content != null && !content.isEmpty()) {
             try {
                 EventUtil.post("modeCheck", this.root, null);
@@ -143,12 +143,12 @@ public class MainController implements IAutoWired, ApplicationContextAware {
             }
         }
     }
-
+    
     @EventHandler("activate")
     public void focus() {
         editor.focus();
     }
-
+    
     /**
      * Check for unsupported window modes. This is done asynchronously to allow modal windows to
      * also be checked.
@@ -157,7 +157,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
     private void onModeCheck() {
         modeCheck(contentBase);
     }
-
+    
     /**
      * Check for any window components with mode settings that need to be changed.
      *
@@ -166,17 +166,17 @@ public class MainController implements IAutoWired, ApplicationContextAware {
     private void modeCheck(BaseComponent comp) {
         if (comp instanceof Window) {
             Window win = (Window) comp;
-
+            
             if (win.isVisible() && ArrayUtils.contains(REPLACE_MODES, win.getMode())) {
                 win.setMode(Mode.INLINE);
             }
         }
-
+        
         for (BaseComponent child : comp.getChildren()) {
             modeCheck(child);
         }
     }
-
+    
     /**
      * Renders the updated cwf content in the view pane.
      */
@@ -186,7 +186,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
         refresh();
         focus();
     }
-
+    
     /**
      * Clears combo box selection when content is cleared.
      */
@@ -196,7 +196,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
         cboCwf.setSelectedItem(null);
         cboCwf.setHint(null);
     }
-
+    
     /**
      * Clears the view pane.
      */
@@ -205,7 +205,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
         contentBase.destroyChildren();
         focus();
     }
-
+    
     /**
      * Re-renders content in the view pane.
      */
@@ -213,23 +213,23 @@ public class MainController implements IAutoWired, ApplicationContextAware {
     private void onClick$btnRefreshView() {
         refresh();
     }
-
+    
     @EventHandler(value = "click", target = "btnFormatContent")
     private void onClick$btnFormatContent() {
         editor.format();
     }
-
+    
     /**
      * Load contents of newly selected cwf document.
      *
      * @throws IOException Exception on reading cwf document.
      */
     @EventHandler(value = "change", target = "@cboCwf")
-    private void onSelect$cboCwf() throws IOException {
+    private void onChange$cboCwf() throws IOException {
         Comboitem item = cboCwf.getSelectedItem();
         cboCwf.setHint(null);
         Resource resource = item == null ? null : item.getData(Resource.class);
-
+        
         if (resource != null) {
             try (InputStream is = resource.getInputStream()) {
                 content = IOUtils.toString(is, StandardCharsets.UTF_8);
@@ -239,7 +239,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
             }
         }
     }
-
+    
     /**
      * Populate combo box model with all cwf documents on class path.
      */
@@ -249,7 +249,7 @@ public class MainController implements IAutoWired, ApplicationContextAware {
         findResources(applicationContext, "**/*.cwf");
         model.sort(resourceComparator, true);
     }
-
+    
     private void findResources(ApplicationContext applicationContext, String pattern) {
         try {
             for (Resource resource : applicationContext.getResources(pattern)) {
@@ -259,5 +259,5 @@ public class MainController implements IAutoWired, ApplicationContextAware {
             throw MiscUtil.toUnchecked(e);
         }
     }
-
+    
 }
