@@ -1572,6 +1572,19 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		content: function(v) {
 			this.widget$.children().remove();
 			this.widget$.append(cwf.$(v));
+			this.setState('src', null);
+		},
+		
+		src: function(v) {
+			var self = this;
+			this.widget$.children().remove();
+			this.setState('content', null);
+			
+			if (v) {
+				require(['text!' + v], function(html) {
+					self.widget$.append($(html));
+				});
+			}
 		}
 		
 	});
