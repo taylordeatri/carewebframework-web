@@ -52,13 +52,19 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>org.carewebframework.web.annotation.SchemaGenerator</mainClass>
-					<arguments>
-						<argument>${basedir}/src/main/resources/web/cwf/cwf.xsd</argument>
-					</arguments>
-					<classpathScope>compile</classpathScope>
-				</configuration>
+				<executions>
+					<execution>
+						<id>default</id>
+						<phase>deploy</phase>
+						<configuration>
+							<mainClass>org.carewebframework.web.annotation.SchemaGenerator</mainClass>
+							<arguments>
+								<argument>${basedir}/src/main/resources/web/cwf/cwf.xsd</argument>
+							</arguments>
+							<classpathScope>compile</classpathScope>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
