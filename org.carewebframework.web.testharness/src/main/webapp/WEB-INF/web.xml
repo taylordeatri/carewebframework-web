@@ -23,6 +23,6 @@
 
 	<context-param>
 		<param-name>cwf.debug</param-name>
-		<param-value>false</param-value>
+		<param-value>true</param-value>
 	</context-param>
 </web-app>
