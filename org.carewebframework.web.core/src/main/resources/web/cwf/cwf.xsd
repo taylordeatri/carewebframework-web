@@ -1,37 +1,4 @@
 <xs:schema elementFormDefault="qualified" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" vc:minVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:element name="a">
-        <xs:complexType>
-            <xs:attribute name="balloon" type="xs:string"/>
-            <xs:attribute name="class" type="xs:string"/>
-            <xs:attribute name="context" type="xs:string"/>
-            <xs:attribute name="controller" type="xs:string"/>
-            <xs:attribute name="css" type="xs:string"/>
-            <xs:attribute name="data" type="xs:string"/>
-            <xs:attribute name="disabled" type="xs:boolean"/>
-            <xs:attribute name="dragid" type="xs:string"/>
-            <xs:attribute name="dropid" type="xs:string"/>
-            <xs:attribute name="flex" type="xs:string"/>
-            <xs:attribute name="focus" type="xs:boolean"/>
-            <xs:attribute name="forward" type="xs:string"/>
-            <xs:attribute name="height" type="xs:string"/>
-            <xs:attribute name="hint" type="xs:string"/>
-            <xs:attribute name="href" type="xs:string"/>
-            <xs:attribute name="if" type="xs:boolean"/>
-            <xs:attribute name="image" type="xs:string"/>
-            <xs:attribute name="impl" type="xs:string"/>
-            <xs:attribute name="keycapture" type="xs:string"/>
-            <xs:attribute name="label" type="xs:string"/>
-            <xs:attribute name="name" type="xs:string"/>
-            <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position" type="xs:string"/>
-            <xs:attribute name="style" type="xs:string"/>
-            <xs:attribute name="tabindex" type="xs:integer"/>
-            <xs:attribute name="target" type="xs:string"/>
-            <xs:attribute name="unless" type="xs:boolean"/>
-            <xs:attribute name="visible" type="xs:boolean"/>
-            <xs:attribute name="width" type="xs:string"/>
-        </xs:complexType>
-    </xs:element>
     <xs:element name="button">
         <xs:complexType>
             <xs:attribute name="balloon" type="xs:string"/>
@@ -55,7 +22,14 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position" type="xs:string"/>
+            <xs:attribute name="position">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="left"/>
+                        <xs:enumeration value="right"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -66,7 +40,6 @@
     <xs:element name="caption">
         <xs:complexType>
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -87,6 +60,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -144,7 +118,16 @@
             <xs:attribute name="label" type="xs:string"/>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="popup" type="xs:string"/>
-            <xs:attribute name="position" type="xs:string"/>
+            <xs:attribute name="position">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="bottom"/>
+                        <xs:enumeration value="left"/>
+                        <xs:enumeration value="right"/>
+                        <xs:enumeration value="top"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
             <xs:attribute name="style" type="xs:string"/>
             <xs:attribute name="tabindex" type="xs:integer"/>
             <xs:attribute name="unless" type="xs:boolean"/>
@@ -155,7 +138,6 @@
     <xs:element name="cell">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -176,6 +158,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -325,7 +308,6 @@
     <xs:element name="column">
         <xs:complexType>
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -346,6 +328,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -619,7 +602,6 @@
     <xs:element name="div">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -640,6 +622,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -768,7 +751,6 @@
     <xs:element name="groupbox">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -789,6 +771,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -1086,6 +1069,46 @@
             <xs:attribute name="width" type="xs:string"/>
         </xs:complexType>
     </xs:element>
+    <xs:element name="link">
+        <xs:complexType>
+            <xs:attribute name="balloon" type="xs:string"/>
+            <xs:attribute name="class" type="xs:string"/>
+            <xs:attribute name="context" type="xs:string"/>
+            <xs:attribute name="controller" type="xs:string"/>
+            <xs:attribute name="css" type="xs:string"/>
+            <xs:attribute name="data" type="xs:string"/>
+            <xs:attribute name="disabled" type="xs:boolean"/>
+            <xs:attribute name="dragid" type="xs:string"/>
+            <xs:attribute name="dropid" type="xs:string"/>
+            <xs:attribute name="flex" type="xs:string"/>
+            <xs:attribute name="focus" type="xs:boolean"/>
+            <xs:attribute name="forward" type="xs:string"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="hint" type="xs:string"/>
+            <xs:attribute name="href" type="xs:string"/>
+            <xs:attribute name="if" type="xs:boolean"/>
+            <xs:attribute name="image" type="xs:string"/>
+            <xs:attribute name="impl" type="xs:string"/>
+            <xs:attribute name="keycapture" type="xs:string"/>
+            <xs:attribute name="label" type="xs:string"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="popup" type="xs:string"/>
+            <xs:attribute name="position">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="left"/>
+                        <xs:enumeration value="right"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="style" type="xs:string"/>
+            <xs:attribute name="tabindex" type="xs:integer"/>
+            <xs:attribute name="target" type="xs:string"/>
+            <xs:attribute name="unless" type="xs:boolean"/>
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="width" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="listbox">
         <xs:complexType>
             <xs:all>
@@ -1376,7 +1399,6 @@
     <xs:element name="messagepane">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -1397,6 +1419,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -1485,7 +1508,6 @@
     <xs:element name="namespace">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -1506,6 +1528,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -1563,7 +1586,6 @@
     <xs:element name="page">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -1584,6 +1606,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -1658,7 +1681,6 @@
     <xs:element name="pane">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -1679,6 +1701,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -1777,7 +1800,6 @@
     <xs:element name="popup">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -1798,6 +1820,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -1949,7 +1972,6 @@
     <xs:element name="radiogroup">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -1970,6 +1992,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -2035,7 +2058,6 @@
     <xs:element name="row">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -2056,6 +2078,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -2115,7 +2138,6 @@
     <xs:element name="rowcell">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -2136,6 +2158,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -2301,7 +2324,6 @@
     <xs:element name="span">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -2322,6 +2344,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -2423,7 +2446,6 @@
     <xs:element name="tab">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -2444,6 +2466,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -2650,7 +2673,6 @@
     <xs:element name="toolbar">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -2671,6 +2693,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
@@ -2846,7 +2869,6 @@
     <xs:element name="window">
         <xs:complexType mixed="true">
             <xs:all>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="a"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="button"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="caption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="cell"/>
@@ -2867,6 +2889,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="import"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="integerbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="label"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="link"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="listbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="longbox"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="memobox"/>
