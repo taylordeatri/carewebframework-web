@@ -50,11 +50,11 @@
 							This is a button with an image.
 						</row>
 						<row>
-							<a label="link" name="link" href="about://" target="about" />
+							<link label="link" name="link" href="about://" target="about" />
 							This is a simple hyperlink.
 						</row>
 						<row>
-							<a label="link+image" image="images/ri.png"/>
+							<link label="link+image" image="images/ri.png"/>
 							This is a hyperlink with an image.
 						</row>
 						<row>
