@@ -1909,7 +1909,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		render$: function() {
 			 var dom = '<details>'
 				    + 	'<summary id="${id}-lbl"/>'
-				    + 	'<span id="${id}-inner"/>'
 					+ '</details>';
 
 			return $(this.resolveEL(dom));
