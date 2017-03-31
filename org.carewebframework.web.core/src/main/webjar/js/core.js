@@ -921,7 +921,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			var blob = new Blob([content], {type: mimetype});
 			saveAs(blob, filename);
 		});
-	}
+	},
 	
+	tagIsSupported: function(tag) {
+		return !(document.createElement(tag) instanceof HTMLUnknownElement);
+	}	
 		
 }});  // end module definition
