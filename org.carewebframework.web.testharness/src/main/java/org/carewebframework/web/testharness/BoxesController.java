@@ -34,6 +34,7 @@ import org.carewebframework.web.component.Caption;
 import org.carewebframework.web.component.Caption.LabelAlignment;
 import org.carewebframework.web.component.Combobox;
 import org.carewebframework.web.component.Comboitem;
+import org.carewebframework.web.component.Detail;
 import org.carewebframework.web.component.Listbox;
 import org.carewebframework.web.component.Listitem;
 import org.carewebframework.web.component.Popupbox;
@@ -62,16 +63,19 @@ public class BoxesController extends BaseController {
     private Combobox cboxRender;
 
     @WiredComponent
-    Popupbox popupbox;
+    private Popupbox popupbox;
 
     @WiredComponent
-    Caption caption;
+    private Caption caption;
 
     @WiredComponent
-    Radiogroup rgPosition;
+    private Radiogroup rgPosition;
 
     @WiredComponent
-    Radiogroup rgAlignment;
+    private Radiogroup rgAlignment;
+    
+    @WiredComponent
+    private Detail detail;
 
     @Override
     public void afterInitialized(BaseComponent root) {
@@ -138,5 +142,10 @@ public class BoxesController extends BaseController {
         String value = rgAlignment.getSelected().getLabel();
         LabelAlignment alignment = LabelAlignment.valueOf(value.toUpperCase());
         caption.setAlignment(alignment);
+    }
+    
+    @EventHandler(value = "click", target = "btnToggleDetail")
+    private void toggleDetailHandler(Event event) {
+        detail.setOpen(!detail.isOpen());
     }
 }

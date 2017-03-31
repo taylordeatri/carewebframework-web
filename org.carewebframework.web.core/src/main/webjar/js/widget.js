@@ -1876,6 +1876,53 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	});
 	
 	/******************************************************************************************************************
+	 * A detail widget
+	 ******************************************************************************************************************/ 
+	
+	cwf.widget.Detail = cwf.widget.LabeledWidget.extend({
+		
+		/*------------------------------ Events ------------------------------*/
+		
+		handleToggle: function(event) {
+			var open = this.widget$.attr('open');
+			
+			if (this.setState('open', open)) {
+				this.trigger(open ? 'open' : 'close');
+			}
+		},
+		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.initState({open: false});
+			this.forwardToServer('open close');
+		},
+		
+		/*------------------------------ Rendering ------------------------------*/
+		
+		afterRender: function() {
+			this._super();
+			this.widget$.on('toggle.cwf', this.handleToggle.bind(this));
+		},
+		
+		render$: function() {
+			 var dom = '<details>'
+				    + 	'<summary id="${id}-lbl"/>'
+				    + 	'<span id="${id}-inner"/>'
+					+ '</details>';
+
+			return $(this.resolveEL(dom));
+		},
+	
+		/*------------------------------ State ------------------------------*/
+		
+		open: function(v) {
+			this.attr('open', v);
+		}
+	});
+	
+	/******************************************************************************************************************
 	 * A caption widget
 	 ******************************************************************************************************************/ 
 	
