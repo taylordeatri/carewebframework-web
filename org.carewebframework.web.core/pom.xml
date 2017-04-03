@@ -19,6 +19,8 @@
 				'cwf-core': 'js/core',
 				'cwf-widget': 'js/widget',
 				'cwf-widget-css': 'css/widget',
+				'cwf-detail': 'js/detail',
+				'cwf-detail-css': 'css/detail',
 				'cwf-grid': 'js/grid',
 				'cwf-grid-css': 'css/grid',
 				'cwf-tabview': 'js/tabview',
