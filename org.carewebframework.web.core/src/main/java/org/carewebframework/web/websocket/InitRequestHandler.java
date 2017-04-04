@@ -30,7 +30,6 @@ import org.carewebframework.web.client.Synchronizer;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.page.PageDefinition;
 import org.carewebframework.web.page.PageDefinitionCache;
-import org.carewebframework.web.websocket.WebSocketHandler.IRequestHandler;
 
 /**
  * Handler for an initialization request. The client sends this request when the bootstrap page is

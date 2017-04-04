@@ -62,26 +62,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
  */
 public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPostProcessor, ServletContextAware {
 
-    /**
-     * Interface for handling a client request. A request handler must be registered for each
-     * expected request type.
-     */
-    public interface IRequestHandler {
-
-        /**
-         * Handle a client request.
-         *
-         * @param request The client request.
-         * @throws Exception Unspecified exception.
-         */
-        void handleRequest(ClientRequest request) throws Exception;
-
-        /**
-         * @return The type of request handled.
-         */
-        String getRequestType();
-    }
-
     private static final Log log = LogFactory.getLog(WebSocketHandler.class);
 
     private static final String ATTR_BUFFER = "message_buffer";
