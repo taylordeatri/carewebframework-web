@@ -600,7 +600,8 @@ a:not([href]) {
     border-top: none;
     padding: 0.5em;
     margin: 1em 0 1em 0;
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
 }
 
 .cwf_groupbox > h1 {
@@ -630,6 +631,12 @@ a:not([href]) {
     overflow: hidden;
     position: relative;
     top: 0.5em;
+}
+
+.cwf_groupbox > div {
+	overflow: auto;
+    flex: 1;
+    margin: -5px;
 }
 
 /* Messagepane */

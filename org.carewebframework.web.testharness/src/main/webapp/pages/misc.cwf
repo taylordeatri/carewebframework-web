@@ -75,6 +75,36 @@
 				<slider synchronized="true"/>
 				Slider control.
 			</row>
+			<row>
+				<caption name="caption" label="caption" alignment="start" position="left">
+					<textbox height="40px" width="100%"/>
+				</caption>
+				<div class="cwf-layout-vertical">
+					<radiogroup name="rgPosition">
+						<radiobutton label="top" />
+						<radiobutton label="bottom" />
+						<radiobutton label="left" checked="true" />
+						<radiobutton label="right" />
+					</radiogroup>
+					<radiogroup name="rgAlignment">
+						<radiobutton label="start" checked="true" />
+						<radiobutton label="center" />
+						<radiobutton label="end" />
+					</radiogroup>
+				</div>	
+			</row>
+			<row>
+				<detail name="detail" label="Click to open/close">
+					This is a detail box!
+				</detail>
+				<button name="btnToggleDetail" label="Toggle open/close" />
+			</row>
+			<row>
+				<groupbox title="Groupbox" height="50px" width="90%">
+					This is a group box!
+				</groupbox>
+				Group box.
+			</row>
 		</rows>
 	</grid>
 	

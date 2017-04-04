@@ -3019,6 +3019,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 	
 	cwf.widget.Groupbox = cwf.widget.UIWidget.extend({
 				
+		/*------------------------------ Containment ------------------------------*/
+		
+		anchor$: function() {
+			return this.sub$('inner');
+		},
+				
 		/*------------------------------ Rendering ------------------------------*/
 		
 		render$: function() {
@@ -3027,6 +3033,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 			  +   '<h1>'
 			  +     '<span id="${id}-title"/>'
 			  +   '</h1>'
+			  +   '<div id="${id}-inner"/>'
 			  + '</div>';
 			return $(this.resolveEL(dom));
 		},
