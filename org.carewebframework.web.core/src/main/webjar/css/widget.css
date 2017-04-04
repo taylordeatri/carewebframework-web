@@ -238,7 +238,8 @@ a:not([href]) {
 /* Menu */
 
 .cwf_menu {
-	margin-right: 5px
+    display: inline-block;
+	margin-right: 5px;
 }
 
 .cwf_menu.cwf_menu-nochildren .caret {
