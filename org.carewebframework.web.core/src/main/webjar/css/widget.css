@@ -16,6 +16,10 @@ a:not([href]) {
 	cursor: default;
 }
 
+caption:empty {
+	display: none;
+}
+
 /* jquery-ui mods */
 
 .ui-dialog-content {

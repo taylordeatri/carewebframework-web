@@ -25,6 +25,10 @@
 
 /* Column */
 
+.cwf_column {
+	border: none!important;
+}
+
 .cwf_column > .glyphicon {
 	margin-left: 5px;
 	padding: 2px;
