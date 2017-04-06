@@ -25,13 +25,16 @@
  */
 package org.carewebframework.web.client;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 
 import org.carewebframework.web.component.Page;
+import org.carewebframework.web.page.PageRegistry;
 import org.carewebframework.web.websocket.Session;
+import org.springframework.util.Assert;
 
 /**
  * Static helper class for threads to determine the current execution context. An execution context
@@ -50,43 +53,122 @@ public class ExecutionContext {
         }
     };
 
+    /**
+     * Put a key/value pair in the thread-local map.
+     *
+     * @param key The key.
+     * @param value The value.
+     * @return The previous value.
+     */
     public static Object put(String key, Object value) {
         return context.get().put(key, value);
     }
 
+    /**
+     * Returns the value associated with a key, or null if not found.
+     *
+     * @param key The key.
+     * @return The associated value, or null if there is none.
+     */
     public static Object get(String key) {
         return context.get().get(key);
     }
 
+    /**
+     * Removes a value given its key.
+     *
+     * @param key The key.
+     * @return The value associated with the key, or null if none.
+     */
     public static Object remove(String key) {
         return context.get().remove(key);
     }
 
+    /**
+     * Clears the thread-local map.
+     */
     public static void clear() {
         context.get().clear();
     }
 
+    /**
+     * Destroys the thread-local map.
+     */
+    public static void destroy() {
+        context.remove();
+    }
+
+    /**
+     * Returns true if the thread-local map is empty.
+     *
+     * @return True if the thread-local map is empty.
+     */
     public static boolean isEmpty() {
         return context.get().isEmpty();
     }
 
+    /**
+     * Returns the active client request.
+     *
+     * @return The active client request.
+     */
     public static ClientRequest getRequest() {
         return (ClientRequest) context.get().get(ATTR_REQUEST);
     }
 
+    /**
+     * Returns the active client session.
+     *
+     * @return The active client session.
+     */
     public static Session getSession() {
         ClientRequest request = getRequest();
         return request == null ? null : request.getSession();
     }
 
+    /**
+     * Returns the active client page.
+     *
+     * @return The active client page.
+     */
     public static Page getPage() {
         ClientRequest request = getRequest();
         return request == null ? null : request.getPage();
     }
 
+    /**
+     * Returns the servlet context.
+     *
+     * @return The servlet context.
+     */
     public static ServletContext getServletContext() {
         Session session = getSession();
         return session == null ? null : session.getServletContext();
+    }
+
+    /**
+     * Invoke a callback in the execution context of the specified page.
+     *
+     * @param pid The id of the page.
+     * @param callback The callback to invoke.
+     */
+    public static void invoke(String pid, Runnable callback) {
+        Page page = PageRegistry.getPage(pid);
+        Page current = getPage();
+        Assert.isTrue(current == null || current == page, "Cannot switch current page execution context");
+
+        try {
+            if (current == null) {
+                clear();
+                put(ExecutionContext.ATTR_REQUEST, new ClientRequest(page.getSession(), Collections.emptyMap()));
+            }
+            
+            callback.run();
+        } finally {
+            if (current == null) {
+                destroy();
+            }
+        }
     }
 
     private ExecutionContext() {
