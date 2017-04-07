@@ -7,5 +7,4 @@
 
 	<bean class="org.carewebframework.web.script.jython.JythonScript" />
 	
-	
 </beans>
