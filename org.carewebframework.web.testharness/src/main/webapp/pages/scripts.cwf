@@ -38,5 +38,11 @@
 		<sscript name="rscript" type="renjin">
 			paste(self$getName(), "worked!")
 		</sscript>
+		<div>
+			You should see the message "Clojure script was executed." in the status log.
+		</div>
+		<sscript name="clojurescript" type="clojure">
+			(str (.getName (.get args "self")) " finished!")
+		</sscript>
 	</div>
 </page>

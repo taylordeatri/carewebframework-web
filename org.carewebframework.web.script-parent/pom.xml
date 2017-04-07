@@ -12,6 +12,7 @@
 	<packaging>pom</packaging>
 	
 	<modules>
+		<module>org.carewebframework.web.script.clojure</module>
 		<module>org.carewebframework.web.script.groovy</module>
 		<module>org.carewebframework.web.script.jruby</module>
 		<module>org.carewebframework.web.script.jython</module>
