@@ -7,7 +7,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	
-	<name>JythonScript Extension</name>
+	<name>Jython Script Extension</name>
 	<artifactId>org.carewebframework.web.script.jython</artifactId>
 	
 	<dependencies>
