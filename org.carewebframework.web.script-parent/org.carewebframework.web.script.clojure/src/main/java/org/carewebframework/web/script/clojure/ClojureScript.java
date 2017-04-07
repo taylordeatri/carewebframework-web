@@ -37,33 +37,34 @@ import clojure.lang.Var;
  * Support for embedding Clojure scripts.
  */
 public class ClojureScript implements IScriptLanguage {
-    
-    private static volatile Var COMPILE;
-    
+
+    private static volatile Var compiler;
+
     /**
      * Wrapper for a parsed Clojure script
      */
     public static class ParsedScript implements IParsedScript {
-        
+
         private final IFn script;
-        
+
         public ParsedScript(String source) {
-            init();
-            this.script = (IFn) COMPILE.invoke("(fn [args] " + source + ")");
+            this.script = (IFn) getCompiler().invoke("(fn [args] " + source + ")");
         }
-        
+
         @Override
         public Object run(Map<String, Object> variables) {
             return script.invoke(variables);
         }
     }
-    
-    private static synchronized void init() {
-        if (COMPILE == null) {
-            COMPILE = RT.var("clojure.core", "load-string");
+
+    private static synchronized Var getCompiler() {
+        if (compiler == null) {
+            compiler = RT.var("clojure.core", "load-string");
         }
+
+        return compiler;
     }
-    
+
     /**
      * @see org.carewebframework.web.script.IScriptLanguage#getType()
      */
@@ -71,7 +72,7 @@ public class ClojureScript implements IScriptLanguage {
     public String getType() {
         return "clojure";
     }
-    
+
     /**
      * @see org.carewebframework.web.script.IScriptLanguage#parse(java.lang.String)
      */
@@ -79,5 +80,5 @@ public class ClojureScript implements IScriptLanguage {
     public IParsedScript parse(String source) {
         return new ParsedScript(source);
     }
-    
+
 }
