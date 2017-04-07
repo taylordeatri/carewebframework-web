@@ -23,53 +23,60 @@
  *
  * #L%
  */
-package org.carewebframework.web.script.groovy;
+package org.carewebframework.web.script.renjin;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
+import javax.script.ScriptException;
+
+import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.script.IScriptLanguage;
-
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
-import groovy.lang.Script;
+import org.renjin.script.RenjinScriptEngine;
+import org.renjin.script.RenjinScriptEngineFactory;
 
 /**
- * Support for embedding Groovy scripts.
+ * Support for embedding Renjin (R language) scripts.
  */
-public class GroovyScript implements IScriptLanguage {
+public class RScript implements IScriptLanguage {
 
-    private static volatile GroovyShell shell;
-
+    private static volatile RenjinScriptEngineFactory factory;
+    
     /**
-     * Utility method for accessing the Groovy shell, instantiating it on first invocation.
-     *
-     * @return The Groovy shell,
-     */
-    public static synchronized GroovyShell getGroovyShell() {
-        if (shell == null) {
-            shell = new GroovyShell();
-        }
-
-        return shell;
-    }
-
-    /**
-     * Wrapper for a parsed Groovy script.
+     * Wrapper for a Renjin script. Note that Renjin does not support pre-compiling scripts.
      */
     public static class ParsedScript implements IParsedScript {
 
-        private final Script script;
+        private final String source;
 
         public ParsedScript(String source) {
-            script = getGroovyShell().parse(source);
+            this.source = source.trim();
         }
 
         @Override
         public Object run(Map<String, Object> variables) {
-            script.setBinding(variables == null ? null : new Binding(variables));
-            return script.run();
-        }
+            RenjinScriptEngine engine = getFactory().getScriptEngine();
 
+            if (variables != null) {
+                for (Entry<String, Object> entry : variables.entrySet()) {
+                    engine.put(entry.getKey(), entry.getValue());
+                }
+            }
+
+            try {
+                return engine.eval(source);
+            } catch (ScriptException e) {
+                throw MiscUtil.toUnchecked(e);
+            }
+        }
+    }
+
+    public static synchronized RenjinScriptEngineFactory getFactory() {
+        if (factory == null) {
+            factory = new RenjinScriptEngineFactory();
+        }
+        
+        return factory;
     }
 
     /**
@@ -77,7 +84,7 @@ public class GroovyScript implements IScriptLanguage {
      */
     @Override
     public String getType() {
-        return "groovy";
+        return "renjin";
     }
 
     /**

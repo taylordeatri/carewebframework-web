@@ -20,11 +20,17 @@
 			return self.getName() + " is groovy!";
 		</sscript>
 		<div>
-		You should see the message "JRuby script was executed." in the status log.
+			You should see the message "JRuby script was executed." in the status log.
 		</div>
 		<sscript name="jrubyscript" type="jruby">
 			require "java"
 			"#{$self.getName} rocks!"
+		</sscript>
+		<div>
+			You should see the message "Renjin script was executed." in the status log.
+		</div>
+		<sscript name="rscript" type="renjin">
+			paste(self$getName(), "worked!")
 		</sscript>
 	</div>
 </page>
