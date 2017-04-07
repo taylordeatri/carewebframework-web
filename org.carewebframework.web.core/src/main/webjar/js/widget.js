@@ -3029,10 +3029,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		
 		render$: function() {
 			var dom = 
-				'<fieldset>'
-			  +   '<legend id="${id}-title"/>'
-			  +   '<span id="${id}-inner"/>'
-			  + '</fieldset>';
+				'<div>'
+			  +   '<fieldset>'
+			  +     '<legend id="${id}-title"/>'
+			  +     '<span id="${id}-inner"/>'
+			  +   '</fieldset>'
+			  + '</div>';
 			return $(this.resolveEL(dom));
 		},
 		

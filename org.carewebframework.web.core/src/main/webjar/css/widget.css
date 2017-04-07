@@ -600,18 +600,21 @@ caption:empty {
 
 /* Groupbox */
 
-.cwf_groupbox {
+.cwf_groupbox > fieldset {
 	border-width: 2px;
     border-style: groove;
     border-color: threedface;
     border-image: initial;
     border-radius: 5px;
 	padding: .35em .625em .75em;
+	height: 100%;
+	overflow: hidden;
 }
 
-.cwf_groupbox > legend {
-	font-size: 1.2em;
+.cwf_groupbox > fieldset > legend {
+	font-size: 1em;
 	padding: 0 5px 0 5px;
+	margin: 0;
 	border: initial;
 	width: inherit;
 }
