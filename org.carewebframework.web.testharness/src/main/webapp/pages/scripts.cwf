@@ -27,6 +27,12 @@
 			"#{$self.getName} rocks!"
 		</sscript>
 		<div>
+			You should see the message "Jython script was executed." in the status log.
+		</div>
+		<sscript name="jythonscript" type="jython">
+			self.getName() + " crushes!"
+		</sscript>
+		<div>
 			You should see the message "Renjin script was executed." in the status log.
 		</div>
 		<sscript name="rscript" type="renjin">

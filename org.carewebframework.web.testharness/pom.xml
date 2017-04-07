@@ -39,6 +39,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.carewebframework</groupId>
+			<artifactId>org.carewebframework.web.script.jython</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.carewebframework</groupId>
 			<artifactId>org.carewebframework.web.script.renjin</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>

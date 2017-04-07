@@ -29,20 +29,25 @@ import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.Event;
 
 public class ScriptsController extends BaseController {
-
+    
     @EventHandler(value = "scriptExecution", target = "groovyscript")
     private void groovyExecutionHandler(Event event) {
         log("Groovy script was executed: " + event.getData());
     }
-
+    
     @EventHandler(value = "scriptExecution", target = "jrubyscript")
     private void jrubyExecutionHandler(Event event) {
         log("JRuby script was executed: " + event.getData());
     }
-
+    
+    @EventHandler(value = "scriptExecution", target = "jythonscript")
+    private void jythonExecutionHandler(Event event) {
+        log("Jython script was executed: " + event.getData());
+    }
+    
     @EventHandler(value = "scriptExecution", target = "rscript")
     private void renjinExecutionHandler(Event event) {
         log("Renjin script was executed: " + event.getData());
     }
-
+    
 }
