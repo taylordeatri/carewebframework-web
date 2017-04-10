@@ -1018,7 +1018,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 			
 			if (newactive !== active) {
 				if (active) {
-					this.widget$.off('drop.cwf');
 					this.widget$.droppable('destroy');
 				} else {
 					this.widget$.droppable({
@@ -1028,8 +1027,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 							'ui-droppable-hover': 'cwf-droppable'
 						}
 					});
-					
-					this.widget$.on('drop.cwf', _dropped);
 				}
 			}
 			
@@ -1055,9 +1052,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 				return result;
 			}
 			
-			function _dropped(event, ui) {
-				event.relatedTarget = ui.draggable;
-			}
 		},
 		
 		focus: function(v) {

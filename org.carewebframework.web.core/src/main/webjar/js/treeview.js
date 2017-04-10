@@ -98,6 +98,10 @@ define('cwf-treeview', ['cwf-core', 'cwf-widget', 'css!cwf-treeview-css.css'], f
 			this._updateToggle();
 		},
 		
+		getDragHelper: function() {
+			return cwf.clone(this.sub$('lbl'), -1);
+		},
+		
 		render$: function() {
 			var dom = 
 				  '<li>'
