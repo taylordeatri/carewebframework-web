@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquery-ui.css', 'css!bootstrap-css.css', 'css!cwf-widget-css.css'], function(cwf) { 
+define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-css.css', 'css!jquery-ui.css', 'css!bootstrap-css.css', 'css!cwf-widget-css.css'], function(cwf) { 
 	/* Widget support.  In the documentation, when we refer to 'widget' we mean an instance of the Widget
 	 * class.  When we refer to 'widget$' (following the convention that a variable name ending in '$'
 	 * is always a jquery object), we mean the jquery object contained by the widget.
@@ -880,8 +880,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'css!balloon-css.css', 'css!jquer
 		},
 		
 		scrollIntoView: function() {
-			var input$ = this.input$();
-			input$.scrollTop(input$[0].scrollHeight);
+			var sp$ = this.widget$.scrollParent();
+			sp$ ? sp$.scrollTo(this.widget$) : null;
 		},
 		
 		subclazz: function(sub, wclazz) {
