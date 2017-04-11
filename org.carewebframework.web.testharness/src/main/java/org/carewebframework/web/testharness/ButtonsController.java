@@ -7,15 +7,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * This Source Code Form is also subject to the terms of the Health-Related
  * Additional Disclaimer of Warranty and Limitation of Liability available at
  *
@@ -41,16 +41,16 @@ import org.carewebframework.web.event.UploadEvent;
  * Buttons demonstration.
  */
 public class ButtonsController extends BaseController {
-    
+
     @WiredComponent
     private Button btnWithEvent;
-    
+
     @WiredComponent
     private Checkbox chkMultiple;
-    
+
     @WiredComponent
     private Upload upload;
-    
+
     /**
      * Sample button event handler.
      */
@@ -58,18 +58,17 @@ public class ButtonsController extends BaseController {
     private void btnEventHandler() {
         log("Button event handler was invoked");
     }
-    
+
     @EventHandler(value = "change", target = { "rg1", "rg2" })
     private void radiobuttonChangeHandler(ChangeEvent event) {
-        boolean isSelected = event.getValue(Boolean.class);
-        log("Radiobutton '" + ((Radiobutton) event.getTarget()).getLabel() + "' was "
-                + (isSelected ? "selected." : "deselected."));
+        Radiobutton rb = event.getValue(Radiobutton.class);
+        log("Radiobutton '" + (rb.getLabel() + "' was " + (rb.isChecked() ? "selected." : "deselected.")));
     }
-    
+
     @EventHandler(value = "upload", target = "@upload")
     private void uploadHandler(UploadEvent event) throws Exception {
         String file = event.getFile();
-        
+
         switch (event.getState()) {
             case DONE:
                 String tmpdir = System.getProperty("java.io.tmpdir");
@@ -79,22 +78,22 @@ public class ButtonsController extends BaseController {
                 out.close();
                 log("Uploaded contents to " + file);
                 break;
-            
+
             case MAXSIZE:
                 log("File too large: " + file);
                 break;
-            
+
             case ABORTED:
                 log("Upload aborted for " + file);
                 break;
-            
+
             case LOADING:
                 double pct = event.getLoaded() * 100.0 / event.getTotal();
                 log("Upload " + pct + "% completed for " + file);
                 break;
         }
     }
-    
+
     @EventHandler(value = "change", target = "@chkMultiple")
     private void chkMultipleChangeHandler(ChangeEvent event) {
         upload.setMultiple(chkMultiple.isChecked());
