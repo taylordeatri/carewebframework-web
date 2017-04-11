@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-treeview', ['cwf-core', 'cwf-widget', 'css!cwf-treeview-css.css'], function(cwf) { 
+define('cwf-treeview', ['cwf-core', 'cwf-widget', 'css!cwf-treeview-css'], function(cwf) { 
 	
 	/******************************************************************************************************************
 	 * Tree view widget

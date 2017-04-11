@@ -3,7 +3,7 @@
  */
 'use strict';
 
-define('cwf-detail', ['cwf-core', 'cwf-widget', 'css!cwf-detail-css.css'], function(cwf) { 
+define('cwf-detail', ['cwf-core', 'cwf-widget', 'css!cwf-detail-css'], function(cwf) { 
 
 	/******************************************************************************************************************
 	 * A detail widget

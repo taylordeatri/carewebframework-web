@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-grid', ['cwf-core', 'cwf-widget', 'css!cwf-grid-css.css'], function(cwf) { 
+define('cwf-grid', ['cwf-core', 'cwf-widget', 'css!cwf-grid-css'], function(cwf) { 
 	/******************************************************************************************************************
 	 * Grid widget
 	 ******************************************************************************************************************/
