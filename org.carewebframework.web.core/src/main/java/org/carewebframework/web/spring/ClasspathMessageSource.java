@@ -25,10 +25,11 @@
  */
 package org.carewebframework.web.spring;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.carewebframework.common.Localizer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.Resource;
@@ -43,17 +44,19 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
  * typically done in the web context initializer code.
  */
 public class ClasspathMessageSource extends ReloadableResourceBundleMessageSource {
-    
-    private static final String PROPERTIES_SUFFIX = ".properties";
-    
-    private static final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-    
-    private static final ClasspathMessageSource instance = new ClasspathMessageSource();
 
+    private static final Log log = LogFactory.getLog(ClasspathMessageSource.class);
+
+    private static final String PROPERTIES_SUFFIX = ".properties";
+
+    private static final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+
+    private static final ClasspathMessageSource instance = new ClasspathMessageSource();
+    
     public static ClasspathMessageSource getInstance() {
         return instance;
     }
-
+    
     /**
      * The message source will search for "messages*.properties" files first in the WEB-INF folder,
      * then anywhere within the classpath. This means that entries in the former will take
@@ -69,7 +72,7 @@ public class ClasspathMessageSource extends ReloadableResourceBundleMessageSourc
             return getMessage(id, args, locale);
         });
     }
-
+    
     /**
      * Intercept the refreshProperties call to handle "classpath*:" syntax.
      *
@@ -84,7 +87,7 @@ public class ClasspathMessageSource extends ReloadableResourceBundleMessageSourc
             return super.refreshProperties(filename, propHolder);
         }
     }
-    
+
     /**
      * Handle classpath syntax.
      *
@@ -95,19 +98,21 @@ public class ClasspathMessageSource extends ReloadableResourceBundleMessageSourc
     private PropertiesHolder refreshClassPathProperties(String filename, PropertiesHolder propHolder) {
         Properties properties = new Properties();
         long lastModified = -1;
-        
+
         try {
             Resource[] resources = resolver.getResources(filename + PROPERTIES_SUFFIX);
-            
+
             for (Resource resource : resources) {
                 String sourcePath = resource.getURI().toString().replace(PROPERTIES_SUFFIX, "");
                 PropertiesHolder holder = super.refreshProperties(sourcePath, propHolder);
                 properties.putAll(holder.getProperties());
                 lastModified = Math.min(lastModified, resource.lastModified());
             }
-        } catch (IOException e) {}
-        
+        } catch (Exception e) {
+            log.warn("Error reading message source: " + filename);
+        }
+
         return new PropertiesHolder(properties, lastModified);
     }
-    
+
 }

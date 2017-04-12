@@ -25,9 +25,10 @@
  */
 package org.carewebframework.web.theme;
 
-import org.carewebframework.common.JSONUtil;
+import java.util.Map.Entry;
+import java.util.Properties;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
@@ -38,18 +39,32 @@ public class Theme {
     private final String name;
 
     private final ObjectNode config;
+
+    private final ObjectNode paths;
     
     public Theme(String name, ObjectNode config) {
         this.name = name;
         this.config = config;
+        this.paths = (ObjectNode) config.get("paths");
     }
     
     public String getName() {
         return name;
     }
 
-    protected void mergeConfig(JsonNode config) {
-        JSONUtil.merge(this.config, config);
+    protected void mergeConfig(Properties props) {
+        for (Entry<Object, Object> entry : props.entrySet()) {
+            String key = entry.getKey().toString();
+            String value = entry.getValue().toString();
+
+            if (value.isEmpty()) {
+                paths.remove(key);
+            } else {
+                ArrayNode node = paths.arrayNode();
+                node.add(value);
+                paths.replace(key, node);
+            }
+        }
     }
     
     public String getWebJarInit() {

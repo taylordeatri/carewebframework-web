@@ -31,6 +31,7 @@ import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_FIELD
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,20 +49,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Loads themes from all theme-*.properties files.
  */
 public class ThemeRegistry extends AbstractRegistry<String, Theme> implements ApplicationContextAware {
-    
-    private static final Log log = LogFactory.getLog(ThemeRegistry.class);
-    
-    private static final ThemeRegistry instance = new ThemeRegistry();
 
+    private static final Log log = LogFactory.getLog(ThemeRegistry.class);
+
+    private static final ThemeRegistry instance = new ThemeRegistry();
+    
     public static ThemeRegistry getInstance() {
         return instance;
     }
-
+    
     @Override
     protected String getKey(Theme theme) {
         return theme.getName();
     }
-
+    
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         ObjectMapper parser = new ObjectMapper().configure(ALLOW_UNQUOTED_FIELD_NAMES, true).configure(ALLOW_SINGLE_QUOTES,
@@ -69,27 +70,29 @@ public class ThemeRegistry extends AbstractRegistry<String, Theme> implements Ap
         loadThemes(applicationContext, parser, "classpath*:META-INF");
         loadThemes(applicationContext, parser, "WEB-INF");
     }
-
+    
     private void loadThemes(ApplicationContext applicationContext, ObjectMapper parser, String path) {
         try {
-            for (Resource resource : applicationContext.getResources(path + "/theme-*.json")) {
+            for (Resource resource : applicationContext.getResources(path + "/theme-*.properties")) {
                 String file = resource.getFilename();
                 int i = file.lastIndexOf(".");
                 String themeName = file.substring(6, i);
                 Theme theme = get(themeName);
-                
+
                 if (theme == null) {
                     theme = new Theme(themeName, WebJarLocator.getInstance().getConfig());
                     register(theme);
                     log.info("Registered theme: " + themeName);
                 }
-                
+
                 try (InputStream in = resource.getInputStream()) {
-                    theme.mergeConfig(parser.readTree(in));
+                    Properties props = new Properties();
+                    props.load(in);
+                    theme.mergeConfig(props);
                 } catch (Exception e) {
                     log.error("Error reading theme configuration data from " + file, e);
                 }
-                
+
             }
         } catch (FileNotFoundException e) {
             // ignore
@@ -97,5 +100,5 @@ public class ThemeRegistry extends AbstractRegistry<String, Theme> implements Ap
             throw MiscUtil.toUnchecked(e);
         }
     }
-
+    
 }
