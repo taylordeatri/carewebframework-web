@@ -25,9 +25,6 @@
  */
 package org.carewebframework.web.theme;
 
-import java.util.Map.Entry;
-import java.util.Properties;
-
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -35,40 +32,35 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * Theme implementation that can pull from multiple sources.
  */
 public class Theme {
-
-    private final String name;
-
-    private final ObjectNode config;
-
-    private final ObjectNode paths;
     
+    private final String name;
+    
+    private final ObjectNode config;
+    
+    private final ObjectNode paths;
+
     public Theme(String name, ObjectNode config) {
         this.name = name;
         this.config = config;
         this.paths = (ObjectNode) config.get("paths");
     }
-    
+
     public String getName() {
         return name;
     }
-
-    protected void mergeConfig(Properties props) {
-        for (Entry<Object, Object> entry : props.entrySet()) {
-            String key = entry.getKey().toString();
-            String value = entry.getValue().toString();
-
-            if (value.isEmpty()) {
-                paths.remove(key);
-            } else {
-                ArrayNode node = paths.arrayNode();
-                node.add(value);
-                paths.replace(key, node);
-            }
+    
+    protected void addPath(String module, String path) {
+        if (path.isEmpty()) {
+            paths.remove(module);
+        } else {
+            ArrayNode node = paths.arrayNode();
+            node.add(path);
+            paths.replace(module, node);
         }
     }
-    
+
     public String getWebJarInit() {
         return config.toString();
     }
-
+    
 }

@@ -31,6 +31,7 @@ import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_FIELD
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
@@ -73,24 +74,29 @@ public class ThemeRegistry extends AbstractRegistry<String, Theme> implements Ap
     
     private void loadThemes(ApplicationContext applicationContext, ObjectMapper parser, String path) {
         try {
-            for (Resource resource : applicationContext.getResources(path + "/theme-*.properties")) {
-                String file = resource.getFilename();
-                int i = file.lastIndexOf(".");
-                String themeName = file.substring(6, i);
-                Theme theme = get(themeName);
-
-                if (theme == null) {
-                    theme = new Theme(themeName, WebJarLocator.getInstance().getConfig());
-                    register(theme);
-                    log.info("Registered theme: " + themeName);
-                }
-
+            for (Resource resource : applicationContext.getResources(path + "/theme.properties")) {
                 try (InputStream in = resource.getInputStream()) {
                     Properties props = new Properties();
                     props.load(in);
-                    theme.mergeConfig(props);
+
+                    for (Entry<Object, Object> entry : props.entrySet()) {
+                        String key = entry.getKey().toString();
+                        String value = entry.getValue().toString();
+                        int i = key.indexOf("/");
+                        String themeName = key.substring(0, i);
+                        key = key.substring(i + 1);
+                        Theme theme = get(themeName);
+                        
+                        if (theme == null) {
+                            theme = new Theme(themeName, WebJarLocator.getInstance().getConfig());
+                            register(theme);
+                            log.info("Registered theme: " + themeName);
+                        }
+                        
+                        theme.addPath(key, value);
+                    }
                 } catch (Exception e) {
-                    log.error("Error reading theme configuration data from " + file, e);
+                    log.error("Error reading theme configuration data from " + resource, e);
                 }
 
             }
