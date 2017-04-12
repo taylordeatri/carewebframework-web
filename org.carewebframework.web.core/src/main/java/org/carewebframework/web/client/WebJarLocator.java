@@ -107,7 +107,7 @@ public class WebJarLocator implements ApplicationContextAware {
             for (Resource resource : resources) {
                 try {
                     if (log.isDebugEnabled()) {
-                        log.debug("Parsing configuration data for web jar " + resource.getFilename());
+                        log.debug("Parsing configuration data for web jar: " + resource);
                     }
                     
                     WebJar webjar = new WebJar(resource);
@@ -115,11 +115,11 @@ public class WebJarLocator implements ApplicationContextAware {
                             || tryBowerFormat(webjar, requireConfig, parser) || tryNPMFormat(webjar, requireConfig, parser)
                             || tryUnknownFormat(webjar, requireConfig);
                     
-                    if (!success) {
-                        throw new Exception("Unrecognized webjar package format.");
+                    if (success) {
+                        webjars.put(webjar.getModule(), webjar);
+                    } else {
+                        log.warn("Unrecognized package format for web jar: " + webjar.getModule());
                     }
-                    
-                    webjars.put(webjar.getModule(), webjar);
                 } catch (Exception e) {
                     log.error("Error extracting webjar configuration from " + resource, e);
                 }

@@ -28,6 +28,7 @@ package org.carewebframework.web.theme;
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_SINGLE_QUOTES;
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -47,53 +48,55 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Loads themes from all theme-*.properties files.
  */
 public class ThemeRegistry extends AbstractRegistry<String, Theme> implements ApplicationContextAware {
-    
-    private static final Log log = LogFactory.getLog(ThemeRegistry.class);
-    
-    private static final ThemeRegistry instance = new ThemeRegistry();
 
+    private static final Log log = LogFactory.getLog(ThemeRegistry.class);
+
+    private static final ThemeRegistry instance = new ThemeRegistry();
+    
     public static ThemeRegistry getInstance() {
         return instance;
     }
-
+    
     @Override
     protected String getKey(Theme theme) {
         return theme.getName();
     }
-
+    
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         loadThemes(applicationContext, "classpath*:META-INF");
         loadThemes(applicationContext, "WEB-INF");
     }
-
+    
     private void loadThemes(ApplicationContext applicationContext, String path) {
         try {
             ObjectMapper parser = new ObjectMapper().configure(ALLOW_UNQUOTED_FIELD_NAMES, true)
                     .configure(ALLOW_SINGLE_QUOTES, true);
-            
+
             for (Resource resource : applicationContext.getResources(path + "/theme-*.json")) {
                 String file = resource.getFilename();
                 int i = file.lastIndexOf(".");
                 String themeName = file.substring(6, i);
                 Theme theme = get(themeName);
-                
+
                 if (theme == null) {
                     theme = new Theme(themeName, WebJarLocator.getInstance().getConfig());
                     register(theme);
                     log.info("Registered theme: " + themeName);
                 }
-                
+
                 try (InputStream in = resource.getInputStream()) {
                     theme.mergeConfig(parser.readTree(in));
                 } catch (Exception e) {
                     log.error("Error reading theme configuration data from " + file, e);
                 }
-                
+
             }
+        } catch (FileNotFoundException e) {
+            // ignore
         } catch (IOException e) {
             throw MiscUtil.toUnchecked(e);
         }
     }
-
+    
 }
