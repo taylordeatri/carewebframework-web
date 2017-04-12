@@ -43,6 +43,9 @@ import org.carewebframework.web.component.Page;
 import org.carewebframework.web.core.RequestUtil;
 import org.carewebframework.web.core.WebUtil;
 import org.carewebframework.web.logging.LogUtil;
+import org.carewebframework.web.theme.Theme;
+import org.carewebframework.web.theme.ThemeRegistry;
+import org.carewebframework.web.theme.ThemeResolver;
 import org.springframework.core.io.AbstractFileResolvingResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.resource.EncodedResource;
@@ -99,6 +102,8 @@ public class CwfResourceTransformer extends ResourceTransformerSupport {
 
     private final List<String> bootstrapperTemplate;
 
+    private final ThemeResolver themeResolver = new ThemeResolver();
+
     public CwfResourceTransformer() {
         try {
             bootstrapperTemplate = IOUtils.readLines(getClass().getResourceAsStream("/web/cwf/bootstrapper.htm"),
@@ -126,10 +131,13 @@ public class CwfResourceTransformer extends ResourceTransformerSupport {
         Page page = Page._create(resource.getURL().toString());
         String baseUrl = RequestUtil.getBaseURL(request);
         String wsUrl = "ws" + baseUrl.substring(4) + "ws";
+        String themeName = themeResolver.resolveThemeName(request);
+        Theme theme = themeName == null ? null : ThemeRegistry.getInstance().get(themeName);
+        String webJarInit = theme == null ? WebJarLocator.getInstance().getWebJarInit() : theme.getWebJarInit();
         map.put("pid", page.getId());
         map.put("baseUrl", baseUrl);
         map.put("wsUrl", wsUrl);
-        map.put("webjarInit", WebJarLocator.getInstance().getWebJarInit());
+        map.put("webjarInit", webJarInit);
         map.put("debug", Boolean.toString(WebUtil.isDebugEnabled()));
         map.put("logging", LogUtil.getSettingsForClient());
         StrSubstitutor sub = new StrSubstitutor(map);

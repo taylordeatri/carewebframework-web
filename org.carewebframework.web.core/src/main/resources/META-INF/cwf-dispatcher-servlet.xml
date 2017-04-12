@@ -85,6 +85,9 @@
 	<bean factory-method="getInstance"
 		class="org.carewebframework.web.script.ScriptRegistry" />
 	
+	<bean factory-method="getInstance" depends-on="cwf_WebJarLocator"
+		class="org.carewebframework.web.theme.ThemeRegistry" />
+	
 	<bean class="org.springframework.beans.factory.config.MethodInvokingBean">
 		<property name="staticMethod" value="org.carewebframework.web.core.InitLocalizer.init" />
 	</bean>
