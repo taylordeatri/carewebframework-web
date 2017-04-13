@@ -9,7 +9,7 @@
     <pluginGroups/>
     <servers>
         <server>
-            <id>ossrh</id>
+            <id>sonatype</id>
             <username>${env.CI_DEPLOY_USERNAME}</username>
             <password>${env.CI_DEPLOY_PASSWORD}</password>
         </server>
