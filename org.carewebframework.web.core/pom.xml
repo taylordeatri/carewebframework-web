@@ -51,11 +51,11 @@
 				<executions>
 					<execution>
 						<id>default</id>
-						<phase>package</phase>
+						<phase>prepare-package</phase>
 						<configuration>
 							<mainClass>org.carewebframework.web.annotation.SchemaGenerator</mainClass>
 							<arguments>
-								<argument>${basedir}/src/main/resources/web/cwf/cwf.xsd</argument>
+								<argument>${basedir}/target/classes/web/cwf/cwf.xsd</argument>
 							</arguments>
 							<classpathScope>compile</classpathScope>
 						</configuration>
