@@ -32,49 +32,49 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
  * Base for components that implement scripting support.
  */
 public class BaseScriptComponent extends BaseSourcedComponent {
-
+    
     protected BaseScriptComponent(boolean contentSynced) {
         super(contentSynced);
     }
-    
+
     protected BaseScriptComponent(String content, boolean contentSynced) {
         super(content, contentSynced);
     }
-    
-    private boolean deferred;
 
+    private boolean defer;
+    
     private String type;
-    
-    @PropertyGetter("deferred")
-    public boolean isDeferred() {
-        return deferred;
-    }
 
-    @PropertySetter("deferred")
-    public void setDeferred(boolean deferred) {
-        if (deferred != this.deferred) {
-            this.deferred = deferred;
-            
+    @PropertyGetter("defer")
+    public boolean getDefer() {
+        return defer;
+    }
+    
+    @PropertySetter("defer")
+    public void setDefer(boolean defer) {
+        if (defer != this.defer) {
+            this.defer = defer;
+
             if (isContentSynced()) {
-                sync("deferred", deferred);
+                sync("defer", defer);
             }
         }
     }
-
+    
     @PropertyGetter("type")
     public String getType() {
         return type;
     }
-
+    
     @PropertySetter("type")
     public void setType(String type) {
         if (!areEqual(type = nullify(type), this.type)) {
             this.type = type;
-
+            
             if (isContentSynced()) {
                 sync("type", type);
             }
         }
     }
-
+    
 }

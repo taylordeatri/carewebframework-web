@@ -48,37 +48,37 @@ import org.springframework.util.Assert;
  */
 @Component(value = "sscript", widgetClass = "MetaWidget", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
 public class ServerScript extends BaseScriptComponent {
-
+    
     private static final String EVENT_DEFERRED = "deferredExecution";
-
+    
     public static final String EVENT_EXECUTED = "scriptExecution";
-
+    
     private IScriptLanguage script;
-
+    
     public ServerScript() {
         super(false);
     }
-    
+
     public ServerScript(String script) {
         super(script, false);
     }
-
+    
     @Override
     protected void onAttach(Page page) {
         super.onAttach(page);
-
-        if (isDeferred()) {
+        
+        if (getDefer()) {
             EventUtil.post(EVENT_DEFERRED, this, null);
         } else {
             doExecute();
         }
     }
-
+    
     private Object execute() {
         Assert.notNull(script, "A script type must be specified");
         return script.parse(getScript()).run(Collections.singletonMap(script.getSelf(), this));
     }
-
+    
     private String getScript() {
         if (getSrc() != null) {
             return getExternalScript();
@@ -86,7 +86,7 @@ public class ServerScript extends BaseScriptComponent {
             return getContent();
         }
     }
-
+    
     private String getExternalScript() {
         try {
             Resource resource = WebUtil.getResource(getSrc());
@@ -95,25 +95,25 @@ public class ServerScript extends BaseScriptComponent {
             throw MiscUtil.toUnchecked(e);
         }
     }
-
+    
     @Override
     @PropertySetter("type")
     public void setType(String type) {
         type = nullify(type);
         script = type == null ? null : ScriptRegistry.getInstance().get(type);
-
+        
         if (script == null && type != null) {
             throw new IllegalArgumentException("Unknown script type: " + type);
         }
-        
+
         super.setType(type);
     }
-
+    
     @EventHandler(value = EVENT_DEFERRED, syncToClient = false)
     private void onDeferredExecution() {
         doExecute();
     }
-
+    
     private void doExecute() {
         EventUtil.post(new Event(EVENT_EXECUTED, this, execute()));
     }

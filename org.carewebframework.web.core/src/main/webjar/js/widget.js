@@ -1406,6 +1406,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 	
 	cwf.widget.Script = cwf.widget.MetaWidget.extend({
 		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.initState({async: false, defer: false});
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		realAnchor$: $('body'),
@@ -1416,11 +1423,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 		
 		/*------------------------------ State ------------------------------*/
 		
+		async: function(v) {
+			this.attr('async', v, this.real$);
+		},
+		
 		content: function(v) {
 			this.real$.text(this.resolveEL(v, '#'));
 		},
 		
-		deferred: function(v) {
+		defer: function(v) {
 			this.attr('defer', v, this.real$);
 		},
 		
