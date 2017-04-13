@@ -29,56 +29,50 @@ import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 
 /**
- * Base class for components that allow content to be expressed inline or imported from an external
- * source.
+ * Base for components that implement scripting support.
  */
-public abstract class BaseSourcedComponent extends BaseComponent {
-    
-    private String src;
-    
-    protected BaseSourcedComponent(boolean contentSynced) {
-        this(null, contentSynced);
+public class BaseScriptComponent extends BaseSourcedComponent {
+
+    protected BaseScriptComponent(boolean contentSynced) {
+        super(contentSynced);
     }
     
-    protected BaseSourcedComponent(String content, boolean contentSynced) {
-        setContentSynced(contentSynced);
-        setContent(content);
+    protected BaseScriptComponent(String content, boolean contentSynced) {
+        super(content, contentSynced);
     }
     
-    @Override
-    public String getContent() {
-        return super.getContent();
-    }
+    private boolean deferred;
+
+    private String type;
     
-    @Override
-    public void setContent(String content) {
-        content = nullify(content);
-        
-        if (content != null) {
-            setSrc(null);
-        }
-        
-        super.setContent(content);
+    @PropertyGetter("deferred")
+    public boolean isDeferred() {
+        return deferred;
     }
 
-    @PropertyGetter("src")
-    public String getSrc() {
-        return src;
-    }
-    
-    @PropertySetter(value = "src")
-    public void setSrc(String src) {
-        src = nullify(src);
-        
-        if (src != null) {
-            super.setContent(null);
+    @PropertySetter("deferred")
+    public void setDeferred(boolean deferred) {
+        if (deferred != this.deferred) {
+            this.deferred = deferred;
+            
+            if (isContentSynced()) {
+                sync("deferred", deferred);
+            }
         }
-        
-        if (!areEqual(src, this.src)) {
-            this.src = src;
+    }
+
+    @PropertyGetter("type")
+    public String getType() {
+        return type;
+    }
+
+    @PropertySetter("type")
+    public void setType(String type) {
+        if (!areEqual(type = nullify(type), this.type)) {
+            this.type = type;
 
             if (isContentSynced()) {
-                sync("src", src);
+                sync("type", type);
             }
         }
     }

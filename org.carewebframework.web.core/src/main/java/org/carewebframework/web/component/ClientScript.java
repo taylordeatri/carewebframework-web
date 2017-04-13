@@ -27,35 +27,19 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ContentHandling;
-import org.carewebframework.web.annotation.Component.PropertyGetter;
-import org.carewebframework.web.annotation.Component.PropertySetter;
 
 /**
  * Component wrapping script source code for client-side invocation.
  */
 @Component(value = "cscript", widgetClass = "Script", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
-public class ClientScript extends BaseSourcedComponent {
-
-    private String type;
-
+public class ClientScript extends BaseScriptComponent {
+    
     public ClientScript() {
         super(true);
     }
-
+    
     public ClientScript(String script) {
         super(script, true);
     }
-
-    @PropertyGetter("type")
-    public String getType() {
-        return type;
-    }
-
-    @PropertySetter("type")
-    public void setType(String type) {
-        if (!areEqual(type = nullify(type), this.type)) {
-            sync("type", this.type = type);
-        }
-    }
-
+    
 }

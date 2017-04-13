@@ -1401,7 +1401,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 	});
 	
 	/******************************************************************************************************************
-	 * Embedded javascript widget
+	 * Script widget
 	 ******************************************************************************************************************/ 
 	
 	cwf.widget.Script = cwf.widget.MetaWidget.extend({
@@ -1418,6 +1418,10 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 		
 		content: function(v) {
 			this.real$.text(this.resolveEL(v, '#'));
+		},
+		
+		deferred: function(v) {
+			this.attr('defer', v, this.real$);
 		},
 		
 		src: function(v) {

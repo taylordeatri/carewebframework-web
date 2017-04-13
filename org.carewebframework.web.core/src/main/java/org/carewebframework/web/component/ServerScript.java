@@ -33,7 +33,6 @@ import org.apache.commons.io.IOUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ContentHandling;
-import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.core.WebUtil;
@@ -48,15 +47,13 @@ import org.springframework.util.Assert;
  * A component wrapping script source code for server-side invocation.
  */
 @Component(value = "sscript", widgetClass = "MetaWidget", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
-public class ServerScript extends BaseSourcedComponent {
+public class ServerScript extends BaseScriptComponent {
 
     private static final String EVENT_DEFERRED = "deferredExecution";
 
     public static final String EVENT_EXECUTED = "scriptExecution";
 
     private IScriptLanguage script;
-
-    private boolean deferred;
 
     public ServerScript() {
         super(false);
@@ -70,7 +67,7 @@ public class ServerScript extends BaseSourcedComponent {
     protected void onAttach(Page page) {
         super.onAttach(page);
 
-        if (deferred) {
+        if (isDeferred()) {
             EventUtil.post(EVENT_DEFERRED, this, null);
         } else {
             doExecute();
@@ -99,28 +96,17 @@ public class ServerScript extends BaseSourcedComponent {
         }
     }
 
-    @PropertyGetter("deferred")
-    public boolean isDeferred() {
-        return deferred;
-    }
-
-    @PropertySetter("deferred")
-    public void setDeferred(boolean deferred) {
-        this.deferred = deferred;
-    }
-
-    @PropertyGetter("type")
-    public String getType() {
-        return script.getType();
-    }
-
+    @Override
     @PropertySetter("type")
     public void setType(String type) {
-        script = ScriptRegistry.getInstance().get(type);
+        type = nullify(type);
+        script = type == null ? null : ScriptRegistry.getInstance().get(type);
 
         if (script == null && type != null) {
             throw new IllegalArgumentException("Unknown script type: " + type);
         }
+        
+        super.setType(type);
     }
 
     @EventHandler(value = EVENT_DEFERRED, syncToClient = false)
