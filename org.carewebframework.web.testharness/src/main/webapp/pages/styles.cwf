@@ -2,7 +2,7 @@
 	<div style="padding-bottom: 20px; text-decoration: underline">
 	Demonstrate different types of style sheets.
 	</div>
-	<stylesheet src="css/styles.css" />
+	<style src="css/styles.css" />
 	<style>
 		.embedded {
 		background: green;

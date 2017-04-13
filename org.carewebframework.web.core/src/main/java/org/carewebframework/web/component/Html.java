@@ -27,46 +27,19 @@ package org.carewebframework.web.component;
 
 import org.carewebframework.web.annotation.Component;
 import org.carewebframework.web.annotation.Component.ContentHandling;
-import org.carewebframework.web.annotation.Component.PropertyGetter;
-import org.carewebframework.web.annotation.Component.PropertySetter;
 
 /**
  * A component that allows embedding native HTML within a page.
  */
 @Component(value = "html", widgetClass = "Html", content = ContentHandling.AS_ATTRIBUTE, parentTag = "*")
-public class Html extends BaseUIComponent {
-    
-    private String src;
-    
+public class Html extends BaseSourcedComponent {
+
     public Html() {
-    }
-    
-    public Html(String html) {
-        this.setContent(html);
-    }
-    
-    @Override
-    public String getContent() {
-        return super.getContent();
-    }
-    
-    @Override
-    public void setContent(String content) {
-        super.setContent(content);
-        src = null;
+        super(true);
     }
 
-    @PropertyGetter("src")
-    public String getSrc() {
-        return src;
+    public Html(String content) {
+        super(content, true);
     }
-    
-    @PropertySetter(value = "src", defer = true)
-    public void setSrc(String src) {
-        if (!areEqual(src = nullify(src), this.src)) {
-            setContent(null, false);
-            sync("src", this.src = src);
-        }
-    }
-    
+
 }

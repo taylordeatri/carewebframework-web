@@ -1373,7 +1373,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 	});
 
 	/******************************************************************************************************************
-	 * Inline style widget
+	 * Style widget
 	 ******************************************************************************************************************/ 
 	
 	cwf.widget.Style = cwf.widget.MetaWidget.extend({
@@ -1383,34 +1383,18 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 		realAnchor$: $('head'),
 		
 		renderReal$: function() {
-			return $('<style>');
+			return $(this.getState('src') ? '<link type="text/css" rel="stylesheet">' : '<style>');
 		},
 		
 		/*------------------------------ State ------------------------------*/
 		
 		content: function(v) {
+			this.rerender();
 			this.real$.text(v);
-		}
-		
-	});
-	
-	/******************************************************************************************************************
-	 * Stylesheet link widget
-	 ******************************************************************************************************************/ 
-	
-	cwf.widget.Stylesheet = cwf.widget.MetaWidget.extend({
-		
-		/*------------------------------ Rendering ------------------------------*/
-		
-		realAnchor$: $('head'),
-		
-		renderReal$: function() {
-			return $('<link type="text/css" rel="stylesheet">');
 		},
 		
-		/*------------------------------ State ------------------------------*/
-		
 		src: function(v) {
+			this.rerender();
 			this.attr('href', v, this.real$);
 		}
 		
