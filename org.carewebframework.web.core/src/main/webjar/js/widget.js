@@ -1563,8 +1563,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 		/*------------------------------ State ------------------------------*/
 		
 		content: function(v) {
-			this.widget$.children().remove();
-			this.widget$.append(cwf.$(v));
+			this._content(v);
 			this.setState('src', null);
 		},
 		
@@ -1575,9 +1574,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 			
 			if (v) {
 				require(['text!' + v], function(html) {
-					self.widget$.append($(html));
+					self._content(html);
 				});
 			}
+		},
+		
+		_content: function(html) {
+			this.widget$.children().remove();
+			html ? this.widget$.append('<html>' + html + '</html>') : null;
 		}
 		
 	});
@@ -2528,6 +2532,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 	
 	cwf.widget.Memobox = cwf.widget.InputboxWidget.extend({
 				
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		init: function() {
+			this._super();
+			this.initState({wrap: 'SOFT', rows: 2});
+		},
+		
 		/*------------------------------ Other ------------------------------*/
 		
 		scrollToBottom: function() {
@@ -2549,12 +2560,20 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-scrollTo', 'css!balloon-c
 			}
 		},
 		
+		rows: function(v) {
+			this.attr('rows', v, this.input$());
+		},
+		
 		value: function(v) {
 			this._super(v);
 			
 			if (this.getState('autoScroll')) {
 				this.scrollToBottom();
 			}
+		},
+		
+		wrap: function(v) {
+			this.attr('wrap', v ? v.toLowerCase() : 'soft', this.input$());
 		}
 		
 	});
