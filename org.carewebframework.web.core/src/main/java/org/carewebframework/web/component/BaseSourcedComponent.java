@@ -33,50 +33,50 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
  * source.
  */
 public abstract class BaseSourcedComponent extends BaseComponent {
-
+    
     private String src;
-
+    
     protected BaseSourcedComponent(boolean contentSynced) {
         this(null, contentSynced);
     }
-
+    
     protected BaseSourcedComponent(String content, boolean contentSynced) {
         setContentSynced(contentSynced);
         setContent(content);
     }
-
+    
     @PropertySetter("content")
     @Override
-    protected void setContent(String content) {
+    public void setContent(String content) {
         content = nullify(content);
-
+        
         if (content != null) {
             setSrc(null);
         }
-
+        
         super.setContent(content);
     }
-    
+
     @PropertyGetter("src")
     public String getSrc() {
         return src;
     }
-
+    
     @PropertySetter(value = "src")
     public void setSrc(String src) {
         src = nullify(src);
-
+        
         if (src != null) {
             super.setContent(null);
         }
-
+        
         if (!areEqual(src, this.src)) {
             this.src = src;
-            
+
             if (isContentSynced()) {
                 sync("src", src);
             }
         }
     }
-    
+
 }
