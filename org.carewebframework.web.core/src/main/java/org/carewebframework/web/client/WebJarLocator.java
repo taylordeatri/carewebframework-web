@@ -64,6 +64,8 @@ public class WebJarLocator implements ApplicationContextAware {
     
     private ObjectNode requireConfig;
 
+    private ObjectNode paths;
+    
     private String webjarInit;
     
     private ApplicationContext applicationContext;
@@ -101,7 +103,7 @@ public class WebJarLocator implements ApplicationContextAware {
             ObjectMapper parser = new ObjectMapper().configure(ALLOW_UNQUOTED_FIELD_NAMES, true)
                     .configure(ALLOW_SINGLE_QUOTES, true);
             requireConfig = parser.createObjectNode();
-            requireConfig.set("paths", parser.createObjectNode());
+            requireConfig.set("paths", paths = parser.createObjectNode());
             requireConfig.set("packages", parser.createArrayNode());
             
             for (Resource resource : resources) {
@@ -111,9 +113,8 @@ public class WebJarLocator implements ApplicationContextAware {
                     }
                     
                     WebJar webjar = new WebJar(resource);
-                    boolean success = tryRequireFormat(webjar, requireConfig, parser)
-                            || tryBowerFormat(webjar, requireConfig, parser) || tryNPMFormat(webjar, requireConfig, parser)
-                            || tryUnknownFormat(webjar, requireConfig);
+                    boolean success = tryRequireFormat(webjar, parser) || tryBowerFormat(webjar, parser)
+                            || tryNPMFormat(webjar, parser) || tryUnknownFormat(webjar);
                     
                     if (success) {
                         webjars.put(webjar.getModule(), webjar);
@@ -137,11 +138,10 @@ public class WebJarLocator implements ApplicationContextAware {
      * parsed and merged with the RequireJS configuration that we are building.
      *
      * @param webjar The webjar.
-     * @param requireConfig The RequireJS configuration we are building.
      * @param parser The JSON parser.
      * @return True if successfully processed.
      */
-    private boolean tryRequireFormat(WebJar webjar, ObjectNode requireConfig, ObjectMapper parser) {
+    private boolean tryRequireFormat(WebJar webjar, ObjectMapper parser) {
         try {
             String pomPath = webjar.getAbsolutePath();
             int i = pomPath.lastIndexOf("/META-INF/") + 10;
@@ -180,9 +180,7 @@ public class WebJarLocator implements ApplicationContextAware {
                 JsonNode child = entry.getValue();
                 
                 if (child.isTextual()) {
-                    ArrayNode newChild = paths.arrayNode();
-                    newChild.add(path + child.asText());
-                    entry.setValue(newChild);
+                    entry.setValue(new TextNode(path + child.asText()));
                 }
             }
         }
@@ -273,27 +271,25 @@ public class WebJarLocator implements ApplicationContextAware {
      * Determine if packaged as Bower and process if so.
      *
      * @param webjar The web jar.
-     * @param requireConfig The RequireJS configuration we are building.
      * @param parser The JSON parser.
      * @return True if successfully processed.
      */
-    private boolean tryBowerFormat(WebJar webjar, ObjectNode requireConfig, ObjectMapper parser) {
-        return tryBowerOrNPMFormat("bower.json", webjar, requireConfig, parser);
+    private boolean tryBowerFormat(WebJar webjar, ObjectMapper parser) {
+        return tryBowerOrNPMFormat("bower.json", webjar, parser);
     }
     
     /**
      * Determine if packaged as NPM and process if so.
      *
      * @param webjar The web jar.
-     * @param requireConfig The RequireJS configuration we are building.
      * @param parser The JSON parser.
      * @return True if successfully processed.
      */
-    private boolean tryNPMFormat(WebJar webjar, ObjectNode requireConfig, ObjectMapper parser) {
-        return tryBowerOrNPMFormat("package.json", webjar, requireConfig, parser);
+    private boolean tryNPMFormat(WebJar webjar, ObjectMapper parser) {
+        return tryBowerOrNPMFormat("package.json", webjar, parser);
     }
     
-    private boolean tryBowerOrNPMFormat(String configFile, WebJar webjar, ObjectNode requireConfig, ObjectMapper parser) {
+    private boolean tryBowerOrNPMFormat(String configFile, WebJar webjar, ObjectMapper parser) {
         
         try {
             Resource configResource = webjar.createRelative(configFile);
@@ -301,58 +297,50 @@ public class WebJarLocator implements ApplicationContextAware {
             if (configResource.exists()) {
                 try (InputStream is = configResource.getInputStream();) {
                     JsonNode config = parser.readTree(is);
-                    ObjectNode paths = (ObjectNode) requireConfig.get("paths");
-                    ArrayNode entries = paths.arrayNode();
                     String name = config.get("name").asText();
                     String path = webjar.getRootPath();
-                    
-                    if (!addMain(config.get("main"), entries, path)) {
-                        return false;
+                    String main = getMain(config.get("main"));
+
+                    if (main != null) {
+                        paths.set(name, new TextNode(path + main));
                     }
                     
-                    paths.set(name, entries);
-                    return true;
+                    return main != null;
                 }
             }
         } catch (Exception e) {
-            return false;
+            // Ignore
         }
         
         return false;
     }
     
     /**
-     * Adds the "main" entry to the RequireJS config we are building.
+     * Extract the "main" entry.
      *
      * @param node The node corresponding to the "main" or "files" entry. If this is an array, we
-     *            recurse over each element.
-     * @param entries The node to receive the "paths" entries.
-     * @param path The root path.
-     * @return True if entries added.
+     *            consider only the first element.
+     * @return The "main" entry.
      */
-    private boolean addMain(JsonNode node, ArrayNode entries, String path) {
-        boolean added = false;
-        
+    private String getMain(JsonNode node) {
         if (node != null) {
             if (node.isArray()) {
                 Iterator<JsonNode> iter = node.elements();
                 
-                while (iter.hasNext()) {
-                    added |= addMain(iter.next(), entries, path);
+                if (iter.hasNext()) {
+                    return getMain(iter.next());
                 }
             } else {
                 String main = node.asText();
                 
                 if (main.endsWith(".js")) {
                     int i = main.lastIndexOf(".");
-                    main = i < 0 ? main : main.substring(0, i);
-                    entries.add(path + main);
-                    added = true;
+                    return i < 0 ? main : main.substring(0, i);
                 }
             }
         }
         
-        return added;
+        return null;
     }
     
     /**
@@ -363,7 +351,7 @@ public class WebJarLocator implements ApplicationContextAware {
      * @return True if successfully processed.
      * @throws Exception Unspecified exception
      */
-    private boolean tryUnknownFormat(WebJar webjar, ObjectNode requireConfig) throws Exception {
+    private boolean tryUnknownFormat(WebJar webjar) throws Exception {
         Resource resource = webjar.findResource(applicationContext, "js", "css");
         
         if (resource == null) {
@@ -376,10 +364,7 @@ public class WebJarLocator implements ApplicationContextAware {
         main = main.substring(abs.length());
         int i = main.lastIndexOf(".");
         main = i < 0 ? main : main.substring(0, i);
-        ObjectNode paths = (ObjectNode) requireConfig.get("paths");
-        ArrayNode entries = paths.arrayNode();
-        entries.add(webjar.getRootPath() + main);
-        paths.set(webjar.getModule(), entries);
+        paths.set(webjar.getModule(), new TextNode(webjar.getRootPath() + main));
         return true;
     }
     

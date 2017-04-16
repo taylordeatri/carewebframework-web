@@ -38,6 +38,7 @@ public class ThemeResolver extends CookieThemeResolver {
 
     public ThemeResolver() {
         super();
+        this.setDefaultThemeName("default");
         setCookieName(COOKIE_NAME);
     }
 
