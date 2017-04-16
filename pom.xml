@@ -36,7 +36,7 @@
 					<artifactId>maven-resources-plugin</artifactId>
 					<executions>
 						<execution>
-							<id>copy-resources</id>
+							<id>copy-webjar-resources</id>
 							<phase>process-resources</phase>
 							<goals>
 								<goal>copy-resources</goal>
