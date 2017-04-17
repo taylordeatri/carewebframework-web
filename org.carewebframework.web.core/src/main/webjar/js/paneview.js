@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-paneview', ['cwf-core', 'cwf-widget', 'css!cwf-paneview-css'], function(cwf) { 
+define('cwf-paneview', ['cwf-core', 'cwf-widget', 'cwf-paneview-css'], function(cwf) { 
 	
 	/******************************************************************************************************************
 	 * Pane view widget

@@ -4,23 +4,21 @@
 </head>
 
 <body>
-	<script src='webjars/requirejs/require.js'></script>
+	<script src='webjars/systemjs/dist/system.js'></script>
 	
 	<script>
-		require([], function() {
-	        require.config(
-	        	${webjarInit}
-	        );
-	        
-			require(['cwf-core'], function(cwf) {
-				cwf.init({
-					pid: '${pid}',
-					wsurl: '${wsUrl}',
-					debug: ${debug},
-					logging: ${logging}
-				});	
-			});
-		});	
+        System.config(
+        	${webjarInit}
+        );
+        
+		System.import('cwf-core').then(function(cwf) {
+			cwf.init({
+				pid: '${pid}',
+				wsurl: '${wsUrl}',
+				debug: ${debug},
+				logging: ${logging}
+			});	
+		});
 	</script>
 	
 	<div id='cwf_root' style='visibility:hidden'></div>

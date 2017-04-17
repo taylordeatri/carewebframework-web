@@ -1,0 +1,13 @@
+{
+    "paths": {
+        "balloon-css": "webjars/balloon-css/balloon.css",
+        "jquery-ui-css": "webjars/jquery-ui/jquery-ui.css"
+    },
+    "map": {
+        "css": "webjars/github-com-systemjs-plugin-css/css.js",
+        "text": "webjars/systemjs-plugin-text/text.js"
+    },
+    "meta": {
+        "*.css": { "loader": "css" }
+    }
+}

@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-picker', ['cwf-core', 'cwf-widget', 'css!cwf-picker-css'], function(cwf) { 
+define('cwf-picker', ['cwf-core', 'cwf-widget', 'cwf-picker-css'], function(cwf) { 
 	
 	/******************************************************************************************************************
 	 * Base class for picker widgets.

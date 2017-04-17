@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'css!cwf-codemirror-css.css', 'css!codemirror.css',
+define('cwf-codemirror', ['cwf-core', 'cwf-widget', 'codemirror', 'cwf-codemirror-css', 'codemirror-css',
 	'codemirror/addon/display/placeholder',
 	'codemirror/addon/edit/closebrackets',
 	'codemirror/addon/edit/closetag',

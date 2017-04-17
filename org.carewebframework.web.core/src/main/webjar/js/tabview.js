@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-tabview', ['cwf-core', 'cwf-widget', 'css!cwf-tabview-css'], function(cwf) { 
+define('cwf-tabview', ['cwf-core', 'cwf-widget', 'cwf-tabview-css'], function(cwf) { 
 	
 	/******************************************************************************************************************
 	 * A tab box widget

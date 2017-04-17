@@ -869,7 +869,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 * 
 	 * @param {array} array The array to be modified.
 	 * @param {object} element The element to be inserted.
-	 * @position {integer} position The position within the array where the
+	 * @param {integer} position The position within the array where the
 	 * 		element will be inserted or moved.
 	 */
 	insertIntoArray: function(array, element, position) {
@@ -894,30 +894,23 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	},
 	
 	load: function(pkgname, callback) {			
-		var pkg;
+		var path = System.resolveSync(pkgname),
+			nmsp = System.registry.get(path),
+			pkg = nmsp ? nmsp.default : null;
 		
-		try {
-			pkg = require(pkgname);
-		} catch (e) {
-			return new Promise(function(resolve, reject) {
-				require([pkgname], function(pkg) {
-					try {
-						resolve(callback ? callback(pkg) : pkg);
-					} catch(e) {
-						reject(e);
-					}
-				}, function(e) {
-					reject(e);
+		if (!pkg) {
+			return System.import(path).then(
+				function(pkg) {
+					return callback ? callback(pkg) : pkg;
 				});
-			});
-		};
+		}
 		
 		return callback ? callback(pkg) : pkg;
 	},
 	
 	saveToFile: function(content, mimetype, filename) {
 		mimetype = !mimetype || navigator.userAgent.match(/Version\/[\d\.]+.*Safari/) ? 'application/octet-stream' : mimetype;
-		require(['file-saver'], function() {
+		System.import('file-saver').then(function(saveAs) {
 			var blob = new Blob([content], {type: mimetype});
 			saveAs(blob, filename);
 		});

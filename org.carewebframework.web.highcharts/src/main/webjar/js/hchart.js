@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-hchart', ['cwf-core', 'cwf-widget', 'highcharts'], function(cwf) { 
+define('cwf-hchart', ['cwf-core', 'cwf-widget', 'highcharts'], function(cwf, wgt, Highcharts) { 
 	
 	/**
 	 * Wrapper for HighCharts
