@@ -233,21 +233,13 @@ public class WebJarLocator implements ApplicationContextAware {
         JsonNode packages = configNode.get("packages");
         
         if (packages != null) {
-            configNode.remove("packages");
-            ObjectNode pkgs = configNode.objectNode();
-            configNode.set("packages", pkgs);
-
             if (packages.isArray()) {
+                configNode.remove("packages");
+                ObjectNode pkgs = configNode.objectNode();
+                configNode.set("packages", pkgs);
+
                 for (int i = 0; i < packages.size(); i++) {
                     parsePackage(packages.get(i), pkgs, webjar);
-                }
-            } else if (packages.isObject()) {
-                Iterator<Entry<String, JsonNode>> iter = packages.fields();
-                
-                while (iter.hasNext()) {
-                    Entry<String, JsonNode> entry = iter.next();
-                    entry.setValue(new TextNode(entry.getKey()));
-                    parsePackage(entry.getValue(), pkgs, webjar);
                 }
             }
         }
