@@ -57,28 +57,28 @@ import com.fasterxml.jackson.databind.node.TextNode;
  * and Bower formats), and generates the necessary initialization code for RequireJS.
  */
 public class WebJarLocator implements ApplicationContextAware {
-
-    private static final Log log = LogFactory.getLog(WebJarLocator.class);
-
-    private static final WebJarLocator instance = new WebJarLocator();
-
-    private ObjectNode config;
     
+    private static final Log log = LogFactory.getLog(WebJarLocator.class);
+    
+    private static final WebJarLocator instance = new WebJarLocator();
+    
+    private ObjectNode config;
+
     private ObjectNode paths;
-
+    
     private String webjarInit;
-
+    
     private ApplicationContext applicationContext;
-
+    
     private final Map<String, WebJar> webjars = new HashMap<>();
-
+    
     public static WebJarLocator getInstance() {
         return instance;
     }
-
+    
     private WebJarLocator() {
     }
-
+    
     /**
      * Returns the initialization data for the requirejs config call.
      *
@@ -87,7 +87,7 @@ public class WebJarLocator implements ApplicationContextAware {
     public String getWebJarInit() {
         return webjarInit;
     }
-
+    
     /**
      * Returns a copy of the configuration.
      *
@@ -96,18 +96,18 @@ public class WebJarLocator implements ApplicationContextAware {
     public ObjectNode getConfig() {
         return config.deepCopy();
     }
-    
+
     public WebJar getWebjar(String module) {
         return webjars.get(module);
     }
-
+    
     /**
      * Locate and process all web jars.
      */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
-
+        
         try {
             Resource[] resources = applicationContext.getResources("classpath*:/META-INF/resources/webjars/?*/?*/");
             ObjectMapper parser = new ObjectMapper().configure(ALLOW_UNQUOTED_FIELD_NAMES, true)
@@ -115,17 +115,17 @@ public class WebJarLocator implements ApplicationContextAware {
             config = parser.createObjectNode();
             config.set("paths", paths = parser.createObjectNode());
             config.set("packages", parser.createArrayNode());
-
+            
             for (Resource resource : resources) {
                 try {
                     if (log.isDebugEnabled()) {
                         log.debug("Parsing configuration data for web jar: " + resource);
                     }
-
+                    
                     WebJar webjar = new WebJar(resource);
                     boolean success = tryRequireFormat(webjar, parser) || tryBowerFormat(webjar, parser)
                             || tryNPMFormat(webjar, parser) || tryUnknownFormat(webjar);
-
+                    
                     if (success) {
                         webjars.put(webjar.getModule(), webjar);
                     } else {
@@ -135,13 +135,13 @@ public class WebJarLocator implements ApplicationContextAware {
                     log.error("Error extracting webjar configuration from " + resource, e);
                 }
             }
-
+            
             webjarInit = config.toString();
         } catch (IOException e) {
             throw MiscUtil.toUnchecked(e);
         }
     }
-
+    
     /**
      * Determine if packaged as RequireJS and process if so. To do this, we have to locate the
      * pom.xml resource and search it for the "requirejs" property entry. If this is found, it is
@@ -158,7 +158,7 @@ public class WebJarLocator implements ApplicationContextAware {
             pomPath = pomPath.substring(0, i) + "maven/**/pom.xml";
             Resource[] poms = applicationContext.getResources(pomPath);
             JsonNode cfg = poms.length == 0 ? null : extractConfig(poms[0], parser);
-
+            
             if (cfg != null) {
                 String rootPath = webjar.getRootPath();
                 addPathToPaths(cfg, rootPath);
@@ -167,12 +167,13 @@ public class WebJarLocator implements ApplicationContextAware {
                 return true;
             }
         } catch (Exception e) {
+            log.error("Error processing configuration data from " + webjar, e);
             return false;
         }
-
+        
         return false;
     }
-
+    
     /**
      * Add root path to the path entries of the parsed RequireJS config.
      *
@@ -181,21 +182,21 @@ public class WebJarLocator implements ApplicationContextAware {
      */
     private void addPathToPaths(JsonNode configNode, String path) {
         ObjectNode paths = (ObjectNode) configNode.get("paths");
-
+        
         if (paths != null) {
             Iterator<Entry<String, JsonNode>> iter = paths.fields();
-
+            
             while (iter.hasNext()) {
                 Entry<String, JsonNode> entry = iter.next();
                 JsonNode child = entry.getValue();
-
+                
                 if (child.isTextual()) {
                     entry.setValue(new TextNode(path + child.asText()));
                 }
             }
         }
     }
-
+    
     /**
      * Add root path to the package entries of the parsed RequireJS config.
      *
@@ -204,13 +205,13 @@ public class WebJarLocator implements ApplicationContextAware {
      */
     private void addPathToPackages(JsonNode configNode, String path) {
         ArrayNode packages = (ArrayNode) configNode.get("packages");
-
+        
         if (packages != null) {
             for (int i = 0; i < packages.size(); i++) {
                 String nameValue, locationValue;
                 JsonNode entry = packages.get(i);
                 ObjectNode object;
-
+                
                 if (entry.isTextual()) {
                     nameValue = entry.asText();
                     locationValue = nameValue;
@@ -225,13 +226,13 @@ public class WebJarLocator implements ApplicationContextAware {
                     nameValue = name == null ? "" : name.asText();
                     locationValue = location == null ? nameValue : "./";//location.asText();
                 }
-
+                
                 object.set("location", new TextNode(path + locationValue));
             }
         }
-
+        
     }
-
+    
     /**
      * Extracts and parses the "requirejs" property value from the pom.xml.
      *
@@ -245,37 +246,37 @@ public class WebJarLocator implements ApplicationContextAware {
             Iterator<String> iter = IOUtils.lineIterator(is, StandardCharsets.UTF_8);
             StringBuilder sb = new StringBuilder();
             boolean found = false;
-
+            
             while (iter.hasNext()) {
                 String line = iter.next();
                 int i;
-
+                
                 if (!found) {
                     i = line.indexOf("<requirejs>");
-
+                    
                     if (i == -1) {
                         continue;
                     }
-
+                    
                     line = line.substring(i + 11);
                     found = true;
                 }
-
+                
                 i = line.indexOf("</requirejs>");
-
+                
                 if (i >= 0) {
                     sb.append(line.substring(0, i));
                     break;
                 }
-
+                
                 sb.append(line);
             }
-
+            
             String requirejs = sb.toString().trim();
             return requirejs.isEmpty() ? null : parser.readTree(requirejs);
         }
     }
-
+    
     /**
      * Determine if packaged as Bower and process if so.
      *
@@ -286,7 +287,7 @@ public class WebJarLocator implements ApplicationContextAware {
     private boolean tryBowerFormat(WebJar webjar, ObjectMapper parser) {
         return tryBowerOrNPMFormat("bower.json", webjar, parser);
     }
-
+    
     /**
      * Determine if packaged as NPM and process if so.
      *
@@ -297,33 +298,33 @@ public class WebJarLocator implements ApplicationContextAware {
     private boolean tryNPMFormat(WebJar webjar, ObjectMapper parser) {
         return tryBowerOrNPMFormat("package.json", webjar, parser);
     }
-
+    
     private boolean tryBowerOrNPMFormat(String configFile, WebJar webjar, ObjectMapper parser) {
-
+        
         try {
             Resource configResource = webjar.createRelative(configFile);
-
+            
             if (configResource.exists()) {
                 try (InputStream is = configResource.getInputStream();) {
                     JsonNode cfg = parser.readTree(is);
                     String name = cfg.get("name").asText();
                     String path = webjar.getRootPath();
                     String main = getMain(cfg.get("main"));
-                    
+
                     if (main != null) {
                         paths.set(name, new TextNode(path + main));
                     }
-
+                    
                     return main != null;
                 }
             }
         } catch (Exception e) {
             // Ignore
         }
-
+        
         return false;
     }
-
+    
     /**
      * Extract the "main" entry.
      *
@@ -335,23 +336,23 @@ public class WebJarLocator implements ApplicationContextAware {
         if (node != null) {
             if (node.isArray()) {
                 Iterator<JsonNode> iter = node.elements();
-
+                
                 if (iter.hasNext()) {
                     return getMain(iter.next());
                 }
             } else {
                 String main = node.asText();
-
+                
                 if (main.endsWith(".js")) {
                     int i = main.lastIndexOf(".");
                     return i < 0 ? main : main.substring(0, i);
                 }
             }
         }
-
+        
         return null;
     }
-
+    
     /**
      * In absence of a supported format, try to infer the RequireJS config.
      *
@@ -361,11 +362,11 @@ public class WebJarLocator implements ApplicationContextAware {
      */
     private boolean tryUnknownFormat(WebJar webjar) throws Exception {
         Resource resource = webjar.findResource(applicationContext, "js", "css");
-
+        
         if (resource == null) {
             return false;
         }
-
+        
         log.warn("Unknown web jar packaging, so inferring configuration for " + webjar);
         String main = resource.getURL().toString();
         String abs = webjar.getAbsolutePath();
@@ -375,5 +376,5 @@ public class WebJarLocator implements ApplicationContextAware {
         paths.set(webjar.getModule(), new TextNode(webjar.getRootPath() + main));
         return true;
     }
-
+    
 }
