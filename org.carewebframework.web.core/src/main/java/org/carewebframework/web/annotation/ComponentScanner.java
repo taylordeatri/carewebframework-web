@@ -27,6 +27,8 @@ package org.carewebframework.web.annotation;
 
 import java.lang.reflect.Method;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.carewebframework.web.annotation.Component.AttributeProcessor;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
@@ -37,6 +39,8 @@ import org.carewebframework.web.component.BaseComponent;
  * them.
  */
 public class ComponentScanner extends AbstractClassScanner<BaseComponent, Component> {
+    
+    private static final Log log = LogFactory.getLog(ComponentScanner.class);
     
     private static final ComponentScanner instance = new ComponentScanner();
     
@@ -56,6 +60,10 @@ public class ComponentScanner extends AbstractClassScanner<BaseComponent, Compon
      */
     @Override
     protected void doScanClass(Class<BaseComponent> clazz) {
+        if (log.isDebugEnabled()) {
+            log.debug("Processing @Component annotation for class " + clazz);
+        }
+
         ComponentDefinition def = new ComponentDefinition(clazz);
         Class<?> nextClass = clazz;
         
