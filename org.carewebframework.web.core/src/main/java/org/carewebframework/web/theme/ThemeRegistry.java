@@ -25,15 +25,13 @@
  */
 package org.carewebframework.web.theme;
 
-import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_SINGLE_QUOTES;
-import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.carewebframework.common.AbstractRegistry;
@@ -44,7 +42,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 
 /**
  * Loads themes from all theme-*.properties files.
@@ -66,13 +65,11 @@ public class ThemeRegistry extends AbstractRegistry<String, Theme> implements Ap
     
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        ObjectMapper parser = new ObjectMapper().configure(ALLOW_UNQUOTED_FIELD_NAMES, true).configure(ALLOW_SINGLE_QUOTES,
-            true);
-        loadThemes(applicationContext, parser, "classpath*:META-INF");
-        loadThemes(applicationContext, parser, "WEB-INF");
+        loadThemes(applicationContext, "classpath*:META-INF");
+        loadThemes(applicationContext, "WEB-INF");
     }
     
-    private void loadThemes(ApplicationContext applicationContext, ObjectMapper parser, String path) {
+    private void loadThemes(ApplicationContext applicationContext, String path) {
         try {
             for (Resource resource : applicationContext.getResources(path + "/theme.properties")) {
                 try (InputStream in = resource.getInputStream()) {
@@ -82,18 +79,7 @@ public class ThemeRegistry extends AbstractRegistry<String, Theme> implements Ap
                     for (Entry<Object, Object> entry : props.entrySet()) {
                         String key = entry.getKey().toString();
                         String value = entry.getValue().toString();
-                        int i = key.indexOf("/");
-                        String themeName = key.substring(0, i);
-                        key = key.substring(i + 1);
-                        Theme theme = get(themeName);
-                        
-                        if (theme == null) {
-                            theme = new Theme(themeName, WebJarLocator.getInstance().getConfig());
-                            register(theme);
-                            log.info("Registered theme: " + themeName);
-                        }
-                        
-                        theme.addPath(key, value);
+                        updateTheme(key, value);
                     }
                 } catch (Exception e) {
                     log.error("Error reading theme configuration data from " + resource, e);
@@ -104,6 +90,67 @@ public class ThemeRegistry extends AbstractRegistry<String, Theme> implements Ap
             // ignore
         } catch (IOException e) {
             throw MiscUtil.toUnchecked(e);
+        }
+    }
+    
+    /**
+     * Fetches the named theme from the registry. If one does not exist, it is created and
+     * registered.
+     *
+     * @param themeName The theme name.
+     * @return The corresponding theme.
+     */
+    private Theme getOrCreateTheme(String themeName) {
+        Theme theme = get(themeName);
+        
+        if (theme == null) {
+            theme = new Theme(themeName, WebJarLocator.getInstance().getConfig());
+            register(theme);
+            log.info("Registered theme: " + themeName);
+        }
+        
+        return theme;
+    }
+    
+    /**
+     * Updates a theme's configuration.
+     *
+     * @param configPath The "/"-delimited path to the configuration node to be updated. The first
+     *            piece of the path is the name of the theme to be modified.
+     * @param value The new value. If null or empty, the configuration node will be removed.
+     */
+    private void updateTheme(String configPath, String value) {
+        String[] path = configPath.split("\\/");
+        Theme theme = getOrCreateTheme(path[0]);
+        ObjectNode config = theme.getConfig();
+        ObjectNode node = config;
+        int last = path.length - 1;
+        value = StringUtils.trimToNull(value);
+
+        for (int i = 1; i <= last; i++) {
+            String pnode = path[i];
+            ObjectNode parent = node;
+
+            if (i == last) {
+                if (value == null) {
+                    parent.remove(pnode);
+                } else {
+                    parent.set(pnode, new TextNode(value));
+                }
+
+                break;
+            }
+
+            node = (ObjectNode) parent.get(pnode);
+
+            if (node == null) {
+                if (value == null) {
+                    return;
+                } else {
+                    node = config.objectNode();
+                    parent.set(pnode, node);
+                }
+            }
         }
     }
     
