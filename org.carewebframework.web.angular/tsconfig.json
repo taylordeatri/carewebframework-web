@@ -4,7 +4,7 @@
         "experimentalDecorators": true
     },
     
-    "files": [
-        "bootstrap.ts"
+    "include": [
+        "src/main/webjar/cwf/*.ts"
     ]
 }
