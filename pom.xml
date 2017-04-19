@@ -22,6 +22,7 @@
 		<module>org.carewebframework.web.codemirror</module>
 		<module>org.carewebframework.web.testharness</module>
 		<module>org.carewebframework.web.sandbox</module>
+		<module>org.carewebframework.web.angular</module>
 	</modules>
 
 	<properties>

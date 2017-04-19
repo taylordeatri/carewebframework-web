@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.carewebframework</groupId>
+		<artifactId>org.carewebframework.web-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<name>CWF Angular 2 Integration</name>
+	<artifactId>org.carewebframework.web.angular</artifactId>
+
+	<properties>
+		<webjar.name>cwf-angular</webjar.name>
+        <systemjs>
+        {	'map': {
+        		'cwf-angular-widget': 'webjars/cwf-angular/cwf/widget.js',
+        		'cwf-angular-bootstrap': 'webjars/cwf-angular/cwf/bootstrap.js',
+		      	'@angular/core': 'webjars/cwf-angular/@angular/core/bundles/core.umd.js',
+		      	'@angular/common': 'webjars/cwf-angular/@angular/common/bundles/common.umd.js',
+		      	'@angular/compiler': 'webjars/cwf-angular/@angular/compiler/bundles/compiler.umd.js',
+		      	'@angular/platform-browser': 'webjars/cwf-angular/@angular/platform-browser/bundles/platform-browser.umd.js',
+		      	'@angular/platform-browser-dynamic': 'webjars/cwf-angular/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+		      	'@angular/http': 'webjars/cwf-angular/@angular/http/bundles/http.umd.js',
+		      	'@angular/router': 'webjars/cwf-angular/@angular/router/bundles/router.umd.js',
+		      	'@angular/forms': 'webjars/cwf-angular/@angular/forms/bundles/forms.umd.js',
+        		'rxjs': 'webjars/cwf-angular/rxjs',
+        		'core-js': 'webjars/cwf-angular/core-js',
+        		'zone.js': 'webjars/cwf-angular/zone.js/dist/zone.js'
+        	},
+        	
+        	'packages': {
+        		'rxjs': {
+        			'defaultExtension': 'js'
+        		},
+        		'core-js': {
+        			'defaultExtension': 'js'
+        		}
+        	}
+		}
+        </systemjs>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-webjar-resources</id>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>node_modules</directory>
+									<filtering>true</filtering>
+									<include>**/*.umd.*</include>
+									<include>rxjs/**/*.js</include>
+									<include>core-js/**/*.js</include>
+									<include>zone.js/dist/*.*</include>
+								</resource>
+								<resource>
+									<directory>${basedir}/src/main/webjar</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<dependencies>
+		<!-- CareWeb Framework -->
+		<dependency>
+			<groupId>org.carewebframework</groupId>
+			<artifactId>org.carewebframework.web.core</artifactId>
+		</dependency>
+		<!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+</project>
