@@ -341,9 +341,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 				this._detachAncillaries(true);
 				this.widget$ ? this.widget$.remove() : null;
 				this.widget$ = null;
+				cwf.widget.unregister(this.id);
 			}
-			
-			cwf.widget.unregister(this.id);
 		},
 		
 		init: function() {
