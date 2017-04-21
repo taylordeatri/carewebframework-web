@@ -1,9 +1,9 @@
 {
-  "name": "angular2",
-  "version": "2.0.0",
+  "name": "cwf-angular",
+  "version": "1.0.0",
   "description": "Angular 2 libraries",
   "main": "",
-  "keywords": [],
+  "keywords": ["cwf", "angular"],
   "author": "CareWeb Framework",
   "repository": {
     "type": "git",
