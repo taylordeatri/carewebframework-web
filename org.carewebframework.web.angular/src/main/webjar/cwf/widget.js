@@ -16,6 +16,12 @@ define('cwf-angular', ['cwf-core', 'cwf-widget', 'cwf-angular-bootstrap', 'core-
 			this._super();
 		},
 		
+		/*------------------------------ Other ------------------------------*/
+		
+		ngInvoke: function(functionName, args) {
+			return this._appContext.invoke(functionName, args);
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
 		
 		afterRender: function() {
@@ -25,8 +31,8 @@ define('cwf-angular', ['cwf-core', 'cwf-widget', 'cwf-angular-bootstrap', 'core-
 			
 			if (src) {
 				System.import(src).then(function(module) {
-					var appContext = new bootstrap.AppContext(module, id);
-					appContext.bootstrap().then(function(ngModuleRef) {
+					self._appContext = new bootstrap.AppContext(module, id);
+					self._appContext.bootstrap().then(function(ngModuleRef) {
 						self._ngModuleRef = ngModuleRef
 					});;
 				});

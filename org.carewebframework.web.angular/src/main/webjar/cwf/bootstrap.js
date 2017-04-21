@@ -15,6 +15,8 @@ var platform_browser_dynamic_1 = require("@angular/platform-browser-dynamic");
 var core_2 = require("@angular/core");
 function AppContext(module, selector) {
     var App = module.AngularComponent;
+    var zone;
+    var componentRef;
     var module_decorations = {
         imports: [platform_browser_1.BrowserModule],
         declarations: [App],
@@ -22,23 +24,36 @@ function AppContext(module, selector) {
     };
     module.decorations ? Object.assign(module_decorations, module.decorations) : null;
     var AppModule = (function () {
-        function AppModule(resolver) {
+        function AppModule(resolver, ngZone) {
             this.resolver = resolver;
+            this.ngZone = ngZone;
+            zone = ngZone;
         }
         AppModule.prototype.ngDoBootstrap = function (appRef) {
             var factory = this.resolver.resolveComponentFactory(App);
             factory.selector = selector;
-            appRef.bootstrap(factory);
+            componentRef = appRef.bootstrap(factory);
         };
         return AppModule;
     }());
     AppModule = __decorate([
         core_1.NgModule(module_decorations),
-        __metadata("design:paramtypes", [core_2.ComponentFactoryResolver])
+        __metadata("design:paramtypes", [core_2.ComponentFactoryResolver,
+            core_2.NgZone])
     ], AppModule);
-    this.bootstrap = function bootstrap(compilerOptions) {
+    AppContext.prototype.bootstrap = function (compilerOptions) {
         var platform = platform_browser_dynamic_1.platformBrowserDynamic();
         return platform.bootstrapModule(AppModule, compilerOptions);
+    };
+    AppContext.prototype.invoke = function (functionName) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        return zone.run(function () {
+            var instance = componentRef.instance;
+            instance[functionName].apply(instance, args);
+        });
     };
 }
 exports.AppContext = AppContext;

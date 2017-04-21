@@ -35,19 +35,23 @@ import org.carewebframework.web.component.BaseUIComponent;
  */
 @Component(value = "angular", widgetPackage = "cwf-angular-widget", widgetClass = "AngularWidget", parentTag = "*")
 public class AngularComponent extends BaseUIComponent {
-
-    private String src;
     
+    private String src;
+
     @PropertyGetter("src")
     public String getSrc() {
         return src;
     }
-    
+
     @PropertySetter("src")
     public void setSrc(String src) {
         if (!areEqual(src = trimify(src), this.src)) {
             sync("src", this.src = src);
         }
     }
-    
+
+    public void ngInvoke(String functionName, Object... args) {
+        invoke("invoke", functionName, args);
+    }
+
 }
