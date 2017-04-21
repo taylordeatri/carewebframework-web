@@ -7,16 +7,26 @@ define('cwf-angular', ['cwf-core', 'cwf-widget', 'cwf-angular-bootstrap', 'core-
 		
 	AngularWidget: cwf.widget.UIWidget.extend({
 		
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		destroy: function() {
+			this._ngModuleRef ? this._ngModuleRef.destroy() : null;
+			this._super();
+		},
+		
 		/*------------------------------ Rendering ------------------------------*/
-			
+		
 		afterRender: function() {
 			var src = this.getState('src'),
-				id = "#" + this.id;
+				id = "#" + this.id,
+				self = this;
 			
 			if (src) {
 				System.import(src).then(function(module) {
 					var appContext = new bootstrap.AppContext(module, id);
-					appContext.bootstrap();
+					appContext.bootstrap().then(function(ngModuleRef) {
+						self._ngModuleRef = ngModuleRef
+					});;
 				});
 			}
 		},
