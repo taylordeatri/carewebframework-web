@@ -112,6 +112,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 			return this.widget$;
 		},
 		
+		/**
+		 * Detaches the associated widget$ and its ancillaries.
+		 */
+		detach: function() {
+			this.widget$ ? this.widget$.detach() : null;
+			this._detachAncillaries();
+		},
+		
 		getAncestor: function(wclass, wpkg) {
 			var parent = this._parent;
 			wpkg = wpkg || this.wpkg;
@@ -193,8 +201,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 			if (currentIndex >= 0) {
 				var anchor$ = child.widget$.parent();
 				this._children.splice(currentIndex, 1);
-				child._detach(destroy);
 				child._parent = null;
+				destroy ? child.destroy() : child.detach();
 				this.onRemoveChild(child, destroy, anchor$);
 				return true;
 			}
@@ -247,25 +255,6 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 			} else {
 				parent$.append(widget$);
 			}
-		},
-		
-		/**
-		 * Detaches or removes the associated widget$.
-		 * 
-		 * @param {boolean} destroy If true, the widget$ is removed from the DOM and set to null.
-		 * 		If false, the widget$ is just detached from the DOM and may be reattached later.
-		 */
-		_detach: function(destroy) {
-			if (this.widget$) {
-				if (destroy) {
-					this.widget$.remove();
-					this.widget$ = null;
-				} else {
-					this.widget$.detach();
-				}
-			}
-			
-			this._detachAncillaries(destroy);
 		},
 		
 		_detachAncillaries: function(destroy) {
@@ -343,13 +332,15 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		/**
-		 * Removes this widget from its parent widget and destroys the associated widget$.
+		 * Removes this widget from its parent widget and destroys the associated widget$ and its ancillaries.
 		 */
 		destroy: function() {
 			if (this._parent) {
 				this._parent.removeChild(this, true);
 			} else {
-				this._detach(true);
+				this._detachAncillaries(true);
+				this.widget$ ? this.widget$.remove() : null;
+				this.widget$ = null;
 			}
 			
 			cwf.widget.unregister(this.id);
@@ -535,7 +526,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 				this._rendering = true;
 
 				if (this.isContainer()) {
-					this.forEachChild(function(child){child._detach();});
+					this.forEachChild(function(child){child.detach();});
 				}
 				
 				var old$ = this.widget$;
@@ -1120,12 +1111,14 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 			this._parent ? this._parent.removeChild(this, true) : null;
 		},
 		
-		_detach: function(destroy) {
-			if (destroy && this._children.length) {
-				this.removeChild(this._children[0], destroy);
+		/*------------------------------ Lifecycle ------------------------------*/
+		
+		destroy: function() {
+			if (this._children.length) {
+				this._children[0].destroy();
 			}
 			
-			this._super(destroy);
+			this._super();
 		},
 		
 		/*------------------------------ Rendering ------------------------------*/
@@ -1451,6 +1444,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 	
 	cwf.widget.Timer = cwf.widget.BaseWidget.extend({
 		
+		/*------------------------------ Containment ------------------------------*/
+		
+		detach: function() {
+			this.stop();
+			this._super();
+		},
+		
 		/*------------------------------ Lifecycle ------------------------------*/
 		
 		init: function() {
@@ -1460,9 +1460,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 			this._repeat = -1;
 		},
 		
-		_detach: function(destroy) {
+		destroy: function() {
 			this.stop();
-			this._super(destroy);
+			this._super();
 		},
 		
 		/*------------------------------ Other ------------------------------*/
@@ -3229,12 +3229,12 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 			return this.sub$('inner');
 		},
 		
-		_detach: function(destroy) {
-			destroy ? this._clearTimeout() : null;
-			this._super(destroy);
-		},
-		
 		/*------------------------------ Lifecycle ------------------------------*/
+		
+		destroy: function() {
+			this._clearTimeout();
+			this._super();
+		},
 		
 		init: function() {
 			this._super();
