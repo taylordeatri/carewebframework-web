@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { ApplicationRef, ComponentFactory, ComponentFactoryResolver } from '@angular/core';
+import { ApplicationRef, ComponentFactory, ComponentFactoryResolver, NgModuleRef } from '@angular/core';
 
 export function AppContext(module: any, selector: string) {
   var App = module.AngularComponent;
@@ -27,9 +27,9 @@ export function AppContext(module: any, selector: string) {
       }
   }
 
-  this.bootstrap = function bootstrap() {  
+  this.bootstrap = function bootstrap(compilerOptions?) : Promise<NgModuleRef<AppModule>> {  
     const platform = platformBrowserDynamic();
-    platform.bootstrapModule(AppModule);  
+    return platform.bootstrapModule(AppModule, compilerOptions);  
   }
   
 }
