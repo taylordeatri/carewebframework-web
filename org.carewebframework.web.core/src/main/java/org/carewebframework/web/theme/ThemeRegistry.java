@@ -49,42 +49,43 @@ import com.fasterxml.jackson.databind.node.TextNode;
  * Loads themes from all theme-*.properties files.
  */
 public class ThemeRegistry extends AbstractRegistry<String, Theme> implements ApplicationContextAware {
-
-    private static final Log log = LogFactory.getLog(ThemeRegistry.class);
-
-    private static final ThemeRegistry instance = new ThemeRegistry();
     
+    private static final Log log = LogFactory.getLog(ThemeRegistry.class);
+    
+    private static final ThemeRegistry instance = new ThemeRegistry();
+
     public static ThemeRegistry getInstance() {
         return instance;
     }
-    
+
     @Override
     protected String getKey(Theme theme) {
         return theme.getName();
     }
-    
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         loadThemes(applicationContext, "classpath*:META-INF");
         loadThemes(applicationContext, "WEB-INF");
     }
-    
+
     private void loadThemes(ApplicationContext applicationContext, String path) {
         try {
             for (Resource resource : applicationContext.getResources(path + "/theme.properties")) {
                 try (InputStream in = resource.getInputStream()) {
                     Properties props = new Properties();
                     props.load(in);
-
+                    
                     for (Entry<Object, Object> entry : props.entrySet()) {
                         String key = entry.getKey().toString();
                         String value = entry.getValue().toString();
                         updateTheme(key, value);
                     }
+                } catch (FileNotFoundException e) {
+                    // ignore
                 } catch (Exception e) {
                     log.error("Error reading theme configuration data from " + resource, e);
                 }
-
             }
         } catch (FileNotFoundException e) {
             // ignore
@@ -92,7 +93,7 @@ public class ThemeRegistry extends AbstractRegistry<String, Theme> implements Ap
             throw MiscUtil.toUnchecked(e);
         }
     }
-    
+
     /**
      * Fetches the named theme from the registry. If one does not exist, it is created and
      * registered.
@@ -102,16 +103,16 @@ public class ThemeRegistry extends AbstractRegistry<String, Theme> implements Ap
      */
     private Theme getOrCreateTheme(String themeName) {
         Theme theme = get(themeName);
-        
+
         if (theme == null) {
             theme = new Theme(themeName, WebJarLocator.getInstance().getConfig());
             register(theme);
             log.info("Registered theme: " + themeName);
         }
-        
+
         return theme;
     }
-    
+
     /**
      * Updates a theme's configuration.
      *
@@ -126,23 +127,23 @@ public class ThemeRegistry extends AbstractRegistry<String, Theme> implements Ap
         ObjectNode node = config;
         int last = path.length - 1;
         value = StringUtils.trimToNull(value);
-
+        
         for (int i = 1; i <= last; i++) {
             String pnode = path[i];
             ObjectNode parent = node;
-
+            
             if (i == last) {
                 if (value == null) {
                     parent.remove(pnode);
                 } else {
                     parent.set(pnode, new TextNode(value));
                 }
-
+                
                 break;
             }
-
+            
             node = (ObjectNode) parent.get(pnode);
-
+            
             if (node == null) {
                 if (value == null) {
                     return;
@@ -153,5 +154,5 @@ public class ThemeRegistry extends AbstractRegistry<String, Theme> implements Ap
             }
         }
     }
-    
+
 }
