@@ -17,6 +17,7 @@ function AppContext(module, selector) {
     var App = module.AngularComponent;
     var zone;
     var componentRef;
+    var moduleRef;
     var module_decorations = {
         imports: [platform_browser_1.BrowserModule],
         declarations: [App],
@@ -41,15 +42,18 @@ function AppContext(module, selector) {
         __metadata("design:paramtypes", [core_2.ComponentFactoryResolver,
             core_2.NgZone])
     ], AppModule);
+    AppContext.prototype.isLoaded = function () {
+        return !!moduleRef;
+    };
     AppContext.prototype.bootstrap = function (compilerOptions) {
         var platform = platform_browser_dynamic_1.platformBrowserDynamic();
-        return platform.bootstrapModule(AppModule, compilerOptions);
+        return platform.bootstrapModule(AppModule, compilerOptions).then(function (ref) { return moduleRef = ref; });
     };
-    AppContext.prototype.invoke = function (functionName) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
+    AppContext.prototype.destroy = function () {
+        moduleRef ? moduleRef.destroy() : null;
+        moduleRef = null;
+    };
+    AppContext.prototype.invoke = function (functionName, args) {
         return zone.run(function () {
             var instance = componentRef.instance;
             instance[functionName].apply(instance, args);

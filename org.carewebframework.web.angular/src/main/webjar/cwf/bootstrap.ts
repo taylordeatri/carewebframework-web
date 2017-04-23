@@ -10,6 +10,8 @@ export function AppContext(module: any, selector: string) {
   
   var componentRef : ComponentRef<any>;
   
+  var moduleRef : NgModuleRef<AppModule>;
+  
   var module_decorations = {
     imports: [ BrowserModule ],
     declarations: [ App ],
@@ -32,12 +34,22 @@ export function AppContext(module: any, selector: string) {
       }
   }
 
-  AppContext.prototype.bootstrap = function(compilerOptions?) : Promise<NgModuleRef<AppModule>> {  
-    const platform = platformBrowserDynamic();
-    return platform.bootstrapModule(AppModule, compilerOptions);
+  AppContext.prototype.isLoaded = function() : boolean {
+    return !!moduleRef;
   }
   
-  AppContext.prototype.invoke = function(functionName: string, ...args) : any {
+  AppContext.prototype.bootstrap = function(compilerOptions?) : Promise<NgModuleRef<AppModule>> {  
+    const platform = platformBrowserDynamic();
+    return platform.bootstrapModule(AppModule, compilerOptions).then(
+      ref => moduleRef = ref);
+  }
+  
+  AppContext.prototype.destroy = function() : void {
+    moduleRef ? moduleRef.destroy() : null;
+    moduleRef = null; 
+  }
+  
+  AppContext.prototype.invoke = function(functionName: string, args: any[]) : any {
     return zone.run(() => {
       let instance = componentRef.instance;
       instance[functionName].apply(instance, args)
