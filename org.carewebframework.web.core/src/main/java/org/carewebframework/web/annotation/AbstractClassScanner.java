@@ -29,6 +29,7 @@ import java.lang.annotation.Annotation;
 
 import org.carewebframework.common.MiscUtil;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 /**
@@ -62,13 +63,16 @@ public abstract class AbstractClassScanner<T, A extends Annotation> {
     /**
      * Scan all classes belonging to the specified package.
      *
-     * @param pkgName A package name.
+     * @param pkgName A package name. Wild card characters are allowed.
      */
     public void scanPackage(String pkgName) {
         try {
             for (Resource resource : resolver.getResources("classpath*:" + pkgName.replace(".", "/") + "/*.class")) {
-                String className = resource.getFilename().replace(".class", "");
-                Class<?> clazz = Class.forName(pkgName + "." + className);
+                String path = ((UrlResource) resource).getURL().getPath();
+                int i = path.lastIndexOf(".jar!/") + 6;
+                int j = path.lastIndexOf(".class");
+                path = path.substring(i, j).replace("/", ".");
+                Class<?> clazz = Class.forName(path);
                 scanClass(clazz);
             }
         } catch (Exception e) {
