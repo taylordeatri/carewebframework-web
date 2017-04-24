@@ -1,0 +1,22 @@
+{
+	"paths": {
+		"react": null,
+		"react-dom": null
+	},
+	
+	"map": {
+		"react": "webjars/react",
+		"react-dom": "webjars/react-dom"
+	},
+	
+	"packages": {
+		"react": {
+			"main": "dist/react",
+			"defaultExtension": "js"
+		},
+		"react-dom": {
+			"main": "dist/react-dom",
+			"defaultExtension": "js"
+		}
+	}
+}

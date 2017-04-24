@@ -42,6 +42,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.carewebframework.common.JSONUtil;
 import org.carewebframework.common.MiscUtil;
+import org.carewebframework.web.core.WebUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -145,7 +146,12 @@ public class WebJarLocator implements ApplicationContextAware {
 
             doConfigOverrides("classpath*:/META-INF/", parser);
             doConfigOverrides("WEB-INF/", parser);
-            webjarInit = config.toString();
+
+            if (WebUtil.isDebugEnabled()) {
+                webjarInit = parser.writerWithDefaultPrettyPrinter().writeValueAsString(config);
+            } else {
+                webjarInit = config.toString();
+            }
         } catch (IOException e) {
             throw MiscUtil.toUnchecked(e);
         }
@@ -163,7 +169,7 @@ public class WebJarLocator implements ApplicationContextAware {
 
             for (Resource resource : resources) {
                 try (InputStream is = resource.getInputStream()) {
-                    JSONUtil.merge(config, parser.readTree(is));
+                    JSONUtil.merge(config, parser.readTree(is), true);
                 }
             }
             
@@ -256,7 +262,7 @@ public class WebJarLocator implements ApplicationContextAware {
                 parsePackages(cfg, webjar);
             }
 
-            JSONUtil.merge(config, cfg);
+            JSONUtil.merge(config, cfg, true);
             return true;
         }
     }

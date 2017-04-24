@@ -1,0 +1,22 @@
+{
+  "name": "cwf-react",
+  "version": "1.0.0",
+  "description": "React libraries",
+  "main": "",
+  "keywords": [
+    "cwf",
+    "react"
+  ],
+  "author": "CareWeb Framework",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/carewebframework/carewebframework-web.git"
+  },
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "typescript": "~2.2.0"
+  }
+}

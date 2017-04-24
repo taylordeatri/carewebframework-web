@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.carewebframework</groupId>
+		<artifactId>org.carewebframework.web-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<name>CWF React Integration</name>
+	<artifactId>org.carewebframework.web.react</artifactId>
+
+	<properties>
+		<webjar.name>cwf-react</webjar.name>
+        <systemjs>
+        {	'map': {
+        		'cwf-react-widget': 'webjars/cwf-react/cwf/widget.js',
+        	}
+		}
+        </systemjs>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+			    <groupId>com.github.eirslett</groupId>
+			    <artifactId>frontend-maven-plugin</artifactId>
+			    <version>1.4</version>
+				<executions>
+					<execution>
+					    <id>npm setup</id>
+					    <goals>
+					    	<goal>install-node-and-npm</goal>
+					    </goals>
+					    <configuration>
+					    	<nodeVersion>v7.9.0</nodeVersion>
+					    	<npmVersion>4.2.0</npmVersion>
+					    </configuration>
+					</execution>
+					<execution>
+					    <id>npm install</id>
+					    <goals>
+					        <goal>npm</goal>
+					    </goals>
+					    <configuration>
+						  	<srcdir>${basedir}</srcdir>
+					    </configuration>
+					</execution>
+				</executions>				
+			</plugin>
+		</plugins>
+	</build>
+	
+	<dependencies>
+		<!-- React -->
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>react</artifactId>
+			<version>15.5.4</version>		
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>react-dom</artifactId>
+			<version>15.5.4</version>		
+		</dependency>
+		<!-- CareWeb Framework -->
+		<dependency>
+			<groupId>org.carewebframework</groupId>
+			<artifactId>org.carewebframework.web.core</artifactId>
+		</dependency>
+		<!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+</project>
