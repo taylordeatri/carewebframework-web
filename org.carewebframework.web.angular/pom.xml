@@ -15,19 +15,19 @@
 		<webjar.name>cwf-angular</webjar.name>
         <systemjs>
         {	'map': {
-        		'cwf-angular-widget': 'webjars/cwf-angular/cwf/widget.js',
-        		'cwf-angular-bootstrap': 'webjars/cwf-angular/cwf/bootstrap.js',
-		      	'@angular/core': 'webjars/cwf-angular/@angular/core/bundles/core.umd.js',
-		      	'@angular/common': 'webjars/cwf-angular/@angular/common/bundles/common.umd.js',
-		      	'@angular/compiler': 'webjars/cwf-angular/@angular/compiler/bundles/compiler.umd.js',
-		      	'@angular/platform-browser': 'webjars/cwf-angular/@angular/platform-browser/bundles/platform-browser.umd.js',
-		      	'@angular/platform-browser-dynamic': 'webjars/cwf-angular/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
-		      	'@angular/http': 'webjars/cwf-angular/@angular/http/bundles/http.umd.js',
-		      	'@angular/router': 'webjars/cwf-angular/@angular/router/bundles/router.umd.js',
-		      	'@angular/forms': 'webjars/cwf-angular/@angular/forms/bundles/forms.umd.js',
-        		'rxjs': 'webjars/cwf-angular/rxjs',
-        		'core-js': 'webjars/cwf-angular/core-js',
-        		'zone.js': 'webjars/cwf-angular/zone.js/dist/zone.js'
+        		'cwf-angular-widget': 'cwf/widget.js',
+        		'cwf-angular-bootstrap': 'cwf/bootstrap.js',
+		      	'@angular/core': '@angular/core/bundles/core.umd.js',
+		      	'@angular/common': '@angular/common/bundles/common.umd.js',
+		      	'@angular/compiler': '@angular/compiler/bundles/compiler.umd.js',
+		      	'@angular/platform-browser': '@angular/platform-browser/bundles/platform-browser.umd.js',
+		      	'@angular/platform-browser-dynamic': '@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+		      	'@angular/http': '@angular/http/bundles/http.umd.js',
+		      	'@angular/router': '@angular/router/bundles/router.umd.js',
+		      	'@angular/forms': '@angular/forms/bundles/forms.umd.js',
+        		'rxjs': 'rxjs',
+        		'core-js': 'core-js',
+        		'zone.js': 'zone.js/dist/zone.js'
         	},
         	
         	'packages': {
