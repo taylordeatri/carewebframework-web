@@ -27,11 +27,12 @@ package org.carewebframework.web.page;
 
 import java.io.InputStream;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.commons.io.IOUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.common.RegistryMap;
 import org.carewebframework.common.RegistryMap.DuplicateAction;
-import org.carewebframework.common.XMLUtil;
 import org.carewebframework.web.ancillary.ComponentException;
 import org.carewebframework.web.annotation.ComponentDefinition;
 import org.carewebframework.web.annotation.ComponentRegistry;
@@ -56,6 +57,8 @@ public class PageParser {
 
     private final RegistryMap<String, PIParserBase> piParsers = new RegistryMap<>(DuplicateAction.ERROR);
 
+    private final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+
     public static PageParser getInstance() {
         return instance;
     }
@@ -63,6 +66,7 @@ public class PageParser {
     private PageParser() {
         registerPIParser(new PIParserTagLibrary());
         registerPIParser(new PIParserAttribute());
+        documentBuilderFactory.setNamespaceAware(true);
     }
 
     public PageDefinition parse(String src) {
@@ -81,7 +85,7 @@ public class PageParser {
 
     public PageDefinition parse(InputStream stream) {
         try {
-            Document document = XMLUtil.parseXMLFromStream(stream);
+            Document document = documentBuilderFactory.newDocumentBuilder().parse(stream);
             PageDefinition pageDefinition = new PageDefinition();
             parseNode(document, pageDefinition.getRootElement());
             return pageDefinition;
