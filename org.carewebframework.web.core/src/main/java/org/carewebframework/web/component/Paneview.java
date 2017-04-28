@@ -33,7 +33,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 /**
  * A component containing visually separate panes with optional splitter controls.
  */
-@Component(value = "paneview", widgetPackage = "cwf-paneview", widgetClass = "Paneview", parentTag = "*", childTag = @ChildTag("pane"))
+@Component(value = "paneview", widgetModule = "cwf-paneview", widgetClass = "Paneview", parentTag = "*", childTag = @ChildTag("pane"))
 public class Paneview extends BaseUIComponent {
     
     public enum Orientation {

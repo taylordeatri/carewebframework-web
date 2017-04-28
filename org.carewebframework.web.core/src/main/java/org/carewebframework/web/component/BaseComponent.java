@@ -825,7 +825,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     protected void _initProps(Map<String, Object> props) {
         props.put("id", id);
         props.put("wclass", componentDefinition.getWidgetClass());
-        props.put("wpkg", componentDefinition.getWidgetPackage());
+        props.put("wmodule", componentDefinition.getWidgetModule());
         props.put("cntr", isContainer());
         props.put("nmsp", this instanceof INamespace ? true : null);
     }
@@ -1305,7 +1305,7 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     /**
      * Set to true if the content property is to be synced to the client.
-     * 
+     *
      * @param contentSynced If true, the content property is synced to the client.
      */
     protected void setContentSynced(boolean contentSynced) {

@@ -39,7 +39,7 @@ import org.carewebframework.web.model.ModelAndView;
 /**
  * A component acting as a root for a hierarchical collection of nodes.
  */
-@Component(value = "treeview", widgetPackage = "cwf-treeview", widgetClass = "Treeview", parentTag = "*", childTag = @ChildTag("treenode"))
+@Component(value = "treeview", widgetModule = "cwf-treeview", widgetClass = "Treeview", parentTag = "*", childTag = @ChildTag("treenode"))
 public class Treeview extends BaseUIComponent implements Iterable<Treenode>, ISupportsModel<Treenode> {
     
     private boolean showRoot;

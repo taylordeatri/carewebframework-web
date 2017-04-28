@@ -34,7 +34,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 /*
  * A single pane within a pane view.
  */
-@Component(value = "pane", widgetPackage = "cwf-paneview", widgetClass = "Pane", content = ContentHandling.AS_CHILD, parentTag = "paneview", childTag = @ChildTag("*"))
+@Component(value = "pane", widgetModule = "cwf-paneview", widgetClass = "Pane", content = ContentHandling.AS_CHILD, parentTag = "paneview", childTag = @ChildTag("*"))
 public class Pane extends BaseUIComponent {
     
     private boolean splittable;

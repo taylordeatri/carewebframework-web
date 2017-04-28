@@ -8,7 +8,7 @@ import org.carewebframework.web.component.BaseInputComponent;
 /**
  * CWF wrapper for HighCharts component.
  */
-@Component(value = "codemirror", widgetPackage = "cwf-codemirror", widgetClass = "CodeMirror", parentTag = "*")
+@Component(value = "codemirror", widgetModule = "cwf-codemirror", widgetClass = "CodeMirror", parentTag = "*")
 public class CodeMirror extends BaseInputComponent<String> {
     
     private String mode;

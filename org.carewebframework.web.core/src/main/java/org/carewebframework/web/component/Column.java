@@ -40,7 +40,7 @@ import org.carewebframework.web.model.Sorting.SortToggle;
 /**
  * A component representing a single column within a grid.
  */
-@Component(value = "column", widgetClass = "Column", widgetPackage = "cwf-grid", parentTag = "columns", childTag = @ChildTag("*"))
+@Component(value = "column", widgetClass = "Column", widgetModule = "cwf-grid", parentTag = "columns", childTag = @ChildTag("*"))
 public class Column extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPositionNone> {
 
     private Comparator<?> sortComparator;

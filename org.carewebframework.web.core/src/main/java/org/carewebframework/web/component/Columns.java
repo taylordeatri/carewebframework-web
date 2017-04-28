@@ -31,7 +31,7 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 /**
  * Component serving as a container for a grid's columns.
  */
-@Component(value = "columns", widgetPackage = "cwf-grid", widgetClass = "Columns", parentTag = "grid", childTag = @ChildTag("column"))
+@Component(value = "columns", widgetModule = "cwf-grid", widgetClass = "Columns", parentTag = "grid", childTag = @ChildTag("column"))
 public class Columns extends BaseUIComponent {
     
     private Column sortColumn;

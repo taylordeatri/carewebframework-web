@@ -33,7 +33,7 @@ import org.carewebframework.web.component.BaseUIComponent;
 /**
  * Container for a react component.
  */
-@Component(value = "react", widgetPackage = "cwf-react-widget", widgetClass = "ReactWidget", parentTag = "*")
+@Component(value = "react", widgetModule = "cwf-react-widget", widgetClass = "ReactWidget", parentTag = "*")
 public class ReactComponent extends BaseUIComponent {
     
     private String src;

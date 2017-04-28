@@ -31,10 +31,10 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 /**
  * A component for selecting an image from a collection of images.
  */
-@Component(value = "imagepicker", widgetPackage = "cwf-picker", widgetClass = "Imagepicker", parentTag = "*", childTag = @ChildTag("imagepickeritem"))
+@Component(value = "imagepicker", widgetModule = "cwf-picker", widgetClass = "Imagepicker", parentTag = "*", childTag = @ChildTag("imagepickeritem"))
 public class ImagePicker extends BasePickerComponent<String> {
     
-    @Component(value = "imagepickeritem", widgetPackage = "cwf-picker", widgetClass = "Imagepickeritem", parentTag = "imagepicker")
+    @Component(value = "imagepickeritem", widgetModule = "cwf-picker", widgetClass = "Imagepickeritem", parentTag = "imagepicker")
     public static class ImagePickeritem extends BasePickerItem<String> {
         
         public ImagePickeritem() {

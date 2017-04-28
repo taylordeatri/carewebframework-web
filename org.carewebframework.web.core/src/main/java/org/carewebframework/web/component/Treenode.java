@@ -39,7 +39,7 @@ import org.carewebframework.web.event.EventUtil;
 /**
  * A single node in a tree view.
  */
-@Component(value = "treenode", widgetPackage = "cwf-treeview", widgetClass = "Treenode", parentTag = { "treeview",
+@Component(value = "treenode", widgetModule = "cwf-treeview", widgetClass = "Treenode", parentTag = { "treeview",
         "treenode" }, childTag = @ChildTag("treenode"))
 public class Treenode extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPositionNone> implements Iterable<Treenode> {
 

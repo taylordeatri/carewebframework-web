@@ -34,7 +34,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 /**
  * A component representing a single cell within a grid row.
  */
-@Component(value = "rowcell", widgetPackage = "cwf-grid", widgetClass = "Rowcell", content = ContentHandling.AS_CHILD, parentTag = "row", childTag = @ChildTag("*"))
+@Component(value = "rowcell", widgetModule = "cwf-grid", widgetClass = "Rowcell", content = ContentHandling.AS_CHILD, parentTag = "row", childTag = @ChildTag("*"))
 public class Rowcell extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
     
     private int colspan = 1;

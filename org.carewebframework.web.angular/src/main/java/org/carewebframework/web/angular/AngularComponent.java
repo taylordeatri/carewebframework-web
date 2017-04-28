@@ -33,7 +33,7 @@ import org.carewebframework.web.component.BaseUIComponent;
 /**
  * Container for an angular component.
  */
-@Component(value = "angular", widgetPackage = "cwf-angular-widget", widgetClass = "AngularWidget", parentTag = "*")
+@Component(value = "angular", widgetModule = "cwf-angular-widget", widgetClass = "AngularWidget", parentTag = "*")
 public class AngularComponent extends BaseUIComponent {
 
     private String src;

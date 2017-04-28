@@ -33,7 +33,7 @@ import org.springframework.util.Assert;
 /**
  * A component for uploading files to the server.
  */
-@Component(value = "upload", widgetPackage = "cwf-upload", widgetClass = "Upload", parentTag = "*")
+@Component(value = "upload", widgetModule = "cwf-upload", widgetClass = "Upload", parentTag = "*")
 public class Upload extends BaseUIComponent {
     
     private boolean multiple;

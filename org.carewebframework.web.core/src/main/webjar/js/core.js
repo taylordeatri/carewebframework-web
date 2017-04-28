@@ -456,14 +456,14 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			var pkg;
 			
 			props.id = props.id || cwf.uniqueId();
-			props.wpkg = props.wpkg || 'cwf-widget';
-			return cwf.load(props.wpkg, _create);
+			props.wmodule = props.wmodule || 'cwf-widget';
+			return cwf.load(props.wmodule, _create);
 
 			function _create(pkg) {
 				var clazz = pkg[props.wclass];
 				
 				if (!clazz) { 
-					throw new Error('Unrecognized widget class: ' + props.wpkg + '.' + props.wclass);
+					throw new Error('Unrecognized widget class: ' + props.wmodule + '.' + props.wclass);
 				}
 				
 				return cwf.widget.register(props.id, new clazz(parent, props, state));

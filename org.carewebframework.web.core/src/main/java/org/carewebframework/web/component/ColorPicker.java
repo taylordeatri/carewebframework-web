@@ -34,10 +34,10 @@ import org.carewebframework.web.annotation.Component.ChildTag;
 /**
  * A component for selecting a color from a palette of colors.
  */
-@Component(value = "colorpicker", widgetPackage = "cwf-picker", widgetClass = "Colorpicker", parentTag = "*", childTag = @ChildTag("colorpickeritem"))
+@Component(value = "colorpicker", widgetModule = "cwf-picker", widgetClass = "Colorpicker", parentTag = "*", childTag = @ChildTag("colorpickeritem"))
 public class ColorPicker extends BasePickerComponent<Color> {
     
-    @Component(value = "colorpickeritem", widgetPackage = "cwf-picker", widgetClass = "Colorpickeritem", parentTag = "colorpicker")
+    @Component(value = "colorpickeritem", widgetModule = "cwf-picker", widgetClass = "Colorpickeritem", parentTag = "colorpicker")
     public static class ColorPickeritem extends BasePickerItem<Color> {
         
         public ColorPickeritem() {

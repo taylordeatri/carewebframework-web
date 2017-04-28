@@ -33,7 +33,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 /**
  * A grid component.
  */
-@Component(value = "grid", widgetPackage = "cwf-grid", widgetClass = "Grid", parentTag = "*", childTag = {
+@Component(value = "grid", widgetModule = "cwf-grid", widgetClass = "Grid", parentTag = "*", childTag = {
         @ChildTag(value = "rows", maximum = 1), @ChildTag(value = "columns", maximum = 1) })
 public class Grid extends BaseUIComponent {
 

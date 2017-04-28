@@ -120,11 +120,11 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 			this._detachAncillaries();
 		},
 		
-		getAncestor: function(wclass, wpkg) {
+		getAncestor: function(wclass, wmodule) {
 			var parent = this._parent;
-			wpkg = wpkg || this.wpkg;
+			wmodule = wmodule || this.wmodule;
 			
-			while (parent && (parent.wclass !== wclass || parent.wpkg !== wpkg)) {
+			while (parent && (parent.wclass !== wclass || parent.wmodule !== wmodule)) {
 				parent = parent._parent;
 			}
 			

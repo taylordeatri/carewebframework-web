@@ -35,7 +35,7 @@ import org.carewebframework.web.event.OpenEvent;
 /**
  * A detail component.
  */
-@Component(value = "detail", widgetPackage = "cwf-detail", widgetClass = "Detail", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
+@Component(value = "detail", widgetModule = "cwf-detail", widgetClass = "Detail", content = ContentHandling.AS_CHILD, parentTag = "*", childTag = @ChildTag("*"))
 public class Detail extends BaseLabeledComponent<BaseLabeledComponent.LabelPositionNone> {
 
     private boolean open;

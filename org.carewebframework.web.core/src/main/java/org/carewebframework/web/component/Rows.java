@@ -41,7 +41,7 @@ import org.carewebframework.web.model.ModelAndView;
 /**
  * A component serving as a container for a grid's rows.
  */
-@Component(value = "rows", widgetPackage = "cwf-grid", widgetClass = "Rows", parentTag = "grid", childTag = @ChildTag("row"))
+@Component(value = "rows", widgetModule = "cwf-grid", widgetClass = "Rows", parentTag = "grid", childTag = @ChildTag("row"))
 public class Rows extends BaseUIComponent implements ISupportsModel<Row> {
     
     public enum Selectable {

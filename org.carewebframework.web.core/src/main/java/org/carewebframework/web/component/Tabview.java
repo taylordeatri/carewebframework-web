@@ -33,7 +33,7 @@ import org.carewebframework.web.annotation.Component.PropertySetter;
 /**
  * A component supporting a tab-based view.
  */
-@Component(value = "tabview", widgetPackage = "cwf-tabview", widgetClass = "Tabview", parentTag = "*", childTag = @ChildTag("tab"))
+@Component(value = "tabview", widgetModule = "cwf-tabview", widgetClass = "Tabview", parentTag = "*", childTag = @ChildTag("tab"))
 public class Tabview extends BaseUIComponent {
     
     public enum TabPosition {

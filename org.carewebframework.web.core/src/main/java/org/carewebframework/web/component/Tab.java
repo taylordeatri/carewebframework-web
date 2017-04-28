@@ -40,7 +40,7 @@ import org.carewebframework.web.event.EventUtil;
 /**
  * A single tab in a tab view.
  */
-@Component(value = "tab", widgetPackage = "cwf-tabview", widgetClass = "Tab", content = ContentHandling.AS_CHILD, parentTag = "tabview", childTag = @ChildTag("*"))
+@Component(value = "tab", widgetModule = "cwf-tabview", widgetClass = "Tab", content = ContentHandling.AS_CHILD, parentTag = "tabview", childTag = @ChildTag("*"))
 public class Tab extends BaseLabeledImageComponent<BaseLabeledComponent.LabelPositionNone> {
 
     private boolean closable;

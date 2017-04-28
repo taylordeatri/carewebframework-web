@@ -27,7 +27,7 @@ import org.carewebframework.web.component.Page;
 /**
  * CWF wrapper for HighCharts component.
  */
-@Component(value = "hchart", widgetPackage = "cwf-hchart", widgetClass = "HChart", parentTag = "*")
+@Component(value = "hchart", widgetModule = "cwf-hchart", widgetClass = "HChart", parentTag = "*")
 public class Chart extends BaseUIComponent implements IOptionMapConverter {
 
     private static final String GLOBAL_SETTINGS = Chart.class.getName() + ".global";
