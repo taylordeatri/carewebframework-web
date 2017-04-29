@@ -12,6 +12,10 @@ body {
 	outline: 0!important;
 }
 
+a[disabled] {
+	pointer-events: none;
+}
+
 a:not([href]) {
 	cursor: default;
 }
