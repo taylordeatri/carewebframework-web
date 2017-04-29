@@ -1633,12 +1633,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 		},
 		
 		_trigger: function(which, notself) {
-			var event = $.Event(which, {
-				relatedTarget: this._related$ ? this._related$.cwf$widget() : null
-			});
-			
-			notself ? null : this.trigger(event);
-			event.relatedTarget ? event.relatedTarget.trigger(event) : null;
+			if (!notself) {
+				var event = $.Event(which, {
+					relatedTarget: this._related$ ? this._related$.cwf$widget() : null
+				});
+				
+				this.trigger(event);
+			}
 		},
 		
 		/*------------------------------ Other ------------------------------*/

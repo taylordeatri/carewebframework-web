@@ -84,9 +84,11 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'cwf-tabview-css'], function(cw
 				self = this;
 				
 			if (!this._ancillaries.pane$) {
-				var pane = '<div id="${id}-pane" class="cwf_tab-pane hidden"/>';
-				this._ancillaries.pane$ = $(this.resolveEL(pane));
-				this._ancillaries.pane$.data('attach', _attachPane);
+				var pane = '<div id="${id}-pane" class="cwf_tab-pane hidden"/>',
+					pane$ = $(this.resolveEL(pane));
+				this._ancillaries.pane$ = pane$;
+				pane$.data('attach', _attachPane);
+				pane$.data('cwf_widget', this);
 				_attachPane();
 			}
 			
@@ -106,6 +108,16 @@ define('cwf-tabview', ['cwf-core', 'cwf-widget', 'cwf-tabview-css'], function(cw
 			if (v) {
 				this.forward(this.sub$('cls'), 'click', 'close');
 			}
+		},
+		
+		context: function(v) {
+			this._super.apply(this, arguments);
+			this.contextMenu(this._ancillaries.pane$, v);
+		},
+		
+		popup: function(v) {
+			this._super.apply(this, arguments);
+			this.hoverPopup(this._ancillaries.pane$, v);
 		},
 		
 		selected: function(v) {
