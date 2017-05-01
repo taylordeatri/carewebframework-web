@@ -2304,7 +2304,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 		/*------------------------------ State ------------------------------*/
 		
 		clazz: function(v) {
-			this._super();
+			this._super.apply(this, arguments);
 			this.attr('class', v, this.sub$('btn'));
 		}
 		
