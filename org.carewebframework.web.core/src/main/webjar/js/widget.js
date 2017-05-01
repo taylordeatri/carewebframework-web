@@ -728,8 +728,8 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 		 * is active.
 		 * 
 		 * @param {string} key The name of the state.
-		 * @param {boolean} [fromServer] If true, do not sync state back to server..
 		 * @param {*} value The new value for the state.
+		 * @param {boolean} [fromServer] If true, do not sync state back to server..
 		 * @return {boolean} True if the state value changed.
 		 */
 		updateState: function(key, value, fromServer) {

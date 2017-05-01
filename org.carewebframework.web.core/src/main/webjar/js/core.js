@@ -743,7 +743,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	 * 		objects.
 	 */
 	combine: function(sources, filter) {
-		target = {};
+		var target = {};
 		
 		for (var i = 0; i < sources.length; i++) {
 			if (sources[i]) {
