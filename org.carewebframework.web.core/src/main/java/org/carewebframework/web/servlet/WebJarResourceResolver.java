@@ -38,33 +38,33 @@ import org.springframework.web.servlet.resource.ResourceResolverChain;
 /**
  * Inserts web jar version into request path. Converts
  * <p>
- * <code>webjars/{package-name}/**</code>
+ * <code>webjars/{webjar-name}/**</code>
  * </p>
  * to
  * <p>
- * <code>webjars/{package-name}/{package-version}/**</code>
+ * <code>webjars/{webjar-name}/{webjar-version}/**</code>
  * </p>
  */
 public class WebJarResourceResolver extends AbstractResourceResolver {
-    
+
     private String getResourcePath(String path) {
         int i = path.indexOf("/");
-        String module = path.substring(0, i);
-        WebJar webjar = WebJarLocator.getInstance().getWebjar(module);
+        String name = path.substring(0, i);
+        WebJar webjar = WebJarLocator.getInstance().getWebjar(name);
         return webjar == null ? path : path.substring(0, i) + "/" + webjar.getVersion() + path.substring(i);
     }
-
+    
     @Override
     protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath,
                                                List<? extends Resource> locations, ResourceResolverChain chain) {
         requestPath = getResourcePath(requestPath);
         return chain.resolveResource(request, requestPath, locations);
     }
-    
+
     @Override
     protected String resolveUrlPathInternal(String resourceUrlPath, List<? extends Resource> locations,
                                             ResourceResolverChain chain) {
-        
+
         resourceUrlPath = getResourcePath(resourceUrlPath);
         return chain.resolveUrlPath(resourceUrlPath, locations);
     }
