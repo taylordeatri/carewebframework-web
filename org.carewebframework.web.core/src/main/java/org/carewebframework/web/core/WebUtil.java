@@ -49,6 +49,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.common.StrUtil;
 import org.carewebframework.web.client.ExecutionContext;
+import org.carewebframework.web.servlet.WebJarResourceResolver;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -57,9 +58,9 @@ import org.springframework.core.io.UrlResource;
  * Class to manage instantiation of framework containers.
  */
 public class WebUtil {
-
+    
     private static Boolean debugEnabled;
-
+    
     /**
      * Initialize the debug state. This is determined by the <code>cwf.debug</code> property value
      * taken from the system properties or, absent that, from the the context parameter settings in
@@ -72,12 +73,12 @@ public class WebUtil {
         if (debugEnabled != null) {
             throw new IllegalStateException("Debug status has already been initialized.");
         }
-
+        
         String debug = System.getProperty("cwf.debug");
         debug = debug != null ? debug : servletContext.getInitParameter("cwf.debug");
         debugEnabled = debug != null && (debug.isEmpty() || BooleanUtils.toBoolean(debug));
     }
-
+    
     /**
      * Returns the debug state of the servlet. When enabled (see {@link #initDebug}), the debug
      * state can affect various application behaviors such as disabling javascript minification.
@@ -89,10 +90,10 @@ public class WebUtil {
         if (debugEnabled == null) {
             throw new IllegalStateException("Debug status has not been initialized.");
         }
-
+        
         return debugEnabled;
     }
-
+    
     /**
      * Converts the queryString to a map.
      *
@@ -103,7 +104,7 @@ public class WebUtil {
     public static Map<String, String> queryStringToMap(String queryString) {
         return queryStringToMap(queryString, ",");
     }
-
+    
     /**
      * Converts the queryString to a map.
      *
@@ -116,25 +117,25 @@ public class WebUtil {
         if (queryString == null || queryString.isEmpty()) {
             return null;
         }
-
+        
         try {
             valueDelimiter = valueDelimiter == null ? "" : valueDelimiter;
             URI uri = new URI(queryString.startsWith("?") ? queryString : ("?" + queryString));
             List<NameValuePair> params = URLEncodedUtils.parse(uri, StrUtil.CHARSET);
-
+            
             Map<String, String> result = new HashMap<>();
-
+            
             for (NameValuePair nvp : params) {
                 String value = result.get(nvp.getName());
                 result.put(nvp.getName(), (value == null ? "" : value + valueDelimiter) + nvp.getValue());
             }
-
+            
             return result;
         } catch (URISyntaxException e) {
             return null;
         }
     }
-
+    
     /**
      * Adds the specified query string to the url.
      *
@@ -145,7 +146,7 @@ public class WebUtil {
      */
     public static String addQueryString(String url, String queryString) {
         Validate.notNull(url, "The url must not be null");
-
+        
         if (!StringUtils.isEmpty(queryString)) {
             if (url.endsWith("?")) {
                 url += queryString;
@@ -155,10 +156,10 @@ public class WebUtil {
                 url += "?" + queryString;
             }
         }
-
+        
         return url;
     }
-
+    
     /**
      * Returns the query parameter string from the request url.
      *
@@ -169,7 +170,7 @@ public class WebUtil {
         int i = requestUrl == null ? -1 : requestUrl.indexOf("?");
         return i == -1 ? "" : requestUrl.substring(i + 1);
     }
-
+    
     /**
      * Returns the original request url from the execution context.
      *
@@ -178,7 +179,7 @@ public class WebUtil {
     public static String getRequestUrl() {
         return ExecutionContext.getPage().getBrowserInfo("requestURL");
     }
-
+    
     /**
      * Returns the base url from the execution context.
      *
@@ -190,7 +191,7 @@ public class WebUtil {
         int i = url.indexOf(path);
         return url.substring(0, i + path.length()) + "/";
     }
-    
+
     /**
      * Returns the named cookie from the current request.
      *
@@ -201,7 +202,7 @@ public class WebUtil {
     public static Cookie getCookie(String cookieName) {
         return getCookie(cookieName, RequestUtil.getRequest());
     }
-
+    
     /**
      * Returns the named cookie from the specified request. When values are retrieved, they should
      * be decoded.
@@ -216,7 +217,7 @@ public class WebUtil {
         Validate.notNull(cookieName, "The cookieName must not be null");
         Validate.notNull(httpRequest, "The httpRequest must not be null");
         Cookie[] cookies = httpRequest.getCookies();
-
+        
         if (cookies != null) {
             for (Cookie cookie : httpRequest.getCookies()) {
                 if (cookieName.equals(cookie.getName())) {
@@ -224,10 +225,10 @@ public class WebUtil {
                 }
             }
         }
-
+        
         return null;
     }
-
+    
     /**
      * Returns the value from the named cookie from the specified request. The value is decoded with
      * for security and consistency (Version 0+ of Cookies and web containers)
@@ -243,7 +244,7 @@ public class WebUtil {
         Cookie cookie = getCookie(cookieName, httpRequest);
         return cookie == null ? null : decodeCookieValue(cookie.getValue());
     }
-
+    
     /**
      * <p>
      * Encodes a plain text cookie value.
@@ -259,14 +260,14 @@ public class WebUtil {
      */
     public static String encodeCookieValue(String cookieValuePlainText) {
         Validate.notNull(cookieValuePlainText, "The cookieValuePlainText must not be null");
-
+        
         try {
             return URLEncoder.encode(Base64.encodeBase64String(cookieValuePlainText.getBytes()), StrUtil.CHARSET);
         } catch (Exception e) {
             throw new RuntimeException("Unexpected exception occurred encoding cookie value", e);
         }
     }
-
+    
     /**
      * <p>
      * Decodes an encoded cookie value
@@ -282,14 +283,14 @@ public class WebUtil {
      */
     public static String decodeCookieValue(String encodedCookieValue) {
         Validate.notNull(encodedCookieValue, "The encodedCookieValue must not be null");
-
+        
         try {
             return new String(Base64.decodeBase64(URLDecoder.decode(encodedCookieValue, StrUtil.CHARSET)));
         } catch (Exception e) {
             throw new RuntimeException("Unexpected exception occurred decoding cookie value", e);
         }
     }
-
+    
     /**
      * Returns the value from the named cookie from the specified request. The value is decoded.
      *
@@ -302,7 +303,7 @@ public class WebUtil {
     public static String getCookieValue(String cookieName) {
         return getCookieValue(cookieName, RequestUtil.getRequest());
     }
-
+    
     /**
      * Sets a cookie into the response. Cookies are URLEncoded for consistency (Version 0+ of
      * Cookies)
@@ -319,11 +320,11 @@ public class WebUtil {
                                    HttpServletRequest httpRequest) {
         Validate.notNull(httpResponse, "The httpResponse must not be null");
         Cookie cookie = getCookie(cookieName, httpRequest);
-
+        
         if (value != null) {
             value = encodeCookieValue(value);
         }
-
+        
         if (cookie == null) {
             if (value == null) {
                 return null;
@@ -334,40 +335,46 @@ public class WebUtil {
         } else {
             cookie.setValue(value);
         }
-
+        
         if (httpRequest.isSecure()) {
             cookie.setSecure(true);
         }
-
+        
         httpResponse.addCookie(cookie);
         return cookie;
     }
-
+    
     public static Resource getResource(String src) {
         try {
             Resource resource;
-
+            
             if (src.startsWith("web/") || src.startsWith("/web/")) {
                 resource = new ClassPathResource(src);
             } else if (src.matches("^.*\\:\\/.*")) {
                 resource = new UrlResource(src);
             } else {
+                src = src.startsWith("/") ? src : "/" + src;
+                
+                if (src.startsWith("/webjars/")) {
+                    src = "/webjars/" + WebJarResourceResolver.getResourcePath(src.substring(9));
+                }
+                
                 ServletContext ctx = ExecutionContext.getSession().getServletContext();
                 URL url = ctx.getResource(src);
                 resource = url == null ? null : new UrlResource(url);
             }
-
+            
             if (resource == null || !resource.exists()) {
                 throw new FileNotFoundException(src);
             }
-
+            
             return resource;
-
+            
         } catch (Exception e) {
             throw MiscUtil.toUnchecked(e);
         }
     }
-
+    
     /**
      * Enforce static class.
      */

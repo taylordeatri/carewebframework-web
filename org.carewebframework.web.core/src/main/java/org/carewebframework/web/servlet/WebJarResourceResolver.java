@@ -46,25 +46,25 @@ import org.springframework.web.servlet.resource.ResourceResolverChain;
  * </p>
  */
 public class WebJarResourceResolver extends AbstractResourceResolver {
-
-    private String getResourcePath(String path) {
+    
+    public static String getResourcePath(String path) {
         int i = path.indexOf("/");
         String name = path.substring(0, i);
         WebJar webjar = WebJarLocator.getInstance().getWebjar(name);
         return webjar == null ? path : path.substring(0, i) + "/" + webjar.getVersion() + path.substring(i);
     }
-    
+
     @Override
     protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath,
                                                List<? extends Resource> locations, ResourceResolverChain chain) {
         requestPath = getResourcePath(requestPath);
         return chain.resolveResource(request, requestPath, locations);
     }
-
+    
     @Override
     protected String resolveUrlPathInternal(String resourceUrlPath, List<? extends Resource> locations,
                                             ResourceResolverChain chain) {
-
+        
         resourceUrlPath = getResourcePath(resourceUrlPath);
         return chain.resolveUrlPath(resourceUrlPath, locations);
     }
