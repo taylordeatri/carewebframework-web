@@ -3,8 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { ApplicationRef, ComponentFactory, ComponentFactoryResolver, NgModuleRef, NgZone, ComponentRef } from '@angular/core';
 
-export function AppContext(module: any, selector: string) {
-  var App = module.AngularComponent;
+export interface IComponentModule {
+  AngularComponent: any;
+  ngModule?: NgModule;
+}
+
+export function AppContext(componentModule: IComponentModule, selector: string) {
+  var App = componentModule.AngularComponent;
 
   var zone : NgZone;
   
@@ -12,15 +17,15 @@ export function AppContext(module: any, selector: string) {
   
   var moduleRef : NgModuleRef<AppModule>;
   
-  var module_decorations = {
+  var ngModule : NgModule = {
     imports: [ BrowserModule ],
     declarations: [ App ],
     entryComponents: [ App ]
   }
 
-  module.decorations ? Object.assign(module_decorations, module.decorations) : null;
+  componentModule.ngModule ? Object.assign(ngModule, componentModule.ngModule) : null;
 
-  @NgModule(module_decorations)
+  @NgModule(ngModule)
   class AppModule {
       constructor(
           private resolver : ComponentFactoryResolver,

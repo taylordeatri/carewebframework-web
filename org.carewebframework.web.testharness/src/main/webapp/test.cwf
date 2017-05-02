@@ -5,6 +5,9 @@
 	<window title="CWF Component Tests" class="flavor:panel-primary" 
 		controller="org.carewebframework.web.testharness.MainController">
 		<tabview name="tabview" height="500px" tabPosition="left">
+			<tab label="Angular">
+				<import src="web/org/carewebframework/web/angular/example/pomodoro.cwf" />
+			</tab>
 			
 			<tab label="Buttons">
 				<import src="pages/buttons.cwf" />
@@ -54,6 +57,10 @@
 				<import src="pages/panes.cwf" />
 			</tab>
 
+			<tab label="React">
+				<import src="web/org/carewebframework/web/react/example/pomodoro.cwf" />
+			</tab>
+			
 			<tab label="Sandbox">
 				<import src="web/org/carewebframework/web/sandbox/main.cwf" />
 			</tab>

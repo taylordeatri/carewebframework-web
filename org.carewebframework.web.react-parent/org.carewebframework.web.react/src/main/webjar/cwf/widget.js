@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-react', ['cwf-core', 'cwf-widget', 'react', 'react-dom'], 
+define('cwf-react-widget', ['cwf-core', 'cwf-widget', 'react', 'react-dom'], 
 	function(cwf, wgt, React, ReactDOM) { 
 
 	return {

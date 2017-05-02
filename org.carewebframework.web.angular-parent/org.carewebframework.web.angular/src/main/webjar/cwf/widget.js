@@ -1,6 +1,6 @@
 'use strict';
 
-define('cwf-angular', ['cwf-core', 'cwf-widget', 'cwf-angular-bootstrap', 'core-js/client/shim', '@angular/common', '@angular/core', '@angular/platform-browser', '@angular/platform-browser-dynamic', 'zone.js', 'rxjs'], 
+define('cwf-angular-widget', ['cwf-core', 'cwf-widget', 'cwf-angular-bootstrap', 'core-js/client/shim', '@angular/common', '@angular/core', '@angular/platform-browser', '@angular/platform-browser-dynamic', 'zone.js', 'rxjs'], 
 	function(cwf, wgt, bootstrap, shim, common, core, platform_browser, platform_browser_dynamic, zone, rxjs) { 
 
 	cwf.debug ? null : core.enableProdMode();
