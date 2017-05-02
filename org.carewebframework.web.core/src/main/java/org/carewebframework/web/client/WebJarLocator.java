@@ -58,30 +58,30 @@ import com.fasterxml.jackson.databind.node.TextNode;
  * classic format has been extended to handle both RequireJS and SystemJS configuration data.
  */
 public class WebJarLocator implements ApplicationContextAware {
-    
-    private static final Log log = LogFactory.getLog(WebJarLocator.class);
-    
-    private static final WebJarLocator instance = new WebJarLocator();
-    
-    private static final String[] OPEN_TAGS = { "<requirejs>", "<systemjs>" };
-    
-    private static final String[] CLOSE_TAGS = { "</requirejs>", "</systemjs>" };
-    
-    private ObjectNode config;
 
+    private static final Log log = LogFactory.getLog(WebJarLocator.class);
+
+    private static final WebJarLocator instance = new WebJarLocator();
+
+    private static final String[] OPEN_TAGS = { "<requirejs>", "<systemjs>" };
+
+    private static final String[] CLOSE_TAGS = { "</requirejs>", "</systemjs>" };
+
+    private ObjectNode config;
+    
     private String webjarInit;
-    
+
     private ApplicationContext applicationContext;
-    
+
     private final Map<String, WebJar> webjars = new HashMap<>();
-    
+
     public static WebJarLocator getInstance() {
         return instance;
     }
-    
+
     private WebJarLocator() {
     }
-    
+
     /**
      * Returns the initialization data for the SystemJS config call.
      *
@@ -90,7 +90,7 @@ public class WebJarLocator implements ApplicationContextAware {
     public String getWebJarInit() {
         return webjarInit;
     }
-    
+
     /**
      * Returns a copy of the configuration.
      *
@@ -99,48 +99,54 @@ public class WebJarLocator implements ApplicationContextAware {
     public ObjectNode getConfig() {
         return config.deepCopy();
     }
-
-    public WebJar getWebjar(String module) {
-        return webjars.get(module);
-    }
     
+    /**
+     * Finds a web jar given its unique name.
+     *
+     * @param name The web jar name
+     * @return The corresponding web jar, or null if not found.
+     */
+    public WebJar getWebjar(String name) {
+        return webjars.get(name);
+    }
+
     /**
      * Locate and process all web jars.
      */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
-        
+
         try {
             Resource[] resources = applicationContext.getResources("classpath*:/META-INF/resources/webjars/?*/?*/");
             ObjectMapper parser = new ObjectMapper().configure(ALLOW_UNQUOTED_FIELD_NAMES, true)
                     .configure(ALLOW_SINGLE_QUOTES, true);
             config = createConfig(parser);
-            
+
             for (Resource resource : resources) {
                 try {
                     if (log.isDebugEnabled()) {
                         log.debug("Parsing configuration data for web jar: " + resource);
                     }
-                    
+
                     WebJar webjar = new WebJar(resource);
-                    webjars.put(webjar.getModule(), webjar);
+                    webjars.put(webjar.getName(), webjar);
                     boolean success = tryPOMFormat(webjar, parser) || tryBowerFormat(webjar, parser)
                             || tryNPMFormat(webjar, parser);
-                    
+
                     if (success) {
                         JSONUtil.merge(config, webjar.getConfig(), true);
                     } else {
-                        log.warn("No configuration information found for web jar: " + webjar.getModule());
+                        log.warn("No configuration information found for web jar: " + webjar.getName());
                     }
                 } catch (Exception e) {
                     log.error("Error extracting configuration information from web jar: " + resource, e);
                 }
             }
-            
+
             doConfigOverrides("classpath*:/META-INF/", parser);
             doConfigOverrides("WEB-INF/", parser);
-            
+
             if (WebUtil.isDebugEnabled()) {
                 webjarInit = parser.writerWithDefaultPrettyPrinter().writeValueAsString(config);
             } else {
@@ -150,7 +156,13 @@ public class WebJarLocator implements ApplicationContextAware {
             throw MiscUtil.toUnchecked(e);
         }
     }
-
+    
+    /**
+     * Creates a configuration with empty map, paths, and packages nodes.
+     *
+     * @param parser The JSON parser.
+     * @return The newly created configuration.
+     */
     private ObjectNode createConfig(ObjectMapper parser) {
         ObjectNode config = parser.createObjectNode();
         config.set("map", parser.createObjectNode());
@@ -158,30 +170,30 @@ public class WebJarLocator implements ApplicationContextAware {
         config.set("packages", parser.createObjectNode());
         return config;
     }
-    
+
     /**
      * Settings in the final configuration may be overridden in systemjs.config.json files.
      *
      * @param path The path to search for configuration override files.
-     * @param parser The parser.
+     * @param parser The JSON parser.
      */
     private void doConfigOverrides(String path, ObjectMapper parser) {
         try {
             Resource[] resources = applicationContext.getResources(path + "systemjs.config.json");
-            
+
             for (Resource resource : resources) {
                 try (InputStream is = resource.getInputStream()) {
                     JSONUtil.merge(config, parser.readTree(is), true);
                 }
             }
-
+            
         } catch (FileNotFoundException e) {
             // ignore
         } catch (IOException e) {
             throw MiscUtil.toUnchecked(e);
         }
     }
-    
+
     /**
      * Determine if the configuration is embedded in the pom.xml file and process if so. To do this,
      * we have to locate the pom.xml resource and search it for a "requirejs" or "systemjs" property
@@ -204,7 +216,7 @@ public class WebJarLocator implements ApplicationContextAware {
             return false;
         }
     }
-    
+
     /**
      * Extracts, parses, and merges the "requirejs" or "systemjs" property value from the pom.xml.
      *
@@ -219,47 +231,51 @@ public class WebJarLocator implements ApplicationContextAware {
             Iterator<String> iter = IOUtils.lineIterator(is, StandardCharsets.UTF_8);
             StringBuilder sb = null;
             int tag = -1;
-            
+
             while (iter.hasNext()) {
                 String line = iter.next();
-                
+
                 if (sb == null) {
                     for (tag = 0; tag < 2; tag++) {
                         int pos = line.indexOf(OPEN_TAGS[tag]);
-                        
+
                         if (pos >= 0) {
                             sb = new StringBuilder();
                             line = line.substring(pos + OPEN_TAGS[tag].length());
                             break;
                         }
                     }
-                    
+
                     if (sb == null) {
                         continue;
                     }
                 }
-                
+
                 int pos = line.indexOf(CLOSE_TAGS[tag]);
-                
+
                 if (pos >= 0) {
                     sb.append(line.substring(0, pos));
                     break;
                 }
-                
+
                 sb.append(line);
             }
-            
+
             String json = sb == null ? "" : sb.toString().trim();
-            
+
             if (json.isEmpty()) {
                 return false;
+            }
+
+            if (!json.startsWith("{")) {
+                json = "{" + json + "}";
             }
             
             webjar.setConfig((ObjectNode) parser.readTree(json));
             return true;
         }
     }
-    
+
     /**
      * Determine if packaged as Bower and process if so.
      *
@@ -268,9 +284,9 @@ public class WebJarLocator implements ApplicationContextAware {
      * @return True if successfully processed.
      */
     private boolean tryBowerFormat(WebJar webjar, ObjectMapper parser) {
-        return tryBowerOrNPMFormat("bower.json", webjar, parser);
+        return extractConfig("bower.json", webjar, parser);
     }
-    
+
     /**
      * Determine if packaged as NPM and process if so.
      *
@@ -279,37 +295,45 @@ public class WebJarLocator implements ApplicationContextAware {
      * @return True if successfully processed.
      */
     private boolean tryNPMFormat(WebJar webjar, ObjectMapper parser) {
-        return tryBowerOrNPMFormat("package.json", webjar, parser);
+        return extractConfig("package.json", webjar, parser);
     }
-    
-    private boolean tryBowerOrNPMFormat(String configFile, WebJar webjar, ObjectMapper parser) {
-        
-        try {
-            Resource configResource = webjar.createRelative(configFile);
 
+    /**
+     * Attempts to locate and parse a package file.
+     *
+     * @param packageFile The package file name.
+     * @param webjar The web jar.
+     * @param parser The JSON parser.
+     * @return True if the package file was successfully processed.
+     */
+    private boolean extractConfig(String packageFile, WebJar webjar, ObjectMapper parser) {
+
+        try {
+            Resource configResource = webjar.createRelative(packageFile);
+            
             if (configResource.exists()) {
                 try (InputStream is = configResource.getInputStream();) {
                     JsonNode cfg = parser.readTree(is);
                     String name = cfg.get("name").asText();
                     String main = getMain(cfg.get("main"));
-
+                    
                     if (main != null) {
                         ObjectNode config = createConfig(parser);
                         webjar.setConfig(config);
                         ObjectNode paths = (ObjectNode) config.get("paths");
                         paths.set(name, new TextNode(main));
                     }
-                    
+
                     return main != null;
                 }
             }
         } catch (Exception e) {
             // Ignore
         }
-        
+
         return false;
     }
-    
+
     /**
      * Extract the "main" entry.
      *
@@ -321,7 +345,7 @@ public class WebJarLocator implements ApplicationContextAware {
         if (node != null) {
             if (node.isArray()) {
                 Iterator<JsonNode> iter = node.elements();
-                
+
                 if (iter.hasNext()) {
                     return getMain(iter.next());
                 }
@@ -329,8 +353,8 @@ public class WebJarLocator implements ApplicationContextAware {
                 return node.asText();
             }
         }
-        
+
         return null;
     }
-    
+
 }
