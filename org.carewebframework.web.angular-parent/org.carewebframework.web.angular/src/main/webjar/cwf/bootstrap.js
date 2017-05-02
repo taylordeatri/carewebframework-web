@@ -13,17 +13,17 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var platform_browser_dynamic_1 = require("@angular/platform-browser-dynamic");
 var core_2 = require("@angular/core");
-function AppContext(module, selector) {
-    var App = module.AngularComponent;
+function AppContext(componentModule, selector) {
+    var App = componentModule.AngularComponent;
     var zone;
     var componentRef;
     var moduleRef;
-    var module_decorations = {
+    var ngModule = {
         imports: [platform_browser_1.BrowserModule],
         declarations: [App],
         entryComponents: [App]
     };
-    module.decorations ? Object.assign(module_decorations, module.decorations) : null;
+    componentModule.ngModule ? Object.assign(ngModule, componentModule.ngModule) : null;
     var AppModule = (function () {
         function AppModule(resolver, ngZone) {
             this.resolver = resolver;
@@ -38,7 +38,7 @@ function AppContext(module, selector) {
         return AppModule;
     }());
     AppModule = __decorate([
-        core_1.NgModule(module_decorations),
+        core_1.NgModule(ngModule),
         __metadata("design:paramtypes", [core_2.ComponentFactoryResolver,
             core_2.NgZone])
     ], AppModule);
