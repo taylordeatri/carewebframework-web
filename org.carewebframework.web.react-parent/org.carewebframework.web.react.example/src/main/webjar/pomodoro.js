@@ -14,7 +14,11 @@ define('cwf-react-pomodoro', [ 'react', 'react-dom' ],
 
 		var CounterClass = React.createClass({
 			formatTime : function() {
-				return this.props.minutes + ':' + this.props.seconds;
+				return format(this.props.minutes) + ':' + format(this.props.seconds);
+				
+				function format(value) {
+					return (value + 100).toString().substring(1);
+				}
 			},
 
 			render : function() {
