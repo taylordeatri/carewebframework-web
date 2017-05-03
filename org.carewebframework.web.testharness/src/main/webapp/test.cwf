@@ -9,95 +9,95 @@
 				<import src="pages/@intro.cwf" />
 			</tab>
 			
-			<tab label="Angular">
+			<tab label="Angular" hint="${@msg.cwf.testharness.angular}">
 				<import src="web/org/carewebframework/web/angular/example/pomodoro.cwf" />
 			</tab>
 			
-			<tab label="Buttons">
+			<tab label="Buttons" hint="${@msg.cwf.testharness.buttons}">
 				<import src="pages/buttons.cwf" />
 			</tab>
 			
-			<tab label="Chart">
+			<tab label="Chart" hint="${@msg.cwf.testharness.chart}">
 				<import src="pages/chart.cwf" />
 			</tab>
 			
-			<tab label="Conditionals">
+			<tab label="Conditionals" hint="${@msg.cwf.testharness.conditionals}">
 				<import src="pages/conditionals.cwf" />
 			</tab>
 			
-			<tab label="Drag &amp; Drop">
+			<tab label="Drag &amp; Drop" hint="${@msg.cwf.testharness.dnd}">
 				<import src="pages/dnd.cwf" />
 			</tab>
 
-			<tab label="EL Expressions">
+			<tab label="EL Expressions" hint="${@msg.cwf.testharness.explang}">
 				<import src="pages/explang.cwf" />
 			</tab>
 			
-			<tab label="Grid">
+			<tab label="Grid" hint="${@msg.cwf.testharness.grids}">
 				<import src="pages/grids.cwf" />
 			</tab>
 			
-			<tab label="HTML">
+			<tab label="HTML" hint="${@msg.cwf.testharness.html}">
 				<import src="pages/html.cwf" />
 			</tab>
 			
-			<tab label="IFrame">
+			<tab label="IFrame" hint="${@msg.cwf.testharness.iframe}">
 				<import src="pages/iframe.cwf" />
 			</tab>
 			
-			<tab name="tabInputBoxes" label="Input Boxes">
+			<tab name="tabInputBoxes" label="Input Boxes" hint="${@msg.cwf.testharness.boxes}">
 				<import src="pages/boxes.cwf" />
 			</tab>
 
-			<tab label="Menus">
+			<tab label="Menus" hint="${@msg.cwf.testharness.menus}">
 				<import src="pages/menus.cwf" />
 			</tab>
 			
-			<tab label="Miscellaneous">
+			<tab label="Miscellaneous" hint="${@msg.cwf.testharness.misc}">
 				<import src="pages/misc.cwf" />
 			</tab>
 			
-			<tab label="Paneview">
+			<tab label="Paneview" hint="${@msg.cwf.testharness.panes}">
 				<import src="pages/panes.cwf" />
 			</tab>
 
-			<tab label="React">
+			<tab label="React" hint="${@msg.cwf.testharness.react}">
 				<import src="web/org/carewebframework/web/react/example/pomodoro.cwf" />
 			</tab>
 			
-			<tab label="Sandbox">
+			<tab label="Sandbox" hint="${@msg.cwf.testharness.sandbox}">
 				<import src="web/org/carewebframework/web/sandbox/main.cwf" />
 			</tab>
 			
-			<tab label="Scripts">
+			<tab label="Scripts" hint="${@msg.cwf.testharness.scripts}">
 				<import src="pages/scripts.cwf" />
 			</tab>
 			
-			<tab label="Styles" selected="true">
+			<tab label="Styles" selected="true" hint="${@msg.cwf.testharness.styles}">
 				<import src="pages/styles.cwf" />
 			</tab>
 			
-			<tab label="Subclassing">
+			<tab label="Subclassing" hint="${@msg.cwf.testharness.subclass}">
 				<import src="pages/subclass.cwf" />
 			</tab>
 			
-			<tab label="Tabview">
+			<tab label="Tabview" hint="${@msg.cwf.testharness.tabs}">
 				<import src="pages/tabs.cwf" />
 			</tab>			
 												
-			<tab label="Template">
+			<tab label="Template" hint="${@msg.cwf.testharness.template}">
 				<import src="pages/templates.cwf" />
 			</tab>
 			
-			<tab label="Timer">
+			<tab label="Timer" hint="${@msg.cwf.testharness.timer}">
 				<import src="pages/timer.cwf" />
 			</tab>
 			
-			<tab label="Tree">
+			<tab label="Tree" hint="${@msg.cwf.testharness.trees}">
 				<import src="pages/trees.cwf" />
 			</tab>
 			
-			<tab label="Window">
+			<tab label="Window" hint="${@msg.cwf.testharness.windows}">
 				<import src="pages/windows.cwf" />
 			</tab>
 									
