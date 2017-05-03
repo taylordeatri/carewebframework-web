@@ -5,6 +5,10 @@
 	<window title="CWF Component Tests" class="flavor:panel-primary" 
 		controller="org.carewebframework.web.testharness.MainController">
 		<tabview name="tabview" height="500px" tabPosition="left">
+			<tab>
+				<import src="pages/@intro.cwf" />
+			</tab>
+			
 			<tab label="Angular">
 				<import src="web/org/carewebframework/web/angular/example/pomodoro.cwf" />
 			</tab>

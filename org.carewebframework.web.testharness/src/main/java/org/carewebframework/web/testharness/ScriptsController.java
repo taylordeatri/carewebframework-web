@@ -28,36 +28,39 @@ package org.carewebframework.web.testharness;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.event.Event;
 
+/**
+ * Demonstration of supported server-side scripting engines.
+ */
 public class ScriptsController extends BaseController {
-    
+
     @EventHandler(value = "scriptExecution", target = "clojurescript")
     private void clojureExecutionHandler(Event event) {
         log("Clojure script was executed: " + event.getData());
     }
-    
+
     @EventHandler(value = "scriptExecution", target = "groovyscript")
     private void groovyExecutionHandler(Event event) {
         log("Groovy script was executed: " + event.getData());
     }
-    
+
     @EventHandler(value = "scriptExecution", target = "jrubyscript")
     private void jrubyExecutionHandler(Event event) {
         log("JRuby script was executed: " + event.getData());
     }
-    
+
     @EventHandler(value = "scriptExecution", target = "jythonscript")
     private void jythonExecutionHandler(Event event) {
         log("Jython script was executed: " + event.getData());
     }
-    
+
     @EventHandler(value = "scriptExecution", target = "rscript")
     private void renjinExecutionHandler(Event event) {
         log("Renjin script was executed: " + event.getData());
     }
-    
+
     @EventHandler(value = "scriptExecution", target = "externalscript")
     private void externalExecutionHandler(Event event) {
         log("External server script was executed: " + event.getData());
     }
-    
+
 }

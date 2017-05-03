@@ -37,7 +37,6 @@ import org.carewebframework.web.component.Popupbox;
 import org.carewebframework.web.component.Textbox;
 import org.carewebframework.web.event.Event;
 import org.carewebframework.web.event.KeycaptureEvent;
-import org.carewebframework.web.model.IComponentRenderer;
 import org.carewebframework.web.model.ListModel;
 
 /**
@@ -69,25 +68,15 @@ public class BoxesController extends BaseController {
             model.add("Rendered item #" + i);
         }
         
-        lboxRender.getModelAndView(String.class).setModel(model);
-        cboxRender.getModelAndView(String.class).setModel(model);
+        lboxRender.setModel(model);
+        cboxRender.setModel(model);
         
-        lboxRender.getModelAndView(String.class).setRenderer(new IComponentRenderer<Listitem, String>() {
-            
-            @Override
-            public Listitem render(String model) {
-                return new Listitem(model);
-            }
-            
+        lboxRender.setRenderer((String label) -> {
+            return new Listitem(label);
         });
         
-        cboxRender.getModelAndView(String.class).setRenderer(new IComponentRenderer<Comboitem, String>() {
-            
-            @Override
-            public Comboitem render(String model) {
-                return new Comboitem(model);
-            }
-            
+        cboxRender.setRenderer((String label) -> {
+            return new Comboitem(label);
         });
     }
     
