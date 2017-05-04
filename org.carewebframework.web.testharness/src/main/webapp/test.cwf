@@ -1,5 +1,5 @@
  
-<page name="page" title="The Page Title"> 
+<page name="page" title="CWF Test Harness"> 
 	<messagewindow name="messagewindow" />
 	
 	<window title="CWF Component Tests" class="flavor:panel-primary" 
