@@ -56,8 +56,8 @@ define('cwf-react-widget', ['cwf-core', 'cwf-widget', 'react', 'react-dom'],
 				self = this;
 			
 			if (src) {
-				System.import(src).then(function(componentClass) {
-					var element = React.createElement(componentClass);
+				System.import(src).then(function(module) {
+					var element = React.createElement(module.ReactComponent);
 					
 					ReactDOM.render(element, self.widget$[0], function() {
 						self.loaded(this);

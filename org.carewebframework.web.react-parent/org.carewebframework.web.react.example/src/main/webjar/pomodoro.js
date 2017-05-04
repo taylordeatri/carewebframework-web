@@ -1,119 +1,196 @@
 'use strict';
 
-define('cwf-react-pomodoro', [ 'react', 'react-dom' ],
-	function(React, ReactDOM) {
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.ReactComponent = undefined;
 
-		var ImageClass = React.createClass({
-			render : function() {
-				return React.createElement('img', {
-					src : 'webjars/cwf-react-example/assets/img/pomodoro.png',
-					alt : 'Pomodoro'
-				});
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ImageComponent = function (_Component) {
+	_inherits(ImageComponent, _Component);
+
+	function ImageComponent() {
+		_classCallCheck(this, ImageComponent);
+
+		return _possibleConstructorReturn(this, (ImageComponent.__proto__ || Object.getPrototypeOf(ImageComponent)).apply(this, arguments));
+	}
+
+	_createClass(ImageComponent, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement('img', {
+				src: 'webjars/cwf-react-example/assets/img/pomodoro.png',
+				alt: 'Pomodoro'
+			});
+		}
+	}]);
+
+	return ImageComponent;
+}(_react.Component);
+
+var CounterComponent = function (_Component2) {
+	_inherits(CounterComponent, _Component2);
+
+	function CounterComponent() {
+		_classCallCheck(this, CounterComponent);
+
+		return _possibleConstructorReturn(this, (CounterComponent.__proto__ || Object.getPrototypeOf(CounterComponent)).apply(this, arguments));
+	}
+
+	_createClass(CounterComponent, [{
+		key: 'formatTime',
+		value: function formatTime() {
+			return format(this.props.minutes) + ':' + format(this.props.seconds);
+
+			function format(value) {
+				return (value + 100).toString().substring(1);
 			}
-		});
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement('h1', {}, this.formatTime());
+		}
+	}]);
 
-		var CounterClass = React.createClass({
-			formatTime : function() {
-				return format(this.props.minutes) + ':' + format(this.props.seconds);
-				
-				function format(value) {
-					return (value + 100).toString().substring(1);
-				}
-			},
+	return CounterComponent;
+}(_react.Component);
 
-			render : function() {
-				return React.createElement('h1', {}, this.formatTime());
-			}
-		});
+var ButtonComponent = function (_Component3) {
+	_inherits(ButtonComponent, _Component3);
 
-		var ButtonClass = React.createClass({
-			render : function() {
-				return React.createElement('button', {
-					className : 'btn btn-danger',
-					onClick : this.props.onClick
-				}, this.props.buttonLabel);
-			}
-		});
+	function ButtonComponent() {
+		_classCallCheck(this, ButtonComponent);
 
-		// Return the class for the top level component.
-		
-		return React.createClass({
-			getInitialState : function() {
-				return {
-					isPaused : true,
-					minutes : 24,
-					seconds : 59,
-					buttonLabel : 'Start'
-				}
-			},
+		return _possibleConstructorReturn(this, (ButtonComponent.__proto__ || Object.getPrototypeOf(ButtonComponent)).apply(this, arguments));
+	}
 
-			componentDidMount : function() {
-				var self = this;
+	_createClass(ButtonComponent, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement('button', {
+				className: 'btn btn-danger',
+				onClick: this.props.onClick
+			}, this.props.buttonLabel);
+		}
+	}]);
 
-				this.timer = setInterval(function() {
-					self.tick();
-				}, 1000);
-			},
+	return ButtonComponent;
+}(_react.Component);
 
-			componentWillUnmount : function() {
-				clearInterval(this.timer);
-				delete this.timer;
-			},
+// Return the class for the top level component.
 
-			resetPomodoro : function() {
-				this.setState(this.getInitialState());
-			},
+var PomodoroComponent = function (_Component4) {
+	_inherits(PomodoroComponent, _Component4);
 
-			tick : function() {
-				if (!this.state.isPaused) {
-					var newState = {};
+	function PomodoroComponent() {
+		_classCallCheck(this, PomodoroComponent);
 
-					newState.buttonLabel = 'Pause';
-					newState.seconds = this.state.seconds - 1;
+		var _this4 = _possibleConstructorReturn(this, (PomodoroComponent.__proto__ || Object.getPrototypeOf(PomodoroComponent)).call(this));
 
-					if (newState.seconds < 0) {
-						newState.seconds = 59;
-						newState.minutes = this.state.minutes - 1;
+		_this4.state = _this4.getBaselineState();
+		return _this4;
+	}
 
-						if (newState.minutes < 0) {
-							return this.resetPomodoro();
-						}
-					}
+	_createClass(PomodoroComponent, [{
+		key: 'getBaselineState',
+		value: function getBaselineState() {
+			return {
+				isPaused: true,
+				minutes: 24,
+				seconds: 59,
+				buttonLabel: 'Start'
+			};
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var self = this;
 
-					this.setState(newState);
-				}
-			},
-
-			togglePause : function() {
+			this.timer = setInterval(function () {
+				self.tick();
+			}, 1000);
+		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			clearInterval(this.timer);
+			delete this.timer;
+		}
+	}, {
+		key: 'resetPomodoro',
+		value: function resetPomodoro() {
+			this.setState(this.getBaselineState());
+		}
+	}, {
+		key: 'tick',
+		value: function tick() {
+			if (!this.state.isPaused) {
 				var newState = {};
 
-				newState.isPaused = !this.state.isPaused;
+				newState.buttonLabel = 'Pause';
+				newState.seconds = this.state.seconds - 1;
 
-				if (this.state.minutes < 24 || this.state.seconds < 59) {
-					newState.buttonLabel = newState.isPaused ? 'Resume' : 'Pause';
+				if (newState.seconds < 0) {
+					newState.seconds = 59;
+					newState.minutes = this.state.minutes - 1;
+
+					if (newState.minutes < 0) {
+						return this.resetPomodoro();
+					}
 				}
 
 				this.setState(newState);
-			},
-
-			render : function() {
-				return React.createElement('div', {
-					className : 'text-center'
-				}, [
-					React.createElement(ImageClass, {
-						key: 'image'
-					}),
-					React.createElement(CounterClass, {
-						key : 'counter',
-						minutes : this.state.minutes,
-						seconds : this.state.seconds
-					}),
-					React.createElement(ButtonClass, {
-						key : 'button',
-						buttonLabel : this.state.buttonLabel,
-						onClick : this.togglePause
-					})
-				]);
 			}
-		});
-	});
+		}
+	}, {
+		key: 'togglePause',
+		value: function togglePause() {
+			var newState = {};
+
+			newState.isPaused = !this.state.isPaused;
+
+			if (this.state.minutes < 24 || this.state.seconds < 59) {
+				newState.buttonLabel = newState.isPaused ? 'Resume' : 'Pause';
+			}
+
+			this.setState(newState);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement('div', {
+				className: 'text-center'
+			}, [_react2.default.createElement(ImageComponent, {
+				key: 'image'
+			}), _react2.default.createElement(CounterComponent, {
+				key: 'counter',
+				minutes: this.state.minutes,
+				seconds: this.state.seconds
+			}), _react2.default.createElement(ButtonComponent, {
+				key: 'button',
+				buttonLabel: this.state.buttonLabel,
+				onClick: this.togglePause.bind(this)
+			})]);
+		}
+	}]);
+
+	return PomodoroComponent;
+}(_react.Component);
+
+var ReactComponent = PomodoroComponent;
+
+exports.ReactComponent = ReactComponent;
