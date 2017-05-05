@@ -35,7 +35,7 @@ import org.carewebframework.web.websocket.WebSocketHandler;
  * Static convenience methods for client-side operations.
  */
 public class ClientUtil {
-
+    
     /**
      * Invoke a function on the client.
      *
@@ -43,26 +43,26 @@ public class ClientUtil {
      * @param args Arguments to pass to the function.
      */
     public static void invoke(String function, Object... args) {
-        ClientInvocation invocation = new ClientInvocation(null, function, args);
+        ClientInvocation invocation = new ClientInvocation((String) null, function, args);
         WebSocketHandler.send(invocation);
     }
-
+    
     public static void redirect(String target) {
         redirect(target, null);
     }
-
+    
     public static void redirect(String target, String window) {
         invoke("cwf.redirect", target, window);
     }
-
+    
     public static void eval(String expression) {
         invoke("cwf.eval", expression);
     }
-
+    
     public static void submit(BaseComponent form) {
         invoke("cwf.submit", form);
     }
-
+    
     public static void busy(BaseUIComponent target, String message) {
         if (message == null || message.isEmpty()) {
             target.removeMask();
@@ -70,15 +70,15 @@ public class ClientUtil {
             target.addMask(message);
         }
     }
-
+    
     public static void canClose(boolean value) {
         invoke("cwf.canClose", value);
     }
-
+    
     public static void saveToFile(String content, String mimeType, String fileName) {
         invoke("cwf.saveToFile", content, mimeType, fileName);
     }
-
+    
     /**
      * Send a print request to the browser client.
      *
@@ -89,7 +89,7 @@ public class ClientUtil {
     public static void printToClient(List<String> selectors, List<String> styleSheets, boolean preview) {
         invoke("cwf_print", null, selectors, styleSheets, preview);
     }
-
+    
     /**
      * Send a print request to the browser client.
      *
@@ -100,7 +100,7 @@ public class ClientUtil {
     public static void printToClient(String selectors, String styleSheets, boolean preview) {
         invoke("cwf_print", null, selectors, styleSheets, preview);
     }
-
+    
     private ClientUtil() {
     }
 }

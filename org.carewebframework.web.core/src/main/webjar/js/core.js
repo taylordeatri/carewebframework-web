@@ -86,6 +86,14 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			var tgt = action.tgt;
 		
 			if (tgt) {
+				if (tgt.startsWith('@')) {
+					return System.import(tgt.substring(1)).then(
+						function(module) {
+							return _invokeAction(module, action);
+						}
+					)
+				}
+				
 				var i = tgt.indexOf('-'),
 					sub = i == -1 ? null : tgt.substring(i + 1);
 				
@@ -98,13 +106,17 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				tgt = sub ? tgt.sub$(sub) : tgt;
 			}
 			
-			var fcn = cwf.resolveReference(tgt, action.fcn);
-		
-			if (!fcn) {
-				throw new Error('Unknown action (' + action.tgt + ').' + action.fcn);
+			return _invokeAction(tgt, action);
+			
+			function _invokeAction(tgt, action) {
+				var fcn = cwf.resolveReference(tgt, action.fcn);
+			
+				if (!fcn) {
+					throw new Error('Unknown action (' + action.tgt + ').' + action.fcn);
+				}
+			
+				return fcn.ref.apply(fcn.base, _processArgs(action.arg));
 			}
-		
-			return fcn.ref.apply(fcn.base, _processArgs(action.arg));
 		
 			function _processArgs(args) {
 				args = args || [];

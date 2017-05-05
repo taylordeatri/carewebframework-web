@@ -7,15 +7,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * This Source Code Form is also subject to the terms of the Health-Related
  * Additional Disclaimer of Warranty and Limitation of Liability available at
  *
@@ -52,7 +52,7 @@ public class ClientInvocation {
     
     /**
      * Create a client invocation request.
-     * 
+     *
      * @param target The identifier of the widget that implements the function being invoked. If
      *            null is specified, the function name must specify a fully qualified path to a
      *            free-standing function.
@@ -83,10 +83,38 @@ public class ClientInvocation {
     }
     
     /**
+     * Create a client invocation request.
+     *
+     * @param moduleName The name of the module whose exported function is to be invoked. If null is
+     *            specified, the function name must specify a fully qualified path to a
+     *            free-standing function.
+     * @param function The name of the exported function to be invoked. This may be one of the
+     *            following formats:
+     *            <table style="padding-left:20px" summary="">
+     *            <tr>
+     *            <td style="text-align:center"><b>[key]^[function name]</b></td>
+     *            <td>- The key and the function name are explicitly declared.</td>
+     *            </tr>
+     *            <tr>
+     *            <td style="text-align:center"><b>^[function name]</b></td>
+     *            <td>- The key is implied to be the same as the function name.</td>
+     *            </tr>
+     *            <tr>
+     *            <td style="text-align:center"><b>[function name]</b></td>
+     *            <td>- The key will default to a unique value.</td>
+     *            </tr>
+     *            </table>
+     * @param arguments Optional arguments to be passed to the function.
+     */
+    public ClientInvocation(String moduleName, String function, Object... arguments) {
+        this(moduleName == null ? null : () -> "@" + moduleName, function, arguments);
+    }
+    
+    /**
      * Returns the key associated with the client invocation request. This key is used when queuing
      * the request. If a client invocation request with a matching key already exists in the queue,
      * it will be replaced by this one.
-     * 
+     *
      * @return The key of the client invocation request.
      */
     public String getKey() {
@@ -95,7 +123,7 @@ public class ClientInvocation {
     
     /**
      * Packages the client invocation request as a map for serialization and transport.
-     * 
+     *
      * @return Client invocation request as a map.
      */
     public Map<String, Object> toMap() {
@@ -108,7 +136,7 @@ public class ClientInvocation {
     
     /**
      * Transforms an array of objects.
-     * 
+     *
      * @param source Array of objects.
      * @return Source array after transformation.
      */
@@ -123,7 +151,7 @@ public class ClientInvocation {
     /**
      * Transforms a component or subcomponent by replacing it with its selector. This only effects
      * IElementIdentifier implementations. All other source objects are returned unchanged.
-     * 
+     *
      * @param source The source object.
      * @return The original or transformed object.
      */
