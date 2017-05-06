@@ -44,6 +44,7 @@ import org.carewebframework.web.client.ClientInvocation;
 import org.carewebframework.web.client.ClientRequest;
 import org.carewebframework.web.client.ExecutionContext;
 import org.carewebframework.web.core.WebUtil;
+import org.carewebframework.web.websocket.Session.SessionEvent;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.web.context.ServletContextAware;
@@ -317,6 +318,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler implements BeanPo
 
         try {
             handler.handleRequest(request);
+            session.notifySessionListeners(SessionEvent.REQUEST, request);
             request.getPage().getEventQueue().processAll();
         } catch (Exception e) {
             request.getPage().getEventQueue().clearAll();
