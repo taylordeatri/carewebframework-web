@@ -42,6 +42,17 @@
 	<bean id="cwf_WebSocketHandler" 
 		class="org.carewebframework.web.websocket.WebSocketHandler" />
 
+	<bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+		<property name="asyncSendTimeout" 
+			value="${org.carewebframework.web.websocket.asyncSendTimeout:0}" />		
+		<property name="maxSessionIdleTimeout" 
+			value="${org.carewebframework.web.websocket.maxSessionIdleTimeout:0}" />		
+		<property name="maxBinaryMessageBufferSize" 
+			value="${org.carewebframework.web.websocket.maxBinaryMessageBufferSize:32768}" />		
+		<property name="maxTextMessageBufferSize" 
+			value="${org.carewebframework.web.websocket.maxTextMessageBufferSize:32768}" />		
+	</bean>
+	
 	<bean id="cwf_Sessions" 
 		factory-method="getInstance"
 		class="org.carewebframework.web.websocket.Sessions" />
@@ -96,12 +107,18 @@
 		<property name="staticMethod" value="org.carewebframework.web.logging.LogUtil.initSettings" />
 		<property name="arguments">
 			<map>
-				<entry key="debug" value="${org.carewebframework.web.logging.debug:NONE}" />
-				<entry key="error" value="${org.carewebframework.web.logging.error:BOTH}" />
-				<entry key="fatal" value="${org.carewebframework.web.logging.fatal:BOTH}" />
-				<entry key="info" value="${org.carewebframework.web.logging.info:NONE}" />
-				<entry key="trace" value="${org.carewebframework.web.logging.trace:NONE}" />
-				<entry key="warn" value="${org.carewebframework.web.logging.warn:NONE}" />
+				<entry key="debug" 
+					value="${org.carewebframework.web.logging.debug:NONE}" />
+				<entry key="error" 
+					value="${org.carewebframework.web.logging.error:BOTH}" />
+				<entry key="fatal" 
+					value="${org.carewebframework.web.logging.fatal:BOTH}" />
+				<entry key="info" 
+					value="${org.carewebframework.web.logging.info:NONE}" />
+				<entry key="trace" 
+					value="${org.carewebframework.web.logging.trace:NONE}" />
+				<entry key="warn" 
+					value="${org.carewebframework.web.logging.warn:NONE}" />
 			</map>
 		</property>
 	</bean>
