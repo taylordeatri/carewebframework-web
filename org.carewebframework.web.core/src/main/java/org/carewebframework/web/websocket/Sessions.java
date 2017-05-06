@@ -118,13 +118,7 @@ public class Sessions implements BeanPostProcessor {
      * @return The associated session, or null if none found.
      */
     public Session getSession(String id) {
-        Session session = sessions.get(id);
-
-        if (session != null) {
-            session.updateLastActivity();
-        }
-        
-        return session;
+        return sessions.get(id);
     }
 
     /**
