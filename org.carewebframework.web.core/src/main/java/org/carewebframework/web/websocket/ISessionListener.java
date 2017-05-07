@@ -31,11 +31,9 @@ import org.carewebframework.web.client.ClientRequest;
  * Allows the implementer to receive notifications of specific session events.
  */
 public interface ISessionListener {
-
+    
     void onClientRequest(ClientRequest request);
-
-    void onInitialize();
     
     void onDestroy();
-
+    
 }

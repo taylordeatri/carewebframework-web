@@ -47,7 +47,7 @@ public class Session {
     private static final Log log = LogFactory.getLog(Session.class);
 
     protected enum SessionEvent {
-        INIT, DESTROY, REQUEST
+        DESTROY, REQUEST
     }
 
     private final ServletContext servletContext;
@@ -199,10 +199,6 @@ public class Session {
             for (ISessionListener sessionListener : sessionListeners) {
                 try {
                     switch (event) {
-                        case INIT:
-                            sessionListener.onInitialize();
-                            break;
-
                         case DESTROY:
                             sessionListener.onDestroy();
                             break;
@@ -249,7 +245,6 @@ public class Session {
                 throw new RuntimeException("Unknown page id.");
             }
 
-            notifySessionListeners(SessionEvent.INIT, null);
             return true;
         }
     }
