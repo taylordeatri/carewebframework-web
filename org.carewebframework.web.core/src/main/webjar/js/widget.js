@@ -3339,14 +3339,33 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 		
 		init: function() {
 			this._super();
-			this.initState({mode: 'INLINE', size: 'NORMAL'});
+			this.initState({mode: 'INLINE', size: 'NORMAL', movable: true});
 			this.toggleClass('cwf_titled panel', true);
 			this.forwardToServer('close');
 		},
 		
 		/*------------------------------ Other ------------------------------*/
 		
-		_updateSizable : function() {
+		_updateMovable: function() {
+			var canMove = this.getState('movable') && this.getState('mode') !== 'INLINE',
+				active = this.widget$.draggable('instance');
+			
+			if (!canMove !== !active) {
+				if (canMove) {
+					this.widget$.draggable({
+						containment: '#cwf_root',
+						handle: '#' + this.subid('titlebar')})
+					.position({
+						my: 'center',
+						at: 'center',
+						of: '#cwf_root'});
+				} else {
+					 this.widget$.draggable('destroy');
+				}
+			}
+		},
+		
+		_updateSizable: function() {
 			var canResize = this.getState('sizable')
 				&& this.getState('mode') !== 'INLINE'
 				&& this.getState('size') === 'NORMAL',
@@ -3476,7 +3495,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 			_mode(oldmode, true);
 			_mode(v, false);
 			this._updateSizable();
-			this.widget$.draggable('instance') ? this.widget$.draggable('destroy') : null;
+			this._updateMovable();
 			this.applyState('dragid');
 			this.widget$.removeAttr('data-cwf-popup');
 			
@@ -3495,19 +3514,13 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 				this.widget$.css('z-index', v === 'POPUP' ? ++cwf.widget._zmodal : null);
 			}
 			
-			if (v !== 'INLINE') {
-				this.widget$.draggable({
-					containment: '#cwf_root'})
-				.position({
-					my: 'center',
-					at: 'center',
-					of: '#cwf_root'});
-				this.scrollIntoView();
-			}
-			
 			function _mode(mode, remove) {
 				mode ? self.toggleClass(self.subclazz(mode), !remove) : null;
 			}
+		},
+		
+		movable: function(v) {
+			this._updateMovable();
 		},
 		
 		sizable: function(v) {
