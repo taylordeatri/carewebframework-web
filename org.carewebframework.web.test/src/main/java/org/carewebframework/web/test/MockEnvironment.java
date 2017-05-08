@@ -33,46 +33,49 @@ import org.carewebframework.web.component.Page;
 import org.carewebframework.web.event.EventQueue;
 import org.carewebframework.web.spring.ClasspathMessageSource;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 /**
  * This class creates a mock CWF environment suitable for certain kinds of unit tests. It creates a
- * web app instance with a single page and desktop and a mock session and execution. It also creates
- * a root Spring application context with a child desktop context.
+ * web app instance with a single page, a mock session and execution context and a single
+ * application context.
  */
 public class MockEnvironment {
-
+    
     private MockSession session;
-
+    
     private MockClientRequest clientRequest;
-
+    
     private MockServletContext servletContext;
-
+    
     private XmlWebApplicationContext rootContext;
-
+    
+    private XmlWebApplicationContext childContext;
+    
     private final Map<String, Object> browserInfo = new HashMap<>();
-
+    
     private final Map<String, Object> clientRequestMap = new HashMap<>();
-
+    
     /**
      * Creates a mock environment for unit testing.
      */
     public MockEnvironment() {
     }
-
+    
     /**
      * Initializes the mock environment.
      *
-     * @param profiles Active profiles.
-     * @param configLocations Additional config file locations.
+     * @param rootConfig Root container configuration.
+     * @param childConfig Child container configuration.
      * @throws Exception Unspecified exception.
      */
-    public void init(String[] profiles, String[] configLocations) throws Exception {
+    public void init(MockConfig rootConfig, MockConfig childConfig) throws Exception {
         // Set up web app
         servletContext = initServletContext(new MockServletContext());
         // Create root Spring context
-        rootContext = initAppContext(profiles, configLocations);
+        rootContext = initAppContext(rootConfig, null);
         servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, rootContext);
         rootContext.refresh();
         // Create mock session
@@ -83,14 +86,19 @@ public class MockEnvironment {
         clientRequestMap.put("data", browserInfo);
         initClientRequestMap(clientRequestMap);
         clientRequest = new MockClientRequest(session, clientRequestMap);
+        // Create the mock execution
+        initExecutionContext();
         // Initialize the page
         Page page = session.getPage();
         Page._init(page, clientRequest, session.getSynchronizer());
         page = initPage(page);
-        // Create the mock execution
-        initExecutionContext();
+        // Create child Spring context
+        if (childConfig != null) {
+            childContext = initAppContext(childConfig, rootContext);
+            childContext.refresh();
+        }
     }
-
+    
     /**
      * Cleans up all application contexts and invalidates the session.
      */
@@ -98,11 +106,11 @@ public class MockEnvironment {
         session.destroy();
         rootContext.close();
     }
-
+    
     protected XmlWebApplicationContext createApplicationContext() {
         return new XmlWebApplicationContext();
     }
-
+    
     /**
      * Initialize the mock servlet context.
      *
@@ -112,50 +120,55 @@ public class MockEnvironment {
     protected MockServletContext initServletContext(MockServletContext servletContext) {
         return servletContext;
     }
-
+    
     protected void initExecutionContext() {
         ExecutionContext.put(ExecutionContext.ATTR_REQUEST, clientRequest);
     }
-
+    
     protected void initClientRequestMap(Map<String, Object> map) {
         map.put("pid", session.getPage().getId());
         map.put("type", "mock");
     }
-
+    
     /**
      * Initialize the app context.
      *
-     * @param profiles Active profiles.
-     * @param configLocations Optional configuration locations.
+     * @param config Configuration data.
+     * @param parent If creating a child context, this will be its parent. Otherwise, will be null.
      * @return The initialized app context.
-     * @throws Exception
      */
-    protected XmlWebApplicationContext initAppContext(String[] profiles, String[] configLocations) throws Exception {
-
+    protected XmlWebApplicationContext initAppContext(MockConfig config, ApplicationContext parent) {
         XmlWebApplicationContext appContext = createApplicationContext();
         appContext.setServletContext(servletContext);
-        ClasspathMessageSource.getInstance().setResourceLoader(appContext);
 
-        if (configLocations != null) {
-            appContext.setConfigLocations(configLocations);
+        if (parent == null) {
+            ClasspathMessageSource.getInstance().setResourceLoader(appContext);
+        } else {
+            appContext.setParent(parent);
         }
-
-        if (profiles != null && profiles.length > 0) {
-            appContext.getEnvironment().setActiveProfiles(profiles);
-            appContext.getEnvironment().setDefaultProfiles(new String[] { profiles[0] });
+        
+        if (config.configLocations != null) {
+            appContext.setConfigLocations(config.configLocations);
         }
-
+        
+        if (config.profiles != null && config.profiles.length > 0) {
+            ConfigurableEnvironment env = appContext.getEnvironment();
+            env.setDefaultProfiles(parent == null ? config.profiles[0] : "dummy");
+            env.setActiveProfiles(config.profiles);
+        }
+        
         return appContext;
     }
-
+    
     /**
      * Initialize browserInfo map.
      *
      * @param browserInfo The browser info map.
      */
     protected void initBrowserInfoMap(Map<String, Object> browserInfo) {
+        browserInfo.put("requestURL", "http://mock.org/mock.cwf");
     }
-
+    
     /**
      * Initialize the page.
      *
@@ -165,15 +178,19 @@ public class MockEnvironment {
     protected Page initPage(Page page) {
         return page;
     }
-
+    
     public ApplicationContext getRootContext() {
         return rootContext;
     }
 
+    public ApplicationContext getChildContext() {
+        return childContext;
+    }
+    
     public MockSession getSession() {
         return session;
     }
-
+    
     /**
      * Flushes and processes any event on the event queue.
      *
@@ -185,5 +202,5 @@ public class MockEnvironment {
         queue.processAll();
         return flushed;
     }
-
+    
 }
