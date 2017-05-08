@@ -44,13 +44,13 @@
 
 	<bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
 		<property name="asyncSendTimeout" 
-			value="${org.carewebframework.web.websocket.asyncSendTimeout:0}" />		
+			value="${org.carewebframework.web.websocket.asyncSendTimeout}" />		
 		<property name="maxSessionIdleTimeout" 
-			value="${org.carewebframework.web.websocket.maxSessionIdleTimeout:0}" />		
+			value="${org.carewebframework.web.websocket.maxSessionIdleTimeout}" />		
 		<property name="maxBinaryMessageBufferSize" 
-			value="${org.carewebframework.web.websocket.maxBinaryMessageBufferSize:32768}" />		
+			value="${org.carewebframework.web.websocket.maxBinaryMessageBufferSize}" />		
 		<property name="maxTextMessageBufferSize" 
-			value="${org.carewebframework.web.websocket.maxTextMessageBufferSize:32768}" />		
+			value="${org.carewebframework.web.websocket.maxTextMessageBufferSize}" />		
 	</bean>
 	
 	<bean id="cwf_Sessions" 
