@@ -25,15 +25,18 @@
  */
 package org.carewebframework.web.websocket;
 
+import org.carewebframework.web.client.ClientInvocation;
 import org.carewebframework.web.client.ClientRequest;
 
 /**
- * Allows the implementer to receive notifications of specific session events.
+ * Allows the implementer to receive notifications about session activity.
  */
 public interface ISessionListener {
-    
+
     void onClientRequest(ClientRequest request);
-    
+
+    void onClientInvocation(ClientInvocation invocation);
+
     void onDestroy();
-    
+
 }

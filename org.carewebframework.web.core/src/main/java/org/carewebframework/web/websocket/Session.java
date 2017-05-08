@@ -43,27 +43,27 @@ import org.springframework.web.socket.WebSocketSession;
  * Container for core resources for a single client session (i.e., web socket connection).
  */
 public class Session {
-
-    private static final Log log = LogFactory.getLog(Session.class);
-
-    protected enum SessionEvent {
-        DESTROY, REQUEST
-    }
-
-    private final ServletContext servletContext;
-
-    private final WebSocketSession socket;
-
-    private final Synchronizer synchronizer;
-
-    private Set<ISessionListener> sessionListeners;
     
+    private static final Log log = LogFactory.getLog(Session.class);
+    
+    private enum EventType {
+        DESTROY, REQUEST, INVOCATION
+    }
+    
+    private final ServletContext servletContext;
+    
+    private final WebSocketSession socket;
+    
+    private final Synchronizer synchronizer;
+    
+    private Set<ISessionListener> sessionListeners;
+
     private final long creationTime;
-
+    
     private long lastActivity;
-
+    
     private Page page;
-
+    
     /**
      * Create a session, with references to its servlet context and web socket.
      *
@@ -77,7 +77,7 @@ public class Session {
         creationTime = System.currentTimeMillis();
         lastActivity = creationTime;
     }
-
+    
     /**
      * Destroy the session. This destroys the associated page.
      */
@@ -90,10 +90,10 @@ public class Session {
                 page = null;
             }
         }
-
-        notifySessionListeners(SessionEvent.DESTROY, null);
+        
+        notifySessionListeners(EventType.DESTROY, null);
     }
-
+    
     /**
      * Returns the session's id, which is the same as the underlying web socket id.
      *
@@ -102,7 +102,7 @@ public class Session {
     public String getId() {
         return socket.getId();
     }
-
+    
     /**
      * Returns the session's time of creation.
      *
@@ -111,7 +111,7 @@ public class Session {
     public long getCreationTime() {
         return creationTime;
     }
-
+    
     /**
      * Returns the time of last activity for the session.
      *
@@ -120,14 +120,14 @@ public class Session {
     public long getLastActivity() {
         return lastActivity;
     }
-
+    
     /**
      * Updates the session's last activity.
      */
     public void updateLastActivity() {
         this.lastActivity = System.currentTimeMillis();
     }
-
+    
     /**
      * Returns the servlet context associated with the session.
      *
@@ -136,7 +136,7 @@ public class Session {
     public ServletContext getServletContext() {
         return servletContext;
     }
-
+    
     /**
      * Returns the web socket associated with the session.
      *
@@ -145,7 +145,7 @@ public class Session {
     public WebSocketSession getSocket() {
         return socket;
     }
-
+    
     /**
      * Returns the synchronizer associated with the session.
      *
@@ -154,7 +154,7 @@ public class Session {
     public Synchronizer getSynchronizer() {
         return synchronizer;
     }
-
+    
     /**
      * Returns the page associated with the session.
      *
@@ -163,7 +163,7 @@ public class Session {
     public Page getPage() {
         return page;
     }
-
+    
     /**
      * Register a session listener.
      *
@@ -174,10 +174,10 @@ public class Session {
         if (sessionListeners == null) {
             sessionListeners = new LinkedHashSet<>();
         }
-        
+
         return sessionListeners.add(listener);
     }
-    
+
     /**
      * Unregister a session listener.
      *
@@ -187,14 +187,32 @@ public class Session {
     public boolean unregisterSessionListener(ISessionListener listener) {
         return sessionListeners != null && sessionListeners.remove(listener);
     }
+
+    /**
+     * Notify all session listeners of a client request event.
+     *
+     * @param request The client request.
+     */
+    protected void notifySessionListeners(ClientRequest request) {
+        notifySessionListeners(EventType.REQUEST, request);
+    }
+    
+    /**
+     * Notify all session listeners of a client invocation event.
+     *
+     * @param invocation The client invocation.
+     */
+    protected void notifySessionListeners(ClientInvocation invocation) {
+        notifySessionListeners(EventType.INVOCATION, invocation);
+    }
     
     /**
      * Notify all session listeners of an event.
      *
      * @param event The type of session event.
-     * @param request The client request, if this is a request event.
+     * @param argument
      */
-    protected void notifySessionListeners(SessionEvent event, ClientRequest request) {
+    private void notifySessionListeners(EventType event, Object argument) {
         if (sessionListeners != null) {
             for (ISessionListener sessionListener : sessionListeners) {
                 try {
@@ -202,9 +220,13 @@ public class Session {
                         case DESTROY:
                             sessionListener.onDestroy();
                             break;
-
+                        
                         case REQUEST:
-                            sessionListener.onClientRequest(request);
+                            sessionListener.onClientRequest((ClientRequest) argument);
+                            break;
+                        
+                        case INVOCATION:
+                            sessionListener.onClientInvocation((ClientInvocation) argument);
                             break;
                     }
                 } catch (Exception e) {
@@ -213,7 +235,7 @@ public class Session {
             }
         }
     }
-
+    
     /**
      * Send a ping to the client.
      *
@@ -222,7 +244,7 @@ public class Session {
     public void ping(String data) {
         WebSocketHandler.send(socket, new ClientInvocation((String) null, "cwf.ws.ping", data));
     }
-
+    
     /**
      * Initialize the session. If already initialized, this only validates that the page id matches
      * that of the associated page. Otherwise, it associates the session with the page specified by
@@ -236,15 +258,15 @@ public class Session {
             if (!page.getId().equals(pageId)) {
                 throw new RuntimeException("Page ids do not match.");
             }
-
+            
             return false;
         } else {
             page = PageRegistry.getPage(pageId);
-
+            
             if (page == null) {
                 throw new RuntimeException("Unknown page id.");
             }
-
+            
             return true;
         }
     }
