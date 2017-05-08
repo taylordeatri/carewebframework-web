@@ -3354,7 +3354,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 				if (canMove) {
 					this.widget$.draggable({
 						containment: '#cwf_root',
-						handle: '#' + this.subid('titlebar')})
+						handle: '#' + this.subId('titlebar')})
 					.position({
 						my: 'center',
 						at: 'center',
