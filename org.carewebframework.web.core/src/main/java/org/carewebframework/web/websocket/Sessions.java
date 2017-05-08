@@ -46,22 +46,22 @@ import org.springframework.web.socket.WebSocketSession;
  * Keeps track of active sessions.
  */
 public class Sessions implements BeanPostProcessor {
-    
-    private static final Log log = LogFactory.getLog(Sessions.class);
 
+    private static final Log log = LogFactory.getLog(Sessions.class);
+    
     private static final Sessions instance = new Sessions();
-    
+
     private final Map<String, Session> sessions = new ConcurrentHashMap<>();
-    
-    private final Set<ISessionTracker> sessionTrackers = new HashSet<>();
-    
+
+    private final Set<ISessionLifecycle> lifecycleListeners = new HashSet<>();
+
     public static Sessions getInstance() {
         return instance;
     }
-    
+
     private Sessions() {
     }
-
+    
     /**
      * Returns a read-only list of all active sessions.
      *
@@ -70,47 +70,47 @@ public class Sessions implements BeanPostProcessor {
     public Collection<Session> getActiveSessions() {
         return Collections.unmodifiableCollection(sessions.values());
     }
-    
+
     /**
-     * Registers a session tracker.
+     * Registers a lifecycle listener.
      *
-     * @param tracker A session tracker.
+     * @param listener A lifecycle listener.
      */
-    public void registerSessionTracker(ISessionTracker tracker) {
-        sessionTrackers.add(tracker);
+    public void addLifecycleListener(ISessionLifecycle listener) {
+        lifecycleListeners.add(listener);
     }
-    
+
     /**
-     * Unregisters a session tracker.
+     * Unregisters a lifecycle listener.
      *
-     * @param tracker A session tracker.
+     * @param listener A lifecycle listener.
      */
-    public void unregisterSessionTracker(ISessionTracker tracker) {
-        sessionTrackers.remove(tracker);
+    public void removeLifecycleListener(ISessionLifecycle listener) {
+        lifecycleListeners.remove(listener);
     }
-    
+
     /**
-     * Notify session trackers of a session-related event.
+     * Notify lifecycle listeners of a lifecycle event.
      *
      * @param session Session triggering the event.
      * @param created If true, it is a create event; if false, a destroy event.
      */
-    protected void notifySessionTrackers(Session session, boolean created) {
-        if (!sessionTrackers.isEmpty()) {
-            for (ISessionTracker tracker : new ArrayList<>(sessionTrackers)) {
+    protected void notifyLifecycleListeners(Session session, boolean created) {
+        if (!lifecycleListeners.isEmpty()) {
+            for (ISessionLifecycle listener : new ArrayList<>(lifecycleListeners)) {
                 try {
                     if (created) {
-                        tracker.onSessionCreate(session);
+                        listener.onSessionCreate(session);
                     } else {
-                        tracker.onSessionDestroy(session);
+                        listener.onSessionDestroy(session);
                     }
                 } catch (Exception e) {
-                    log.error("A session tracker threw an exception.", e);
+                    log.error("A session lifecycle listener threw an exception.", e);
                 }
             }
         }
     }
-    
+
     /**
      * Looks up a session by its unique id.
      *
@@ -120,7 +120,7 @@ public class Sessions implements BeanPostProcessor {
     public Session getSession(String id) {
         return sessions.get(id);
     }
-    
+
     /**
      * Creates and registers a new session.
      *
@@ -131,14 +131,14 @@ public class Sessions implements BeanPostProcessor {
     protected Session createSession(ServletContext servletContext, WebSocketSession socket) {
         Session session = new Session(servletContext, socket);
         sessions.put(session.getId(), session);
-        
+
         if (log.isDebugEnabled()) {
             logSessionEvent(session, "established");
         }
-
+        
         return session;
     }
-    
+
     /**
      * Destroys and unregisters the session associated with the specified web socket.
      *
@@ -147,17 +147,17 @@ public class Sessions implements BeanPostProcessor {
      */
     protected void destroySession(WebSocketSession socket, CloseStatus status) {
         Session session = sessions.remove(socket.getId());
-        
+
         if (session != null) {
             if (log.isDebugEnabled()) {
                 logSessionEvent(session, "closed, " + status);
             }
-            
-            notifySessionTrackers(session, false);
+
+            notifyLifecycleListeners(session, false);
             session.destroy();
         }
     }
-    
+
     /**
      * Logs a session event.
      *
@@ -167,7 +167,7 @@ public class Sessions implements BeanPostProcessor {
     private void logSessionEvent(Session session, String event) {
         log.debug("Session #" + session.getId() + " " + event + ".");
     }
-    
+
     /**
      * NOP
      */
@@ -175,17 +175,17 @@ public class Sessions implements BeanPostProcessor {
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
     }
-    
+
     /**
-     * Detects and registers session trackers.
+     * Detects and registers lifecycle listeners.
      */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof ISessionTracker) {
-            registerSessionTracker((ISessionTracker) bean);
+        if (bean instanceof ISessionLifecycle) {
+            addLifecycleListener((ISessionLifecycle) bean);
         }
-        
+
         return bean;
     }
-    
+
 }

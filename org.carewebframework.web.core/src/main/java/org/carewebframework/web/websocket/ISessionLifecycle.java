@@ -28,7 +28,7 @@ package org.carewebframework.web.websocket;
 /**
  * Allows the implementer to receive notification of session creation and destruction.
  */
-public interface ISessionTracker {
+public interface ISessionLifecycle {
     
     void onSessionCreate(Session session);
     
