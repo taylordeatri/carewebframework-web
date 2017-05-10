@@ -26,22 +26,14 @@
 package org.carewebframework.web.websocket;
 
 /**
- * Allows the implementer to receive notifications of session lifecycle events.
+ * Exception occurring during session initialization. It should be considered fatal and the session
+ * should be discarded.
  */
-public interface ISessionLifecycle {
+public class SessionInitException extends RuntimeException {
 
-    /**
-     * Invoked after a session is created and its page has been initialized but not yet
-     * materialized.
-     *
-     * @param session The session.
-     */
-    void onSessionCreate(Session session);
-
-    /**
-     * Invoked after a session is destroyed (e.g., after its associated web socket has been closed).
-     *
-     * @param session The session.
-     */
-    void onSessionDestroy(Session session);
+    private static final long serialVersionUID = 1L;
+    
+    public SessionInitException(Throwable cause) {
+        super(cause);
+    }
 }

@@ -32,15 +32,14 @@ import org.carewebframework.web.client.ClientRequest;
  * request type.
  */
 public interface IRequestHandler {
-    
+
     /**
      * Handle a client request.
      *
      * @param request The client request.
-     * @throws Exception Unspecified exception.
      */
-    void handleRequest(ClientRequest request) throws Exception;
-    
+    void handleRequest(ClientRequest request);
+
     /**
      * @return The type of request handled.
      */

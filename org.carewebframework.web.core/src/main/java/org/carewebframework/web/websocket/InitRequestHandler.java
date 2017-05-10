@@ -38,7 +38,7 @@ import org.carewebframework.web.page.PageDefinitionCache;
 public class InitRequestHandler implements IRequestHandler {
     
     @Override
-    public void handleRequest(ClientRequest request) throws Exception {
+    public void handleRequest(ClientRequest request) {
         Page page = request.getPage();
         PageDefinition pageDefinition = PageDefinitionCache.getInstance().get(page.getSrc());
         Synchronizer synchronizer = request.getSession().getSynchronizer();
@@ -52,7 +52,7 @@ public class InitRequestHandler implements IRequestHandler {
             page.fireEvent("afterInitialize");
         } catch (Exception e) {
             synchronizer.clear();
-            throw e;
+            throw new SessionInitException(e);
         } finally {
             synchronizer.stopQueueing();
         }

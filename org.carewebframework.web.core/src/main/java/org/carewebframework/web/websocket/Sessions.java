@@ -46,22 +46,22 @@ import org.springframework.web.socket.WebSocketSession;
  * Keeps track of active sessions.
  */
 public class Sessions implements BeanPostProcessor {
-
-    private static final Log log = LogFactory.getLog(Sessions.class);
     
+    private static final Log log = LogFactory.getLog(Sessions.class);
+
     private static final Sessions instance = new Sessions();
-
+    
     private final Map<String, Session> sessions = new ConcurrentHashMap<>();
-
+    
     private final Set<ISessionLifecycle> lifecycleListeners = new HashSet<>();
-
+    
     public static Sessions getInstance() {
         return instance;
     }
-
+    
     private Sessions() {
     }
-    
+
     /**
      * Returns a read-only list of all active sessions.
      *
@@ -70,7 +70,7 @@ public class Sessions implements BeanPostProcessor {
     public Collection<Session> getActiveSessions() {
         return Collections.unmodifiableCollection(sessions.values());
     }
-
+    
     /**
      * Registers a lifecycle listener.
      *
@@ -79,7 +79,7 @@ public class Sessions implements BeanPostProcessor {
     public void addLifecycleListener(ISessionLifecycle listener) {
         lifecycleListeners.add(listener);
     }
-
+    
     /**
      * Unregisters a lifecycle listener.
      *
@@ -88,7 +88,7 @@ public class Sessions implements BeanPostProcessor {
     public void removeLifecycleListener(ISessionLifecycle listener) {
         lifecycleListeners.remove(listener);
     }
-
+    
     /**
      * Notify lifecycle listeners of a lifecycle event.
      *
@@ -105,12 +105,16 @@ public class Sessions implements BeanPostProcessor {
                         listener.onSessionDestroy(session);
                     }
                 } catch (Exception e) {
-                    log.error("A session lifecycle listener threw an exception.", e);
+                    if (created && e instanceof SessionInitException) {
+                        throw e;
+                    } else {
+                        log.error("A session lifecycle listener threw an exception.", e);
+                    }
                 }
             }
         }
     }
-
+    
     /**
      * Looks up a session by its unique id.
      *
@@ -120,7 +124,7 @@ public class Sessions implements BeanPostProcessor {
     public Session getSession(String id) {
         return sessions.get(id);
     }
-
+    
     /**
      * Creates and registers a new session.
      *
@@ -131,14 +135,14 @@ public class Sessions implements BeanPostProcessor {
     protected Session createSession(ServletContext servletContext, WebSocketSession socket) {
         Session session = new Session(servletContext, socket);
         sessions.put(session.getId(), session);
-
+        
         if (log.isDebugEnabled()) {
             logSessionEvent(session, "established");
         }
-        
+
         return session;
     }
-
+    
     /**
      * Destroys and unregisters the session associated with the specified web socket.
      *
@@ -147,17 +151,17 @@ public class Sessions implements BeanPostProcessor {
      */
     protected void destroySession(WebSocketSession socket, CloseStatus status) {
         Session session = sessions.remove(socket.getId());
-
+        
         if (session != null) {
             if (log.isDebugEnabled()) {
                 logSessionEvent(session, "closed, " + status);
             }
-
+            
             notifyLifecycleListeners(session, false);
             session.destroy();
         }
     }
-
+    
     /**
      * Logs a session event.
      *
@@ -167,7 +171,7 @@ public class Sessions implements BeanPostProcessor {
     private void logSessionEvent(Session session, String event) {
         log.debug("Session #" + session.getId() + " " + event + ".");
     }
-
+    
     /**
      * NOP
      */
@@ -175,7 +179,7 @@ public class Sessions implements BeanPostProcessor {
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
     }
-
+    
     /**
      * Detects and registers lifecycle listeners.
      */
@@ -184,8 +188,8 @@ public class Sessions implements BeanPostProcessor {
         if (bean instanceof ISessionLifecycle) {
             addLifecycleListener((ISessionLifecycle) bean);
         }
-
+        
         return bean;
     }
-
+    
 }
