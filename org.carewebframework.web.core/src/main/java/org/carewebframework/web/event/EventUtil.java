@@ -43,7 +43,7 @@ import org.carewebframework.web.component.Page;
  * Static methods for manipulating events.
  */
 public class EventUtil {
-
+    
     /**
      * Sends an event to its designated target.
      *
@@ -54,7 +54,7 @@ public class EventUtil {
         BaseComponent target = event.getCurrentTarget();
         send(event, target);
     }
-
+    
     /**
      * Sends an event to the specified target.
      *
@@ -66,7 +66,7 @@ public class EventUtil {
         target = target == null ? ExecutionContext.getPage() : target;
         target.fireEvent(event);
     }
-
+    
     /**
      * Creates and sends an event to the specified target.
      *
@@ -80,7 +80,7 @@ public class EventUtil {
         send(event);
         return event;
     }
-
+    
     /**
      * Queues an event for later processing.
      *
@@ -90,7 +90,7 @@ public class EventUtil {
         Page page = event.getPage();
         post(page != null ? page : ExecutionContext.getPage(), event);
     }
-
+    
     /**
      * Queues an event for later processing.
      *
@@ -100,7 +100,7 @@ public class EventUtil {
     public static void post(Page page, Event event) {
         page.getEventQueue().queue(event);
     }
-
+    
     /**
      * Creates and posts an event for later delivery.
      *
@@ -114,7 +114,7 @@ public class EventUtil {
         post(event);
         return event;
     }
-
+    
     /**
      * Creates and posts an event for later delivery.
      *
@@ -129,7 +129,7 @@ public class EventUtil {
         post(page, event);
         return event;
     }
-
+    
     /**
      * Returns the implementation class for the specified event type. If there is no implementation
      * specific to the event type, the Event class will be returned.
@@ -140,7 +140,7 @@ public class EventUtil {
     public static Class<? extends Event> getEventClass(String eventType) {
         return EventTypeScanner.getInstance().getEventClass(stripOn(eventType));
     }
-
+    
     /**
      * Returns the event type given the implementation class.
      *
@@ -150,7 +150,7 @@ public class EventUtil {
     public static String getEventType(Class<? extends Event> eventClass) {
         return EventTypeScanner.getInstance().getEventType(eventClass);
     }
-
+    
     /**
      * Strips the "on" prefix from an event type, if one is present.
      *
@@ -160,7 +160,7 @@ public class EventUtil {
     public static String stripOn(String eventType) {
         return eventType.startsWith("on") ? StringUtils.uncapitalize(eventType.substring(2)) : eventType;
     }
-
+    
     /**
      * Invokes an event handler.
      *
@@ -171,7 +171,7 @@ public class EventUtil {
      */
     public static boolean invokeHandler(String handlerName, Object instance, Event event) {
         Method method = getHandler(handlerName, instance, event);
-
+        
         if (method != null) {
             try {
                 if (method.getParameterCount() == 1) {
@@ -179,16 +179,16 @@ public class EventUtil {
                 } else {
                     method.invoke(instance);
                 }
-
+                
                 return true;
             } catch (Exception e) {
                 throw MiscUtil.toUnchecked(e);
             }
         }
-
+        
         return false;
     }
-
+    
     /**
      * Returns a suitable handler method for an event. First, it searches for a method with a single
      * argument that assignment-compatible with the event. Failing that, it searches for a method
@@ -206,9 +206,9 @@ public class EventUtil {
             new Class<?>[] { event.getClass() });
         return method != null ? method
                 : MethodUtils.getAccessibleMethod(instance.getClass(), handlerName, ArrayUtils.EMPTY_CLASS_ARRAY);
-
+        
     }
-
+    
     /**
      * Returns true if the client request contains an event.
      *
@@ -218,7 +218,18 @@ public class EventUtil {
     public static boolean hasEvent(ClientRequest request) {
         return "event".equals(request.getType()) && request.getData() instanceof Map;
     }
-
+    
+    /**
+     * Returns true if the client request contains an event of the specified type.
+     *
+     * @param request The client request.
+     * @param eventType The event type.
+     * @return True if the request contains an event of the specified type.
+     */
+    public static boolean hasEvent(ClientRequest request, String eventType) {
+        return eventType.equals(getEventType(request));
+    }
+    
     /**
      * Extracts an event from the client request.
      *
@@ -227,14 +238,25 @@ public class EventUtil {
      * @exception IllegalArgumentException If the request does not contain an event.
      */
     public static Event toEvent(ClientRequest request) {
-        if (hasEvent(request)) {
-            String type = (String) request.getData(Map.class).get("type");
-            return toEvent(getEventClass(type), request);
+        String type = getEventType(request);
+
+        if (type == null) {
+            throw new IllegalArgumentException("Request does not contain an event");
         }
 
-        throw new IllegalArgumentException("Request does not contain an event");
+        return toEvent(getEventClass(type), request);
     }
 
+    /**
+     * Extracts the event type from the client request.
+     *
+     * @param request The client request.
+     * @return The event type.
+     */
+    public static String getEventType(ClientRequest request) {
+        return hasEvent(request) ? (String) request.getData(Map.class).get("type") : null;
+    }
+    
     /**
      * Creates an event from the specified event type. If an event class exists for the specified
      * type, will create an event of that class. Otherwise, will create a generic event.
@@ -245,14 +267,14 @@ public class EventUtil {
     public static Event toEvent(String eventType) {
         eventType = stripOn(eventType);
         Class<? extends Event> eventClass = getEventClass(eventType);
-
+        
         try {
             return eventClass == Event.class ? new Event(eventType) : eventClass.newInstance();
         } catch (Exception e) {
             throw MiscUtil.toUnchecked(e);
         }
     }
-
+    
     /**
      * Extracts an event of the expected class from the client request.
      *
@@ -271,11 +293,11 @@ public class EventUtil {
         } catch (InstantiationException | IllegalAccessException e) {
             return toEvent(clazz.getSuperclass(), request);
         }
-
+        
         return null;
     }
-
+    
     private EventUtil() {
     }
-
+    
 }
