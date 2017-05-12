@@ -7,15 +7,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * This Source Code Form is also subject to the terms of the Health-Related
  * Additional Disclaimer of Warranty and Limitation of Liability available at
  *
@@ -40,22 +40,22 @@ import org.carewebframework.web.event.IEventListener;
  * Wires {@literal @EventHandler}-annotated methods.
  */
 public class EventHandlerScanner {
-    
+
     /**
      * Event listener implementation that invokes an {@literal @EventHandler}-annotated method on a
      * target object.
      */
     private static class EventListener implements IEventListener {
-        
+
         private final Object target;
-        
+
         private final Method method;
-        
+
         EventListener(Object target, Method method) {
             this.target = target;
             this.method = method;
         }
-        
+
         /**
          * Pass an event to the handler method on the target.
          */
@@ -71,28 +71,46 @@ public class EventHandlerScanner {
                 throw MiscUtil.toUnchecked(e);
             }
         }
-        
+
+        @Override
+        public boolean equals(Object object) {
+            if (object == this) {
+                return true;
+            }
+            
+            if (!(object instanceof EventListener)) {
+                return false;
+            }
+            
+            EventListener el = (EventListener) object;
+            return target == el.target && method.equals(el.method);
+        }
+
+        @Override
+        public int hashCode() {
+            return target.hashCode() ^ method.hashCode();
+        }
     }
-    
+
     /**
      * Recursively scans the controller's class and superclasses for {@literal @EventHandler}
      * -annotated methods.
-     * 
+     *
      * @param instance Controller to be wired.
      * @param root The root component used to resolve component names.
      */
     public static void wire(Object instance, BaseComponent root) {
         Class<?> clazz = instance.getClass();
-        
+
         while (clazz != Object.class) {
             wire(instance, root, clazz);
             clazz = clazz.getSuperclass();
         }
     }
-    
+
     /**
      * Scans the specified class for {@literal @EventHandler}-annotated methods.
-     * 
+     *
      * @param instance Controller to be wired.
      * @param root The root component used to resolve component names.
      * @param clazz The class to be scanned.
@@ -101,36 +119,36 @@ public class EventHandlerScanner {
         for (Method method : clazz.getDeclaredMethods()) {
             method.setAccessible(true);
             EventHandler[] annotations = method.getAnnotationsByType(EventHandler.class);
-            
+
             for (EventHandler annot : annotations) {
-                
+
                 OnFailure onFailure = annot.onFailure();
                 Class<?>[] params = method.getParameterTypes();
-                
+
                 if (params.length > 1 || (params.length == 1 && !Event.class.isAssignableFrom(params[0]))) {
                     onFailure.doAction(
                         "Method " + method.getName() + " signature does not conform to that of an event handler.");
                     return;
                 }
-                
+
                 Set<String> targets = asSet(annot.target());
                 Set<String> types = asSet(annot.value());
                 BaseComponent component = null;
-                
+
                 if (types.isEmpty()) {
                     onFailure.doAction("At least one event type must be specified");
                 }
-                
+
                 if (targets.isEmpty()) {
                     targets.add("self");
                 }
-                
+
                 for (String target : targets) {
                     if ("self".equals(target)) {
                         component = isComponent(clazz) ? (BaseComponent) instance : root;
                     } else if (target.startsWith("@")) {
                         Field field = findField(clazz, target.substring(1));
-                        
+
                         if (field != null) {
                             try {
                                 field.setAccessible(true);
@@ -142,7 +160,7 @@ public class EventHandlerScanner {
                     } else {
                         component = root == null ? null : root.findByName(target);
                     }
-                    
+
                     if (component == null) {
                         onFailure.doAction("No suitable event handler target found for \"" + target + "\"");
                     } else {
@@ -154,39 +172,39 @@ public class EventHandlerScanner {
             }
         }
     }
-    
+
     /**
      * Converts an array of string values to a set. This effectively removes duplicate and empty
      * entries.
-     * 
+     *
      * @param values Array of string values.
      * @return Corresponding set of values.
      */
     private static Set<String> asSet(String[] values) {
         Set<String> set = new HashSet<>();
-        
+
         for (String value : values) {
             if (!value.isEmpty()) {
                 set.add(value);
             }
         }
-        
+
         return set;
     }
-    
+
     /**
      * Returns true if the class is a component class.
-     * 
+     *
      * @param clazz Class to be examined.
      * @return True if the class is a component class.
      */
     private static boolean isComponent(Class<?> clazz) {
         return BaseComponent.class.isAssignableFrom(clazz);
     }
-    
+
     /**
      * Returns the field definition for the named field. Field must be a component type.
-     * 
+     *
      * @param clazz Class to be searched.
      * @param name Name of the field.
      * @return The corresponding field definition, or null if no matching field was found.
@@ -199,7 +217,7 @@ public class EventHandlerScanner {
             return null;
         }
     }
-    
+
     private EventHandlerScanner() {
     }
 }

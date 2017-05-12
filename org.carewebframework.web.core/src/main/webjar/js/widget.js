@@ -1633,13 +1633,9 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 		},
 		
 		_trigger: function(which, notself) {
-			if (!notself) {
-				var event = $.Event(which, {
-					relatedTarget: this._related$ ? this._related$.cwf$widget() : null
-				});
-				
-				this.trigger(event);
-			}
+			var relatedTarget = this._related$ ? this._related$.cwf$widget() : null;
+			notself ? null : this.trigger($.Event(which, {relatedTarget: relatedTarget}));
+			relatedTarget ? relatedTarget.trigger($.Event('popup' + which, {relatedTarget: this})) : null;
 		},
 		
 		/*------------------------------ Other ------------------------------*/
