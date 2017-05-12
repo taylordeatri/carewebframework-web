@@ -386,7 +386,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			cwf.event.preventDefault(event);
 		},
 		
-		stopPropagation(event) {
+		stopPropagation: function(event) {
 			event.stopPropagation ? event.stopPropagation() : null;
 		},
 		
