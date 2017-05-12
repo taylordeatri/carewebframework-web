@@ -1685,7 +1685,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 		afterRender: function() {
 			this._super();
 			this.real$.on('move', this.moveHandler.bind(this));
-			this._allowBubble ? null : this.real$.on('click', false);
+			this._allowBubble ? null : this.real$.on('click', cwf.event.stopPropagation);
 		},
 		
 		render$: function() {

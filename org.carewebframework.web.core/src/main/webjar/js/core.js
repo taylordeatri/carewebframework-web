@@ -377,10 +377,17 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			target$ ? target$.triggerHandler(event) : null;
 		},
 		
-		stop: function(event) {
-			event.stopPropagation ? event.stopPropagation() : null;
+		preventDefault: function(event) {
 			event.preventDefault ? event.preventDefault(): null;
-			return event;
+		},
+		
+		stop: function(event) {
+			cwf.event.stopPropagation(event)
+			cwf.event.preventDefault(event);
+		},
+		
+		stopPropagation(event) {
+			event.stopPropagation ? event.stopPropagation() : null;
 		},
 		
 		removeOn: function(type) {

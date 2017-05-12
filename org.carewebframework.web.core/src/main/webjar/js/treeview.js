@@ -70,10 +70,10 @@ define('cwf-treeview', ['cwf-core', 'cwf-widget', 'cwf-treeview-css'], function(
 		/*------------------------------ Events ------------------------------*/
 		
 		handleClick: function(event) {
-			cwf.event.stop(event);
 			var collapsed = !this.getState('collapsed');
 			this.updateState('collapsed', collapsed);
 			this.trigger('toggle', {collapsed: collapsed});
+			return false;
 		},
 		
 		handleSelect: function(event) {
