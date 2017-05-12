@@ -1279,6 +1279,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 			input$.on('blur', this.handleBlur.bind(this));
 			input$.on('keyup', this.handleKeyup.bind(this));
 			this._constraint ? input$.on('keypress', cwf.event.constrainInput.bind(this, this._constraint)) : null;
+			this._step ? input$.attr('step', this._step) : null;
 		},
 		
 		render$: function() {
@@ -2700,6 +2701,7 @@ define('cwf-widget', ['cwf-core', 'bootstrap', 'jquery-ui', 'jquery-scrollTo', '
 		
 		init: function() {
 			this._type = 'time';
+			this._step = 1;
 			this._super();
 		}
 		
