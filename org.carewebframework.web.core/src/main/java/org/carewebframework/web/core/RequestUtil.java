@@ -43,11 +43,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
- * Utilities for dealing with <code>ServletRequest</code>s and <code>Execution</code>s.
- * <p>
- * Note that due to static nature of these getters and such scope'd objects as Request/Session, we
- * are throwing IllegalStateException for most methods, with the exception of {@link #getRequest()}
- * &amp; {@link #getSession()}.
+ * Utilities for dealing with servlet requests.
  */
 public class RequestUtil {
 
