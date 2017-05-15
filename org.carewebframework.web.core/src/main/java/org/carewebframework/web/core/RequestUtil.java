@@ -30,6 +30,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.util.Enumeration;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -62,17 +63,13 @@ public class RequestUtil {
      */
     public static HttpServletRequest getRequest() {
         ServletRequestAttributes requestAttrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-
-        if (requestAttrs == null) {
-            return null;
-        }
-        return requestAttrs.getRequest();
+        return requestAttrs == null ? null : requestAttrs.getRequest();
     }
 
     /**
      * Return current HttpSession
      *
-     * @return HttpSession, null when invoked outside the scope of an Execution/ServletRequest
+     * @return HttpSession, null when invoked outside the scope of a servlet request
      */
     public static HttpSession getSession() {
         return getSession(getRequest());
@@ -81,11 +78,11 @@ public class RequestUtil {
     /**
      * Return current HttpSession given request.
      *
-     * @param request Http servlet request object.
-     * @return HttpSession, null when invoked outside the scope of an Execution/ServletRequest
+     * @param request Servlet request object.
+     * @return HttpSession or null if none present.
      */
-    public static HttpSession getSession(HttpServletRequest request) {
-        return request == null ? null : request.getSession(false);
+    public static HttpSession getSession(ServletRequest request) {
+        return request instanceof HttpServletRequest ? ((HttpServletRequest) request).getSession(false) : null;
     }
 
     /**
@@ -94,7 +91,7 @@ public class RequestUtil {
     public static void logHeaderNames() {
         HttpServletRequest request = getRequest();
         if (request == null) {
-            log.debug("logHeaderNames() invoked outside the scope of an Execution/ServletRequest");
+            log.debug("logHeaderNames() invoked outside the scope of a servlet request");
         } else {
             Enumeration<?> enumeration = request.getHeaderNames();
             while (enumeration.hasMoreElements()) {
@@ -112,10 +109,7 @@ public class RequestUtil {
      */
     public static String getServerName() {
         HttpServletRequest request = getRequest();
-        if (request == null) {
-            return null;
-        }
-        return request.getServerName();
+        return request == null ? null : request.getServerName();
     }
 
     /**
@@ -182,9 +176,8 @@ public class RequestUtil {
     }
 
     public static URL getResourceURL(String path) {
-        path = path.startsWith("/web/") ? "classpath:" + path : path;
         try {
-            return ResourceUtils.getURL(path);
+            return ResourceUtils.getURL(path.startsWith("/web/") ? "classpath:" + path : path);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -210,7 +203,7 @@ public class RequestUtil {
      */
     public static HttpServletRequest assertRequest() {
         HttpServletRequest request = getRequest();
-        Assert.state(request != null, "Method must be invoked within the scope of an Execution/ServletRequest");
+        Assert.state(request != null, "Method must be invoked within the scope of a servlet request.");
         return request;
     }
 
