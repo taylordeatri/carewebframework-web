@@ -18,12 +18,12 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		this.debug = options.debug;
 		this.pid = options.pid;
 		this._canClose = true;
-		this.log._init(options.logging);
+		this.log._init(options);
 		this.action._init();
 		this.jquery._init();
 		this.event._init();
 		this.widget._init();
-		this.ws._init(options.wsurl);
+		this.ws._init(options);
 	},
 	
 	/*------------------------------ Request Processing ------------------------------*/
@@ -269,35 +269,51 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	/*------------------------------ Websocket Support ------------------------------*/
 	
 	ws: {
-		_init: function(wsurl) {
-			this.socket = new WebSocket(wsurl);
-			this.socket.onerror = this._onerror;
-			this.socket.onmessage = this._onmessage;
-			this.socket.onopen = this._onopen;
+		_init: function(options) {
+			this.socket = new WebSocket(options.wsurl);
+			this.socket.onerror = _onerror.bind(this);
+			this.socket.onmessage = _onmessage.bind(this);
+			this.socket.onopen = _onopen.bind(this);
 			this.socket.binaryType = 'blob';
-		},
-		
-		_onopen: function() {
-			var data = {
-				requestURL: window.location.href,
-				viewportHeight: $(window).height(),
-				viewportWidth: $(window).width(),
-				timezoneOffset: new Date().getTimezoneOffset()
-			};
+			this.lastSend = 0;
+			this.lastReceive = 0;
 			
-			cwf.flatten(screen, data, 'screen', 1);
-			cwf.flatten(navigator, data, 'browser', 1);
-			cwf.ws.sendData('init', data);
-		},
-	
-		_onmessage: function(message) {
-			var action = JSON.parse(message.data);
-			cwf.log.debug('Received: ', action);
-			cwf.action.queueAction(action);
-		},
+			if (options.keepalive >= 0) {
+				this.keepalive = options.keepalive;
+				this.onkeepalive = setInterval(_onkeepalive.bind(this), this.keepalive / 2);
+			}
 		
-		_onerror: function(event) {
-			cwf.log.error(event);
+			function _onopen() {
+				var data = {
+					requestURL: window.location.href,
+					viewportHeight: $(window).height(),
+					viewportWidth: $(window).width(),
+					timezoneOffset: new Date().getTimezoneOffset()
+				};
+				
+				cwf.flatten(screen, data, 'screen', 1);
+				cwf.flatten(navigator, data, 'browser', 1);
+				this.sendData('init', data);
+			}
+		
+			function _onmessage(message) {
+				this.lastReceive = Date.now();
+				var action = JSON.parse(message.data);
+				cwf.log.debug('Received: ', action);
+				cwf.action.queueAction(action);
+			}
+			
+			function _onerror(event) {
+				cwf.log.error(event);
+			}
+		
+			function _onkeepalive() {
+				var elapsed = Date.now() - this.lastSend;
+				
+				if (elapsed >= this.keepalive) {
+					this.ping('keepalive');
+				}
+			}
 		},
 		
 		isConnected: function() {
@@ -310,7 +326,16 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		
 		sendData: function(type, data, nolog) {
 			if (!this.isConnected()) {
-				throw new Error('Communication with the server has been interrupted.');
+				if (this.onkeepalive) {
+					clearInterval(this.onkeepalive);
+					delete this.onkeepalive;
+				}
+
+				cwf.debug ? null : $('html').empty();
+
+				return setTimeout(function() {
+					throw new Error('Communication with the server has been interrupted.');
+				}, 1);
 			}
 			
 			var pkt = {type: type, pid: cwf.pid, data: data};
@@ -323,6 +348,8 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 				this.socket.send(JSON.stringify(pkt));
 			}
 			
+			this.lastSend = Date.now();
+				
 			if (!nolog) {
 				cwf.log.debug('Sent: ', pkt);
 			}
@@ -511,8 +538,8 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	log: {
 		level: {},
 		
-		_init: function(settings) {
-			this.level = settings;
+		_init: function(options) {
+			this.level = options.logging;
 		},
 
 		debug: function() {

@@ -26,6 +26,7 @@
 package org.carewebframework.web.websocket;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -36,10 +37,16 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 @Configuration
 @EnableWebSocket
 public class WebSocketConfiguration implements WebSocketConfigurer {
+    
+    private static long keepaliveInterval;
 
     @Autowired
     private WebSocketHandler cwf_WebSocketHandler;
 
+    public static long getKeepaliveInterval() {
+        return keepaliveInterval;
+    }
+    
     /**
      * Register the web socket handler and add a handshake interceptor to copy attributes from the
      * http session to the web socket.
@@ -51,4 +58,8 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
         registry.addHandler(cwf_WebSocketHandler, "/ws/**").addInterceptors(new HttpSessionHandshakeInterceptor());
     }
     
+    @Value("${org.carewebframework.web.websocket.keepaliveInterval}")
+    private void setKeepaliveInterval(long value) {
+        keepaliveInterval = value;
+    }
 }
