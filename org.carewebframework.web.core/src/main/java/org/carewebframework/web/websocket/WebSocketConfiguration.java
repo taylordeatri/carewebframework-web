@@ -34,19 +34,28 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
+/**
+ * Configurer for the web socket connection.
+ */
 @Configuration
 @EnableWebSocket
 public class WebSocketConfiguration implements WebSocketConfigurer {
-    
-    private static long keepaliveInterval;
 
+    private static long keepaliveInterval;
+    
     @Autowired
     private WebSocketHandler cwf_WebSocketHandler;
-
+    
+    /**
+     * Returns the keep-alive interval, in milliseconds. The client will transmit a ping packet when
+     * no transmission has occurred within this interval. A value of <= 0 disables this feature.
+     *
+     * @return The keep-alive interval.
+     */
     public static long getKeepaliveInterval() {
         return keepaliveInterval;
     }
-    
+
     /**
      * Register the web socket handler and add a handshake interceptor to copy attributes from the
      * http session to the web socket.
@@ -57,7 +66,13 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(cwf_WebSocketHandler, "/ws/**").addInterceptors(new HttpSessionHandshakeInterceptor());
     }
-    
+
+    /**
+     * Sets the keep-alive interval, in milliseconds. The client will transmit a ping packet when no
+     * transmission has occurred within this interval.
+     *
+     * @param value The keep-alive interval, in milliseconds. A value of <= 0 disables this feature.
+     */
     @Value("${org.carewebframework.web.websocket.keepaliveInterval}")
     private void setKeepaliveInterval(long value) {
         keepaliveInterval = value;
