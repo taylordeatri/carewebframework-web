@@ -7,9 +7,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 	/*------------------------------ Initialization ------------------------------*/
 			
 	init: function(options) {
-		window.onerror = function(error) {
-			cwf.fatal(error);
-		};
+		window.onerror = cwf.fatal;
 		
 		window.onbeforeunload = function(event) {
 			return cwf._canClose ? undefined : event.returnValue = true;
@@ -321,7 +319,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		},
 		
 		ping: function(data) {
-			cwf.ws.sendData('ping', data);
+			this.sendData('ping', data);
 		},
 		
 		sendData: function(type, data, nolog) {
