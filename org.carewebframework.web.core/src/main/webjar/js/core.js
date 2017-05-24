@@ -13,6 +13,10 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			return cwf._canClose ? undefined : event.returnValue = true;
 		};
 		
+		window.onunload = function(event) {
+			cwf.ws.setKeepalive(0);
+		};
+		
 		this.debug = options.debug;
 		this.pid = options.pid;
 		this._canClose = true;
@@ -275,11 +279,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			this.socket.binaryType = 'blob';
 			this.lastSend = 0;
 			this.lastReceive = 0;
-			
-			if (options.keepalive >= 0) {
-				this.keepalive = options.keepalive;
-				this.onkeepalive = setInterval(_onkeepalive.bind(this), this.keepalive / 2);
-			}
+			this.setKeepalive(options.keepalive);
 		
 			function _onopen() {
 				var data = {
@@ -314,6 +314,20 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 			}
 		},
 		
+		setKeepalive: function(keepalive) {
+			if (this.onkeepalive) {
+				clearInterval(this.onkeepalive);
+				delete this.onkeepalive;
+			}
+			
+			if (keepalive > 0) {
+				this.keepalive = keepalive;
+				this.onkeepalive = setInterval(_onkeepalive.bind(this), keepalive / 2);
+			} else {
+				delete this.keepalive;
+			}
+		},
+		
 		isConnected: function() {
 			return this.socket && this.socket.readyState === WebSocket.OPEN;
 		},
@@ -324,11 +338,7 @@ define('cwf-core', ['jquery', 'jquery-ui', 'lodash'], function($) {
 		
 		sendData: function(type, data, nolog) {
 			if (!this.isConnected()) {
-				if (this.onkeepalive) {
-					clearInterval(this.onkeepalive);
-					delete this.onkeepalive;
-				}
-
+				this.setKeepalive(0);
 				cwf.debug ? null : $('html').empty();
 
 				return setTimeout(function() {

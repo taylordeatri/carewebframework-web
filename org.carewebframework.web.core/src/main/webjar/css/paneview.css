@@ -53,24 +53,21 @@
     border: 1px solid lightgray;
 }
 
-.cwf_pane > span:first-child {
+.cwf_pane > span {
     border-bottom: 1px solid lightgray;
     background: lightblue;
     text-align: center;
 }
 
-.cwf_pane > span:first-child:empty {
+.cwf_pane > span:empty {
     display: none;
-}
-
-.cwf_pane > :not(:first-child) {
-    padding: 5px;
 }
 
 .cwf_pane > .ui-resizable-e {
     cursor: col-resize;
-    opacity: .5;   
-    right: -14px;
+    opacity: .5;
+    right: -9px;
+    padding: 0;
     z-index: auto!important;
 }
 
