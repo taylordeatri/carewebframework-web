@@ -34,7 +34,6 @@ import org.carewebframework.web.ancillary.ComponentException;
 import org.carewebframework.web.annotation.ComponentDefinition;
 import org.carewebframework.web.annotation.ComponentDefinition.DeferredSetter;
 import org.carewebframework.web.component.BaseComponent;
-import org.carewebframework.web.component.BaseComponent.ComponentFactory;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.expression.ELContext;
 import org.carewebframework.web.expression.ELEvaluator;
@@ -44,11 +43,11 @@ import org.carewebframework.web.expression.ELEvaluator;
  * elements, rooted at the root element.
  */
 public class PageDefinition {
-
+    
     private final PageElement root = new PageElement(null, null);
-
+    
     private String source;
-
+    
     /**
      * The root of all page elements in this definition.
      *
@@ -57,7 +56,7 @@ public class PageDefinition {
     public PageElement getRootElement() {
         return root;
     }
-
+    
     /**
      * Returns the source from which this page definition was derived.
      *
@@ -66,7 +65,7 @@ public class PageDefinition {
     public String getSource() {
         return source;
     }
-
+    
     /**
      * Sets the source from which this page definition was derived.
      *
@@ -75,7 +74,7 @@ public class PageDefinition {
     /*package*/ void setSource(String source) {
         this.source = source;
     }
-
+    
     /**
      * Materializes this page definition under the given parent component.
      *
@@ -85,7 +84,7 @@ public class PageDefinition {
     public List<BaseComponent> materialize(BaseComponent parent) {
         return materialize(parent, null);
     }
-
+    
     /**
      * Materializes this page definition under the given parent component.
      *
@@ -99,43 +98,43 @@ public class PageDefinition {
             List<DeferredSetter> deferrals = new ArrayList<>();
             List<BaseComponent> created = new ArrayList<>();
             materialize(root.getChildren(), parent, deferrals, created);
-
+            
             if (args != null && !args.isEmpty()) {
                 for (BaseComponent component : created) {
                     component.getAttributes().putAll(args);
                 }
             }
-
+            
             for (DeferredSetter deferral : deferrals) {
                 deferral.execute();
             }
-
+            
             return created;
         } catch (Exception e) {
             throw new ComponentException(e, "Exception materializing page definition '%s'", source);
         }
     }
-
+    
     private void materialize(Iterable<PageElement> children, BaseComponent parent, List<DeferredSetter> deferrals,
                              List<BaseComponent> created) {
         if (children != null) {
             for (PageElement child : children) {
                 BaseComponent component = materialize(child, parent, deferrals);
-
+                
                 if (created != null) {
                     created.add(component);
                 }
             }
         }
     }
-
+    
     private BaseComponent materialize(PageElement element, BaseComponent parent, List<DeferredSetter> deferrals) {
         ComponentDefinition def = element.getDefinition();
         boolean merge = parent instanceof Page && def.getComponentClass() == Page.class;
         boolean skip = def.getComponentClass() == Page.class && parent != null;
         Map<String, String> attributes;
         BaseComponent component;
-
+        
         if (merge) {
             component = parent;
             parent = null;
@@ -145,34 +144,33 @@ public class PageDefinition {
             parent = null;
             attributes = null;
         } else {
-            component = new ComponentFactory(element).create();
-
+            attributes = element.getAttributes();
+            component = def.getFactory().create(attributes);
+            
             if (component == null) {
                 return null;
             }
-
-            attributes = element.getAttributes();
         }
-
+        
         if (attributes != null) {
             ELContext elContext = new ELContext(component, parent, element);
-
+            
             for (Entry<String, String> attribute : attributes.entrySet()) {
                 Object value = ELEvaluator.getInstance().evaluate(attribute.getValue(), elContext);
                 DeferredSetter deferral = def.setProperty(component, attribute.getKey(), value);
-
+                
                 if (deferral != null) {
                     deferrals.add(deferral);
                 }
             }
         }
-
+        
         materialize(element.getChildren(), component, deferrals, null);
-
+        
         if (parent != null) {
             parent.addChild(component);
         }
-
+        
         return component;
     }
 }

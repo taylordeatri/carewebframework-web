@@ -62,7 +62,6 @@ import org.carewebframework.web.event.ForwardListener;
 import org.carewebframework.web.event.IEventListener;
 import org.carewebframework.web.event.StatechangeEvent;
 import org.carewebframework.web.expression.ELEvaluator;
-import org.carewebframework.web.page.PageElement;
 import org.springframework.util.Assert;
 
 /**
@@ -76,15 +75,15 @@ public abstract class BaseComponent implements IElementIdentifier {
      */
     public static class ComponentFactory {
         
+        private final ComponentDefinition def;
+        
         private Class<? extends BaseComponent> clazz;
         
         private Boolean namespace;
         
-        private final PageElement element;
-        
-        public ComponentFactory(PageElement element) {
-            this.element = element;
-            this.clazz = element.getDefinition().getComponentClass();
+        public ComponentFactory(ComponentDefinition def) {
+            this.def = def;
+            this.clazz = def.getComponentClass();
         }
         
         /**
@@ -95,8 +94,8 @@ public abstract class BaseComponent implements IElementIdentifier {
          */
         @SuppressWarnings("unchecked")
         public void setComponentClass(Class<?> clazz) {
-            Class<? extends BaseComponent> originalClazz = element.getDefinition().getComponentClass();
-            
+            Class<? extends BaseComponent> originalClazz = def.getComponentClass();
+
             if (clazz != null && !originalClazz.isAssignableFrom(clazz)) {
                 throw new ComponentException("Implementation class must extend class " + originalClazz.getName());
             }
@@ -132,18 +131,16 @@ public abstract class BaseComponent implements IElementIdentifier {
         /**
          * Creates a component instance from the definition using a factory context.
          *
-         * @param context The factory context.
+         * @param attributes Attribute map for initializing.
          * @return A component instance. May be null if creation is suppressed.
          */
-        public BaseComponent create() {
-            Map<String, String> attributes = element.getAttributes();
-            
+        public BaseComponent create(Map<String, String> attributes) {
             if (attributes != null) {
-                for (Entry<String, Method> entry : element.getDefinition().getProcessors().entrySet()) {
+                for (Entry<String, Method> entry : def.getProcessors().entrySet()) {
                     String name = entry.getKey();
                     
                     if (attributes.containsKey(name)) {
-                        Object value = ELEvaluator.getInstance().evaluate(attributes.get(name));
+                        Object value = ELEvaluator.getInstance().evaluate(attributes.remove(name));
                         ConvertUtil.invokeSetter(null, entry.getValue(), value, this);
                         
                         if (isInactive()) {

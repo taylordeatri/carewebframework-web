@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.IntSupplier;
 
+import org.apache.commons.beanutils.ConstructorUtils;
+import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.ancillary.ComponentException;
 import org.carewebframework.web.ancillary.ConvertUtil;
 import org.carewebframework.web.annotation.Component.AttributeProcessor;
@@ -112,6 +114,8 @@ public class ComponentDefinition {
 
     private final Class<? extends BaseComponent> componentClass;
 
+    private final Class<? extends ComponentFactory> factoryClass;
+    
     private final String widgetModule;
 
     private final String widgetClass;
@@ -137,6 +141,7 @@ public class ComponentDefinition {
     public ComponentDefinition(Class<? extends BaseComponent> componentClass) {
         Component annot = componentClass.getAnnotation(Component.class);
         this.componentClass = componentClass;
+        this.factoryClass = annot.factoryClass();
         this.widgetModule = annot.widgetModule();
         this.widgetClass = annot.widgetClass();
         this.tag = annot.value();
@@ -220,6 +225,19 @@ public class ComponentDefinition {
      */
     public Class<? extends BaseComponent> getComponentClass() {
         return componentClass;
+    }
+
+    /**
+     * Returns a factory instance for this component.
+     *
+     * @return The component factory.
+     */
+    public ComponentFactory getFactory() {
+        try {
+            return ConstructorUtils.invokeConstructor(factoryClass, this);
+        } catch (Exception e) {
+            throw MiscUtil.toUnchecked(e);
+        }
     }
 
     /**
@@ -416,7 +434,7 @@ public class ComponentDefinition {
 
         if (!processors.containsKey(name)) {
             if (!isStatic(method) || method.getParameterTypes().length != 2
-                    || method.getParameterTypes()[1] != ComponentFactory.class) {
+                    || !method.getParameterTypes()[1].isAssignableFrom(factoryClass)) {
                 throw new IllegalArgumentException("Bad signature for attribute processor method: " + method.getName());
             }
 
