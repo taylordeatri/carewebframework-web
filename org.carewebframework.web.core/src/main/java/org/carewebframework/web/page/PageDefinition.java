@@ -33,8 +33,8 @@ import java.util.Map.Entry;
 import org.carewebframework.web.ancillary.ComponentException;
 import org.carewebframework.web.annotation.ComponentDefinition;
 import org.carewebframework.web.annotation.ComponentDefinition.DeferredSetter;
-import org.carewebframework.web.annotation.ComponentDefinition.FactoryContext;
 import org.carewebframework.web.component.BaseComponent;
+import org.carewebframework.web.component.BaseComponent.ComponentFactory;
 import org.carewebframework.web.component.Page;
 import org.carewebframework.web.expression.ELContext;
 import org.carewebframework.web.expression.ELEvaluator;
@@ -145,14 +145,13 @@ public class PageDefinition {
             parent = null;
             attributes = null;
         } else {
-            FactoryContext context = new FactoryContext(element);
-            component = def.create(context);
+            component = new ComponentFactory(element).create();
 
             if (component == null) {
                 return null;
             }
 
-            attributes = context.getAttributes();
+            attributes = element.getAttributes();
         }
 
         if (attributes != null) {

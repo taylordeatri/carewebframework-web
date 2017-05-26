@@ -23,13 +23,14 @@
  *
  * #L%
  */
-package org.carewebframework.web.annotation;
+package org.carewebframework.web.ancillary;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.carewebframework.common.AbstractRegistry;
 import org.carewebframework.common.RegistryMap.DuplicateAction;
+import org.carewebframework.web.annotation.ComponentDefinition;
 import org.carewebframework.web.component.BaseComponent;
 
 /**

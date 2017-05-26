@@ -26,18 +26,21 @@
 package org.carewebframework.web.component;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.reflect.FieldUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.ancillary.ComponentException;
+import org.carewebframework.web.ancillary.ComponentRegistry;
 import org.carewebframework.web.ancillary.ConvertUtil;
 import org.carewebframework.web.ancillary.IAutoWired;
 import org.carewebframework.web.ancillary.IElementIdentifier;
@@ -47,8 +50,6 @@ import org.carewebframework.web.annotation.Component.AttributeProcessor;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.ComponentDefinition;
-import org.carewebframework.web.annotation.ComponentDefinition.FactoryContext;
-import org.carewebframework.web.annotation.ComponentRegistry;
 import org.carewebframework.web.annotation.EventHandler;
 import org.carewebframework.web.annotation.EventHandlerScanner;
 import org.carewebframework.web.annotation.WiredComponentScanner;
@@ -60,6 +61,8 @@ import org.carewebframework.web.event.EventUtil;
 import org.carewebframework.web.event.ForwardListener;
 import org.carewebframework.web.event.IEventListener;
 import org.carewebframework.web.event.StatechangeEvent;
+import org.carewebframework.web.expression.ELEvaluator;
+import org.carewebframework.web.page.PageElement;
 import org.springframework.util.Assert;
 
 /**
@@ -67,6 +70,100 @@ import org.springframework.util.Assert;
  */
 public abstract class BaseComponent implements IElementIdentifier {
     
+    /**
+     * Factory to be used during component creation. Special attribute processors may modify the
+     * factory's settings prior to component creation to alter this process.
+     */
+    public static class ComponentFactory {
+
+        private Class<? extends BaseComponent> clazz;
+
+        private boolean namespace;
+
+        private final PageElement element;
+
+        public ComponentFactory(PageElement element) {
+            this.element = element;
+            this.clazz = element.getDefinition().getComponentClass();
+        }
+
+        /**
+         * A special processor may modify the component's implementation class, as long as the
+         * substituted class is a subclass of the original.
+         *
+         * @param clazz Component implementation class to substitute.
+         */
+        @SuppressWarnings("unchecked")
+        public void setComponentClass(Class<?> clazz) {
+            Class<? extends BaseComponent> originalClazz = element.getDefinition().getComponentClass();
+
+            if (clazz != null && !originalClazz.isAssignableFrom(clazz)) {
+                throw new ComponentException("Implementation class must extend class " + originalClazz.getName());
+            }
+
+            this.clazz = (Class<? extends BaseComponent>) clazz;
+        }
+
+        /**
+         * Sets flag indicating if created component should be a namespace boundary.
+         *
+         * @param namespace If true, component will be a namespace boundary.
+         */
+        public void setNamespace(boolean namespace) {
+            this.namespace = namespace;
+        }
+
+        /**
+         * Inactivates the factory, preventing it from creating a component.
+         */
+        public void inactivate() {
+            clazz = null;
+        }
+
+        /**
+         * Returns true if component creation has been inactivated.
+         *
+         * @return True prevents component creation.
+         */
+        public boolean isInactive() {
+            return clazz == null;
+        }
+        
+        /**
+         * Creates a component instance from the definition using a factory context.
+         *
+         * @param context The factory context.
+         * @return A component instance. May be null if creation is suppressed.
+         */
+        public BaseComponent create() {
+            Map<String, String> attributes = element.getAttributes();
+
+            if (attributes != null) {
+                for (Entry<String, Method> entry : element.getDefinition().getProcessors().entrySet()) {
+                    String name = entry.getKey();
+
+                    if (attributes.containsKey(name)) {
+                        Object value = ELEvaluator.getInstance().evaluate(attributes.get(name));
+                        ConvertUtil.invokeSetter(null, entry.getValue(), value, this);
+
+                        if (isInactive()) {
+                            return null;
+                        }
+                    }
+                }
+            }
+
+            try {
+                BaseComponent component = clazz.newInstance();
+                component.namespace = namespace;
+                return component;
+            } catch (Exception e) {
+                throw MiscUtil.toUnchecked(e);
+            }
+        }
+
+    }
+
     /**
      * Reference to a subcomponent.
      */
@@ -122,7 +219,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         private void _validate(BaseComponent component, BaseComponent root) {
             _validate(component.getName(), root, component);
             
-            if (!(component instanceof INamespace)) {
+            if (!(component.isNamespace())) {
                 for (BaseComponent child : component.getChildren()) {
                     _validate(child, root);
                 }
@@ -160,7 +257,7 @@ public abstract class BaseComponent implements IElementIdentifier {
             }
             
             for (BaseComponent child : root.getChildren()) {
-                if (!(child instanceof INamespace)) {
+                if (!(child.isNamespace())) {
                     component = _find(name, child);
                     
                     if (component != null) {
@@ -194,6 +291,8 @@ public abstract class BaseComponent implements IElementIdentifier {
     private Map<String, Object> inits;
     
     private ClientInvocationQueue invocationQueue;
+
+    private boolean namespace;
     
     private final List<BaseComponent> children = new LinkedList<>();
     
@@ -207,31 +306,37 @@ public abstract class BaseComponent implements IElementIdentifier {
     
     protected static void validate(BaseComponent comp) {
         if (comp != null && comp.isDead()) {
-            throw new ComponentException("Element no longer exists: %s", comp.getId());
+            throw new ComponentException("Component no longer exists: %s", comp.getId());
         }
     }
     
     @AttributeProcessor("impl")
-    private static void implProcessor(String value, FactoryContext context) throws ClassNotFoundException {
-        context.setComponentClass(Class.forName(value));
+    private static void implProcessor(String value, ComponentFactory factory) throws ClassNotFoundException {
+        factory.setComponentClass(Class.forName(value));
     }
     
     @AttributeProcessor("if")
-    private static void ifProcessor(boolean value, FactoryContext context) {
+    private static void ifProcessor(boolean value, ComponentFactory factory) {
         if (!value) {
-            context.terminate();
+            factory.inactivate();
         }
     }
     
     @AttributeProcessor("unless")
-    private static void unlessProcessor(boolean value, FactoryContext context) {
+    private static void unlessProcessor(boolean value, ComponentFactory factory) {
         if (value) {
-            context.terminate();
+            factory.inactivate();
         }
+    }
+    
+    @AttributeProcessor("namespace")
+    private static void namespaceProcessor(boolean value, ComponentFactory factory) {
+        factory.setNamespace(value);
     }
     
     public BaseComponent() {
         componentDefinition = ComponentRegistry.getInstance().get(getClass());
+        namespace = this instanceof INamespace;
         EventHandlerScanner.wire(this, this);
     }
     
@@ -742,9 +847,28 @@ public abstract class BaseComponent implements IElementIdentifier {
      * @return The namespace to which this component belongs.
      */
     public BaseComponent getNamespace() {
-        return (BaseComponent) getAncestor(INamespace.class, true);
+        BaseComponent comp = this;
+
+        while (comp != null) {
+            if (comp.isNamespace()) {
+                return comp;
+            }
+
+            comp = comp.getParent();
+        }
+
+        return null;
     }
     
+    /**
+     * Returns true if this component is a namespace boundary.
+     *
+     * @return True if this component is a namespace boundary.
+     */
+    public boolean isNamespace() {
+        return namespace;
+    }
+
     /**
      * Returns the page to which this component belongs.
      *
@@ -828,7 +952,7 @@ public abstract class BaseComponent implements IElementIdentifier {
         props.put("wclass", componentDefinition.getWidgetClass());
         props.put("wmodule", componentDefinition.getWidgetModule());
         props.put("cntr", isContainer());
-        props.put("nmsp", this instanceof INamespace ? true : null);
+        props.put("nmsp", isNamespace() ? true : null);
     }
     
     /**

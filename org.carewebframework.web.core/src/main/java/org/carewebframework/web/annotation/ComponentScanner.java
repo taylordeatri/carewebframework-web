@@ -29,6 +29,7 @@ import java.lang.reflect.Method;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.carewebframework.web.ancillary.ComponentRegistry;
 import org.carewebframework.web.annotation.Component.AttributeProcessor;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;

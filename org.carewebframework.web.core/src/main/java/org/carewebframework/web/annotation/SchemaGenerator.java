@@ -42,6 +42,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.io.IOUtils;
 import org.carewebframework.common.XMLUtil;
+import org.carewebframework.web.ancillary.ComponentRegistry;
 import org.carewebframework.web.annotation.Component.ContentHandling;
 import org.carewebframework.web.annotation.ComponentDefinition.Cardinality;
 import org.w3c.dom.Document;
