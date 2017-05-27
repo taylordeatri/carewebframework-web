@@ -36,22 +36,22 @@ import org.carewebframework.web.component.BaseComponent;
 import org.carewebframework.web.expression.ELEvaluator;
 
 /**
- * Factory to be used during component creation. Factory parameters may be modified during
+ * Factory used during component deserialization. Factory parameters may be modified during
  * deserialization to provide control over component creation.
  */
 public class ComponentFactory {
-    
+
     private final ComponentDefinition def;
-    
+
     private Class<? extends BaseComponent> clazz;
-    
+
     private boolean inactive;
-    
+
     public ComponentFactory(ComponentDefinition def) {
         this.def = def;
         this.clazz = def.getComponentClass();
     }
-    
+
     /**
      * A special processor may modify the component's implementation class, as long as the
      * substituted class is a subclass of the original.
@@ -59,16 +59,16 @@ public class ComponentFactory {
      * @param clazz Component implementation class to substitute.
      */
     @FactoryParameter("impl")
-    public void setImplementationClass(Class<? extends BaseComponent> clazz) {
+    protected void setImplementationClass(Class<? extends BaseComponent> clazz) {
         Class<? extends BaseComponent> originalClazz = def.getComponentClass();
-
+        
         if (clazz != null && !originalClazz.isAssignableFrom(clazz)) {
             throw new ComponentException("Implementation class must extend class " + originalClazz.getName());
         }
-        
+
         this.clazz = clazz;
     }
-    
+
     /**
      * Conditionally prevents the factory from creating a component.
      *
@@ -78,7 +78,7 @@ public class ComponentFactory {
     protected void setIf(boolean condition) {
         inactive = !condition;
     }
-    
+
     /**
      * Conditionally prevents the factory from creating a component.
      *
@@ -88,7 +88,7 @@ public class ComponentFactory {
     protected void setUnless(boolean condition) {
         inactive = condition;
     }
-    
+
     /**
      * Returns true if component creation has been inactivated.
      *
@@ -97,7 +97,7 @@ public class ComponentFactory {
     public boolean isInactive() {
         return inactive;
     }
-
+    
     /**
      * Creates a component instance from the definition using a factory context.
      *
@@ -108,19 +108,19 @@ public class ComponentFactory {
         if (attributes != null) {
             for (Entry<String, Method> entry : def.getFactoryParameters().entrySet()) {
                 String name = entry.getKey();
-                
+
                 if (attributes.containsKey(name)) {
                     Object value = ELEvaluator.getInstance().evaluate(attributes.remove(name));
                     ConvertUtil.invokeSetter(this, entry.getValue(), value);
                 }
             }
         }
-        
+
         try {
             return inactive ? null : clazz.newInstance();
         } catch (Exception e) {
             throw MiscUtil.toUnchecked(e);
         }
     }
-    
+
 }
