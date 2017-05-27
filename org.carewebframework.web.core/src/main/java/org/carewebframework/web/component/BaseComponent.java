@@ -26,14 +26,12 @@
 package org.carewebframework.web.component;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ObjectUtils;
@@ -46,7 +44,6 @@ import org.carewebframework.web.ancillary.IAutoWired;
 import org.carewebframework.web.ancillary.IElementIdentifier;
 import org.carewebframework.web.ancillary.ILabeled;
 import org.carewebframework.web.ancillary.INamespace;
-import org.carewebframework.web.annotation.Component.FactoryParameter;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.annotation.ComponentDefinition;
@@ -61,7 +58,6 @@ import org.carewebframework.web.event.EventUtil;
 import org.carewebframework.web.event.ForwardListener;
 import org.carewebframework.web.event.IEventListener;
 import org.carewebframework.web.event.StatechangeEvent;
-import org.carewebframework.web.expression.ELEvaluator;
 import org.springframework.util.Assert;
 
 /**
@@ -69,120 +65,6 @@ import org.springframework.util.Assert;
  */
 public abstract class BaseComponent implements IElementIdentifier {
     
-    /**
-     * Factory to be used during component creation. Special attribute processors may modify the
-     * factory's settings prior to component creation to alter this process.
-     */
-    public static class ComponentFactory {
-
-        private final ComponentDefinition def;
-
-        private Class<? extends BaseComponent> clazz;
-
-        private Boolean namespace;
-
-        public ComponentFactory(ComponentDefinition def) {
-            this.def = def;
-            this.clazz = def.getComponentClass();
-        }
-
-        /**
-         * A special processor may modify the component's implementation class, as long as the
-         * substituted class is a subclass of the original.
-         *
-         * @param clazz Component implementation class to substitute.
-         */
-        @FactoryParameter("impl")
-        private void setImplementationClass(Class<? extends BaseComponent> clazz) {
-            Class<? extends BaseComponent> originalClazz = def.getComponentClass();
-            
-            if (clazz != null && !originalClazz.isAssignableFrom(clazz)) {
-                throw new ComponentException("Implementation class must extend class " + originalClazz.getName());
-            }
-
-            this.clazz = clazz;
-        }
-
-        /**
-         * Sets flag indicating if created component should be a namespace boundary.
-         *
-         * @param namespace If true, component will be a namespace boundary.
-         */
-        @FactoryParameter("namespace")
-        private void setNamespace(boolean namespace) {
-            this.namespace = namespace;
-        }
-
-        /**
-         * Conditionally prevents the factory from creating a component.
-         *
-         * @param condition If false, prevent factory from creating a component.
-         */
-        @FactoryParameter("if")
-        private void setIf(boolean condition) {
-            if (!condition) {
-                clazz = null;
-            }
-        }
-
-        /**
-         * Conditionally prevents the factory from creating a component.
-         *
-         * @param condition If true, prevent factory from creating a component.
-         */
-        @FactoryParameter("unless")
-        private void setUnless(boolean condition) {
-            if (condition) {
-                clazz = null;
-            }
-        }
-
-        /**
-         * Returns true if component creation has been inactivated.
-         *
-         * @return True prevents component creation.
-         */
-        public boolean isInactive() {
-            return clazz == null;
-        }
-        
-        /**
-         * Creates a component instance from the definition using a factory context.
-         *
-         * @param attributes Attribute map for initializing.
-         * @return A component instance. May be null if creation is suppressed.
-         */
-        public BaseComponent create(Map<String, String> attributes) {
-            if (attributes != null) {
-                for (Entry<String, Method> entry : def.getFactoryParameters().entrySet()) {
-                    String name = entry.getKey();
-
-                    if (attributes.containsKey(name)) {
-                        Object value = ELEvaluator.getInstance().evaluate(attributes.remove(name));
-                        ConvertUtil.invokeSetter(this, entry.getValue(), value);
-
-                        if (isInactive()) {
-                            return null;
-                        }
-                    }
-                }
-            }
-
-            try {
-                BaseComponent component = clazz.newInstance();
-                
-                if (namespace != null) {
-                    component.namespace = namespace;
-                }
-                
-                return component;
-            } catch (Exception e) {
-                throw MiscUtil.toUnchecked(e);
-            }
-        }
-
-    }
-
     /**
      * Reference to a subcomponent.
      */
@@ -860,10 +742,22 @@ public abstract class BaseComponent implements IElementIdentifier {
      *
      * @return True if this component is a namespace boundary.
      */
+    @PropertyGetter("namespace")
     public boolean isNamespace() {
         return namespace;
     }
 
+    /**
+     * When set to true, this component is a namespace boundary. This may not be changed once a
+     * parent or children are added.
+     *
+     * @param namespace True to make component a namespace boundary.
+     */
+    @PropertySetter("namespace")
+    private void setNamespace(boolean namespace) {
+        this.namespace = namespace;
+    }
+    
     /**
      * Returns the page to which this component belongs.
      *

@@ -37,6 +37,7 @@ import java.util.function.IntSupplier;
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.carewebframework.common.MiscUtil;
 import org.carewebframework.web.ancillary.ComponentException;
+import org.carewebframework.web.ancillary.ComponentFactory;
 import org.carewebframework.web.ancillary.ConvertUtil;
 import org.carewebframework.web.annotation.Component.ChildTag;
 import org.carewebframework.web.annotation.Component.ContentHandling;
@@ -44,7 +45,6 @@ import org.carewebframework.web.annotation.Component.FactoryParameter;
 import org.carewebframework.web.annotation.Component.PropertyGetter;
 import org.carewebframework.web.annotation.Component.PropertySetter;
 import org.carewebframework.web.component.BaseComponent;
-import org.carewebframework.web.component.BaseComponent.ComponentFactory;
 
 /**
  * Stores metadata about a component, as derived from component annotations.

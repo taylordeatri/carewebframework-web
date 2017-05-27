@@ -31,7 +31,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.carewebframework.web.component.BaseComponent.ComponentFactory;
+import org.carewebframework.web.ancillary.ComponentFactory;
 
 /**
  * Class annotation to control deserialization of a cwf resource.
