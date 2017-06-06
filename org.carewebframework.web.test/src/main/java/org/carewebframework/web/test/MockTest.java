@@ -33,6 +33,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.carewebframework.common.MiscUtil;
 import org.carewebframework.common.StrUtil;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -50,15 +51,11 @@ public class MockTest {
     
     public static MockConfig childConfig;
     
-    public static MockEnvironment mockEnvironment;
+    private static MockEnvironment mockEnvironment;
     
     @BeforeClass
     public static void beforeClass() throws Exception {
-        if (mockEnvironment == null) {
-            System.out.println("Initializing mock environment...");
-            mockEnvironment = mockEnvironmentClass.newInstance();
-            mockEnvironment.init(rootConfig, childConfig);
-        }
+        getMockEnvironment();
     }
     
     @AfterClass
@@ -71,6 +68,25 @@ public class MockTest {
     }
     
     /**
+     * Returns the mock environment, instantiating it if necessary.
+     *
+     * @return The mock environment.
+     */
+    public static MockEnvironment getMockEnvironment() {
+        if (mockEnvironment == null) {
+            try {
+                System.out.println("Initializing mock environment...");
+                mockEnvironment = mockEnvironmentClass.newInstance();
+                mockEnvironment.init(rootConfig, childConfig);
+            } catch (Exception e) {
+                throw MiscUtil.toUnchecked(e);
+            }
+        }
+        
+        return mockEnvironment;
+    }
+    
+    /**
      * Reads text from the specified resource on the classpath.
      *
      * @param resourceName Name of the resource.
@@ -78,7 +94,7 @@ public class MockTest {
      * @throws IOException IO exception.
      */
     public static String getTextFromResource(String resourceName) throws IOException {
-        Resource resource = mockEnvironment.getRootContext().getResource("classpath:" + resourceName);
+        Resource resource = getMockEnvironment().getRootContext().getResource("classpath:" + resourceName);
         InputStream is = resource.getInputStream();
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
