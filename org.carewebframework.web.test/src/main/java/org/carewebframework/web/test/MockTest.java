@@ -52,15 +52,20 @@ public class MockTest {
     public static MockConfig childConfig;
     
     private static MockEnvironment mockEnvironment;
+
+    private static int initCount;
     
     @BeforeClass
     public static void beforeClass() throws Exception {
+        initCount++;
         getMockEnvironment();
     }
     
     @AfterClass
     public static void afterClass() {
-        if (mockEnvironment != null) {
+        initCount = initCount <= 0 ? 0 : initCount - 1;
+
+        if (initCount == 0 && mockEnvironment != null) {
             System.out.println("Destroying mock environment...");
             mockEnvironment.close();
             mockEnvironment = null;
