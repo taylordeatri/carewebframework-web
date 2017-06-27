@@ -56,7 +56,9 @@
 									<filtering>true</filtering>
 									<include>**/*.umd.*</include>
 									<include>rxjs/**/*.js</include>
+									<include>rxjs/**/*.map</include>
 									<include>core-js/**/*.js</include>
+									<include>core-js/**/*.map</include>
 									<include>zone.js/dist/*.*</include>
 								</resource>
 								<resource>
