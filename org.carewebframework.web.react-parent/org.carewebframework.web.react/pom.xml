@@ -13,34 +13,52 @@
 
 	<properties>
 		<webjar.name>cwf-react</webjar.name>
-        <systemjs>
-        {	'map': {
-        		'cwf-react-widget': 'webjars/cwf-react/cwf/widget.js'
-        	}
-		}
-        </systemjs>
+		<systemjs>
+			{ 'map': {
+			'cwf-react-widget':
+			'webjars/cwf-react/cwf/widget.js'
+			}
+			}
+		</systemjs>
 	</properties>
 
 	<build>
 		<plugins>
 			<plugin>
-			    <groupId>com.github.eirslett</groupId>
-			    <artifactId>frontend-maven-plugin</artifactId>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<!-- React -->
 		<dependency>
 			<groupId>org.webjars.npm</groupId>
 			<artifactId>react</artifactId>
-			<version>15.5.4</version>		
+			<version>15.6.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.webjars.npm</groupId>
+					<artifactId>fbjs</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars.npm</groupId>
 			<artifactId>react-dom</artifactId>
-			<version>15.5.4</version>		
+			<version>15.6.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.webjars.npm</groupId>
+					<artifactId>fbjs</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>fbjs</artifactId>
+			<version>0.8.12</version>
 		</dependency>
 		<!-- CareWeb Framework -->
 		<dependency>

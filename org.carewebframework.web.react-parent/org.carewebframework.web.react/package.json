@@ -13,8 +13,8 @@
     "url": "git://github.com/carewebframework/carewebframework-web.git"
   },
   "dependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   },
   "devDependencies": {
     "typescript": "~2.2.0"
